@@ -1,0 +1,81 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Услуги", 
+		"/services/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Дизайн-проект", 
+		"/services/dizayn-proekt/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Выезд специалиста", 
+		"/services/vyezd-spetsialista/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Тест-драйв", 
+		"/services/test-drayv/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Консультация эксперта", 
+		"/services/konsultatsiya-eksperta/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Доставка", 
+		"/services/dostavka/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Сборка", 
+		"/services/sborka/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Вывоз упаковки", 
+		"/services/vyvoz-musora/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Переезд", 
+		"/services/pereezd/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Онлайн-кредит", 
+		"/services/onlayn-kredit/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Расширенный заказ", 
+		"/services/rasshirennyy-zakaz/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

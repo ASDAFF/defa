@@ -1,0 +1,5 @@
+<?
+$MESS["SBEEKON_DELIVERYPRICE_CUSTOM_CALC_PARAM"] = "Рассчитывать без учета корзины";
+$MESS["SBEEKON_DELIVERYPRICE_CUSTOM_PRICE_PARAM"] = "Цена для расчета";
+$MESS["SBEEKON_DELIVERYPRICE_CUSTOM_WEIGHT_PARAM"] = "Вес для расчета";
+?>

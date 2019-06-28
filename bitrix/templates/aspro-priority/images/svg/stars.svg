@@ -1,0 +1,27 @@
+<svg id="stars.svg" xmlns="http://www.w3.org/2000/svg" width="121" height="40.03" viewBox="0 0 121 40.03">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e3c45a;
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #dfe2e6;
+      }
+    </style>
+  </defs>
+  <path id="Shape_921_copy_9" data-name="Shape 921 copy 9" class="cls-1" d="M99.176,1050H107l-6.013,4.78L103,1062l-6.468-3.85L90,1062l2-7.22,0-.01L86,1050h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_8" data-name="Shape 921 copy 8" class="cls-1" d="M124.176,1050H132l-6.013,4.78L128,1062l-6.468-3.85L115,1062l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_7" data-name="Shape 921 copy 7" class="cls-1" d="M149.176,1050H157l-6.013,4.78L153,1062l-6.468-3.85L140,1062l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_6" data-name="Shape 921 copy 6" class="cls-1" d="M174.176,1050H182l-6.013,4.78L178,1062l-6.468-3.85L165,1062l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_5" data-name="Shape 921 copy 5" class="cls-1" d="M199.176,1050H207l-6.013,4.78L203,1062l-6.468-3.85L190,1062l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_14" data-name="Shape 921 copy 14" class="cls-2" d="M99.176,1071H107l-6.013,4.78L103,1083l-6.468-3.85L90,1083l2-7.22,0-.01L86,1071h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_13" data-name="Shape 921 copy 13" class="cls-2" d="M124.176,1071H132l-6.013,4.78L128,1083l-6.468-3.85L115,1083l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_12" data-name="Shape 921 copy 12" class="cls-2" d="M149.176,1071H157l-6.013,4.78L153,1083l-6.468-3.85L140,1083l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_11" data-name="Shape 921 copy 11" class="cls-2" d="M174.176,1071H182l-6.013,4.78L178,1083l-6.468-3.85L165,1083l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+  <path id="Shape_921_copy_10" data-name="Shape 921 copy 10" class="cls-2" d="M199.176,1071H207l-6.013,4.78L203,1083l-6.468-3.85L190,1083l2-7.22,0-.01-6-4.77h7.82l2.68-7.04Z" transform="translate(-86 -1042.97)"/>
+</svg>

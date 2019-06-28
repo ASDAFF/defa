@@ -1,0 +1,26 @@
+body .maxwidth-theme, body.fill_bg_y .contacts-page-map, body.fill_bg_y .banners-big .maxwidth-banner, body.fill_bg_y > .body > .main,
+body.fill_bg_y footer{ max-width: 1344px; }
+body.fill_bg_y .banner.TOP_HEADER, body.fill_bg_y .banner.TOP_UNDERHEADER{max-width: 1344px;}
+
+.item-views.company.front .text,
+.contacts.front .left_block,
+body .project:not(.wti) .info,
+.contacts .left_block,
+.contacts_page.contacts.front .feedback{max-width:672px;}
+
+body.with_decorate .item-views.company.front .text,
+body.with_decorate .contacts.front:not(.contacts_page) .left_block,
+body.with_decorate body .project:not(.wti) .info{max-width:656px;}
+
+
+@media (max-width:1540px){
+	.banners-big .slides .text .inner{padding-left:100px;}
+}
+
+@media (max-width:1440px){
+	body.with_decorate .project.item.wti .info{padding-left:32px;}
+}
+
+@media (min-width:1377px){
+	body .maxwidth-theme{padding-left:0;padding-right:0;}
+}

@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Moneyback";
+$arDirProperties = Array(
+
+);
+?>

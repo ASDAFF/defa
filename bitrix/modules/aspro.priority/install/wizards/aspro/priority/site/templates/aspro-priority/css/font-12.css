@@ -1,0 +1,13 @@
+/* 13px/22px Montserrat (Default) */
+body,body div.bx-yandex-map,.fancybox-title{ font: 13px/22px "Montserrat", Arial, sans-serif; }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6,.popup-window{font-family:"Montserrat", Arial, sans-serif;}
+body .breadcrumb > li:after{margin-top:-3px;}
+body .item-views.type_2_within.within.services-items .item .toogle>span:before{top:3px;}
+.basket_order .items>.head .btn{padding-top:7px;}
+.item-views .item .btn.btn-xs{padding-top:8px;}
+body #headerfixed .logo-row.v2 .mega-menu table td .wrap > a>span{padding-top:24px;padding-bottom:23px;}
+body .contacts_list .contacts-stores .item .show_on_map>span svg,
+body .contacts-stores .item .top-wrap .show_on_map>span svg{top:0;}
+
+body .btn.btn-default.btn-sm{padding-top:10px;}
+body .btn.btn-xs, .bx-firefox .btn.btn-xs{padding-top:8px;}

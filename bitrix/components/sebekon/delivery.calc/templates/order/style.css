@@ -1,0 +1,110 @@
+.DP_search_form  {
+	margin: 0px !important; 
+	padding: 0px;
+}
+.DP_search_form input {
+    color: #555555;
+    display: inline-block;
+    font-size: 13px;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px;
+    width: 210px;
+    height: auto;
+	margin-bottom: 0px !important;
+    -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.DP_search_form input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+.DP_search_form input[type="submit"] {
+    width: auto;
+	margin-top: -3px;
+}
+/*.sebekon a.btn:link {
+	text-decoration: none;
+	color: #333333;
+}
+.sebekon .btn {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F5F5F5;
+    background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+    background-repeat: repeat-x;
+    border-color: #E6E6E6 #E6E6E6 #B3B3B3;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 18px;
+    margin-bottom: 0;
+    padding: 4px 10px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+}
+.sebekon .btn:hover, .sebekon .btn:active, .sebekon .btn.active, .sebekon .btn.disabled, .sebekon .btn[disabled] {
+    background-color: #E6E6E6;
+}
+.sebekon .btn:active, .sebekon .btn.active {
+}
+.sebekon .btn:first-child {
+}
+.sebekon .btn:hover {
+    -moz-transition: background-position 0.1s linear 0s;
+    background-color: #E6E6E6;
+    background-position: 0 -15px;
+    color: #333333;
+    text-decoration: none;
+}
+.sebekon .btn:focus {
+    outline: thin dotted #333333;
+    outline-offset: -2px;
+}*/
+.sebekon .btn:hover {
+    background-image: none;
+}
+.DELIVERS .info {
+	margin-left: 26px;
+}
+.DELIVERS .wait {line-height: 15px;}
+.DP_search_form .help {
+	margin: 0 0 0px 120px;
+	font-size: 10px;
+	color: #AAAAAA;
+}
+.sebekon-help_block {
+	display: block;
+	position: absolute;
+	z-index: 1051;
+	background: #FFF;
+	border: 1px solid #CCCCCC;
+	padding: 0px 10px;
+	top: 29px;
+	left: 100px;
+	width: 235px;
+}
+.sebekon-help_block > div {
+	cursor: pointer;
+}
+.sebekon-help_block > div h3 {
+    margin: 8px 0 0px 0px;
+    font-style: normal;
+    font-weight: bold;
+}
+.sebekon-help_block > div p {
+	margin-top: 0px;
+}

@@ -1,0 +1,43 @@
+<div class="tizers in_content text-right">
+	<div class="wrap text-center clearfix">
+		<div class="tizer image_bg text-left">
+			<div class="image">
+<img alt="Pickup from the store" src="/bitrix/templates/aspro-priority/images/svg/tizer_1.svg" title="Pickup from the store">
+			</div>
+			<div class="body-info">
+				<div class="title">
+					Pickup from the store
+				</div>
+				<div class="previewtext font_xs">
+					Today or later - for free
+				</div>
+			</div>
+		</div>
+		<div class="tizer image_bg text-left">
+			<div class="image">
+<img alt="Delivery to" src="/bitrix/templates/aspro-priority/images/svg/tizer_2.svg" title="Delivery to">
+			</div>
+			<div class="body-info">
+				<div class="title">
+					 Delivery to
+				</div>
+				<div class="previewtext font_xs">
+					Tomorrow or later - 250 r
+				</div>
+			</div>
+		</div>
+		<div class="tizer image_bg text-left">
+			<div class="image">
+<img alt="Convenient payment method" src="/bitrix/templates/aspro-priority/images/svg/tizer_3.svg" title="Convenient payment method">
+			</div>
+			<div class="body-info">
+				<div class="title">
+					Convenient payment method
+				</div>
+				<div class="previewtext font_xs">
+					Cash, card or online payment
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

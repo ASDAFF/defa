@@ -1,0 +1,97 @@
+<?
+$MESS['SHOW_DETAIL_LINK'] = 'Отображать ссылку на детальную страницу';
+$MESS["COUNT_IN_LINE"] = "Количество элементов в строке";
+$MESS["T_COUNT_LIST_LINE"] = "Количество элементов в строке";
+$MESS["VIEW_TYPE_TITLE"] = "Вид отображения списка элементов";
+$MESS["VIEW_TYPE_LIST"] = "Список";
+$MESS["VIEW_TYPE_TABLE"] = "Плитка";
+$MESS["VIEW_TYPE_PRICE"] = "Прайсом";
+$MESS["COUNT_IN_LINE"] = "Количество элементов в строке";
+$MESS["SHOW_TABS"] = "Показывать табы";
+$MESS["SHOW_NAME"] = "Показывать название";
+$MESS["SHOW_DETAIL"] = "Ссылка на детальную страницу";
+$MESS["SHOW_IMAGE"] = "Показывать изображение";
+$MESS["IMAGE_POSITION"] = "Положение изображения";
+$MESS["IMAGE_POSITION_LEFT"] = "Слева";
+$MESS["IMAGE_POSITION_RIGHT"] = "Справа";
+$MESS["IMAGE_POSITION_TOP"] = "Сверху";
+$MESS["IMAGE_POSITION_BOTTOM"] = "Снизу";
+$MESS['IMAGE_CATALOG_POSITION'] = 'Положение картинки каталогов';
+
+$MESS["USE_SHARE"] = "Показывать ссылки на соцсети";
+$MESS["T_SORT_PROP"] = "Доступные поля для сортировки";
+$MESS["T_SORT_PROP_DEFAULT"] = "Сортировка по умолчанию";
+$MESS["V_NAME"] = "Наименование";
+$MESS["V_SORT"] = "Сортировка";
+$MESS["T_VIEWS"] = "Вид отображения элементов раздела";
+$MESS["V_TABLE"] = "Таблицей";
+$MESS["V_LIST"] = "Списком";
+$MESS["T_COUNT_SECTIONS_LINE"] = "Количество выводимых разделов в строке";
+$MESS["T_SHOW_SECTIONS_IMG"] = "Показывать картинку у раздела";
+$MESS["T_SHOW_ELEMENT_IMAGE"] = "Показывать картинку у элемента";
+$MESS["T_SECTION_PAGE_ELEMENT"] = "Количество разделов на страницу";
+$MESS["SD_ASC"] = "По возрастанию";
+$MESS["SD_DESC"] = "По убыванию";
+$MESS["T_SORT_DIRECTION"] = "Направление сортировки";
+$MESS['FILTER_URL_TEMPLATE'] = 'Url раздела для умного фильтра';
+$MESS['S_ASK_QUESTION'] = 'Текст кнопки "Задать вопрос"';
+$MESS['S_ORDER_PRODUCT'] = 'Текст кнопки "Заказать товар"';
+$MESS['S_TO_ALL'] = 'Текст кнопки "Подробнее"';
+$MESS['T_FORM_ID_ORDER_SERVISE'] = 'ИД формы "Заказать товар"';
+$MESS['T_GALLERY'] = 'Текст таба "Галерея"';
+$MESS['T_DOCS'] = 'Текст таба "Документы"';
+$MESS['T_PROJECTS'] = 'Текст таба "Реализованные проекты"';
+$MESS['T_CHARACTERISTICS'] = 'Текст таба "Характеристики"';
+$MESS['T_VIDEO'] = 'Текст таба "Видео"';
+$MESS['T_DESC'] = 'Текст таба "Описание"';
+$MESS['T_TARIF'] = 'Текст таба "Тарифы"';
+$MESS['T_FAQ'] = 'Текст таба "FAQ"';
+$MESS['T_SERVICES'] = 'Текст заголовка "Услуги"';
+$MESS['T_ITEMS'] = 'Текст заголовка "Товары"';
+$MESS['T_DEV'] = 'Текст заголовка "Разработчик продукта"';
+$MESS['VIEW_TYPE'] = 'Вид отображения разделов';
+$MESS['TYPE_LIST'] = 'построчно';
+$MESS['TYPE_ROW'] = 'в 2 столбца';
+$MESS['SHOW_CHILD_SECTIONS'] = 'Показывать вложенные подразделы/элементы';
+$MESS['SHOW_ELEMENTS_IN_LAST_SECTION'] = 'Показывать вложенные элементы если у разделов на странице нет подразделов';
+
+$MESS["CP_BC_TPL_DETAIL_BRAND_USE"] = "Использовать компонент \"Бренды\"";
+$MESS["CP_BC_TPL_DETAIL_PROP_CODE"] = "Таблица с брендами";
+
+$MESS["GALLERY_TYPE"] = "Тип галлереи";
+$MESS["GALLERY_BIG"] = "большая";
+$MESS["GALLERY_SMALL"] = "маленькая";
+
+$MESS["T_SECTIONS_TYPE_VIEW"] = "Шаблон списка разделов";
+$MESS["T_SECTION_TYPE_VIEW"] = "Шаблон списка подразделов";
+$MESS["T_SECTION_ELEMENTS_TYPE_VIEW"] = "Шаблон списка элементов";
+$MESS["T_ELEMENT_TYPE_VIEW"] = "Шаблон детальной страницы";
+$MESS["T_SHOW_SECTION_PREVIEW_DESCRIPTION"] = "Показывать описание разделов";
+$MESS["T_LINE_ELEMENT_COUNT"] = "Количество элементов в строке";
+
+$MESS["CP_BC_TPL_DETAIL_USE_COMMENTS"] = "Включить отзывы";
+$MESS["CP_BC_TPL_DETAIL_BLOG_USE"] = "Использовать комментарии";
+$MESS["CP_BC_DETAIL_TPL_BLOG_URL"] = "Название блога латинскими буквами";
+$MESS["CP_BC_TPL_DETAIL_BLOG_EMAIL_NOTIFY"] = "Уведомление по электронной почте";
+$MESS["CP_BC_TPL_DETAIL_VK_USE"] = "Использовать Вконтакте";
+$MESS["CP_BC_TPL_DETAIL_VK_API_ID"] = "Идентификатор приложения Вконтакте (API_ID)";
+$MESS["CP_BC_TPL_DETAIL_FB_APP_ID"] = "Идентификатор приложения (APP_ID)";
+$MESS["CP_BC_TPL_DETAIL_FB_USE"] = "Использовать Facebook";
+$MESS["CP_BC_TPL_FB_APP_ID"] = "Идентификатор приложения (APP_ID)";
+$MESS["T_COMMENTS_COUNT"] = "Количество комментариев на странице";
+$MESS["BLOCK_TITLE_TAB"] = "Заголовок таба";
+$MESS["S_COMMENTS_VALUE"] = "Комментарии";
+$MESS["S_VK_VALUE"] = "Вконтакте";
+$MESS["S_FB_VALUE"] = "Facebook";
+
+$MESS["T_SHOW_BRAND_DETAIL"] = "Показывать дополнительную информацию о производителе";
+$MESS["LANDING_IBLOCK_ID_TITLE"] = "ID инфоблока с посадочными страницами";
+$MESS["LANDING_TIZER_IBLOCK_ID_TITLE"] = "ID инфоблока с тизерами в посадочных страницах";
+$MESS["CATALOG_IBLOCK_ID_TITLE"] = "ID инфоблока каталога";
+$MESS["LANDING_TITLE"] = "Заголовок с посадочными страницами";
+$MESS["LANDING_DEFAULT_TITLE"] = "Похожие посадочные страницы";
+$MESS["LANDING_SECTION_COUNT_TITLE"] = "Общее количество связанных посадочных страниц";
+$MESS["LANDING_SECTION_COUNT_VISIBLE_TITLE"] = "Отображаемое количество связанных посадочных страниц";
+$MESS["CATALOG_NEWS_COUNT_TITLE"] = "Общее количество элементов каталога";
+$MESS["CATALOG_COUNT_IN_LINE_TITLE"] = "Количество элементов каталога в строке";
+?>

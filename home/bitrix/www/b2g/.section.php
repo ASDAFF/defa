@@ -1,0 +1,3 @@
+<?
+$sSectionName="b2g";
+?>

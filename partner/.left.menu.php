@@ -1,0 +1,46 @@
+<?
+$aMenuLinks = Array(
+    Array(
+        "Наши партнеры",
+        "/partner/brands/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Портал поставщиков",
+        "/partner/supplierportal/",
+        Array(),
+        Array(),
+        ""
+    ),
+    /*Array(
+        "Сотрудничество",
+        "/sotrudnichestvo/partner/",
+        Array(),
+        Array(),
+        ""
+    ),*/
+    Array(
+        "Госзаказчикам",
+        "/partner/b2g/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Арендодателям",
+        "/partner/cooperation/",
+        Array(),
+        Array(),
+        ""
+    ),
+    Array(
+        "Дилерам",
+        "/partner/cooperation/",
+        Array(),
+        Array(),
+        ""
+    )
+);
+?>

@@ -1,0 +1,743 @@
+/*NOTE: This file is intended for programmers. Aspro technical support is not advised to work with him.*/
+
+/* Examples (uncomment to use):*/
+
+/* Expand site width */
+/* body .wrapper { max-width: 1400px !important;  } */
+
+/* Set site background image */
+/* body {  background: url(image_source) top no-repeat; }
+
+/* Hide compare button */
+/* a.compare_item { display: none !important;  }*/
+
+
+
+.maxwidth-theme {
+    padding: 0 15px;
+}
+
+/*HEADER*/
+.header_wrap.index #header {
+    padding: 0!important;
+    margin: -1px 0 0!important;
+    position: absolute;
+}
+
+#header .maxwidth-theme {
+    padding-top: 0;
+    background: none;
+}
+
+#header .top-block {
+    border-bottom: none;
+}
+
+#header .logo-block {
+    display: inline-block;
+    float: left;
+}
+
+.top-block>.maxwidth-theme>.wrapp_block {
+    background: none;
+}
+
+#header .top-menu-block {
+    border-bottom: 1px solid #d1d1d1;
+    margin-left: 20px;
+}
+
+#header .top-menu-block .mega-menu {
+    padding: 0;
+}
+
+.mega-menu .left-menu {
+    margin-bottom: 0;
+}
+.mega-menu ul li {
+    display: inline-block;
+}
+
+.mega-menu .logo-block, .mega-menu .left-menu {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.mega-menu ul.left-menu li {
+    padding: 7px 16px;
+    background: none;
+}
+
+.header_wrap.index #header .mega-menu ul.left-menu li a {
+    font-weight: 400!important;
+    font-size: 14px;
+    color: #d1d1d1;
+    text-decoration: none;
+    position: relative;
+}
+/*МЕНЮ НА ОСТАЛЬНЫХ СТРАНИЦАХ*/
+.header_wrap #header .mega-menu ul.left-menu li a {
+    font-weight: 400!important;
+    font-size: 14px;
+    color: rgb(101, 104, 109);
+    text-decoration: none;
+    position: relative;
+}
+
+.mega-menu ul.left-menu li:nth-of-type(1) {
+    padding-left: 0;
+}
+.mega-menu ul.left-menu li:nth-last-of-type(1){
+    padding-right: 0;
+}
+
+.mega-menu ul.left-menu li:before {
+    display: none;
+}
+
+.mega-menu ul.left-menu li a {
+
+}
+
+.mega-menu ul.left-menu li a.selected {
+    color: white;
+    /*color: rgb(229,48,51);*/
+}
+
+.mega-menu ul.left-menu li a.selected:after {
+    width: 100%;
+    left: 0;
+}
+
+.header_wrap.index #header .mega-menu ul.left-menu li a:after {
+    position: absolute;
+    bottom: -11px;
+    content: '';
+    height: 4px;
+    width: 0;
+    background: rgb(229,48,51);
+    left: 50%;
+    transition: all 0.3s;
+}
+/*ПОДЧЕРКИВАНИЕ МЕНЮ НА ОСТАНЛЬНЫХ СТРАНИЦАХ*/
+.mega-menu ul.left-menu li a:after {
+    position: absolute;
+    bottom: -11px;
+    content: '';
+    height: 4px;
+    width: 0;
+    background: rgb(101, 104, 109);
+    left: 50%;
+    transition: all 0.3s;
+}
+
+.mega-menu ul.left-menu li a:hover {
+    color: white;
+}
+
+.mega-menu ul.left-menu li a:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.top-block-item .phone {
+    position: relative;
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.top-block-item .phone .svg {
+    display: none;
+}
+
+.header_wrap.index #header .top-block-item .phone > a {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+}
+
+/*ТЕЛЕФОН НА ДРУГИХ СТРАНИЦАХ*/
+.top-block-item .phone > a {
+    color: rgb(101, 104, 109);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+}
+
+
+.with_dropdown {
+    position: relative;
+    padding-right: 0!important;
+}
+
+.with_dropdown:after {
+    display: none;
+    /*content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -2px;
+    width: 5px;
+    height: 3px;
+    background: url(/bitrix/templates/aspro_next/images/next.png) -20px -333px no-repeat;*/
+}
+
+
+.top-block-item .phone-block, .top-block-item .city-block {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.region_wrapper:before {
+    display: none;
+    /*content: "";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    background: url(/bitrix/templates/aspro_next/images/svg/Marker.svg) 0 0 no-repeat;*/
+}
+
+.region_wrapper .js_city_chooser {
+    padding-right: 20px;
+}
+
+.region_wrapper .arrow {
+    bottom: 2px;
+}
+
+.region_wrapper .arrow i {
+    content: "";
+    display: block;
+    width: 13px;
+    height: 11px;
+    background: url(/bitrix/templates/aspro_next/images/arrows.png) 0px -140px no-repeat;
+    border-radius: 4px;
+}
+
+
+.header_wrap.index #header .top-block-item .city-block .colored {
+    color: white;
+}
+/*ГОРОДА НА ДРУГИХ СТРАНИЦАХ*/
+.top-block-item .city-block .colored {
+    color: rgb(101, 104, 109);
+}
+
+.right-block-item {
+    text-align: right;
+    padding-right: 0!important;
+}
+
+.right-block-item .top-block-item{
+    padding: 0;
+}
+
+.top-block-item .personal_wrap, .top-block-item .top-btn {
+    display: inline-block!important;
+    vertical-align: middle!important;
+}
+
+.top-block-item .personal_wrap {
+    width: 120px;
+}
+
+
+
+.header_wrap.index #header .top-block-item .personal_wrap .personal-link .name {
+    color: white;
+}
+/*ЛК на других страницах*/
+.top-block-item .personal_wrap .personal-link .name {
+    color: rgb(101, 104, 109);
+}
+
+
+
+.top-block .top-block-item .personal.top>a {
+    position: relative;
+    display: block;
+    padding: 7px 0 7px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.header_wrap.index #header .personal_wrap .svg .uscls-1 {
+    fill: #fff;
+}
+
+.header_wrap.index #header .personal_wrap .svg .loccls-1 {
+    fill: #fff;
+}
+
+/*ИКОНКА ЛК НА ДРУГИХ СТРАНИЦАХ*/
+.personal_wrap .svg .uscls-1 {
+    fill: rgb(101, 104, 109);
+}
+
+.personal_wrap .svg .loccls-1 {
+    fill: rgb(101, 104, 109);
+}
+
+
+.header_wrap.index #header .inline-search-show .svg .sscls-1 {
+    fill: #fff;
+}
+/*ИКОНКА ПОИСКА*/
+.inline-search-show .svg .sscls-1 {
+    fill: rgb(101, 104, 109);
+}
+
+
+
+
+.top-block .top-block-item .inline-search-show {
+    border: none;
+    padding: 20px 0 20px;
+}
+
+/*ПОДМЕНЮ*/
+.menu-row .menu-only {
+    margin-left: 5px;
+}
+
+.header_wrap.index #header .mega-menu table td .wrap>a {
+    border: none;
+    font-weight: 400;
+    padding: 20px 0px 20px;
+    position: relative;
+    text-transform: none;
+    color: white!important;
+    width: auto;
+    font-size: 16px;
+    display: inline-block;
+    height: auto;
+}
+
+.header_wrap.index #header .mega-menu table td .wrap>a:hover {
+    color: rgb(229,48,51)!important;
+}
+
+/*ПОДМЕНЮ НА ОСТАЛЬНЫХ СТРАНИЦАХ*/
+#header .mega-menu table td .wrap>a {
+    border: none;
+    font-weight: 400;
+    padding: 20px 0px 20px;
+    position: relative;
+    text-transform: none;
+    color: rgb(101, 104, 109);!important;
+    width: auto;
+    font-size: 16px;
+    display: inline-block;
+    height: auto;
+}
+#header .mega-menu table td .wrap>a:hover {
+    color: rgb(229,48,51)!important;
+}
+
+
+
+
+.mega-menu td .wrap>a .line-wrapper .line {
+    display: none;
+    /*bottom: 0;
+    right: auto;
+    width: 100%;
+    opacity: 0;
+    background-color: rgb(229,48,51)!important;
+    transition: 0.3s;*/
+}
+
+
+.mega-menu td .wrap>ul.dropdown-menu li {
+    display: block;
+}
+.mega-menu td .wrap>ul.dropdown-menu>li:first-of-type:before {
+    display: none;
+}
+
+
+
+/*ФИКСИРОВАННАЯ ШАПКА*/
+#headerfixed {
+    top: -150px;
+}
+
+#headerfixed .logo-row.v2 {
+    display: table;
+    width: 100%;
+}
+
+
+#headerfixed .logo-row .logo img, #headerfixed .logo-row .logo svg {
+    visibility: hidden;
+}
+
+#headerfixed .logo-row .logo a {
+    position: relative;
+    display: block;
+    height: 64px;
+}
+
+#headerfixed .logo-row .logo a:after {
+    position: absolute;
+    content: '';
+    background: url("../../../../images/logo_bright_for_redesign_only_defo copy.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.fixed .mega-menu table td .wrap>a {
+    color: rgb(31,34,41);
+    font-weight: 400!important;
+    font-size: 16px;
+}
+
+.fixed .mega-menu table td .wrap>a .line-wrapper {
+    bottom: 20px;
+}
+
+
+
+/*БОЛЬШОЙ БАНЕР*/
+.top_big_one_banner .top_slider_wrapp .flexslider {
+    height: 720px;
+}
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li {
+    height: 720px;
+    margin: 0;
+    background-size: cover;
+    background-position: center center;
+}
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner {
+    max-width: 600px;
+}
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .text.left {
+    width: 100%;
+    vertical-align: bottom;
+}
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .img {
+    display: none;
+}
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .text.left .banner_title {
+    margin-left: 0;
+    margin-right: 0;
+    overflow: visible;
+    margin-bottom: 20px;
+}
+
+
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .text.left .banner_title a {
+    font-size: 57px;
+    color: white;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .text.left .banner_buttons {
+    margin: 0;
+}
+
+.top_big_one_banner .top_slider_wrapp .flexslider .slides>li .wrapper_inner table .text.left .banner_buttons a {
+    background: none;
+    border: 2px solid white;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    padding: 15px 40px;
+}
+
+
+
+/*МЕНЮ НА БАНЕРЕ*/
+.top-slider-block {
+    position: relative;
+}
+
+
+.left-block-catalog {
+    position: absolute;
+    width: 320px;
+    height: 440px;
+    left: 0;
+    right: 1152px;
+    bottom: 0;
+    top: 100px;
+    margin: auto;
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full>a {
+    display: block;
+    padding: 11px 31px 13px 17px;
+    background: rgba(6, 6, 36, 0.4);
+    text-decoration: none;
+    text-align: left;
+    color: white;
+    border: none;
+    position: relative;
+    border-bottom: 1px solid rgba(100,100,100,0.5);
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full:nth-last-of-type(1)>a {
+    border-bottom: none;
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full>a:after {
+    color: white;
+    position: absolute;
+    content: "\f105";
+    right: 15px;
+    top: 15px;
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full>a:before {
+    background: rgb(229,48,51)!important;
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full>a:hover {
+    color: white;
+    background: rgba(100,100,100,0.5);
+}
+
+body .menu_top_block.catalog_block .dropdown>li.full>a:hover:after {
+    color: white;
+}
+
+
+/*выпадающее меню*/
+.menu_top_block.catalog_block .dropdown>li.full>.dropdown>li>a {
+    color: rgb(31,34,41);
+}
+
+.menu_top_block.catalog_block .dropdown>li.full>.dropdown>li>a:hover {
+    color: rgb(229,48,51)!important;
+}
+
+/*ТИЗЕРЫ*/
+.tizers_block .item .img {
+    display: block;
+}
+
+
+
+
+/*ТАБЛИЧНЫЕ ТИЗЕРЫ*/
+.tizers-item {
+    text-align: center;
+    border: 1px solid rgba(237,238,238,1);
+    padding: 40px 20px;
+}
+
+.tizers-item-content {
+
+}
+
+.tizers-item .tizers-item-child {
+    display: inline-block;
+    width: 49%;
+    padding: 20px 15px;
+}
+
+.tizers-item h3 a{
+    margin: 0 0 40px;
+    font-weight: 400;
+    color: rgba(31,34,41,1);
+    font-size: 20px;
+}
+
+.tizers-item h3 a:hover {
+    color: rgb(229,48,51);
+}
+
+
+.tizers-item-img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30%;
+    margin-right: 5%;
+}
+
+.tizers-item-text {
+    display: inline-block;
+    vertical-align: middle;
+    width: 60%;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2;
+    color: rgba(31,34,41,1);
+    transition: 0.3s;
+}
+
+
+.tizers-item .tizers-item-child:hover .tizers-item-text{
+    color: rgb(229,48,51);
+}
+
+.tizers-item-content .col-xs-6 {
+    padding: 20px 10px;
+}
+
+.border-right {
+    border-right: 1px solid rgba(237,238,238,1);
+}
+
+.border-bottom {
+    border-bottom: 1px solid rgba(237,238,238,1);
+}
+.border-left {
+    border-left: 1px solid rgba(237,238,238,1);
+}
+.border-top {
+    border-top: 1px solid rgba(237,238,238,1);
+}
+
+
+
+
+/*БЛОК С ПЛАВАЮЩИМИ БАНЕРАМИ*/
+.wrap_tizer .wrap_outer .inner_text {
+    position: relative;
+    left: -7px;
+    color: #fff;
+    font-style: normal;
+    background: rgba(6, 6, 36, 0.4);
+    z-index: 1;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.wrap_tizer .wrap_outer {
+    background: none;
+}
+
+.wrap_tizer .wrap_outer .outer_text {
+    background: none;
+}
+
+
+/*БЛОК ХИТ, НОВИНКА, ЦЕНА*/
+.tab_slider_wrapp ul.tabs>li span {
+    color: rgb(31,34,41);
+    position: relative;
+    border-bottom: none;
+}
+
+.tab_slider_wrapp ul.tabs li.cur span {
+    border-bottom: none;
+}
+
+.tab_slider_wrapp ul.tabs li.cur span:after {
+    width: 100%;
+}
+
+.tab_slider_wrapp ul.tabs>li span:after {
+    content: '';
+    width: 0;
+    height: 2px;
+    background:rgb(229,48,51);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+.tab_slider_wrapp ul.tabs>li:hover span:after {
+    width: 100%;
+}
+
+
+
+
+
+/*БЛОК С КОНТАКТАМИ*/
+.contacts-block {
+
+}
+
+.contacts-block-item {
+    background: rgb(248, 248, 248);
+    text-align: center;
+    padding: 22px 0;
+}
+
+.contacts-block-item p{
+    font-size: 24px;
+    color: rgb(31,34,41);
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.contacts-block-item a{
+    display: block;
+    font-size: 24px;
+    color: rgb(31,34,41);
+}
+
+.contacts-block-item a:hover {
+    color: rgb(229,48,51);
+}
+
+.contacts-block-item .phone .svg {
+    display: none;
+}
+
+.contacts-block-item .phone a {
+    font-weight: 500;
+    color: black;
+    font-size: 30px;
+}
+
+.contacts-block-item .phone a:hover {
+    color: rgb(229,48,51);
+
+}
+
+/*.col-md-4:nth-of-type(3) .contacts-block-item > a:nth-of-type(1) {
+    margin-bottom: 20px;
+}*/
+
+/*СЛАЙДЕР С БРЭНДАМИ*/
+.brands_slider_wrapp {
+    padding: 25px 30px 27px;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
+    margin: 0 0 0;
+    overflow: hidden;
+    max-height: 100px;
+}
+
+
+/*4 нижних банера*/
+.adv_bottom_block .item{
+    padding: 0;
+}
+
+
+.adv_bottom_block .img_inner span {
+    height: 375px;
+    background-size: cover;
+    background-position: center center;
+}
+
+/*ЛЭНДИНГ ДИЗАЙНЕРАМ*/
+.banners-content .maxwidth-banner {
+    height: 600px;
+    background-size: cover;
+}

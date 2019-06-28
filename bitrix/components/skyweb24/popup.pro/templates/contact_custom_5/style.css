@@ -1,0 +1,424 @@
+#skyweb24_contact_type2 {
+	margin: 0 auto;
+	min-width: 200px;
+	max-width: 400px;
+	box-sizing: border-box;
+	background: white;
+}
+
+#skyweb24_contact_type2 h2 {
+	text-align: left;
+	margin: 0;
+	font-size: 25px;
+	font-weight: 400;
+	margin-bottom: 30px;
+	padding: 55px 43px 0 44px!important;
+
+}
+
+#skyweb24_contact_type2 div.subtitle {
+	width: 100%;
+	position: relative;
+	/*margin-bottom: 10px;*/
+	padding: 0 43px 0 44px!important;
+}
+
+#skyweb24_contact_type2 .help_list {
+	margin: 0;
+}
+
+#skyweb24_contact_type2 .help_list li {
+	font-size: 12px;
+}
+
+#skyweb24_contact_type2 .help_list li:not(:last-child) {
+	margin-bottom: 20px;
+}
+
+#skyweb24_contact_type2 button,
+#skyweb24_contact_type2 input[type=submit] {
+	cursor: pointer;
+}
+
+#skyweb24_contact_type2 div.subtitle h3 {
+	position: relative;
+	line-height: 1.2;
+	font-weight: 400;
+	font-size: 14px;
+	margin: auto;
+	display: block;
+	color: #000000;
+}
+
+#skyweb24_contact_type2 div.subtitle h3>span {
+	display: inline-block;
+	margin: 0 auto;
+	text-align: left;
+	vertical-align: middle;
+	width: 100%;
+	/*padding-left: 20px;*/
+}
+
+#skyweb24_contact_type2 div.subtitle img {
+	width: 100%;
+}
+
+#skyweb24_contact_type2 label {
+	width: 100%;
+	display: block;
+	margin: 10px auto 0;
+	padding: 0 15px;
+	box-sizing: border-box;
+}
+
+#skyweb24_contact_type2 fieldset label input,
+#skyweb24_contact_type2 fieldset label textarea {
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+}
+
+#skyweb24_contact_type2 label>span {
+	height: 20px;
+	font-family: 20px;
+	line-height: 20px;
+	color: #777;
+}
+
+#skyweb24_contact_type2 fieldset label sup {
+	display: none !important;
+}
+
+#skyweb24_contact_type2 fieldset label.required sup {
+	/*display: inline-block !important;*/
+	/*color: #e74c3c;*/
+	display: none;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:empty {
+	line-height: 35px;
+	padding-left: 10px;
+	padding-top: 10px;
+	font-size: 14px;
+	background: #fff;
+	min-height: 80px;
+	border-radius: 5px;
+}
+
+#skyweb24_contact_type2 fieldset label {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	box-sizing: border-box;
+}
+
+#skyweb24_contact_type2 fieldset label:first-child {
+	margin-bottom: 27px;
+}
+
+#skyweb24_contact_type2 fieldset label:not(.submit) {
+	padding: 0 43px 0 44px!important;
+}
+
+#skyweb24_contact_type2 fieldset label>* {
+	display: inline-block;
+}
+
+#skyweb24_contact_type2 fieldset .notshow {
+	display: none;
+}
+
+#skyweb24_contact_type2 fieldset label.one {
+	width: 100%;
+}
+
+#skyweb24_contact_type2 fieldset label.two {
+	width: 50%;
+}
+
+#skyweb24_contact_type2 fieldset label.three {
+	width: 33.3%;
+}
+
+#skyweb24_contact_type2 fieldset label>textarea {
+	width: 100%;
+}
+
+#skyweb24_contact_type2 fieldset label.submit {
+	width: 100%;
+	margin-bottom: 0;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button {
+	position: relative;
+	width: 100%;
+	padding: 30px 0;
+	line-height: 1;
+	text-align: center;
+	font-size: 16px;
+	transition: .3s all;
+	outline: none;
+	color: #fff;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button span {
+	display: inline-block;
+	width: 16px;
+	height: 2px;
+	background-color: #9a9b9e;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 110px;
+	transition: all 0.3s;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button span::after,
+#skyweb24_contact_type2 fieldset label.submit>button span::before {
+	content: "";
+	position: absolute;
+	width: 50%;
+	height: 2px;
+	background-color: inherit;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button span::after {
+	transform: rotate(45deg);
+	bottom: 3px;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button span::before {
+	transform: rotate(-45deg);
+	top: 3px;
+}
+
+#skyweb24_contact_type2 fieldset label span {
+	display: block;
+}
+
+#skyweb24_contact_type2 fieldset label input:not([type="submit"]):empty {
+	height: 35px;
+	padding-left: 18px;
+	border: 0;
+	padding-top: 13px;
+	padding-bottom: 13px;
+	outline: none;
+	font-weight: 400;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+#skyweb24_contact_type2 fieldset label input:not([type="submit"]):focus {
+	border-color: #333333;
+	outline: 0;
+	box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.25);
+}
+
+#skyweb24_contact_type2 fieldset label textarea:empty+span,
+#skyweb24_contact_type2 fieldset label input:empty+span {
+	/*position: absolute;*/
+	/*left: 5px;*/
+	/*line-height: 35px;*/
+	/*width: 300px;item*/
+/*font-size: 14px;*/
+	/*transition: all 0.3s;*/
+	/*top: -20px;*/
+	/*font-weight: 400;*/
+	/*cursor: text;*/
+	/*color: #000000;*/
+	/*line-height: 20px;*/
+	/*display: block;*/
+	/*font-size: 12px;*/
+	display: none!important;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:focus+span,
+#skyweb24_contact_type2 fieldset label input:focus+span,
+#skyweb24_contact_type2 fieldset label textarea:valid+span,
+#skyweb24_contact_type2 fieldset label input:valid+span {
+	line-height: 20px;
+	display: block;
+	font-size: 12px;
+}
+
+#skyweb24_contact_type2 fieldset label input::-webkit-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input::-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:-ms-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea::-webkit-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea::-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:-ms-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:focus::-webkit-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:focus::-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:focus:-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label input:focus:-ms-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:focus::-webkit-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:focus::-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:focus:-moz-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:focus:-ms-input-placeholder {
+	font-weight: initial;
+}
+
+#skyweb24_contact_type2 fieldset label div.info input[type='checkbox'] {
+	height: initial;
+	width: initial;
+	display: inline;
+}
+
+#skyweb24_contact_type2 fieldset label div.info a {
+	display: inline;
+}
+
+#skyweb24_contact_type2 fieldset label input[name=use_consent]:empty {
+	height: 1em;
+	width: 1em;
+	vertical-align: middle;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#skyweb24_contact_type2 fieldset .consentBlock {
+	margin: 10px 20px;
+	text-align: left;
+}
+
+#skyweb24_contact_type2 .error {
+	background: #e74c3c;
+	color: #fff;
+}
+
+#skyweb24_contact_type2 .error p {
+	padding: 5px 10px;
+}
+
+#skyweb24_contact_type2 .success {
+	padding: 25px 20px 20px;
+	font-size: 1.2em;
+}
+
+#skyweb24_contact_type2 .sw24TextCloseButton {
+	display: inline-block;
+	margin-bottom: 10px;
+	font-size: 14px;
+	border-bottom: 1px dashed #2c3e50;
+	transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	color: #2c3e50;
+}
+
+#skyweb24_contact_type2 .sw24TextCloseButton:hover {
+	border-bottom: 1px dashed transparent;
+}
+
+#skyweb24_contact_type2 span.timer {
+	position: relative;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	display: block;
+	width: 135px;
+	color: rgba(51, 51, 51, 0.7);
+	font-size: 25px;
+}
+
+#skyweb24_contact_type2 span.timer::before {
+	content: url("/bitrix/templates/aspro_next/images/svg/clock.svg");
+	position: relative;
+	left: 0;
+	top: 2px;
+	opacity: 0.7;
+	margin-right: 5px;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+}
+
+#skyweb24_contact_type2 span.consent {
+	font-size: 10px;
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+	color: #747474;
+	opacity: 0.8;
+}
+
+#skyweb24_contact_type2 span.consent a {
+	color: #ce171f;
+}
+
+#skyweb24_contact_type2 span.consent a:hover {
+	color: #747474;
+}
+
+#skyweb24_contact_type2 ul.help_list li::before {
+	/*content: "-"!important;*/
+}
+
+@media screen and (max-width:720px) {
+	#skyweb24_contact_type2 h2 {
+		/*padding: 15px 25px;*/
+		/*font-size: 20px;*/
+	}
+}
+
+@media screen and (max-width:440px) {
+	#skyweb24_contact_type2 {
+		/*width: 320px;*/
+	}
+}
+
+@media screen and (max-width:440px) {
+	.skyweb24_popup_pro_timer {
+		/*max-width: 320px;*/
+		/*width: 320px;*/
+	}
+	.skyweb24_popup_pro_timer.right {
+		/*left: calc(100% - 320px);*/
+	}
+}
+

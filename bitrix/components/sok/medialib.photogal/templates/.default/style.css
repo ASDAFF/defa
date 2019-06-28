@@ -1,0 +1,65 @@
+.fancybox-opened .fancybox-title {
+	display:none !important;
+}
+.thumbnail img{
+max-height: 190px;
+max-width: 200px;
+display: table;
+margin: 0 auto;
+}
+
+.thumbnail,.caption {
+display: table;
+margin: 0 auto;
+}
+.galthumbnails li {
+display: block;
+width: 180px;
+height: 180px;
+float: left;
+list-style: none;
+margin-right: 20px;
+margin-bottom: 0px !important;
+}
+.workarea .galspan2::before{
+
+content:none;
+}
+galspan2{
+padding: 0;
+color:#333333;
+}
+.galimg{
+height: 180px;
+padding-top: 20px;
+}
+.ntc {
+padding: 0 10px;
+text-align: center;
+}
+.caption .blue{
+margin: 5px 0 5px 0;
+}
+.workarea .caption h3 {
+font-size: 18px;
+}
+.caption h3{
+font-size:18px;
+}
+.caption {
+font-size:14px;
+color:#333333;
+}
+.galspan2 a:visited{
+color:#333333;
+}
+
+.galthumbnails{
+display: table;
+width: 100%;
+padding:0 0 20px 0;
+margin:0;
+}
+.galblink{
+text-decoration:none;
+}

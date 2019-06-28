@@ -1,0 +1,1 @@
+This folder contain seo files robots.txt and sitemap.xml

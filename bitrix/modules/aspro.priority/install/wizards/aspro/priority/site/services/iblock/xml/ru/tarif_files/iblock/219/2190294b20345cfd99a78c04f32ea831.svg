@@ -1,0 +1,16 @@
+<svg id="reliabilty.svg" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        opacity: 0.9;
+      }
+    </style>
+  </defs>
+  <path id="Rounded_Rectangle_966_copy_3" data-name="Rounded Rectangle 966 copy 3" class="cls-1" d="M732,336h-2v-2A2,2,0,0,0,732,336Zm8-2V308h20v10h0v2h0v10h0v4h-5v-6a5,5,0,0,0-10,0v6h-5Zm7-14h6v-2h0v-4a3,3,0,0,0-6,0v6Z" transform="translate(-730 -296)"/>
+  <path id="Rounded_Rectangle_981" data-name="Rounded Rectangle 981" class="cls-2" d="M763,336h5a2,2,0,0,0,2-2V314h-6v4h-2V308h2a2,2,0,0,0,2-2V296h4v40h-7Zm-3-30H736v-8h4v4h8v-4h4v4h8v-4h4v8h-4Zm-6-10h4v4h-4v-4Zm-12,0h4v4h-4v-4Zm-4,22h-2v-4h-6V296h4v10a2,2,0,0,0,2,2h2v10Zm-6-2h2v4h4v9h-6V316Zm6,18h-6v-3h6v3Zm-6,2h-2v-2A2,2,0,0,0,732,336Zm17-22a1,1,0,0,1,2,0v4h-2v-4Zm1,11a3,3,0,0,1,3,3v6h-6v-6A3,3,0,0,1,750,325Zm16-9h2v13h-6v-9h4v-4Zm2,18h-6v-3h6v3Z" transform="translate(-730 -296)"/>
+</svg>

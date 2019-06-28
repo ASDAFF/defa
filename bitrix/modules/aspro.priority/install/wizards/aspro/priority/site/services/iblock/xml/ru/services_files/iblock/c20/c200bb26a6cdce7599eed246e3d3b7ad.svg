@@ -1,0 +1,16 @@
+<svg id="management_etf.svg" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        opacity: 0.9;
+      }
+    </style>
+  </defs>
+  <path id="Rectangle_724_copy_7" data-name="Rectangle 724 copy 7" class="cls-1" d="M488,464h-4v22h4V464Zm-22,11V458h-4v17h4Z" transform="translate(-450 -456)"/>
+  <path id="Rectangle_724_copy_6" data-name="Rectangle 724 copy 6" class="cls-2" d="M450,456h40v40H450V456Zm37,32v5h-2v-5h-3V462h3v-6h2v6h3v26h-3Zm-11,8h-2V484h-3V473h3V462h2v11h3v11h-3v12Zm1-14v-4h-2v-2h2v-1h-4v4h2v2h-2v1h4Zm-12,11h-2V477h-3V456h8v21h-3v16Zm-10,3h-2v-3h-3V479h3V462h2v17h3v14h-3v3Zm1-5v-4h-2v-2h2v-4h-4v1h2v2h-2v4h2v2h-2v1h4Z" transform="translate(-450 -456)"/>
+</svg>

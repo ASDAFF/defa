@@ -1,0 +1,10 @@
+.wd_propsorter {}
+	.wd_propsorter table {border:0; border-collapse:collapse; border-spacing:0; width:100%;}
+		.wd_propsorter table td {background:transparent; padding:4px 4px 2px; vertical-align:top;}
+		.wd_propsorter table td.cell_name {display:inline-block; vertical-align:middle;}
+		.wd_propsorter table td.cell_name:after {content:':';}
+		.wd_propsorter table td.cell_value {display:inline-block; vertical-align:middle;}
+		.wd_propsorter table tr.row_header td {font-weight:bold;}
+		.wd_propsorter table tr.row_header + tr td {padding-top:4px;}
+		.wd_propsorter table tr.row_empty td {border-bottom:0;}
+		.wd_propsorter table tr.row_empty td:before {content:'\00a0\00a0'; display:block; height:0.5em; line-height:0.5em; overflow:hidden;}

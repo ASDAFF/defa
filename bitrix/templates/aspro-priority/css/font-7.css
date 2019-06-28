@@ -1,0 +1,8 @@
+/* 15px/24px Ubuntu (Default) */
+body,body div.bx-yandex-map,.fancybox-title{ font: 15px/25px "Ubuntu", Arial, sans-serif; }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6,.popup-window{font-family:"Ubuntu", Arial, sans-serif;}
+body ol{margin-left:24px;}
+.header-v9 .menu-row.bgcolored .mega-menu table td .wrap > a,
+.header-v10 .menu-row.bgcolored .mega-menu table td .wrap > a,
+.header-v11 .menu-row.bgcolored .mega-menu table td .wrap > a,
+.header-v12 .menu-row.bgcolored .mega-menu table td .wrap > a{padding-top:17px;padding-bottom:18px;}

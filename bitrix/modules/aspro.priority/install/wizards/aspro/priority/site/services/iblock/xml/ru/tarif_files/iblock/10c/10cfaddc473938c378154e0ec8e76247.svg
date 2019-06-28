@@ -1,0 +1,16 @@
+<svg id="profi.svg" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        opacity: 0.9;
+      }
+    </style>
+  </defs>
+  <path id="Rectangle_725_copy_2" data-name="Rectangle 725 copy 2" class="cls-1" d="M1232,315v5h7v-5h4v14h-4v-5h-7v5h-4v-5h-7v5h-4V315h4v5h7v-5h1v7a1,1,0,0,0,2,0v-7h1Z" transform="translate(-1210 -296)"/>
+  <path id="Rectangle_725_copy_3" data-name="Rectangle 725 copy 3" class="cls-2" d="M1235,303a5,5,0,0,1-5,5h0A5,5,0,1,1,1235,303Zm-5-4h0a4,4,0,0,0-4,4h0a1,1,0,0,0,2,0h0a2,2,0,0,1,2-2h0A1,1,0,0,0,1230,299Zm-20,37v-4a4,4,0,0,0,4,4h32a4,4,0,0,0,4-4V312a4,4,0,0,0-4-4h-8.52a8.807,8.807,0,0,1-1.83,2H1246a2,2,0,0,1,2,2v20a2,2,0,0,1-2,2h-32a2,2,0,0,1-2-2V312a2,2,0,0,1,2-2h10.35a8.807,8.807,0,0,1-1.83-2H1214a4,4,0,0,0-4,4V296h20a6.984,6.984,0,0,0-1,13.9V312h0v3h-1v-2h-1a1,1,0,0,0-1,1v4h-3v-4a1,1,0,0,0-1-1h-6a1,1,0,0,0-1,1v16a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1v-4h3v4a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1v-4h3v4a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V314a1,1,0,0,0-1-1h-6a1,1,0,0,0-1,1v4h-3v-4a1,1,0,0,0-1-1h-1v2h-1v-2h0v-3.1a6.984,6.984,0,0,0-1-13.9h20v40h-40Z" transform="translate(-1210 -296)"/>
+</svg>

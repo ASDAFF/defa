@@ -1,0 +1,16 @@
+<svg id="key.svg" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        opacity: 0.9;
+      }
+    </style>
+  </defs>
+  <path id="Ellipse_305_copy_7" data-name="Ellipse 305 copy 7" class="cls-1" d="M1402,326a4,4,0,1,1-4,4A4,4,0,0,1,1402,326Zm-30-28h22v9h0v13h-22V298Zm11,19a3.992,3.992,0,0,0,1-7.859V302a1,1,0,0,0-2,0v1h-1a1,1,0,0,0,0,2h1v4.141A3.992,3.992,0,0,0,1383,317Zm1,13a4,4,0,1,1-4-4A4,4,0,0,1,1384,330Zm-14-32v-2h2A2,2,0,0,0,1370,298Z" transform="translate(-1370 -296)"/>
+  <path id="Ellipse_305_copy_6" data-name="Ellipse 305 copy 6" class="cls-2" d="M1408,311v7h-6V307h2A4,4,0,0,1,1408,311Zm-38,25v-7a2,2,0,0,0,2,2h2v-1a5.991,5.991,0,0,0,11.9,1h10.2a6,6,0,1,0,0-2H1396V307h4v11a2,2,0,0,0,2,2h6v2h0a1,1,0,0,0,0,2h0v7a2,2,0,0,0,2-2V311a6,6,0,0,0-6-6h-8v-7a2,2,0,0,0-2-2h16v40h-40Zm4-6v-1h-2v-7h22v7h-8.1A5.991,5.991,0,0,0,1374,330Zm-4-32v-2h2A2,2,0,0,0,1370,298Zm13,13a2,2,0,1,1-2,2A2,2,0,0,1,1383,311Z" transform="translate(-1370 -296)"/>
+</svg>

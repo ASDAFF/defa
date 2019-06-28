@@ -1,0 +1,1 @@
+<?$arResult = CPriority::getChilds($arResult);?>

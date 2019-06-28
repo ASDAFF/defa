@@ -1,0 +1,3 @@
+<?
+	$arResult = CNextStock::getChilds($arResult);
+?>

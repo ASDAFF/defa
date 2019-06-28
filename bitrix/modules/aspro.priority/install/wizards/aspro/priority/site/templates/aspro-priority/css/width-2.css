@@ -1,0 +1,34 @@
+body .maxwidth-theme, body.fill_bg_y .contacts-page-map, body.fill_bg_y .banners-big .maxwidth-banner, body.fill_bg_y > .body > .main,
+body.fill_bg_y footer{ max-width: 1500px; }
+body.fill_bg_y .banner.TOP_HEADER, body.fill_bg_y .banner.TOP_UNDERHEADER{max-width: 1500px;}
+body .logo-row .logo{max-width:182px;}
+
+.item-views.company.front .text,
+.contacts.front .left_block,
+body .project:not(.wti) .info,
+.contacts .left_block,
+.contacts_page.contacts.front .feedback{max-width:750px;}
+
+body.with_decorate .item-views.company.front .text,
+body.with_decorate .contacts.front:not(.contacts_page) .left_block,
+body.with_decorate body .project:not(.wti) .info{max-width:734px;}
+
+
+@media (min-width: 1300px){
+	/*tizers front*/
+	body .banners-small .item.wide-block .image{max-height:479px;}
+
+	.detail .gallery-block .bigs.flexslider .slides .item{height:728px;line-height:725px;}
+	
+	/*tarifs*/
+	.tarifs .items_view td{width:225px;min-width:225px;}
+	.tarifs .data_table_props.items_view td:first-child{width:195px;min-width:195px;max-width:195px;}
+}
+
+@media (max-width:1596px){
+	body.with_decorate .project.item.wti .info{padding-left:32px;}
+}
+
+@media (min-width:1533px){
+	body .maxwidth-theme,#headerfixed>.maxwidth-theme{padding-left:0;padding-right:0;}
+}

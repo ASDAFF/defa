@@ -1,0 +1,1 @@
+<?require($_SERVER["DOCUMENT_ROOT"]."/local/modules/highloadblock/admin/highloadblock_row_edit.php");?>

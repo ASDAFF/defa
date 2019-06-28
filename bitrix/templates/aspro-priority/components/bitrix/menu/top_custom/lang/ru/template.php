@@ -1,0 +1,5 @@
+<?
+$MESS['S_MORE_ITEMS_BUTTON'] = "+ Ещё #COUNT_ELEMENTS#";
+$MESS['CT_BST_SEARCH_BUTTON'] = "Найти";
+$MESS['S_MORE_ITEMS_BUTTON_CLOSE'] = 'Свернуть';
+?>

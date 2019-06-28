@@ -1,0 +1,130 @@
+
+23.10.2018 15:30:36 START UPDATE 1.0.0 -> 1.0.1
+
+
+23.10.2018 15:30:38 START UPDATE 1.0.1 -> 1.0.2
+
+
+23.10.2018 15:30:39 START UPDATE 1.0.2 -> 1.0.3
+
+
+23.10.2018 15:30:40 START UPDATE 1.0.3 -> 1.0.4
+
+
+23.10.2018 15:30:42 START UPDATE 1.0.4 -> 1.0.5
+
+
+23.10.2018 15:30:43 START UPDATE 1.0.5 -> 1.0.6
+
+
+23.10.2018 15:30:46 START UPDATE 1.0.6 -> 1.0.7
+
+
+23.10.2018 15:30:48 START UPDATE 1.0.7 -> 1.0.8
+
+
+23.10.2018 15:30:49 START UPDATE 1.0.8 -> 1.0.9
+
+
+23.10.2018 15:30:51 START UPDATE 1.0.9 -> 1.0.10
+
+
+23.10.2018 15:30:52 START UPDATE 1.0.10 -> 1.0.11
+
+
+23.10.2018 15:30:54 START UPDATE 1.0.11 -> 1.0.12
+
+
+23.10.2018 15:30:56 START UPDATE 1.0.12 -> 1.1.0
+
+
+23.10.2018 15:30:57 START UPDATE 1.1.0 -> 1.1.1
+
+
+23.10.2018 15:30:59 START UPDATE 1.1.1 -> 1.1.2
+
+
+23.10.2018 15:31:01 START UPDATE 1.1.2 -> 1.1.3
+
+
+23.10.2018 15:31:03 START UPDATE 1.1.3 -> 1.1.4
+
+
+23.10.2018 15:31:05 START UPDATE 1.1.4 -> 1.1.5
+
+
+23.10.2018 15:31:07 START UPDATE 1.1.5 -> 1.1.6
+
+
+23.10.2018 15:31:09 START UPDATE 1.1.6 -> 1.1.7
+
+
+23.10.2018 15:31:11 START UPDATE 1.1.7 -> 1.2.0
+
+
+23.10.2018 15:31:12 START UPDATE 1.2.0 -> 1.2.1
+
+
+23.10.2018 15:31:13 START UPDATE 1.2.1 -> 1.2.9
+
+
+23.10.2018 15:31:15 START UPDATE 1.2.9 -> 1.3.0
+
+
+11.12.2018 16:54:23 START UPDATE 1.3.0 -> 1.3.1
+
+11.12.2018 16:54:24 Update /contacts/page_contacts_1.php
+11.12.2018 16:54:24 Update /contacts/page_contacts_2.php
+11.12.2018 16:54:24 Update /contacts/page_contacts_3.php
+11.12.2018 16:54:24 Update /contacts/page_contacts_4.php
+11.12.2018 16:54:24 Update /include/share_buttons.php
+11.12.2018 16:54:24 Update /include/mainpage/comp_catalog_ajax.php
+11.12.2018 16:54:24 Update /include/top_page/comp_basket_top.php
+11.12.2018 16:54:24 Update /indexblocks_index1.php
+11.12.2018 16:54:24 Update /indexblocks_index2.php
+11.12.2018 16:54:24 Update /indexblocks_index3.php
+11.12.2018 16:54:24 Update /indexblocks_index4.php
+11.12.2018 16:54:24 Update /ajax/goals.php
+11.12.2018 16:54:24 Update /ajax/js_item_detail.php
+11.12.2018 16:54:24 Update /services/.left.menu_ext.php
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add SHOW_VIDEO property=225
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_SOURCE property=226
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO property=227
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_AUTOSTART property=228
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_COVER property=229
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_DISABLE_SOUND property=230
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_LOOP property=231
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add VIDEO_SRC property=232
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add BUTTON_VIDEO_TEXT property=233
+11.12.2018 16:54:24 IBLOCK_ID: 3. Add BUTTON_VIDEO_CLASS property=234
+11.12.2018 16:54:24 Update /footer.php
+11.12.2018 16:54:24 Update /header.php
+
+11.12.2018 16:54:26 START UPDATE 1.3.1 -> 1.4.0
+
+11.12.2018 16:54:26 Update /ajax/js_item_detail.php
+11.12.2018 16:54:26 IBLOCK_ID: 17. Add YM_ELEMENT_ID property=235
+11.12.2018 16:54:26 Update /header.php
+
+22.01.2019 16:52:54 START UPDATE 1.4.0 -> 1.4.1
+
+22.01.2019 16:52:54 Update /ajax/js_item_detail.php
+
+05.03.2019 14:27:14 START UPDATE 1.4.1 -> 1.4.2
+
+05.03.2019 14:27:16 Update /ajax/js_item_detail.php
+05.03.2019 14:27:16 Update /include/mainpage/comp_catalog_ajax.php
+05.03.2019 14:27:16 Update /include/news.detail.products_block.php
+05.03.2019 14:27:16 Update /include/news.detail.products_slider.php
+05.03.2019 14:27:16 IBLOCK_ID: 17. Add LINK_SALE property=695
+05.03.2019 14:27:17 IBLOCK_ID: 17. Add ASSOCIATED_FILTER property=696
+05.03.2019 14:27:17 IBLOCK_ID: 17. Add EXPANDABLES_FILTER property=697
+05.03.2019 14:27:17 IBLOCK_ID: 14. Add LINK_GOODS_FILTER property=698
+05.03.2019 14:27:17 IBLOCK_ID: 19. Add LINK_GOODS_FILTER property=699
+
+13.05.2019 15:07:39 START UPDATE 1.4.2 -> 1.4.3
+
+13.05.2019 15:07:40 Update /ajax/city_chooser.php
+13.05.2019 15:07:40 Update /ajax/js_item_detail.php
+13.05.2019 15:07:40 Update /ajax/actualBasket.php
+13.05.2019 15:07:40 IBLOCK_ID: 23. Add IS_SEARCH_TITLE property=755

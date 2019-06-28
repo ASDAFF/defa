@@ -1,0 +1,51 @@
+#skyweb24_contact_type2 div.subtitle {
+	/*background: linear-gradient(to right, #3a3d42 0%, #d33234 40%, #d33234 60%, #3a3d42 100%);*/
+	/*background: #d33234;*/
+}
+
+#skyweb24_contact_type2 h2 {
+	color: #000000;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button {
+	/*background: linear-gradient(to right, #d33234 0%, #3a3d42 100%);*/
+	background: #ffffff;
+	color: #1d2029;
+	border: none;
+	border-top: 1px solid #b7b8ba;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button:hover {
+	/*background: linear-gradient(to right, #d33234 0%, #3a3d42 100%);*/
+	background: #1d2029;
+	border-color: #1d2029;
+	color: #ffffff;
+}
+
+#skyweb24_contact_type2 fieldset label.submit>button:hover span {
+	background-color: #ffffff;
+}
+
+#skyweb24_contact_type2 fieldset label input:not([type="submit"]):empty {
+	border: 1px solid #f2f2f2;
+}
+
+#skyweb24_contact_type2 fieldset label textarea:empty {
+	border: 1px solid #d33234;
+}
+
+.skyweb24_popup_pro_timer {
+	/*background: linear-gradient(to right, #d33234 0%, #3a3d42 100%);*/
+	background: #d33234;
+}
+
+.popup-window.sw24PopupPro .popup-window-close-icon {
+	background: transparent;
+	top: 10px!important;
+	right: 10px!important;
+}
+
+.popup-window.sw24PopupPro .popup-window-close-icon::before,
+.popup-window.sw24PopupPro .popup-window-close-icon::after {
+	background-color: #000000!important;
+}

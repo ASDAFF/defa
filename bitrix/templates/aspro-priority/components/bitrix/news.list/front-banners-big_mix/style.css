@@ -1,0 +1,26 @@
+body.wheader_v4.with_decorate header,
+body.wheader_v5.with_decorate header,
+body.wheader_v6.with_decorate header,
+body.wheader_v7.with_decorate header,
+body.wheader_v15.with_decorate header{padding-top:0!important;}
+body.wheader_v9 .banners-big.front,
+body.wheader_v10 .banners-big.front,
+body.wheader_v11 .banners-big.front,
+body.wheader_v12 .banners-big.front{margin-top:0!important;}
+body .visible-lg .top-block{border-bottom:1px solid #f5f5f5;}
+
+body.with_decorate .header-v3 .logo_and_menu-row,
+body.with_decorate .header-v4 .logo_and_menu-row,
+body.with_decorate .header-v5 .logo_and_menu-row,
+body.with_decorate .header-v6 .logo_and_menu-row,
+body.with_decorate .header-v7 .logo_and_menu-row,
+body.with_decorate .header-v15 .logo_and_menu-row{padding-left:0!important;padding-right:0!important;}
+.logo_and_menu-row .menu_row_wrap .left_border,
+.logo_and_menu-row .menu_row_wrap .right_border{display:none;}
+
+.visible-lg.index header[data-change_color=Y] .burger:hover .svg-burger,
+.visible-lg.index header[data-change_color=Y] .logo_and_menu-row .inline-search-show:hover,
+.visible-lg.index header[data-change_color=Y] .logo_and_menu-row.wbanner .menu-row .mega-menu table td .wrap:hover > a,
+.visible-lg.index header[data-change_color=Y] .logo_and_menu-row.wbanner .callback-block:hover,
+.visible-lg.index header[data-change_color=Y] .logo_and_menu-row .personal-link:hover,
+.visible-lg.index header[data-change_color=Y] .logo_and_menu-row .basket-link:hover{opacity:1!important;}

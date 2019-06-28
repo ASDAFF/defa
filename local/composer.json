@@ -1,0 +1,10 @@
+{
+    "name": "defo/site",
+    "type": "project",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Defo\\": "lib/Defo/"
+        }
+    }
+}

@@ -1,0 +1,1 @@
+<img class="img-responsive" src="<?=SITE_DIR?>include/images/contacts.jpg" alt="Контакты" title="Контакты">

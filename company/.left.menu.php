@@ -1,0 +1,95 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Новости", 
+		"/company/news/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Вакансии", 
+		"/company/vacancy/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Преимущества", 
+		"/company/advantage/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Проекты", 
+		"/company/projects/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	/*Array(
+		"Наши партнеры", 
+		"/company/brands/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	Array(
+		"Награды и сертификаты", 
+		"/company/licenses/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Сотрудники", 
+		"/company/staff/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	/*Array(
+		"Портал поставщиков", 
+		"/company/supplierportal/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	/*Array(
+		"Сотрудничество", 
+		"/company/partner/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	/*Array(
+		"Госзаказчикам", 
+		"/company/b2g/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	/*Array(
+		"Арендодателям", 
+		"/company/cooperation/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	Array(
+		"Политика конфиденциальности", 
+		"/company/licenses_detail.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Салоны", 
+		"/company/stores/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

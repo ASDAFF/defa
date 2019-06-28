@@ -1,0 +1,48 @@
+.level-2 {
+	width: 100%;
+	left: 0;
+}
+
+.dropdown {
+	position: static;
+}
+
+li:hover .level-2-wrap {
+	display: block;
+	width: 100%;
+	margin-top: 0px;
+	left: 0 !important;
+}
+
+.level-2-wrap > li {
+	max-width: 300px;
+	vertical-align: top;
+}
+
+.level-2 li a {
+	font-weight: bold;
+}
+
+.mega-menu ul .dropdown-menu .level-3 li a {
+	font-weight: normal;
+	width: 100% !important;
+}
+.level-2 li:hover .level-3 .dropdown-menu {
+	display: block;
+	margin-top: -5px;
+}
+
+ul.level-3-wrap.dropdown-menu {}
+
+.mega-menu ul .dropdown-menu .level-3 li {
+	padding-left: 10px;
+	width: 100%;
+}
+
+.level-2-wrap.dropdown-menu >ul>li {
+	padding: 0;
+}
+
+.level-2-wrap.dropdown-menu >ul>li>a {
+	display: inline-block;
+}

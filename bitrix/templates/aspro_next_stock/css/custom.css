@@ -1,0 +1,253 @@
+/*NOTE: This file is intended for programmers. Aspro technical support is not advised to work with him.*/
+
+/* Examples (uncomment to use):*/
+
+/* Expand site width */
+/* body .wrapper { max-width: 1400px !important;  } */
+
+/* Set site background image */
+/* body {  background: url(image_source) top no-repeat; }
+
+/* Hide compare button */
+/* a.compare_item { display: none !important;  }*/
+
+
+
+.maxwidth-theme {
+    padding: 0 15px;
+}
+
+/*HEADER*/
+.header_wrap #header {
+    padding: 0!important;
+    margin: -1px 0 0!important;
+    height: 100px;
+}
+
+#header .maxwidth-theme {
+    padding-top: 0;
+    background: none;
+    padding-bottom: 0;
+}
+
+#header .top-block {
+    border-bottom: none;
+}
+
+#header .logo-block {
+    display: inline-block;
+    float: left;
+}
+
+.top-block>.maxwidth-theme>.wrapp_block {
+    background: none;
+}
+
+#header .top-menu-block {
+    border-bottom: 1px solid rgb(101, 104, 109);
+    margin-left: 20px;
+}
+
+#header .top-menu-block .mega-menu {
+    padding: 0;
+}
+
+.mega-menu .left-menu {
+    margin-bottom: 0;
+}
+.mega-menu ul li {
+    display: inline-block;
+}
+
+.mega-menu .logo-block, .mega-menu .left-menu {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.mega-menu ul.left-menu li {
+    padding: 10px 16px;
+    background: none;
+}
+
+.mega-menu ul.left-menu li a {
+    font-weight: 400!important;
+    font-size: 16px;
+    color: rgb(101, 104, 109);
+    text-decoration: none;
+    position: relative;
+
+}
+
+.mega-menu ul.left-menu li:nth-of-type(1) {
+    padding-left: 0;
+}
+.mega-menu ul.left-menu li:nth-last-of-type(1){
+    padding-right: 0;
+}
+
+.mega-menu ul.left-menu li:before {
+    display: none;
+}
+
+
+.mega-menu ul.left-menu li a.selected {
+    color: rgb(31,34,41);
+}
+
+.mega-menu ul.left-menu li a.selected:after {
+    width: 100%;
+    left: 0;
+}
+
+.mega-menu ul.left-menu li a:after {
+    position: absolute;
+    bottom: -16px;
+    content: '';
+    height: 4px;
+    width: 0;
+    background: rgb(229,48,51);
+    left: 50%;
+    transition: all 0.3s;
+}
+
+.mega-menu ul.left-menu li a:hover {
+    color: rgb(31,34,41);
+}
+
+.mega-menu ul.left-menu li a:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.top-block-item .phone {
+    position: relative;
+    display: block;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.top-block-item .phone .svg {
+    display: none;
+}
+
+.top-block-item .phone > a {
+    color: rgb(101, 104, 109);
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0;
+}
+
+.with_dropdown {
+    position: relative;
+    padding-right: 0!important;
+}
+
+.with_dropdown:after {
+    display: none;
+    /*content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -2px;
+    width: 5px;
+    height: 3px;
+    background: url(/bitrix/templates/aspro_next/images/next.png) -20px -333px no-repeat;*/
+}
+
+
+.top-block-item .phone-block, .top-block-item .city-block {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.region_wrapper:before {
+    display: none;
+    /*content: "";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    background: url(/bitrix/templates/aspro_next/images/svg/Marker.svg) 0 0 no-repeat;*/
+}
+
+.region_wrapper .js_city_chooser {
+    padding-right: 20px;
+}
+
+.region_wrapper .arrow {
+    bottom: 2px;
+}
+
+.top-block-item .city-block .colored {
+    color: rgb(101, 104, 109);
+}
+
+
+.right-block-item {
+    text-align: right;
+    padding-right: 0!important;
+}
+
+.right-block-item .top-block-item{
+    padding: 0;
+}
+
+.top-block-item .personal_wrap, .top-block-item .top-btn {
+    display: inline-block!important;
+    vertical-align: middle!important;
+}
+
+.top-block-item .personal_wrap {
+    width: 120px;
+}
+
+.top-block-item .personal_wrap .personal-link .name {
+    color: rgb(101, 104, 109);
+}
+
+.personal_wrap .svg .uscls-1 {
+    fill: rgb(101, 104, 109);;
+
+}
+.inline-search-show .svg .sscls-1 {
+    fill: rgb(101, 104, 109);;
+}
+
+
+
+/*ПОДМЕНЮ*/
+.menu-row .menu-only {
+    margin-left: 5px;
+}
+.mega-menu table td .wrap>a {
+    border: none;
+    font-weight: 400;
+    padding: 14px 0px 14px;
+    position: relative;
+    text-transform: none;
+    color: rgb(101, 104, 109);
+    width: auto;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    height: auto;
+}
+
+.mega-menu table td .wrap>a:hover {
+
+}
+
+.mega-menu td .wrap>a .line-wrapper .line {
+    bottom: 0;
+}
+
+
+/*УДАЛЕНИЕ ТЕГА BR ПОСЛЕ ШАПКИ*/
+.wraps.hover_shine .wrapper_inner .middle > br {
+    display: none;
+}
+

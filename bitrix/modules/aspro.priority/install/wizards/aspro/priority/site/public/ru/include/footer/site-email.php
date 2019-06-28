@@ -1,0 +1,1 @@
+<a href="mailto:#SITE_EMAIL#"><span>#SITE_EMAIL#</span></a>

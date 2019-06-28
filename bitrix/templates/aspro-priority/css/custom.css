@@ -1,0 +1,284 @@
+/* CSS kod pishite v etom faile, chotobi pri ustanovke obnovlenii ne bilo problem  */
+/* --------------------------------------- */
+/* Here you can put custom css rules for your site */
+.main > .container > br {
+    display: none;
+}
+
+
+.maxwidth-theme {
+    padding: 0 15px;
+}
+
+/*HEADER*/
+.header_wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.header_wrap #header {
+    padding: 0!important;
+    margin: -1px 0 0!important;
+    position: absolute;
+}
+
+.top-block .maxwidth-theme {
+    padding-top: 0;
+    background: none;
+}
+
+.top-block {
+    border-bottom: none;
+    padding: 0;
+}
+
+.top-block .logo-block {
+    display: inline-block;
+    float: left;
+}
+
+.top-block>.maxwidth-theme>.wrapp_block {
+    background: none;
+}
+
+.top-block .top-menu-block {
+    border-bottom: 1px solid #a7b7c8;
+    margin-left: 20px;
+}
+
+.top-block .top-menu-block .mega-menu {
+    padding: 0;
+}
+
+.mega-menu .left-menu {
+    margin-bottom: 0;
+}
+.mega-menu ul li {
+    display: inline-block;
+}
+
+.mega-menu .logo-block, .mega-menu .left-menu {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.mega-menu ul.left-menu li {
+    padding: 10px 16px;
+    background: none;
+    margin: 0;
+}
+
+.mega-menu ul.left-menu li a {
+    font-weight: 500!important;
+    font-size: 16px;
+}
+
+.mega-menu ul.left-menu li:nth-of-type(1) {
+    padding-left: 0;
+}
+.mega-menu ul.left-menu li:nth-last-of-type(1){
+    padding-right: 0;
+}
+
+.mega-menu ul.left-menu li:before {
+    display: none;
+}
+
+.mega-menu ul.left-menu li a {
+    color: #a7b7c8;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    font-size: 16px;
+}
+
+.mega-menu ul.left-menu li a.selected {
+    color: white;
+}
+
+.mega-menu ul.left-menu li a.selected:after {
+    width: 100%;
+    left: 0;
+}
+
+.mega-menu ul.left-menu li a:after {
+    position: absolute;
+    bottom: -17px;
+    content: '';
+    height: 4px;
+    width: 0;
+    background: rgb(229,48,51);
+    left: 50%;
+    transition: all 0.3s;
+}
+
+.mega-menu ul.left-menu li a:hover {
+    color: white;
+}
+
+.mega-menu ul.left-menu li a:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.top-block-item .phone {
+    position: relative;
+    display: block;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.top-block-item .phone .svg {
+    display: none;
+}
+
+.top-block .top-block-item .phone > a {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+}
+
+.with_dropdown {
+    position: relative;
+    padding-right: 0!important;
+}
+
+.with_dropdown:after {
+    display: none;
+    /*content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -2px;
+    width: 5px;
+    height: 3px;
+    background: url(/bitrix/templates/aspro_next/images/next.png) -20px -333px no-repeat;*/
+}
+
+
+.top-block-item .phone-block, .top-block-item .city-block {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.region_wrapper:before {
+    display: none;
+    /*content: "";
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    background: url(/bitrix/templates/aspro_next/images/svg/Marker.svg) 0 0 no-repeat;*/
+}
+
+
+.top-block-item .city-block .colored {
+    color: white;
+}
+
+
+.right-block-item {
+    text-align: right;
+}
+
+.top-block-item .personal_wrap, .top-block-item .top-btn {
+    display: inline-block!important;
+    vertical-align: middle!important;
+}
+
+.top-block-item .personal_wrap {
+    width: 120px;
+}
+
+.top-block-item .personal_wrap .personal-link .name {
+    color: white;
+}
+
+.top-block .top-block-item .personal.top>a {
+    position: relative;
+    display: block;
+    padding: 14px 0 14px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.personal_wrap .svg .uscls-1 {
+    fill: #fff;
+
+}
+.inline-search-show .svg .sscls-1 {
+    fill: #fff;
+}
+
+
+
+/*ПОДМЕНЮ*/
+.menu-row .menu-only {
+    margin-left: 2px;
+}
+
+.mega-menu table {
+    width: 100%;
+}
+.mega-menu table td .wrap {
+    text-align: center;
+}
+.mega-menu table td .wrap>a {
+    border: none;
+    font-weight: 400;
+    padding: 20px 0px 20px;
+    position: relative;
+    text-transform: none;
+    color: white;
+    width: auto;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    height: auto;
+}
+
+.mega-menu table td .wrap>a:hover {
+
+}
+
+.mega-menu td .wrap>a .line-wrapper .line {
+    bottom: 0;
+}
+
+
+
+/*БАНЕР*/
+
+.banners-big.front {
+    height: 100vh;
+}
+
+.banners-big .slides>li {
+    height: 100vh;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.banners-big .slides .btn {
+    background: none;
+    border: 2px solid white;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    padding: 15px 40px;
+}
+
+
+
+
+/*БЛОК С ТИЗЕРАМИ*/
+.props .item-wrap .item .image {
+    background: none;
+}

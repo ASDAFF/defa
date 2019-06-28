@@ -1,0 +1,1 @@
+This folder contain seo file sitemap.xml
