@@ -6,7 +6,19 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit59bc989a1289eb9f82b7c1aa208ad208
 {
+    public static $files = array (
+        '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'X' => 
+        array (
+            'XFive\\' => 6,
+        ),
+        'K' => 
+        array (
+            'Kint\\' => 5,
+        ),
         'D' => 
         array (
             'Defo\\' => 5,
@@ -14,6 +26,14 @@ class ComposerStaticInit59bc989a1289eb9f82b7c1aa208ad208
     );
 
     public static $prefixDirsPsr4 = array (
+        'XFive\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib/XFive',
+        ),
+        'Kint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kint-php/kint/src',
+        ),
         'Defo\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib/Defo',
