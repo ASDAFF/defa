@@ -254,8 +254,8 @@ if($arItems)
 
                         //Иконка метки
                         iconLayout: 'default#image',
-                        iconImageHref: '/images/placemark.png',
-                        iconImageSize: [21, 32],
+                        iconImageHref: '/images/icons/geotag.svg',
+                        iconImageSize: [60, 41],
                         iconImageOffset: [-11, -32]
                     });
 
