@@ -11,7 +11,7 @@ if(!CModule::IncludeModule("sale") || !CModule::IncludeModule("catalog") || !CMo
 if($_REQUEST['id']) {
     $IBLOCK_ID = 17;
     $IBLOCK_TYPE_ID = 'aspro_next_catalog';
-    $iterator = CIblockSection::GetList([],['IBLOCK_ID'=>$IBLOCK_ID,'=ID'=>$_REQUEST['id']],false,['ID','NAME','SECTION_PAGE_URL',"UF_MODELS","UF_CATEGORY_SERIES"]);
+    $iterator = CIblockSection::GetList([],['IBLOCK_ID'=>$IBLOCK_ID,'=ID'=>$_REQUEST['id']],false,['ID','NAME','SECTION_PAGE_URL',"UF_MODELS","UF_CATEGORY_SERIES","UF_BANNERS"]);
     if($section = $iterator->GetNext()) {
         ?>
         <div class="form_head">
@@ -19,14 +19,26 @@ if($_REQUEST['id']) {
         </div>
         <div class="container-n"><?
             if($section['UF_MODELS']):
-                ?>
-                <?
-                $iterator = CIblockElement::GetList([],['IBLOCK_ID'=>$IBLOCK_ID,'=SECTION_ID'=>$section['ID'],'!=PROPERTY_SHOW_MENU'=>false],false,false,['ID','NAME','PROPERTY_MODEL']);
-
-                while($item = $iterator->Fetch()){
-
-                    $models[$item['PROPERTY_MODEL_VALUE']][] = $item;
-
+                //x5 20190626
+                $models_for_menu = \XFive\Data::getModelsRowForMenu($IBLOCK_ID);
+                foreach($models_for_menu as $row){
+                    $xmlIds[] = $row['UF_XML_ID'];
+                }
+                $models = [];
+                if($xmlIds):
+                    $iterator = CIblockElement::GetList([],['IBLOCK_ID'=>$IBLOCK_ID,'=SECTION_ID'=>$section['ID'],'!=PROPERTY_SHOW_MENU'=>false,
+                        'PROPERTY_MODEL'=>$xmlIds
+                    ],false,false,['ID','NAME','PROPERTY_MODEL']);
+                    while($item = $iterator->Fetch()){
+                        $model_name = $models_for_menu[$item['PROPERTY_MODEL_VALUE']]['UF_NAME'];
+                        $models[$model_name][] = $item;
+                    }
+                endif;
+                $banners = [];
+                if($section['UF_BANNERS']){
+                    foreach($section['UF_BANNERS'] as $imgId){
+                        $banners[] = \CFile::GetFileArray($imgId);
+                    }
                 }
                 ?>
                 <div class="row-n">
@@ -59,8 +71,21 @@ if($_REQUEST['id']) {
 
                     </div>
                     <div class="col-md-8">
-                        <div class="ajax-element">
+                        <div class="row">
+                            <div class="ajax-element col-xs-9">
 
+                            </div>
+                            <div class="col-xs-3">
+                                <ul class="x5slider" data-interval="3000">
+                                    <?$i=0;
+                                    foreach($banners as $banner):
+                                        ?>
+                                        <li class="x5slide <?=($i==0?"showing":"")?>"><img src1="<?=SITE_TEMPLATE_PATH?>/images/onepixel.jpg" src="<?=$banner['SRC']?>" data-img-src="<?=$banner['SRC']?>" /></li>
+                                        <?
+                                        $i++;
+                                    endforeach;?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div><!---->

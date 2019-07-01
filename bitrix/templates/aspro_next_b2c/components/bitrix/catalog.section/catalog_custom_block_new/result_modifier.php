@@ -682,5 +682,24 @@ if (!empty($arResult['ITEMS'])){
 	}
 
 }
-// print_r($arResult);
+
+//x5 20190625 begin получение акций для товаров
+if (intVal($arParams["IBLOCK_STOCK_ID"])){
+    $itemsIds = [];
+    foreach($arResult['ITEMS'] as $arItem){
+        $itemsIds[] = $arItem['ID'];
+    }
+    $arSelect = array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID", "NAME", "PREVIEW_PICTURE", "PREVIEW_TEXT", "DETAIL_PAGE_URL");
+    $arFilter = array("IBLOCK_ID" => $arParams["IBLOCK_STOCK_ID"], "ACTIVE"=>"Y", "ACTIVE_DATE" => "Y", "PROPERTY_LINK_GOODS" => $itemsIds);
+    $res = \CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+    $arResult["STOCK"] = [];
+    while($ob = $res->GetNextElement()){
+
+        $arFields = $ob->GetFields();
+        $arProps = $ob->GetProperties(array(),array('CODE'=>'LINK_GOODS'));
+        $arResult["STOCK"][] = array_merge($arFields,array('PROPERTY_LINK_GOODS_VALUE'=>$arProps['LINK_GOODS']['VALUE']));
+    }
+}
+//x5 20190625 end получение акций для товаров
 ?>
+
