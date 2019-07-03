@@ -3,6 +3,7 @@
 
 <div class="first-block">
     <div class="maxwidth-theme">
+
         <!--<div class="row">-->
             <? $rsGroups = CIBlockSection::GetList (
                 Array("SORT"=>"ASC"),
