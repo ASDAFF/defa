@@ -658,7 +658,7 @@ li:hover .level-2-wrap {
 .level-2 li:hover .level-3 .dropdown-menu {
     display: flex;
     margin-top: -5px;
-    width: 1400px;
+    width: 1355px;
     left: 0!important;
     right: auto!important;
     z-index: 200;
@@ -685,7 +685,7 @@ ul.level-3-wrap.dropdown-menu:after {
 ul.level-3-wrap.dropdown-menu.active {
     display: flex;
     margin-top: -5px;
-    width: 1400px;
+    width: 1355px;
     left: 0!important;
     right: auto!important;
     z-index: 200;
