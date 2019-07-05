@@ -9,6 +9,7 @@ class BalanceAgent2{
 	//надо будет изменить на ($site);
 	static function updateBalanceChanges ($arResponse, $storeFromSite, $type) {
 		\Bitrix\Main\Loader::includeModule('iblock');
+		\Bitrix\Main\Loader::IncludeModule("defo.log1c");
 
 		if (!is_dir(self::ROOT_PATCH))
 		    $root = $_SERVER['DOCUMENT_ROOT'];
@@ -54,7 +55,7 @@ class BalanceAgent2{
 
             $arItemStore = self::getItemStore($arItem);
 
-            $nn = 0;
+            $nn = 0; $countStore = 0; $countMainStore = 0;
             foreach ($arItem as $artikul => $id) {
 
                 $nn++;
@@ -70,7 +71,7 @@ class BalanceAgent2{
                             $itemForUpdate[] = $itemId;
                             $time = date("d.m.Y H:i:s");
                             fwrite($fp, $time.": $type: ".sprintf("%' 6d", $itemId).": sklad: ".sprintf("%' 4d", $skladId).", old: ".sprintf("%' 4d",$ostatokSite).", new: ".sprintf("%' 4d",$ostatok).sprintf("%' 25d",$nn)."\n");
-
+							$countStore++;
 
                         }
 
@@ -90,6 +91,7 @@ class BalanceAgent2{
                                 self::setStoreProduct($arItem[$artikul], $storenewId, $ostatokNew);
                                 $itemForUpdate[] = $arItem[$artikul];
                                 fwrite($fp, $time.": $type: ".sprintf("%' 6d", $arItem[$artikul]).": sklad: ".sprintf("%' 4d", $storenewId).", old: ".sprintf("%' 4d",$arItemStore[$arItem[$artikul]][$storenewId]).", new: ".sprintf("%' 4d",$ostatokNew)." <-- main store\n");
+								$countMainStore++;
                             }
                         }
                     }
@@ -97,6 +99,15 @@ class BalanceAgent2{
 
                 }//city
             }
+
+			$arLog = array(
+				"TYPE" => "restsdr",
+				"STATUS" => "SUCCESS",
+				"AMOUNT" => $count1c,
+				"DATE" => date("Y-m-d H:i:s",time()),
+				"TEXT" => "Найдено $countSite товаров из $count1c;<br>Обновлены склады у ".count($itemForUpdate)." товаров;<br>Обновлено простых $countStore складов и $countMainStore составных; $type"
+			);
+			\DLog::add($arLog);
         }
         if (is_array($itemForUpdate)){
             $itemForUpdate = array_unique($itemForUpdate);

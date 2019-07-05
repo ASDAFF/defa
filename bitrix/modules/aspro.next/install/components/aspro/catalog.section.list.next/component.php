@@ -46,6 +46,9 @@ else
 		$arrFilter = array();
 }
 
+$arrFilter['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+CNext::makeSectionFilterInRegion($arrFilter);
+
 /*************************************************************************
 			Work with cache
 *************************************************************************/

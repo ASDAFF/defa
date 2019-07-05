@@ -26,14 +26,14 @@ if(is_array($arParams["~POST"]))
 	<div style="clear:both;"></div>
 	<form method="post" name="bx_auth_services<?=$arParams["SUFFIX"]?>" target="_top" action="<?=$arParams["AUTH_URL"]?>">
 		<div id="bx_auth_serv<?=$arParams["SUFFIX"]?>" style="display:none" >
-			<?foreach($arParams["~AUTH_SERVICES"] as $service):?>			
+			<?foreach($arParams["~AUTH_SERVICES"] as $service):?>
 				<?if(($arParams["~FOR_SPLIT"] != 'Y') || (!is_array($service["FORM_HTML"]))):?>
 					<div class="form-control bg" id="bx_auth_serv_<?=$arParams["SUFFIX"]?><?=$service["ID"]?>" style="display:none"><?=$service["FORM_HTML"]?></div>
 				<?endif;?>
 			<?endforeach?>
 		</div>
 		<?foreach($arPost as $key => $value):?>
-				<?if(!preg_match("|OPENID_IDENTITY|", $key)):?>
+				<?if(!preg_match("|OPENID_IDENTITY|", $key) && !in_array($key, array('captcha_sid', 'captcha_word', 'g-recaptcha-response'))):?>
 					<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
 				<?endif;?>
 		<?endforeach?>
@@ -48,7 +48,7 @@ if(is_array($arParams["~POST"]))
 	});
 	function BxShowAuthService(id, suffix)
 	{
-		var bxCurrentAuthId = ''; 
+		var bxCurrentAuthId = '';
 		if(window['bxCurrentAuthId'+suffix])
 			bxCurrentAuthId = window['bxCurrentAuthId'+suffix];
 
@@ -78,7 +78,7 @@ if(is_array($arParams["~POST"]))
 		if(!bxAuthWnd)
 		{
 			bxAuthWnd = new BX.CDialog({
-				'content':'<div id="bx_auth_float_container"></div>', 
+				'content':'<div id="bx_auth_float_container"></div>',
 				'width': 640,
 				'height': 400,
 				'resizable': false
@@ -89,7 +89,7 @@ if(is_array($arParams["~POST"]))
 
 		if(bCreated)
 			BX('bx_auth_float_container').appendChild(BX('bx_auth_float'));
-				
+
 		BxShowAuthService(id, suffix);
 	}
 </script>

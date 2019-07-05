@@ -37,7 +37,7 @@ if($arParams["~FOR_SPLIT"] == 'Y'):?>
 		<?if($arParams["~AUTH_LINE"] != 'N'):?>
 			<div class="bx-auth-line"></div>
 		<?endif;?>
-		
+
 		<div class="bx-auth-service-form" id="bx_auth_serv<?=$arParams["SUFFIX"]?>" style="display:none">
 			<?foreach($arParams["~AUTH_SERVICES"] as $service):?>
 				<?if(($arParams["~FOR_SPLIT"] != 'Y') || (!is_array($service["FORM_HTML"]))):?>
@@ -45,9 +45,9 @@ if($arParams["~FOR_SPLIT"] == 'Y'):?>
 				<?endif;?>
 			<?endforeach?>
 		</div>
-		
+
 <?foreach($arParams["~POST"] as $key => $value):?>
-		<?if(!preg_match("|OPENID_IDENTITY|", $key)):?>
+		<?if(!preg_match("|OPENID_IDENTITY|", $key) && !in_array($key, array('captcha_sid', 'captcha_word', 'g-recaptcha-response'))):?>
 		<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
 		<?endif;?>
 <?endforeach?>

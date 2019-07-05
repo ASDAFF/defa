@@ -65,6 +65,9 @@
 		"FAQ_IBLOCK_ID" => $arParams["FAQ_IBLOCK_ID"],
 		"VACANCYS_IBLOCK_ID" => $arParams["VACANCYS_IBLOCK_ID"],
 		"SERTIFICATES_IBLOCK_ID" => $arParams["SERTIFICATES_IBLOCK_ID"],
+		"STRICT_SECTION_CHECK" => $arParams["STRICT_SECTION_CHECK"],
+		'SECTION_ID' => $arResult['VARIABLES']['SECTION_ID'],
+		'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE'],
 	),
 	$component
 );?>

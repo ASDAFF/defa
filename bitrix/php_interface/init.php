@@ -1479,9 +1479,7 @@ class EventSend
 				}
 			}
 			
-			$f = fopen ($_SERVER['DOCUMENT_ROOT'] . '/sale.log', 'a');
-			fwrite($f, var_export($arSaleCut, true));
-			return $arSaleCut;
+			
 		}
 	}
 

@@ -59,6 +59,7 @@ $arServices = Array(
 			"cheaper.php",
 			"one_click_buy.php",
 			"send_gift.php",
+			"sms.php",
 			"errors_updates.php",
 		)
 	),

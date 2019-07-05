@@ -363,6 +363,9 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 		<?}else{?>
 			<div class="item_slider flex color-controls"></div>
 		<?}?>
+		<?if($arResult['PROPERTIES']['POPUP_VIDEO']['VALUE']):?>
+			<div class="popup_video mobile"><a class="various video_link" href="<?=$arResult['PROPERTIES']['POPUP_VIDEO']['VALUE']?>"><?=GetMessage("VIDEO")?></a></div>
+		<?endif;?>
 	</div>
 	<div class="right_info">
 		<div class="info_item">
@@ -1515,7 +1518,11 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 						<ul class="tabs_slider access_slides slides">
 							<?
 							if($arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"])
-								$GLOBALS['arrFilterAccess'] = array("ID" => $arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"]);?>
+								$GLOBALS['arrFilterAccess'] = array("ID" => $arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"]);
+
+							$GLOBALS['arrFilterAccess']['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+							CNext::makeElementFilterInRegion($GLOBALS['arrFilterAccess']);
+							?>
 							<?$APPLICATION->IncludeComponent(
 								"bitrix:catalog.top",
 								"main",
@@ -1867,7 +1874,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 	<?endif;?>
 </div>
 <?
-if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
+if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && $arParams['USE_PREDICTION'] === 'Y' && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
 	$APPLICATION->IncludeComponent(
 		'bitrix:sale.prediction.product.detail',
 		'main',

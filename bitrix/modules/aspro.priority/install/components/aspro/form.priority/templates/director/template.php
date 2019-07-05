@@ -177,8 +177,21 @@
 			});
 		}
 
-		if(arPriorityOptions['THEME']['DATE_MASK'].length)
-			$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false });
+		if(arPriorityOptions['THEME']['DATE_MASK'].length){
+			$('.inline form[name="<?=$arResult['IBLOCK_CODE']?>"] input.date').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
+
+		if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+			$('.inline form[name="<?=$arResult['IBLOCK_CODE']?>"] input.datetime').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
 
 		$('.jqmClose').closest('.jqmWindow').jqmAddClose('.jqmClose');
 

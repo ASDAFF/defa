@@ -83,6 +83,9 @@
 		"VK_TITLE" => $arParams["VK_TITLE"],
 		"VK_API_ID" => $arParams["DETAIL_VK_API_ID"],
 		"SERVICES_LINK_ELEMENTS_TEMPLATE" => $arParams['SERVICES_LINK_ELEMENTS_TEMPLATE'],
+		"STRICT_SECTION_CHECK" => $arParams['STRICT_SECTION_CHECK'],
+		'SECTION_ID' => $arResult['VARIABLES']['SECTION_ID'],
+		'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE'],
 	),
 	$component
 );?>

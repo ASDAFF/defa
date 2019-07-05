@@ -1098,6 +1098,9 @@ body .mega-menu table td .wrap > .dropdown-menu > li:first-of-type:before {
 .catalog_detail .title-tab-heading:hover {
   color: #48a216;
 }
+#simple-prediction .catalog-element-popup-element {
+  color: #48a216;
+}
 .style-switcher .switch:hover,
 .style-switcher .switch_presets:hover {
   background: #48a216;
@@ -1259,7 +1262,7 @@ header .menu_top_block.catalogfirst li.full>.dropdown>li:not(.current)>a {
 .bx_filter .bx_filter_param_label.active .bx_filter_btn_color_icon,
 .bx_catalog_item_scu ul li.active .cnt_item,
 .bx_scu_scroller_container ul li.bx_active .cnt_item {
-  box-shadow: 0px 0px 0px 2px #fff inset, 0px 0px 0px 2px #449a14;
+  box-shadow: 0px 0px 0px 2px #449a14;
 }
 .bx_filter_vertical input[type="checkbox"]:not(:checked) + label.sku:hover span,
 .sku_props .bx_item_detail_size ul li:not(.active):hover span,

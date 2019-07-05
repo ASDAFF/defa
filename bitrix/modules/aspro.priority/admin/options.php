@@ -40,6 +40,7 @@ if($RIGHT >= "R"){
 	}
 
 	$tabControl = new CAdminTabControl("tabControl", $arTabs);
+
 	if($REQUEST_METHOD == "POST" && strlen($Update.$Apply.$RestoreDefaults) && $RIGHT >= "W" && check_bitrix_sessid()){
 		global $APPLICATION;
 		if(strlen($RestoreDefaults)){
@@ -97,22 +98,24 @@ if($RIGHT >= "R"){
 						else{
 							if($optionCode == "BASE_COLOR_CUSTOM")
 								$moduleClass::CheckColor($_REQUEST[$optionCode."_".$optionsSiteID]);
-							
+
 							if($optionCode == "BASE_COLOR" && $_REQUEST[$optionCode."_".$optionsSiteID] === 'CUSTOM')
 								Option::set($moduleID, "NeedGenerateCustomTheme", 'Y', $optionsSiteID);
 
 							if($optionCode == "BGCOLOR_THEME" && $_REQUEST[$optionCode."_".$optionsSiteID] === 'CUSTOM')
 								Option::set($moduleID, "NeedGenerateCustomThemeBG", 'Y', $optionsSiteID);
-							
-							if($optionCode == 'CUSTOM_FONT'){
+
+							if($optionCode == 'CUSTOM_FONT')
+							{
 								$newVal = str_replace('<', '', $_REQUEST[$optionCode."_".$optionsSiteID]);
 								$newVal = str_replace('>', '', $newVal);
 							}
-							else{						
+							else
+							{
 								$newVal = $_REQUEST[$optionCode."_".$optionsSiteID];
 							}
 
-							if($arOption["TYPE"] == "checkbox" || $arOption["TYPE"] == "hidden" && $arOption['DEPENDENT_PARAMS']){
+							if($arOption["TYPE"] == "checkbox"){
 								if(!strlen($newVal) || $newVal != "Y"){
 									$newVal = "N";
 								}
@@ -233,28 +236,28 @@ if($RIGHT >= "R"){
 
 													unset($arTab["OPTIONS"][$key2."_".$key3]);
 												}
-												
+
 												//set default template index components
 												if(isset($arSubValue['TEMPLATE']) && $arSubValue['TEMPLATE'])
 												{
-													
+
 													$code_tmp = $key2.'_'.$key3.'_TEMPLATE';
 													if($_REQUEST[$code_tmp.'_'.$optionsSiteID])
 														Option::set($moduleID, $code_tmp, $_REQUEST[$code_tmp.'_'.$optionsSiteID], $optionsSiteID);
-												}												
+												}
 											}
 
 											//sort order prop for main page
 											$param = 'SORT_ORDER_'.$optionCode.'_'.$key2;
-											if(isset($_REQUEST[$param]))
+											if(isset($_REQUEST[$param.'_'.$optionsSiteID]))
 											{
-												Option::set($moduleID, $param, $_REQUEST[$param], $arTab["SITE_ID"]);
+												Option::set($moduleID, $param, $_REQUEST[$param.'_'.$optionsSiteID], $optionsSiteID);
 											}
 										}
 									}
 									if($arSubValues)
 									{
-										Option::set($moduleID, "NESTED_OPTIONS_".$optionCode."_".$newVal, serialize($arSubValues), $arTab["SITE_ID"]);
+										Option::set($moduleID, "NESTED_OPTIONS_".$optionCode."_".$newVal, serialize($arSubValues), $optionsSiteID);
 									}
 								}
 							}
@@ -263,6 +266,26 @@ if($RIGHT >= "R"){
 								$arTab["OPTIONS"][$optionCode] = $newVal;
 
 							Option::set($moduleID, $optionCode, $newVal, $arTab["SITE_ID"]);
+
+							if($optionCode == "CUSTOM_FONT")
+							{
+								$path = \Bitrix\Main\Application::getDocumentRoot().'/bitrix/components/aspro/theme.priority/css/user_font_'.$optionsSiteID.'.css';
+								$content = '';
+								if($newVal)
+								{
+									$string = str_replace('link href=', '', $newVal);
+									$stringLength = strlen($string);
+									$startLetter = strpos($string, '=');
+									$string = substr($string, $startLetter + 1, $stringLength);
+									$endLetter = strpos($string, ':');
+									$string = ($endLetter ? substr($string, 0, $endLetter) : $string);
+									$string = str_replace('" rel="stylesheet"', '', $string);
+									$endLetter = strpos($string, '&amp');
+									$string = ($endLetter ? substr($string, 0, $endLetter) : $string);
+									$content = "body,h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .popup-window,body div.bx-yandex-map,.fancybox-title{font-family: '".str_replace('+', ' ', $string)."', sans-serif;}";
+								}
+								\Bitrix\Main\IO\File::putFileContents($path, $content);
+							}
 						}
 					}
 				}
@@ -300,7 +323,7 @@ if($RIGHT >= "R"){
 					<?
 					foreach($arBlock["OPTIONS"] as $optionCode => $arOption)
 					{
-						if(isset($arTab["OPTIONS"][$optionCode]) || $arOption["TYPE"] == 'note' || $arOption["TYPE"] == 'includefile' || $arOption["TYPE"] == 'hidden')
+						if(isset($arTab["OPTIONS"][$optionCode]) || $arOption["TYPE"] == 'note' || $arOption["TYPE"] == 'includefile')
 						{
 							$arControllerOption = CControllerClient::GetInstalledOptions($module_id);
 							if($arOption['TYPE'] === 'array'){
@@ -371,18 +394,13 @@ if($RIGHT >= "R"){
 									$optionDisabled = isset($arControllerOption[$optionCode]) || array_key_exists("DISABLED", $arOption) && $arOption["DISABLED"] == "Y" ? "disabled" : "";
 									$optionSup_text = array_key_exists("SUP", $arOption) ? $arOption["SUP"] : "";
 									$optionController = isset($arControllerOption[$optionCode]) ? "title='".GetMessage("MAIN_ADMIN_SET_CONTROLLER_ALT")."'" : "";
-									$optionParent = $arOption['PARENT'];
+
 									$style = "";
-									/*echo '<pre>';
-									
-									print_r($arOption);
-									echo '</pre>';*/
-									if(($optionCode == 'BGCOLOR_THEME' || $optionCode == 'CUSTOM_BGCOLOR_THEME') && $arTab["OPTIONS"]['SHOW_BG_BLOCK'] != 'Y' && $arOption['PARENT'] != 'SHOW_FORMS')
+									if(($optionCode == 'BGCOLOR_THEME' || $optionCode == 'CUSTOM_BGCOLOR_THEME') && $arTab["OPTIONS"]['SHOW_BG_BLOCK'] != 'Y')
 									{
 										$style = "style=display:none;";
 									}
 									?>
-
 									<tr <?=$style;?> class="<?=htmlspecialcharsbx($optionCode)."_".$optionsSiteID;?>">
 										<?=$moduleClass::ShowAdminRow($optionCode, $arOption, $arTab, $arControllerOption);?>
 									</tr>
@@ -400,7 +418,6 @@ if($RIGHT >= "R"){
 															{
 																$arOrder = explode(",", $arTab['OPTIONS'][$param]);
 																$arTmp = array();
-			
 																foreach($arOrder as $name)
 																{
 																	$arTmp[$name] = $arOption['SUB_PARAMS'][$key][$name];
@@ -423,7 +440,9 @@ if($RIGHT >= "R"){
 																	}
 																}
 																?>
-															<?endforeach;?>													</table>
+															<?endforeach;?>
+														</tbody>
+													</table>
 													<?//show template index components?>
 													<?if($arIndexTemplate):?>
 														<table style="width:100%;" class="adm-detail-content-table">
@@ -433,16 +452,16 @@ if($RIGHT >= "R"){
 																<?endforeach;?>
 															</tbody>
 														</table>
-													<?endif;?>													
+													<?endif;?>
 												</td>
 											</tr>
 											<?//sort order prop for main page?>
-											<tr class="sort-param-block"><td colspan="2"><input type="hidden" name="<?=$param;?>" value="<?=$arTab["OPTIONS"][$param]?>" /></td></tr>
+											<tr class="sort-param-block"><td colspan="2"><input type="hidden" name="<?=$param.'_'.$arTab["SITE_ID"];?>" value="<?=$arTab["OPTIONS"][$param]?>" /></td></tr>
 										<?endforeach;?>
 									<?endif;?>
 									<?if(isset($arOption['DEPENDENT_PARAMS']) && $arOption['DEPENDENT_PARAMS']): //dependent params?>
 										<?foreach($arOption['DEPENDENT_PARAMS'] as $key => $arValue):?>
-											<?if(isset($arOption['SHOW_DEPENDENT_PARAMS']) && $arOption['SHOW_DEPENDENT_PARAMS'] == 'Y' || !isset($arValue['CONDITIONAL_VALUE']) || ($arValue['CONDITIONAL_VALUE'] && $arTab["OPTIONS"][$optionCode] == $arValue['CONDITIONAL_VALUE']))
+											<?if(!isset($arValue['CONDITIONAL_VALUE']) || ($arValue['CONDITIONAL_VALUE'] && $arTab["OPTIONS"][$optionCode] == $arValue['CONDITIONAL_VALUE']))
 												$style = "style='display:table-row'";
 											else
 												$style = "style='display:none'";
@@ -477,9 +496,6 @@ if($RIGHT >= "R"){
 		<?if(CPriority::IsCompositeEnabled()):?>
 			<div class="adm-info-message"><?=GetMessage("WILL_CLEAR_HTML_CACHE_NOTE")?></div><div style="clear:both;"></div>
 		<?endif;?>
-		<style>
-		.adm-detail-content-table .image[data-select=Y].selected{border:2px solid red;}
-		</style>
 		<script type="text/javascript">
 		var arModuleParametrs = <?=CUtil::PhpToJSObject($moduleClass::$arParametrsList, false)?>;
 		$(document).ready(function() {
@@ -493,15 +509,6 @@ if($RIGHT >= "R"){
 					}
 				});
 			<?endif;?>
-			$('.image[data-select=Y]').on('click', function(){
-				var optionValue = $(this).data('option-value'),
-					option = $(this).closest('tr').find('select option[value='+optionValue+']');
-				
-				$(this).closest('tr').find('.image').removeClass('selected');
-				$(this).addClass('selected');
-				option.attr('selected', 'selected');
-				console.log(optionValue);
-			});
 
 			$('select[name^="SCROLLTOTOP_TYPE"]').change(function() {
 				var posSelect = $(this).parents('table').first().find('select[name^="SCROLLTOTOP_POSITION"]');
@@ -685,7 +692,7 @@ if($RIGHT >= "R"){
 							_th.find('.block').each(function(){
 								order.push($(this).find('input[type="checkbox"]').attr('name').replace(current_type+'_', '').replace('_'+current_site, ''))
 							})
-							$('.sort-param-block input[name=SORT_ORDER_INDEX_TYPE_'+current_type+']').val(order.join(','));
+							_th.closest('.adm-detail-content-table.edit-table').find('input[name^=SORT_ORDER_INDEX_TYPE_'+current_type+']').val(order.join(','));
 						},
 					});
 				})
@@ -699,6 +706,7 @@ if($RIGHT >= "R"){
 						$('tr.block.'+value+'[data-parent='+$(this).attr('name')+']').css({'display':'table-row'});
 					}
 				});
+
 				$('input.depend-check').change(function() {
 					var ischecked = $(this).prop('checked'),
 						depend_block = $('.depend-block[data-parent='+$(this).attr('id')+']');
@@ -735,94 +743,93 @@ if($RIGHT >= "R"){
 						}
 					}
 				});
-			})
 
-			$('select[name^="USE_FORMS_GOALS"]').change(function() {
-				var parent = $(this).closest('tr').data('parent');
-				var inUAC = $(this).parents('table').first().find('input#'+parent);
+				$('select[name^="USE_FORMS_GOALS"]').change(function() {
+					var parent = $(this).closest('tr').data('parent');
+					var inUAC = $(this).parents('table').first().find('input#'+parent);
 
-				if(inUAC.length && inUAC.attr('checked')){
-					var isNone = $(this).val().indexOf('NONE') != -1;
-					var isCommon = $(this).val().indexOf('COMMON') != -1;
-					var itrUFGNote = $(this).parents('table').first().find('tr.USE_FORMS_GOALS_NOTE');
-					if(!isNone){
-						if(isCommon){
-							itrUFGNote.find('[data-value=common]').show();
-							itrUFGNote.find('[data-value=single]').hide();
+					if(inUAC.length && inUAC.attr('checked')){
+						var isNone = $(this).val().indexOf('NONE') != -1;
+						var isCommon = $(this).val().indexOf('COMMON') != -1;
+						var itrUFGNote = $(this).parents('table').first().find('tr.USE_FORMS_GOALS_NOTE');
+						if(!isNone){
+							if(isCommon){
+								itrUFGNote.find('[data-value=common]').show();
+								itrUFGNote.find('[data-value=single]').hide();
+							}
+							else{
+								itrUFGNote.find('[data-value=common]').hide();
+								itrUFGNote.find('[data-value=single]').show();
+							}
+							itrUFGNote.fadeIn();
 						}
 						else{
-							itrUFGNote.find('[data-value=common]').hide();
-							itrUFGNote.find('[data-value=single]').show();
+							itrUFGNote.fadeOut();
 						}
-						itrUFGNote.fadeIn();
+					}
+				});
+
+				$('input[name^="USE_SALE_GOALS"]').change(function() {
+					var parent = $(this).closest('tr').data('parent');
+					var inUAC = $(this).parents('table').first().find('input#'+parent);
+					if(inUAC.length && inUAC.attr('checked')){
+						var itrUSGNote = $(this).parents('table').first().find('tr.USE_SALE_GOALS_NOTE');
+						var ischecked = $(this).attr('checked');
+						if(typeof(ischecked) != 'undefined'){
+							itrUSGNote.fadeIn();
+						}
+						else{
+							itrUSGNote.fadeOut();
+						}
+					}
+				});
+
+				$('input[name^="USE_DEBUG_GOALS"]').change(function() {
+					var parent = $(this).closest('tr').data('parent');
+					var inUAC = $(this).parents('table').first().find('input#'+parent);
+					if(inUAC.length && inUAC.attr('checked')){
+						var itrUDGNote = $(this).parents('table').first().find('tr.USE_DEBUG_GOALS_NOTE');
+						var ischecked = $(this).attr('checked');
+						if(typeof(ischecked) != 'undefined'){
+							itrUDGNote.fadeIn();
+						}
+						else{
+							itrUDGNote.fadeOut();
+						}
+					}
+				});
+
+				$('select[name^="CAPTCHA_FORM_TYPE"]').change(function() {
+					var isReCaptcha = $(this).val().indexOf('RECAPTCHA') != -1;
+					var isReCaptchaHidden = $(this).val() == 'RECAPTCHA2';
+					var itrRNote = $(this).parents('table').first().find('tr[class^=RECAPTCHA_NOTE]');
+					var itrRSK = $(this).parents('table').first().find('tr[class^=RECAPTCHA_SITE_KEY]');
+					var itrRSRK = $(this).parents('table').first().find('tr[class^=RECAPTCHA_SECRET_KEY]');
+					var itrRL = $(this).parents('table').first().find('tr[class^=RECAPTCHA_LOGO]');
+
+					if(isReCaptchaHidden)
+					{
+						itrRL.fadeIn();
+					}
+					else
+					{
+						itrRL.fadeOut();
+					}
+					if(isReCaptcha){
+						itrRSK.fadeIn();
+						itrRSRK.fadeIn();
+						itrRNote.fadeIn();
 					}
 					else{
-						itrUFGNote.fadeOut();
+						itrRSK.fadeOut();
+						itrRSRK.fadeOut();
+						itrRNote.fadeOut();
 					}
-				}
-			});
 
-			$('input[name^="USE_SALE_GOALS"]').change(function() {
-				var parent = $(this).closest('tr').data('parent');
-				var inUAC = $(this).parents('table').first().find('input#'+parent);
-				if(inUAC.length && inUAC.attr('checked')){
-					var itrUSGNote = $(this).parents('table').first().find('tr.USE_SALE_GOALS_NOTE');
-					var ischecked = $(this).attr('checked');
-					if(typeof(ischecked) != 'undefined'){
-						itrUSGNote.fadeIn();
-					}
-					else{
-						itrUSGNote.fadeOut();
-					}
-				}
-			});
+					// checkGoalsNote();
+				});
 
-			$('input[name^="USE_DEBUG_GOALS"]').change(function() {
-				var parent = $(this).closest('tr').data('parent');
-				var inUAC = $(this).parents('table').first().find('input#'+parent);
-				if(inUAC.length && inUAC.attr('checked')){
-					var itrUDGNote = $(this).parents('table').first().find('tr.USE_DEBUG_GOALS_NOTE');
-					var ischecked = $(this).attr('checked');
-					if(typeof(ischecked) != 'undefined'){
-						itrUDGNote.fadeIn();
-					}
-					else{
-						itrUDGNote.fadeOut();
-					}
-				}
-			});
-
-			$('select[name^="CAPTCHA_FORM_TYPE"]').change(function() {
-				var isReCaptcha = $(this).val().indexOf('RECAPTCHA') != -1;
-				var isReCaptchaHidden = $(this).val() == 'RECAPTCHA2';
-				var itrRNote = $(this).parents('table').first().find('tr[class^=RECAPTCHA_NOTE]');
-				var itrRSK = $(this).parents('table').first().find('tr[class^=RECAPTCHA_SITE_KEY]');
-				var itrRSRK = $(this).parents('table').first().find('tr[class^=RECAPTCHA_SECRET_KEY]');
-				var itrRL = $(this).parents('table').first().find('tr[class^=RECAPTCHA_LOGO]');
-
-				if(isReCaptchaHidden)
-				{
-					itrRL.fadeIn();
-				}
-				else
-				{
-					itrRL.fadeOut();
-				}
-				if(isReCaptcha){
-					itrRSK.fadeIn();
-					itrRSRK.fadeIn();
-					itrRNote.fadeIn();
-				}
-				else{
-					itrRSK.fadeOut();
-					itrRSRK.fadeOut();
-					itrRNote.fadeOut();
-				}
-
-				// checkGoalsNote();
-			});
-
-			$('input[name^="YA_GOLAS"]').change(function() {
+				$('input[name^="YA_GOLAS"]').change(function() {
 					var itrYACID = $(this).parents('table').first().find('tr.YA_COUNTER_ID');
 					var itrUFG = $(this).parents('table').first().find('tr.USE_FORMS_GOALS');
 					var itrUFGNote = $(this).parents('table').first().find('tr.USE_FORMS_GOALS_NOTE');
@@ -902,6 +909,8 @@ if($RIGHT >= "R"){
 
 				$('input[name^="USE_GOOGLE_RECAPTCHA"]').change();
 				$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change();
+				$('input.depend-check').change();
+			})
 		</script>
 	<?$tabControl->End();?>
 	<?

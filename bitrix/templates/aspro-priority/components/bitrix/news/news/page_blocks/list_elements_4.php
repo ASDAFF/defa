@@ -19,7 +19,7 @@ if($arItems)
 		$bHasYear = (isset($_GET['year']) && (int)$_GET['year']);
 		$year = ($bHasYear ? (int)$_GET['year'] : 0);
 		$yearGet = (isset($_GET['year']) && strlen($_GET['year']) ? true : false)
-		?>	
+		?>
 		<div class="head-block top clearfix">
 			<div class="hidden-xs">
 				<div class="item-link font_upper_md<?=(!$yearGet ? ' active' : '')?>">
@@ -74,10 +74,6 @@ if($arItems)
 			<?
 			if($bHasYear)
 			{
-				/*$GLOBALS[$arParams["FILTER_NAME"]] = array(
-					">DATE_ACTIVE_FROM" => ConvertDateTime("31.12.".($year-1), FORMAT_DATETIME),
-					"<=DATE_ACTIVE_FROM" => ConvertDateTime("31.12.".$year, FORMAT_DATETIME),
-				);*/
 				$GLOBALS[$arParams["FILTER_NAME"]][">DATE_ACTIVE_FROM"] = ConvertDateTime("31.12.".($year-1), FORMAT_DATETIME);
 				$GLOBALS[$arParams["FILTER_NAME"]]["<=DATE_ACTIVE_FROM"] = ConvertDateTime("31.12.".$year, FORMAT_DATETIME);
 			}?>
@@ -152,7 +148,7 @@ if($arItems)
 							if(isset($arSection['NAME']) && $arSection['NAME']):?>
 								<li class="font_xs clearfix">
 									<span class="count pull-right"><?=$arSection['ELEMENT_CNT'];?></span>
-									<a href="<?=$arSection['SECTION_PAGE_URL'];?>" class="dark-color<?=($APPLICATION->GetCurDir() == $arSection['SECTION_PAGE_URL'] ? ' selected' : '');?>"><span class="text"><?=$arSection['NAME'];?></span></a>
+									<a href="<?=$arSection['SECTION_PAGE_URL'];?>" class="dark-color<?=($APPLICATION->GetCurDir() == $arSection['SECTION_PAGE_URL'] ? ' selected' : '');?>" title="<?=$arSection['NAME']?>"><span class="text"><?=$arSection['NAME'];?></span></a>
 								</li>
 							<?endif;?>
 						<?endforeach;?>

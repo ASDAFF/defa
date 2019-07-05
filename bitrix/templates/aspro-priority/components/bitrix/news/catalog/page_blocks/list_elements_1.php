@@ -23,7 +23,7 @@
 											  'AREA_FILE_SUFFIX' => 'ask',
 											  'EDIT_TEMPLATE' => ''
 										 )
-									);?>		
+									);?>
 								</div>
 							</td>
 							<td class="col-md-3 col-sm-4 col-xs-5 valign">
@@ -52,6 +52,15 @@
 $frame = new \Bitrix\Main\Page\FrameHelper('catalog-elements-block');
 $frame->begin();
 $frame->setAnimation(true);
+
+// region filter
+if($arTheme['USE_REGIONALITY']['VALUE'] === 'Y' && $arRegion && $arTheme['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y'){
+	if(!$arParams["FILTER_NAME"]){
+		$arParams["FILTER_NAME"] = 'arRegionLink';
+	}
+
+	$GLOBALS[$arParams["FILTER_NAME"]]['PROPERTY_LINK_REGION'] = $arRegion['ID'];
+}
 ?>
 <?include_once(__DIR__."/../include_filter.php");?>
 <?
@@ -60,7 +69,6 @@ $itemsCnt = CCache::CIblockElement_GetList(array("CACHE" => array("TAG" => CCach
 <?if(!$itemsCnt):?>
 	<div class="alert alert-warning"><?=GetMessage("SECTION_EMPTY")?></div>
 <?endif;?>
-
 
 <?include_once(__DIR__."/../include_sort.php");?>
 
@@ -92,13 +100,13 @@ $itemsCnt = CCache::CIblockElement_GetList(array("CACHE" => array("TAG" => CCach
 
 		if($langing_seo_title)
 			$APPLICATION->SetPageProperty("title", $langing_seo_title);
-		
+
 		if($arSeoItem["IPROPERTY_VALUES"]["ELEMENT_META_DESCRIPTION"])
 			$APPLICATION->SetPageProperty("description", $arSeoItem["IPROPERTY_VALUES"]["ELEMENT_META_DESCRIPTION"]);
-		
+
 		if($arSeoItem["IPROPERTY_VALUES"]['ELEMENT_META_KEYWORDS'])
 			$APPLICATION->SetPageProperty("keywords", $arSeoItem["IPROPERTY_VALUES"]['ELEMENT_META_KEYWORDS']);
-		
+
 		$arSeoItemBanner['IPROPERTY_VALUES'] = $arSeoItem["IPROPERTY_VALUES"];
 		$arSeoItemBanner['NAME'] = $arSeoItem["NAME"];
 		$arSeoItemBanner['FIELDS']['PREVIEW_TEXT'] = $arSeoItem["PREVIEW_TEXT"];
@@ -113,12 +121,12 @@ $itemsCnt = CCache::CIblockElement_GetList(array("CACHE" => array("TAG" => CCach
 			<?CPriority::ShowTopDetailBanner($arSeoItemBanner, $arParams);?>
 		<?$this->EndViewTarget();?>
 	<?endif;?>
-	
+
 	<?if($arSeoItemsSection["PROPERTY_SECTION_VALUE"]):?>
 		<?$GLOBALS["arLandingSections"] = array("PROPERTY_SECTION" => $arSeoItemsSection["PROPERTY_SECTION_VALUE"], "!ID" => $arSeoItem["ID"]);?>
 		<?$APPLICATION->IncludeComponent(
-			"bitrix:news.list", 
-			"landings_list", 
+			"bitrix:news.list",
+			"landings_list",
 			array(
 				"IBLOCK_TYPE" => "aspro_priority_advt",
 				"IBLOCK_ID" => $arParams["LANDING_IBLOCK_ID"],

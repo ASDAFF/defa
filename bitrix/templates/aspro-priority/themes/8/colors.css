@@ -249,7 +249,7 @@ hr.colored_line {
 .logo_and_menu-row .inline-search-show:hover .title {
   color: #ef5a54;
 }
-.menu-only.with_icons .mega-menu table td.full_dropdown>.wrap>.dropdown-menu>li .image {
+.menu-only.with_icons .mega-menu table td.full_dropdown>.wrap>.dropdown-menu>li .image.wbg {
   background-color: #ef5a54;
 }
 .mega-menu table td.full_dropdown .dropdown-submenu .dropdown-menu li a:hover {
@@ -1013,10 +1013,10 @@ footer .info .subscribe_button .btn:hover {
 .detail .galery #carousel .flex-direction-nav a:hover:before {
   background-color: #ef5a54;
 }
-.item-views.sections.type_4_within.type_12_within .items .item .image {
+.item-views.sections.type_4_within.type_12_within .items .item.wbg .image {
   background-color: #ef5a54;
 }
-.tizers.in_content .tizer .image img {
+.tizers.in_content .tizer.image_bg .image img {
   background-color: #ef5a54;
 }
 .catalog.sections.type_4_within .item:hover .arrow_link {
@@ -1106,7 +1106,7 @@ footer .info .subscribe_button .btn:hover {
 .item-views.services-items.type_1 .items .item>.wrap .more:hover a:before {
   background: #ef5a54;
 }
-.item-views.services-items.icons .items .item .image img {
+.item-views.services-items.icons .items .item.wbg .image img {
   background-color: #ef5a54;
 }
 .item-views.staff-items.within.type_2.type_3 .items .item:hover .arrow_link {
@@ -1443,4 +1443,14 @@ section.toggle.active > label {
 }
 .detail.staff .properties .bottom-props.social_props a:hover svg path {
   fill: #ef5a54;
+}
+.datetimepicker table tr td.active.active,
+.datetimepicker table tr td.active:hover.active {
+  background: #ef5a54;
+}
+.uploader .resetfile:hover {
+  background-color: #f27570;
+}
+.uploader:hover .resetfile:before {
+  background-color: #f27570;
 }

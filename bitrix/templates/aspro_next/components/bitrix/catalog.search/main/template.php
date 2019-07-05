@@ -38,7 +38,9 @@ if($arParams['IBLOCK_ID'])
 $APPLICATION->ShowViewContent('comp_search_page');
 
 // include bitrix.search_page
+ob_start();
 include 'include_search_page.php';
+$searchPageContent = ob_get_clean();
 
 if(!strlen($searchQuery)){
 	$searchQuery = $_GET['q'];
@@ -105,6 +107,7 @@ $arLanding = $oSearchQuery->getLandings(
 		'DETAIL_PICTURE',
 		'PROPERTY_IS_INDEX',
 		'PROPERTY_FORM_QUESTION',
+		'PROPERTY_HIDE_QUERY_INPUT',
 		'PROPERTY_TIZERS',
 		'PROPERTY_H3_GOODS',
 		'PROPERTY_SIMILAR',
@@ -113,35 +116,28 @@ $arLanding = $oSearchQuery->getLandings(
 		'PROPERTY_QUERY_REPLACEMENT',
 		'PROPERTY_CUSTOM_FILTER',
 		'PROPERTY_CUSTOM_FILTER_TYPE',
+		'PROPERTY_I_ELEMENT_PAGE_TITLE',
+		'PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT',
+		'PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE',
+		'PROPERTY_I_SKU_PAGE_TITLE',
+		'PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT',
+		'PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE',
 	),
 	true
 );
 if($arLanding){
-	if(!$arLanding["PROPERTY_IS_INDEX_VALUE"]){
+	if(!$arLanding['PROPERTY_IS_INDEX_VALUE']){
 		$APPLICATION->AddHeadString('<meta name="robots" content="noindex,nofollow" />');
 	}
 
 	if(strlen($arLanding['PROPERTY_URL_CONDITION_VALUE'])){
 		$urlCondition = ltrim(trim($arLanding['PROPERTY_URL_CONDITION_VALUE']), '/');
+		$canonicalUrl = '/'.$urlCondition;
 
 		if(!isset($_REQUEST['ls'])){
-			$canonicalUrl = '/'.$urlCondition;
-		}
-		else{
-			// get urlrewrite item
-			if($arUrlRewrites = \Bitrix\Main\UrlRewriter::getList(SITE_ID, array('CONDITION' => '#^/'.$urlCondition.'#'))){
-				$searchRule = 'ls='.$arLanding['ID'];
-				foreach($arUrlRewrites as $arUrlRewrite){
-					if($arUrlRewrite['RULE'] && strpos($arUrlRewrite['RULE'], $searchRule) !== false){
-						$q = preg_replace('/&ls\=[\d]*/', '', $arUrlRewrite['RULE']);
-						$canonicalUrl = str_replace('index.php', '', $arUrlRewrite['PATH']).(strlen($q) ? '?'.$q : '');
-						break;
-					}
-				}
-			}
-		}
+			LocalRedirect($canonicalUrl, true, '301 Moved permanently');
+			die();
 
-		if(strlen($canonicalUrl)){
 			// not use APPLICATION->AddHeadString because it`s cached template
 			?><link rel="canonical" href="<?=$canonicalUrl?>" /><?
 		}
@@ -152,6 +148,10 @@ if($arLanding){
 			LocalRedirect($arLanding['PROPERTY_REDIRECT_URL_VALUE'], false, '301 Moved Permanently');
 			die();
 		}
+	}
+
+	if($arLanding['PROPERTY_HIDE_QUERY_INPUT_VALUE']){
+		$searchPageContent = '';
 	}
 
 	if($arLanding['PROPERTY_CUSTOM_FILTER_VALUE'] && $arLanding['PROPERTY_CUSTOM_FILTER_TYPE_VALUE']){
@@ -230,8 +230,18 @@ if($arLanding){
 			unset($arLanding['PROPERTY_SIMILAR_VALUE'][array_search($arLanding['ID'], $arLanding['PROPERTY_SIMILAR_VALUE'])]);
 		}
 	}
+
+	$arIBInheritTemplates = array(
+		"ELEMENT_PAGE_TITLE" => $arLanding["PROPERTY_I_ELEMENT_PAGE_TITLE_VALUE"],
+		"ELEMENT_PREVIEW_PICTURE_FILE_ALT" => $arLanding["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+		"ELEMENT_PREVIEW_PICTURE_FILE_TITLE" => $arLanding["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+		"SKU_PAGE_TITLE" => $arLanding["PROPERTY_I_SKU_PAGE_TITLE_VALUE"],
+		"SKU_PREVIEW_PICTURE_FILE_ALT" => $arLanding["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+		"SKU_PREVIEW_PICTURE_FILE_TITLE" => $arLanding["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+	);
 }
 ?>
+<?=$searchPageContent?>
 <?if($arLanding && ($arLanding["DETAIL_PICTURE"] || strlen($arLanding["PREVIEW_TEXT"]) || $arLanding["PROPERTY_FORM_QUESTION_VALUE"]) || $arLanding["PROPERTY_TIZERS_VALUE"]):?>
 	<div class="seo_block">
 		<?if($arLanding["DETAIL_PICTURE"]):?>
@@ -339,7 +349,6 @@ if($arLanding){
 <?
 if (is_array($arElements) && !empty($arElements))
 {
-
 	if($arSKU)
 	{
 		foreach($arElements as $key => $value)
@@ -396,7 +405,7 @@ if (is_array($arElements) && !empty($arElements))
 		array(
 			'CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag($catalogIBlockID))
 		),
-		$GLOBALS[$arParams["FILTER_NAME"]],
+		CNext::makeElementFilterInRegion($GLOBALS[$arParams["FILTER_NAME"]]),
 		false,
 		false,
 		array(
@@ -413,7 +422,7 @@ if (is_array($arElements) && !empty($arElements))
 		foreach($arItems as $arItem)
 		{
 			$arItemsID[$arItem["ID"]] = $arItem["ID"];
-			if($arItem["IBLOCK_SECTION_ID"])
+			if($arItem["IBLOCK_SECTION_ID"] && $arItem["IBLOCK_ID"] == $catalogIBlockID)
 			{
 				if(is_array($arItem["IBLOCK_SECTION_ID"]))
 				{
@@ -439,11 +448,20 @@ if (is_array($arElements) && !empty($arElements))
 
 		<?ob_start()?>
 			<?if(count($arAllSections) > 1):?>
+				<?
+				if(preg_match_all('/PAGEN_\d+/i'.BX_UTF_PCRE_MODIFIER, $_SERVER['QUERY_STRING'], $arMatches)){
+					$arPagenParams = $arMatches[0];
+				}
+				$arDeleteParams = array('section_id');
+				if($arPagenParams){
+					$arDeleteParams = array_merge($arDeleteParams, $arPagenParams);
+				}
+				?>
 				<div class="top_block_filter_section">
-					<div class="title"><a class="dark_link" title="<?=GetMessage("FILTER_ALL_SECTON");?>" href="<?=$APPLICATION->GetCurPageParam('', array('section_id'))?>"><?=GetMessage("FILTER_SECTON");?></a></div>
+					<div class="title"><a class="dark_link" title="<?=GetMessage("FILTER_ALL_SECTON");?>" href="<?=$APPLICATION->GetCurPageParam('', $arDeleteParams)?>"><?=GetMessage($arLanding && $arLanding['PROPERTY_HIDE_QUERY_INPUT_VALUE'] ? 'FILTER_SECTON' : 'FILTER_SECTON_SEARCH');?></a></div>
 					<div class="items">
 						<?foreach($arAllSections as $key => $arTmpSection):?>
-							<div class="item <?=($setionIDRequest ? ($key == $setionIDRequest ? 'current' : '') : '');?>"><a href="<?=$APPLICATION->GetCurPageParam('section_id='.$key, array('section_id'))?>" class="dark_link"><span><?=$arSections[$key]["NAME"];?></span><span><?=$arTmpSection["COUNT"];?></span></a></div>
+							<div class="item <?=($setionIDRequest ? ($key == $setionIDRequest ? 'current' : '') : '');?>"><a href="<?=$APPLICATION->GetCurPageParam('section_id='.$key, $arDeleteParams)?>" class="dark_link"><span><?=$arSections[$key]["NAME"];?></span><span><?=$arTmpSection["COUNT"];?></span></a></div>
 						<?endforeach;?>
 					</div>
 				</div>
@@ -638,6 +656,9 @@ if (is_array($arElements) && !empty($arElements))
 				<div class="clearfix"></div>
 			<!--/noindex-->
 		</div>
+
+		<?unset($_GET['q']);?>
+
 		<div class="ajax_load <?=$display;?>">
 
 			<?$arTransferParams = array(
@@ -675,6 +696,8 @@ if (is_array($arElements) && !empty($arElements))
 				"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 				"OFFER_ADD_PICT_PROP" => $arParams["OFFER_ADD_PICT_PROP"],
 				"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
+				'CURRENT_BASE_PAGE' => $arLanding && strlen($arLanding['PROPERTY_URL_CONDITION_VALUE']) ? $canonicalUrl : null,
+				"IBINHERIT_TEMPLATES" => $arLanding ? $arIBInheritTemplates : array(),
 			);?>
 
 		<div class="catalog <?=$display;?> search js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
@@ -696,10 +719,8 @@ if (is_array($arElements) && !empty($arElements))
 					"LINE_ELEMENT_COUNT" => $arParams["LINE_ELEMENT_COUNT"],
 					"HIDE_NOT_AVAILABLE" => $arParams["HIDE_NOT_AVAILABLE"],
 					"PROPERTY_CODE" => $arParams["PROPERTY_CODE"],
-
 					"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 					"SHOW_MEASURE_WITH_RATIO" => $arParams["SHOW_MEASURE_WITH_RATIO"],
-
 					"OFFERS_CART_PROPERTIES" => $arParams["OFFERS_CART_PROPERTIES"],
 					"OFFERS_FIELD_CODE" => $arParams["OFFERS_FIELD_CODE"],
 					"OFFERS_PROPERTY_CODE" => $arParams["OFFERS_PROPERTY_CODE"],
@@ -710,9 +731,7 @@ if (is_array($arElements) && !empty($arElements))
 					"OFFERS_SORT_ORDER2" => $arParams["OFFERS_SORT_ORDER2"],
 					'OFFER_TREE_PROPS' => $arParams['OFFER_TREE_PROPS'],
 					"SHOW_COUNTER_LIST" => $arParams["SHOW_COUNTER_LIST"],
-
 					"DISPLAY_TYPE" => $display,
-
 					"SECTION_URL" => $arParams["SECTION_URL"],
 					"DETAIL_URL" => $arParams["DETAIL_URL"],
 					"BASKET_URL" => $arParams["BASKET_URL"],
@@ -772,6 +791,9 @@ if (is_array($arElements) && !empty($arElements))
 					"OFFER_HIDE_NAME_PROPS" => $arParams["OFFER_HIDE_NAME_PROPS"],
 					"SHOW_MEASURE" => $arParams["SHOW_MEASURE"],
 					"HIDE_NOT_AVAILABLE_OFFERS" => $arParams["HIDE_NOT_AVAILABLE_OFFERS"],
+					'CURRENT_BASE_PAGE' => $arLanding && strlen($arLanding['PROPERTY_URL_CONDITION_VALUE']) ? $canonicalUrl : null,
+					"SET_SKU_TITLE" => (($arTheme["TYPE_SKU"]["VALUE"] == "TYPE_1" && $arTheme["CHANGE_TITLE_ITEM"]["VALUE"] == "Y") ? "Y" : ""),
+					"IBINHERIT_TEMPLATES" => $arLanding ? $arIBInheritTemplates : array(),
 				),
 				$arResult["THEME_COMPONENT"]
 			);?>
@@ -798,7 +820,7 @@ if (is_array($arElements) && !empty($arElements))
 
 	<?$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');?>
 
-	<?if($arLanding['PROPERTY_SIMILAR_VALUE']):?>
+	<?if($arParams['SHOW_LANDINGS'] !== 'N' && $arLanding['PROPERTY_SIMILAR_VALUE']):?>
 		<?$arLandingsFilter['ID'] = $arLanding['PROPERTY_SIMILAR_VALUE'];?>
 		<?$GLOBALS["arLandingsFilter"] = $arLandingsFilter;?>
 		<?$APPLICATION->IncludeComponent(

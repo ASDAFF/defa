@@ -57,7 +57,7 @@
 			<?if($arParams["SHOW_LICENCE"] == "Y"):?>
 				<div class="form">
 					<div class="licence_block filter label_block">
-						<input type="checkbox" id="licenses_popup_OCB" <?=(COption::GetOptionString("aspro_next_b2c", "LICENCE_CHECKED", "N") == "Y" ? "checked" : "");?> name="licenses_popup_OCB" required value="Y">
+						<input type="checkbox" id="licenses_popup_OCB" <?=(COption::GetOptionString("aspro.next", "LICENCE_CHECKED", "N") == "Y" ? "checked" : "");?> name="licenses_popup_OCB" required value="Y">
 						<label for="licenses_popup_OCB" class="license">
 							<?$APPLICATION->IncludeFile(SITE_DIR."include/licenses_text.php", Array(), Array("MODE" => "html", "NAME" => "LICENSES")); ?>
 						</label>
@@ -130,84 +130,123 @@ $('#one_click_buy_form').validate({
 	},
 	<?if($arParams['INLINE_FORM']):?>
 		submitHandler: function( form ){
-			var form_url = $(form).attr('action');
-			$.ajax({
-				url: $(form).attr('action'),
-				data: $(form).serialize(),
-				type: 'POST',
-				dataType: 'json',
-				error: function(data) {
-					alert('Error connecting server');
-				},
-				success: function(data) {
-					var obUrl = parseUrlQuery();
-					if(data.result == 'Y'){
-						if(arNextOptions['COUNTERS']['USE_1CLICK_GOALS'] !== 'N'){
-							var eventdata = {goal: 'goal_1click_success'};
-							BX.onCustomEvent('onCounterGoals', [eventdata])
-						}
+			if($(form).valid())
+			{
+				if($(form).find('input.error').length || $(form).find('textarea.error').length){
+					return false;
+				}
+				else if(!$(form).find('#one_click_buy_form_button').hasClass('clicked')){
+					$(form).find('#one_click_buy_form_button').addClass('clicked');
 
-						if(ocb_files.length)
+					var form_url = $(form).attr('action');
+					var bSend = true;
+					if(window.renderRecaptchaById && window.asproRecaptcha && window.asproRecaptcha.key)
+					{
+						if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined' && arNextOptions.THEME.ONE_CLICK_BUY_CAPTCHA === 'Y')
 						{
-							var obData = new FormData(),
-								bHasFiles = false;
-							$.each( ocb_files, function( key, value ){
-								if(value)
-								{
-									bHasFiles = true;
-									obData.append( key+'_'+value.code , value[0] );
-								}
-							});
-							if(bHasFiles)
+							if($(form).find('.g-recaptcha-response').val())
 							{
-								$.ajax({
-									url: form_url+'?uploadfiles&orderID='+data.message,
-									type: 'POST',
-									data: obData,
-									cache: false,
-									dataType: 'json',
-									processData: false, // Don't process the files
-									contentType: false, // this is string query
-									error: function(data) {
-										alert('Error with files');
-									},
-									success: function( respond, textStatus, jqXHR ){
-										$('.one_click_buy_result').show();
-										$('.one_click_buy_result_success').show();
-										purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["ONE_CLICK"]);
-									}
-								})
+								// eventdata.form.submit();
+								bSend = true;
 							}
 							else
 							{
-								$('.one_click_buy_result').show();
-								$('.one_click_buy_result_success').show();
-								purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["ONE_CLICK"]);
+								grecaptcha.execute($(form).find('.g-recaptcha').data('widgetid'));
+								$(form).find('#one_click_buy_form_button').removeClass('clicked');
+								bSend = false;
 							}
 						}
-						else
-						{
-							$('.one_click_buy_result').show();
-							$('.one_click_buy_result_success').show();
-						}
 					}
-					else{
-						$('.one_click_buy_result').show();
-						$('.one_click_buy_result_fail').show();
-						if(('err' in data) && data.err)
-							data.message=data.message+' \n'+data.err;
-						$('.one_click_buy_result_text').html(data.message);
+
+					if(bSend)
+					{
+						$.ajax({
+							url: $(form).attr('action'),
+							data: $(form).serialize(),
+							type: 'POST',
+							dataType: 'json',
+							error: function(data) {
+								alert('Error connecting server');
+							},
+							success: function(data) {
+								var obUrl = parseUrlQuery();
+								if(data.result == 'Y'){
+									if(arNextOptions['COUNTERS']['USE_1CLICK_GOALS'] !== 'N'){
+										var eventdata = {goal: 'goal_1click_success'};
+										BX.onCustomEvent('onCounterGoals', [eventdata])
+									}
+
+									if(ocb_files.length)
+									{
+										var obData = new FormData(),
+											bHasFiles = false;
+										$.each( ocb_files, function( key, value ){
+											if(value)
+											{
+												bHasFiles = true;
+												obData.append( key+'_'+value.code , value[0] );
+											}
+										});
+										if(bHasFiles)
+										{
+											$.ajax({
+												url: form_url+'?uploadfiles&orderID='+data.message,
+												type: 'POST',
+												data: obData,
+												cache: false,
+												dataType: 'json',
+												processData: false, // Don't process the files
+												contentType: false, // this is string query
+												error: function(data, exception) {
+													if(data)
+													{
+														// if('statusText')
+														console.log(data);
+														console.log(exception);
+													}
+													alert('Error with files');
+												},
+												success: function( respond, textStatus, jqXHR ){
+													$('.one_click_buy_result').show();
+													$('.one_click_buy_result_success').show();
+													purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["<?=($arParams['BUY_ALL_BASKET'] === 'Y' ? 'QUICK_ORDER' : 'ONE_CLICK')?>"]);
+												}
+											})
+										}
+										else
+										{
+											$('.one_click_buy_result').show();
+											$('.one_click_buy_result_success').show();
+											purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["<?=($arParams['BUY_ALL_BASKET'] === 'Y' ? 'QUICK_ORDER' : 'ONE_CLICK')?>"]);
+										}
+									}
+									else
+									{
+										$('.one_click_buy_result').show();
+										$('.one_click_buy_result_success').show();
+										purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["<?=($arParams['BUY_ALL_BASKET'] === 'Y' ? 'QUICK_ORDER' : 'ONE_CLICK')?>"]);
+									}
+								}
+								else{
+									$('.one_click_buy_result').show();
+									$('.one_click_buy_result_fail').show();
+									if(('err' in data) && data.err)
+										data.message=data.message+' \n'+data.err;
+									$('.one_click_buy_result_text').html(data.message);
+								}
+								$('.one_click_buy_modules_button', self).removeClass('disabled');
+								$('#one_click_buy_form').hide();
+								$('#one_click_buy_form_result').show();
+
+								if('path' in obUrl)
+									$('<br/><div><a href="'+decodeURIComponent(obUrl.path)+'" class="btn btn-default">'+BX.message('FANCY_CLOSE')+'</a></div>').appendTo($('.one_click_buy_result'));
+
+								$('html,body').animate({'scrollTop':0},150);
+							}
+						});
 					}
-					$('.one_click_buy_modules_button', self).removeClass('disabled');
-					$('#one_click_buy_form').hide();
-					$('#one_click_buy_form_result').show();
-
-					if('path' in obUrl)
-						$('<br/><div><a href="'+obUrl.path+'" class="btn btn-default">'+BX.message('FANCY_CLOSE')+'</a></div>').appendTo($('.one_click_buy_result'));
-
-					$('html,body').animate({'scrollTop':0},150);
 				}
-			});
+			}
 		},
 	<?endif;?>
 	messages:{

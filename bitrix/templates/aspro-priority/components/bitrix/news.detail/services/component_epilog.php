@@ -25,7 +25,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 			$bShowVideoTab = (!empty($templateData['VIDEO']) || !empty($templateData['VIDEO_IFRAME']) ? ++$i : '');
 			$bShowFaqTab = (!empty($templateData['LINK_FAQ']) ? ++$i : '');
 			$bShowProjecTab = (!empty($templateData['LINK_PROJECTS']) ? ++$i : '');
-			
+
 			if($bShowTarifTab || $bShowDetailTextTab || $bShowPropsTab || $bShowDocsTab || $bShowVideoTab || $bShowFaqTab || $bShowProjecTab):?>
 				<div class="tabs">
 					<?if($i > 1):?>
@@ -50,7 +50,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<li class="shadow border <?=(!($iTab++) ? 'active' : '')?>"><a href="#tarifs" data-toggle="tab"><?=($arParams["T_TARIF"] ? $arParams["T_TARIF"] : Loc::getMessage("T_TARIF"));?></a></li>
 									<?endif;?>
 								<?endif;?>
-								
+
 								<?//show projects block?>
 								<?if($value == "projects"):?>
 									<?if($bShowProjecTab):?>
@@ -92,7 +92,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 													<?if(!$templateData['SECTION_BNR_CONTENT'] && strlen($templateData['PREVIEW_TEXT'])):?>
 														<div class="introtext"><?=$templateData['PREVIEW_TEXT'];?></div>
 													<?endif;?>
-												
+
 													<?// element detail text?>
 													<?if(strlen($templateData['DETAIL_TEXT'])):?>
 														<?=$templateData['DETAIL_TEXT'];?>
@@ -180,7 +180,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?include_once(str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'])."/include/comp_tarifs_services.php");?>
 									</div>
 								<?endif;?>
-							<?endif;?>							
+							<?endif;?>
 							<?//show char block?>
 							<?if($value == "char"):?>
 								<?if($bShowPropsTab):?>
@@ -196,7 +196,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 																<?if($arProp['HINT']):?>
 																	<span class="hint">
 																		<span class="icons" data-toggle="tooltip" data-placement="top" title="<?=$arProp['HINT']?>"></span>
-																	</span>																			
+																	</span>
 																<?endif;?>
 															</span>
 														</td>
@@ -437,11 +437,14 @@ $bOrderViewBasket = $templateData["ORDER"];
 		<?//show gallery block?>
 		<?if($value == "gallery"):?>
 			<?if(count($templateData['GALLERY_BIG'])):?>
+				<?
+				$bShowSmallGallery = $templateData['GALLERY_TYPE'] === 'small';
+				?>
 				<div class="wraps galerys-block">
-					<span class="switch_gallery"></span>
-					<div class="title small-gallery font_xs"><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
-					<div class="title big-gallery font_xs"><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
-					<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth" id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
+					<span class="switch_gallery<?=($bShowSmallGallery ? ' small' : '');?>"></span>
+					<div class="title small-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
+					<div class="title big-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?>><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
+					<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?> id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
 						<ul class="slides items">
 							<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
 								<li class="col-md-12 item">
@@ -455,7 +458,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 							<?endforeach;?>
 						</ul>
 					</div>
-					<div class="small-gallery-block">
+					<div class="small-gallery-block"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>>
 						<div class="front bigs">
 							<div class="items row">
 								<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
@@ -588,7 +591,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 		<?endif;?>
 		<?//show sale block?>
 		<?if($value == "sale"):?>
-			<?if(count($templateData['LINK_SALE'])):?>				
+			<?if(count($templateData['LINK_SALE'])):?>
 				<?$GLOBALS['arrSaleFilter'] = array('ID' => $templateData['LINK_SALE']); ?>
 				<div class="wraps">
 					<h4><?=(strlen($arParams['T_NEWS']) ? $arParams['T_NEWS'] : Loc::getMessage('T_NEWS'))?></h4>
@@ -654,7 +657,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 					</div>
 				</div>
 			<?endif;?>
-		<?endif;?>					
+		<?endif;?>
 		<?//show goods block?>
 		<?if($value == "goods"):?>
 			<?if($templateData['LINK_GOODS']):?>
@@ -1165,6 +1168,6 @@ $bOrderViewBasket = $templateData["ORDER"];
 					false, array("HIDE_ICONS" => "Y")
 				);?>
 			<?endif;?>
-		<?endif;?>					
+		<?endif;?>
 	</div>
 <?endforeach;?>

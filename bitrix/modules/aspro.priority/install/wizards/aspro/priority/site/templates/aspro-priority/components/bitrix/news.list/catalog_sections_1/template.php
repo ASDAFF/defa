@@ -14,9 +14,9 @@ $this->setFrameMode(true);
 				$this->AddEditAction($arItem['ID'], $arSectionButtons['edit']['edit_section']['ACTION_URL'], CIBlock::GetArrayByID($arItem['IBLOCK_ID'], 'SECTION_EDIT'));
 				$this->AddDeleteAction($arItem['ID'], $arSectionButtons['edit']['delete_section']['ACTION_URL'], CIBlock::GetArrayByID($arItem['IBLOCK_ID'], 'SECTION_DELETE'), array('CONFIRM' => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 				// preview picture
-				if($bShowSectionImage = in_array('PREVIEW_PICTURE', $arParams['FIELD_CODE']) && $arResult['SECTIONS_ICON']){
-					$bImage = (isset($arResult['SECTIONS_ICON'][$arItem['ID']]) && $arResult['SECTIONS_ICON'][$arItem['ID']]['UF_ICON']);
-					$arSectionImage = ($bImage ? CFile::ResizeImageGet($arResult['SECTIONS_ICON'][$arItem['ID']]['UF_ICON'], array('width' => 40, 'height' => 40), BX_RESIZE_IMAGE_PROPORTIONAL, true) : array());
+				if($bShowSectionImage = in_array('PREVIEW_PICTURE', $arParams['FIELD_CODE']) && $arParams['SHOW_ICONS'] === 'Y'){
+					$bImage = $arItem['UF_ICON'];
+					$arSectionImage = ($bImage ? CFile::ResizeImageGet($arItem['UF_ICON'], array('width' => 40, 'height' => 40), BX_RESIZE_IMAGE_PROPORTIONAL, true) : array());
 					$imageSectionSrc = ($bImage ? $arSectionImage['src'] : '');
 				}
 				else if($bShowSectionImage = in_array('PREVIEW_PICTURE', $arParams['FIELD_CODE'])){
@@ -26,7 +26,7 @@ $this->setFrameMode(true);
 				}
 				?>
 				<div class="item-wrap col-md-3 col-sm-6 col-xs-6">
-					<div class="item border shadow<?=(isset($arParams['SHOW_ICONS']) && $arParams['SHOW_ICONS'] ? ' wicons' : '');?><?=($bShowSectionImage && $imageSectionSrc ? '' : ' wti')?>  slice-item <?=$arParams['IMAGE_CATALOG_POSITION'];?>" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
+					<div class="item border shadow<?=(isset($arParams['SHOW_ICONS']) && $arParams['SHOW_ICONS'] === 'Y' ? ' wicons' : '');?><?=($bShowSectionImage && $imageSectionSrc ? '' : ' wti')?><?=($arParams['SHOW_ICONS'] === 'Y' && !$arItem['UF_BACKGROUND'] ? ' no_bg' : '');?> slice-item <?=$arParams['IMAGE_CATALOG_POSITION'];?>" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
 						<?// icon or preview picture?>
 						<?if($bShowSectionImage && $imageSectionSrc):?>
 							<div class="image">
@@ -35,7 +35,7 @@ $this->setFrameMode(true);
 								</a>
 							</div>
 						<?endif;?>
-						
+
 						<div class="info">
 							<?// section name?>
 							<?if(in_array('NAME', $arParams['FIELD_CODE'])):?>
@@ -45,12 +45,9 @@ $this->setFrameMode(true);
 									</a>
 								</div>
 							<?endif;?>
-							
+
 							<?// count elements?>
-							<?
-							$countElements = ($arItem['CHILD'] ? count($arItem['CHILD']) : 0);
-							?>
-							<div class="count_elements font_upper"><?=CPriority::Vail($countElements, array(Loc::getMessage('COUNT_ELEMENTS_TITLE'), Loc::getMessage('COUNT_ELEMENTS_TITLE_2'), Loc::getMessage('COUNT_ELEMENTS_TITLE_3')));?></div>
+							<div class="count_elements font_upper"><?=CPriority::Vail($arItem['ELEMENTS_COUNT'], array(Loc::getMessage('COUNT_ELEMENTS_TITLE'), Loc::getMessage('COUNT_ELEMENTS_TITLE_2'), Loc::getMessage('COUNT_ELEMENTS_TITLE_3')));?></div>
 
 							<?// section preview text?>
 							<?if(strlen($arItem['UF_TOP_SEO']) && $arParams['SHOW_SECTION_PREVIEW_DESCRIPTION'] != 'N'):?>

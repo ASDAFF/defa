@@ -74,7 +74,7 @@ if($arParams["~FOR_SPLIT"] == 'Y'):?>
 			<?endforeach?>
 		</div>
 		<?foreach($arPost as $key => $value):?>
-			<?if(!preg_match("|OPENID_IDENTITY|", $key)):?>
+			<?if(!preg_match("|OPENID_IDENTITY|", $key) && !in_array($key, array('captcha_sid', 'captcha_word', 'g-recaptcha-response'))):?>
 				<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
 			<?endif;?>
 		<?endforeach?>

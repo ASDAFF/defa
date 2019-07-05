@@ -271,7 +271,7 @@ $APPLICATION->SetTitle("Обзоры");
 			2 => "COLOR_REF",
 			3 => "",
 		),
-		"LIST_OFFERS_LIMIT" => "5",
+		"LIST_OFFERS_LIMIT" => "10",
 		"DETAIL_OFFERS_FIELD_CODE" => array(
 			0 => "",
 			1 => "",

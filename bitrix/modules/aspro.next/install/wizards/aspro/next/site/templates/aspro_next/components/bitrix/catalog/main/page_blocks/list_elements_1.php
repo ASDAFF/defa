@@ -5,11 +5,17 @@
 			<img src="<?=CFile::GetPath($arSeoItem["DETAIL_PICTURE"]);?>" alt="" title="" class="img-responsive"/>
 		<?endif;?>
 
-		<?$APPLICATION->ShowViewContent('sotbit_seometa_top_desc');?>
-
+		<?ob_start();?>
 		<?if($arSeoItem["PREVIEW_TEXT"]):?>
 			<?=$arSeoItem["PREVIEW_TEXT"]?>
 		<?endif;?>
+		<?
+		$html = ob_get_clean();
+		$APPLICATION->AddViewContent('top_desc', $html);
+		$APPLICATION->ShowViewContent('top_desc');
+		$APPLICATION->ShowViewContent('sotbit_seometa_top_desc');
+		?>
+
 		<?if($arSeoItem["PROPERTY_FORM_QUESTION_VALUE"]):?>
 			<table class="order-block noicons">
 				<tbody>
@@ -122,6 +128,8 @@
 				"ADD_SECTIONS_CHAIN" => ((!$iSectionsCount || $arParams['INCLUDE_SUBSECTIONS'] !== "N") ? 'N' : 'Y'),
 				"SHOW_SECTION_LIST_PICTURES" => $arParams["SHOW_SECTION_PICTURES"],
 				"TOP_DEPTH" => "1",
+				"FILTER_NAME" => "arSubSectionFilter",
+				"CACHE_FILTER" => "Y",
 			),
 			$component
 		);?>
@@ -202,7 +210,7 @@ if($isAjaxFilter == "Y")
 
 			</script>
 		<?endif;?>
-		<?ob_start()?>
+		<?ob_start();?>
 			<?include_once(__DIR__."/../filter.php")?>
 			<script>
 				$('#content > .wrapper_inner > .left_block').addClass('filter_ajax filter_visible');
@@ -229,7 +237,7 @@ if($isAjaxFilter == "Y")
 <?endif;?>
 			<?if(!$arSeoItem):?>
 				<?if($arParams["SHOW_SECTION_DESC"] != 'N' && strpos($_SERVER['REQUEST_URI'], 'PAGEN') === false):?>
-					<?$APPLICATION->ShowViewContent('sotbit_seometa_top_desc');?>
+					<?ob_start();?>
 					<?if($posSectionDescr=="BOTH"):?>
 						<?if ($arSection[$section_pos_top]):?>
 							<div class="group_description_block top">
@@ -251,6 +259,12 @@ if($isAjaxFilter == "Y")
 							</div>
 						<?endif;?>
 					<?endif;?>
+					<?
+					$html = ob_get_clean();
+					$APPLICATION->AddViewContent('top_desc', $html);
+					$APPLICATION->ShowViewContent('sotbit_seometa_top_desc');
+					$APPLICATION->ShowViewContent('top_desc');
+					?>
 				<?endif;?>
 			<?endif;?>
 <?if($itemsCnt):?>
@@ -310,7 +324,6 @@ if($isAjaxFilter == "Y")
 						"PROPERTY_CODE" => $arParams["LIST_PROPERTY_CODE"],
 						"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 						"SHOW_MEASURE_WITH_RATIO" => $arParams["SHOW_MEASURE_WITH_RATIO"],
-
 						"OFFERS_FIELD_CODE" => $arParams["LIST_OFFERS_FIELD_CODE"],
 						"OFFERS_PROPERTY_CODE" => $arParams["LIST_OFFERS_PROPERTY_CODE"],
 						"OFFERS_SORT_FIELD" => $arParams["OFFERS_SORT_FIELD"],
@@ -318,9 +331,8 @@ if($isAjaxFilter == "Y")
 						"OFFERS_SORT_FIELD2" => $arParams["OFFERS_SORT_FIELD2"],
 						"OFFERS_SORT_ORDER2" => $arParams["OFFERS_SORT_ORDER2"],
 						'OFFER_TREE_PROPS' => $arParams['OFFER_TREE_PROPS'],
-
+						'OFFER_SHOW_PREVIEW_PICTURE_PROPS' => $arParams['OFFER_SHOW_PREVIEW_PICTURE_PROPS'],
 						"OFFERS_LIMIT" => $arParams["LIST_OFFERS_LIMIT"],
-
 						"SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
 						"DETAIL_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["element"],
 						"BASKET_URL" => $arParams["BASKET_URL"],
@@ -358,14 +370,12 @@ if($isAjaxFilter == "Y")
 						"OFFERS_CART_PROPERTIES" => $arParams["OFFERS_CART_PROPERTIES"],
 						"DISPLAY_TOP_PAGER" => $arParams["DISPLAY_TOP_PAGER"],
 						"DISPLAY_BOTTOM_PAGER" => $arParams["DISPLAY_BOTTOM_PAGER"],
-
 						"PAGER_TITLE" => $arParams["PAGER_TITLE"],
 						"PAGER_SHOW_ALWAYS" => $arParams["PAGER_SHOW_ALWAYS"],
 						"PAGER_TEMPLATE" => $arParams["PAGER_TEMPLATE"],
 						"PAGER_DESC_NUMBERING" => $arParams["PAGER_DESC_NUMBERING"],
 						"PAGER_DESC_NUMBERING_CACHE_TIME" => $arParams["PAGER_DESC_NUMBERING_CACHE_TIME"],
 						"PAGER_SHOW_ALL" => $arParams["PAGER_SHOW_ALL"],
-
 						"AJAX_OPTION_ADDITIONAL" => "",
 						"ADD_CHAIN_ITEM" => "N",
 						"SHOW_QUANTITY" => $arParams["SHOW_QUANTITY"],
@@ -398,6 +408,7 @@ if($isAjaxFilter == "Y")
 						"STIKERS_PROP" => $arParams["STIKERS_PROP"],
 						"SHOW_RATING" => $arParams["SHOW_RATING"],
 						"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
+						"IBINHERIT_TEMPLATES" => $arSeoItem ? $arIBInheritTemplates : array(),
 					), $component, array("HIDE_ICONS" => $isAjax)
 				);?>
 			<?if($isAjax!="Y"){?>
@@ -408,6 +419,7 @@ if($isAjaxFilter == "Y")
 			<?if($isAjax=="N"){?>
 				<?if(!$arSeoItem):?>
 					<?if($arParams["SHOW_SECTION_DESC"] != 'N' && strpos($_SERVER['REQUEST_URI'], 'PAGEN') === false):?>
+						<?ob_start();?>
 						<?if($posSectionDescr=="BOTH"):?>
 							<?if($arSection[$section_pos_bottom]):?>
 								<div class="group_description_block bottom">
@@ -429,20 +441,28 @@ if($isAjaxFilter == "Y")
 								</div>
 							<?endif;?>
 						<?endif;?>
+						<?
+						$html = ob_get_clean();
+						$APPLICATION->AddViewContent('bottom_desc', $html);
+						$APPLICATION->ShowViewContent('bottom_desc');
+						$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');
+						$APPLICATION->ShowViewContent('sotbit_seometa_add_desc');
+						?>
 					<?endif;?>
 
-					<?$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');?>
-					<?$APPLICATION->ShowViewContent('sotbit_seometa_add_desc');?>
-
 				<?else:?>
+					<?ob_start();?>
 					<?if($arSeoItem["DETAIL_TEXT"]):?>
 						<?=$arSeoItem["DETAIL_TEXT"];?>
 					<?endif;?>
-
-					<?$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');?>
-
+					<?
+					$html = ob_get_clean();
+					$APPLICATION->AddViewContent('bottom_desc', $html);
+					$APPLICATION->ShowViewContent('bottom_desc');
+					$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');
+					?>
 				<?endif;?>
-				<?if($arSeoItems):?>
+				<?if($arParams['SHOW_LANDINGS'] !== 'N' && $arSeoItems):?>
 					<?
 					$arLandingFilter = array();
 					if($arSeoItem)

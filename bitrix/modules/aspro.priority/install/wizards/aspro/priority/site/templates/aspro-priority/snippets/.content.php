@@ -9,4 +9,6 @@ $SNIPPETS['snippet0005.snp'] = Array('title' => 'Danger block');
 $SNIPPETS['snippet0006.snp'] = Array('title' => 'Info block');
 $SNIPPETS['snippet0007.snp'] = Array('title' => 'Tizers');
 $SNIPPETS['snippet0008.snp'] = Array('title' => 'Tizers text-right');
+$SNIPPETS['snippet0009.snp'] = Array('title' => 'Two columns left label');
+$SNIPPETS['snippet0010.snp'] = Array('title' => 'Two columns left image');
 ?>

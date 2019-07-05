@@ -19,7 +19,7 @@ if(is_array($arParams["~POST"]))
 			$onClickEvent = "onclick=\"BxShowAuthService('".$service['ID']."', '".$arParams['SUFFIX']."')\"";
 		if(strpos($service["FORM_HTML"], "OPENID_IDENTITY")!==false){
 		?>
-		<a title="<?=htmlspecialcharsbx($service["NAME"])?>" href="javascript:void(0)"  <?=$onClickEvent?> class="link-button icon <?=htmlspecialcharsbx($service["ICON"])?>" type="<?=htmlspecialcharsbx($service["ICON"])?>" id="bx_auth_href_<?=$arParams["SUFFIX"]?><?=$service["ID"]?>">
+		<a title="<?=htmlspecialcharsbx($service["NAME"])?>" href="javascript:void(0)"  <?=$onClickEvent?> class="button icon <?=htmlspecialcharsbx($service["ICON"])?>" type="<?=htmlspecialcharsbx($service["ICON"])?>" id="bx_auth_href_<?=$arParams["SUFFIX"]?><?=$service["ID"]?>">
 			<i class="soc-icon <?=htmlspecialcharsbx($service["ICON"])?>" title="<?=htmlspecialcharsbx($service["ICON"])?>" alt="<?=htmlspecialcharsbx($service["ICON"])?>"></i>
 		</a>
 		<?}else{?>
@@ -34,8 +34,7 @@ if(is_array($arParams["~POST"]))
 		<div id="bx_auth_serv<?=$arParams["SUFFIX"]?>" style="display:none">
 			<?foreach($arParams["~AUTH_SERVICES"] as $service):?>
 				<?if(($arParams["~FOR_SPLIT"] != 'Y') || (!is_array($service["FORM_HTML"]))):?>
-					<?$service["FORM_HTML"]=str_replace('"button"', '"btn btn-sm btn-default"', $service["FORM_HTML"]);?>
-					<?$service["FORM_HTML"]=str_replace('"required"', '"required form-control"', $service["FORM_HTML"]);?>
+					<?$service["FORM_HTML"]=str_replace('"button"', '"btn btn-default"', $service["FORM_HTML"]);?>
 					<div id="bx_auth_serv_<?=$arParams["SUFFIX"]?><?=$service["ID"]?>" style="display:none"><?=$service["FORM_HTML"]?></div>
 				<?endif;?>
 			<?endforeach?>
@@ -52,7 +51,7 @@ if(is_array($arParams["~POST"]))
 <script>
 	$("#bx_auth_serv<?=$arParams["SUFFIX"]?> input[type=text]").each(function()
 	{
-		$(this).addClass("required form-control").attr("required", "true");
+		$(this).addClass("required").attr("required", "true");
 	});
 	function BxShowAuthService(id, suffix)
 	{
@@ -63,8 +62,10 @@ if(is_array($arParams["~POST"]))
 		BX('bx_auth_serv'+suffix).style.display = '';
 		if(bxCurrentAuthId != '' && bxCurrentAuthId != id)
 		{
+			//BX('bx_auth_href_'+suffix+bxCurrentAuthId).className = BX('bx_auth_href_'+suffix+bxCurrentAuthId).type;
 			BX('bx_auth_serv_'+suffix+bxCurrentAuthId).style.display = 'none';
 		}
+		//BX('bx_auth_href_'+suffix+id).className = BX('bx_auth_href_'+suffix+id).className+' bx-ss-selected';
 		BX('bx_auth_href_'+suffix+id).blur();
 		BX('bx_auth_serv_'+suffix+id).style.display = '';
 		var el = BX.findChild(BX('bx_auth_serv_'+suffix+id), {'tag':'input', 'attribute':{'type':'text'}}, true);

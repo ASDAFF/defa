@@ -153,7 +153,14 @@ $arTemplateParameters['IMAGE_POSITION'] = array(
 $arTemplateParameters['COUNT_IN_LINE'] = array(
 	'PARENT' => 'LIST_SETTINGS',
 	'NAME' => GetMessage('COUNT_IN_LINE'),
-	'TYPE' => 'STRING',
+	'TYPE' => 'LIST',
+	'VALUES' => array(
+		'1' => GetMessage('ITEM_COUNT_1'),
+		'2' => GetMessage('ITEM_COUNT_2'),
+		'3' => GetMessage('ITEM_COUNT_3'),
+		'4' => GetMessage('ITEM_COUNT_4'),
+		'5' => GetMessage('ITEM_COUNT_5'),
+	),
 	'DEFAULT' => '3',
 );
 ?>

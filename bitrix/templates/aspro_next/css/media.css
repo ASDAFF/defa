@@ -1240,6 +1240,9 @@ ul.tabs li.stretch { display: none; }
 
 	body .catalog_detail .adaptive_extended_info_wrapp { 	display: block; }
 	body .item_main_info .item_slider.flex { display: block; }
+	.img_wrapper .popup_video.mobile{display:block;}
+	.catalog_detail .item_slider:not(.has_more)+.popup_video.mobile{display:none;}
+	.catalog_detail .item_slider.flexslider-init+.popup_video.mobile{display:block;}
 	body .container .catalog_detail .item_main_info .item_slider { padding: 0 !important; width: 100%; float: none; }
 	body .container .catalog_detail .item_main_info .right_info { padding: 0 !important; border-top: 1px solid #e5e5e5; }
 	body .catalog_detail .extended_info { margin-bottom: 0; }

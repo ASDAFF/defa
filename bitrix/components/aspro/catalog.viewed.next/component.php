@@ -17,7 +17,16 @@ else{
 		$viewedCntMax = \Bitrix\Main\Config\Option::get("sale", "viewed_count", "10");
 		$arResult['DIETIME'] = $DIETIME = $STARTTIME - $viewedDays * 86400000;
 
+		$arViewedIds = array_keys($arViewed);
+		CNext::checkElementsIdsInRegion($arViewedIds);
+
 		foreach($arViewed as $PRODUCT_ID => $arItem){
+			// delete items that are not in region
+			if(!in_array($PRODUCT_ID, $arViewedIds)){
+				unset($arViewed[$PRODUCT_ID]);
+				continue;
+			}
+
 			// delete old items
 			if($arItem[0] < $DIETIME){
 				unset($arViewed[$PRODUCT_ID]);

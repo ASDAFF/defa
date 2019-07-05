@@ -1,3 +1,4 @@
+<?global $arTheme, $arRegion;?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.detail",
 	"partners",
@@ -51,19 +52,22 @@
 	$component
 );?>
 
-<?$list_view = ($arParams['LIST_VIEW'] ? $arParams['LIST_VIEW'] : 'slider');?>
 <? // link goods?>
 <?if($arParams["SHOW_LINKED_PRODUCTS"] == "Y" && strlen($arParams["LINKED_PRODUCTS_PROPERTY"])):?>
+	<?
+	$list_view = ($arParams['LIST_VIEW'] ? $arParams['LIST_VIEW'] : 'slider');
+	?>
 	<div class="wraps goods-block with-padding block ajax_load catalog">
 		<?$bAjax = ((isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == "xmlhttprequest")  && (isset($_GET["ajax_get"]) && $_GET["ajax_get"] == "Y"));?>
 		<?if($bAjax):?>
 			<?$APPLICATION->RestartBuffer();?>
 		<?endif;?>
-		<?$GLOBALS['arrProductsFilter'] = array(
+		<?
+		$GLOBALS['arrProductsFilter'] = array(
 			"PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"],
 			'SECTION_GLOBAL_ACTIVE' => 'Y',
-		);?>
-		<?
+		);
+
 		if($arParams['STORES'])
 		{
 			foreach($arParams['STORES'] as $key => $store)
@@ -72,7 +76,7 @@
 					unset($arParams['STORES'][$key]);
 			}
 		}
-		global $arRegion;
+
 		if($arRegion && $arParams["HIDE_NOT_AVAILABLE"] == "Y")
 		{
 			if(reset($arRegion['LIST_STORES']) != 'component')

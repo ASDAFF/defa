@@ -16,7 +16,7 @@ $arPageBlocksParams = array();
 if(\Bitrix\Main\Loader::includeModule('aspro.priority')){
 	$arPageBlocks = CPriority::GetComponentTemplatePageBlocks(__DIR__);
 	$arPageBlocksParams = CPriority::GetComponentTemplatePageBlocksParams($arPageBlocks);
-	
+
 	CPriority::AddComponentTemplateModulePageBlocksParams(__DIR__, $arPageBlocksParams, array('SECTION' => 'SERVICES_PAGE', 'OPTION' => 'SECTIONS_TYPE_VIEW', 'CUSTOM_PARAM' => 'SERVICES_SECTIONS_TYPE_VIEW')); // add option value FROM_MODULE
 	CPriority::AddComponentTemplateModulePageBlocksParams(__DIR__, $arPageBlocksParams, array('SECTION' => 'SERVICES_PAGE', 'OPTION' => 'SECTION_ELEMENTS_TYPE_VIEW', 'CUSTOM_PARAM' => 'SERVICES_SECTION_ELEMENTS_TYPE_VIEW')); // add option value FROM_MODULE
 	CPriority::AddComponentTemplateModulePageBlocksParams(__DIR__, $arPageBlocksParams, array('SECTION' => 'SERVICES_PAGE', 'OPTION' => 'SERVICES')); // add option value FROM_MODULE
@@ -121,13 +121,21 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'N',
 	),
+	'GALLERY_TYPE' => array(
+		'PARENT' => 'DETAIL_SETTINGS',
+		'SORT' => 600,
+		'NAME' => GetMessage('GALLERY_TYPE'),
+		'TYPE' => 'LIST',
+		'VALUES' => $arGalleryType,
+		'DEFAULT' => 'big',
+	),
 	'LANDING_IBLOCK_ID' => array(
 		'SORT' => 1,
 		'NAME' => GetMessage('LANDING_IBLOCK_ID_TITLE'),
 		'TYPE' => 'TEXT',
 		'PARENT' => 'ADDITIONAL',
 		'DEFAULT' => '',
-	),	
+	),
 	'S_ASK_QUESTION' => array(
 		'SORT' => 700,
 		'NAME' => GetMessage('S_ASK_QUESTION'),

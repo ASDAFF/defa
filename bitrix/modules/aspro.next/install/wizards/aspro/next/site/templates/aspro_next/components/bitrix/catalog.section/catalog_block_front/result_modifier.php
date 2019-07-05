@@ -126,7 +126,7 @@ if (!empty($arResult['ITEMS'])){
 				$arSKUPropKeys = array_fill_keys($arSKUPropIDs, false);
 		}
 	}
-	
+
 	$arNewItemsList = array();
 	foreach ($arResult['ITEMS'] as $key => $arItem)
 	{
@@ -141,7 +141,7 @@ if (!empty($arResult['ITEMS'])){
 				$arResult['ITEMS'][$key]['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'] = $arItem['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'];
 			}
 		}
-		
+
 		$arItem['CHECK_QUANTITY'] = false;
 		if (!isset($arItem['CATALOG_MEASURE_RATIO']))
 			$arItem['CATALOG_MEASURE_RATIO'] = 1;
@@ -254,6 +254,7 @@ if (!empty($arResult['ITEMS'])){
 				$offerPictures = CIBlockPriceTools::getDoublePicturesForItem($arOffer, $arParams['OFFER_ADD_PICT_PROP']);
 
 				$arOffer['OWNER_PICT'] = empty($offerPictures['PICT']);
+				$arOffer['PREVIEW_PICTURE_FIELD'] = $arOffer['PREVIEW_PICTURE'];
 				$arOffer['PREVIEW_PICTURE'] = false;
 				$arOffer['PREVIEW_PICTURE_SECOND'] = false;
 				$arOffer['SECOND_PICT'] = true;
@@ -313,7 +314,8 @@ if (!empty($arResult['ITEMS'])){
 				}
 				if($arPropSKU[$strOneCode])
 				{
-					Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_NUMERIC, SORT_ASC))); // sort sku prop values
+					// sort sku prop values
+					Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_STRING, SORT_ASC)));
 					$arItem['OFFERS_PROPS_JS'][$strOneCode] = array(
 						"ID" => $arSKUPropList[$strOneCode]["ID"],
 						"CODE" => $arSKUPropList[$strOneCode]["CODE"],
@@ -508,6 +510,13 @@ if (!empty($arResult['ITEMS'])){
 				$arItem['OFFERS_SELECTED'] = $intSelected;
 				$arItem['OFFERS_PROPS_DISPLAY'] = $boolSKUDisplayProperties;
 			}
+
+			if($arParams["SET_SKU_TITLE"] === "Y"){
+				if(isset($arItem["OFFERS_SELECTED"])){
+					$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IBLOCK_ID'], $arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['ID']);
+					$arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IPROPERTY_VALUES'] = $ipropValues->getValues();
+				}
+			}
 		}
 
 		//set min price when USE_PRICE_COUNT
@@ -533,7 +542,7 @@ if (!empty($arResult['ITEMS'])){
 			foreach ($arItem['DISPLAY_PROPERTIES'] as $propKey => $arDispProp)
 			{
 				if ('F' == $arDispProp['PROPERTY_TYPE'])
-					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);				
+					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);
 
 			}
 		}
@@ -553,18 +562,34 @@ if (!empty($arResult['ITEMS'])){
 					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);
 			}
 		}
-		
 		$arItem['LAST_ELEMENT'] = 'N';
+
+		if($arParams['IBINHERIT_TEMPLATES']){
+			\Aspro\Next\Property\IBInherited::modifyItemTemplates($arParams, $arItem);
+		}
+
 		$arNewItemsList[$key] = $arItem;
 	}
-	
+
 	$arNewItemsList[$key]['LAST_ELEMENT'] = 'Y';
 	$arResult['ITEMS'] = $arNewItemsList;
+	unset($arNewItemsList);
+
+	if($arSKUPropList)
+	{
+		foreach($arSKUPropList as $prop => $arProps)
+		{
+			unset($arSKUPropList[$prop]["USER_TYPE_SETTINGS"]);
+			unset($arSKUPropList[$prop]["VALUES"]);
+		}
+
+	}
+
 	$arResult['SKU_PROPS'] = $arSKUPropList;
+	unset($arSKUPropList);
+
 	$arResult['DEFAULT_PICTURE'] = $arEmptyPreview;
 
-
-	unset($arNewItemsList);
 	$arResult['CURRENCIES'] = array();
 	if ($arResult['MODULES']['currency'])
 	{
