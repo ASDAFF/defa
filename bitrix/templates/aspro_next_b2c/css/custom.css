@@ -4318,12 +4318,12 @@ body .tabs_slider .catalog_item .inner_wrap {
     justify-content: space-between;
     align-items: flex-start;
     padding: 0;
+    margin-bottom: 20px;
 }
 
 .series-sort .sort-list-wrapper {
     display: flex;
     align-items: center;
-    width: 405px;
 }
 
 .sort-list-wrapper .sort-evt {
@@ -4335,9 +4335,10 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 .sort-list-wrapper .sort-list {
     margin: 0;
-    width: 260px;
+    width: 1000px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .sort-list-wrapper .sort-item {
@@ -4451,6 +4452,50 @@ body .tabs_slider .catalog_item .inner_wrap {
     background-position-y: 0;
 }
 
+.roll-up-all {
+    background: none;
+    border: none;
+    color: #a2a4a8;
+    font-size: 12px;
+}
+
+.sort-result .col-m-20 {
+    width: 25%;
+}
+
+.sort-result .top_block.roll {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.roll-up {
+    position: relative;
+    font-size: 0;
+}
+
+.roll-up::before,
+.roll-up::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: #5d6167;
+}
+
+.roll-up::before {
+    top: 50%;
+    left: -21px;
+    transform: rotate(40deg);
+}
+
+.roll-up::after {
+    top: 50%;
+    left: -28px;
+    transform: rotate(-40deg);
+}
+
 
 /*результат выбора*/
 
@@ -4465,12 +4510,12 @@ body .tabs_slider .catalog_item .inner_wrap {
 .filters-title {
     display: block;
     padding: 5px 0;
-    border-bottom: 1px solid #e6e6e6;
 }
 
 .filter-products-wrapper {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .sort-result .red-btn.white {
@@ -4488,6 +4533,8 @@ body .tabs_slider .catalog_item .inner_wrap {
     border: 1px solid #1f2229;
     background-color: #1f2229;
 }
+
+
 
 /*похожие серии*/
 
@@ -4974,7 +5021,7 @@ body .tabs_slider .catalog_item .inner_wrap {
     display: block;
     position: fixed;
     /*top: 420px;*/
-    bottom: 4px;
+    bottom: 60px;
     /*right: -202px;*/
     right: -330px;
     width: 262px;
@@ -15185,3 +15232,53 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     font-weight: 600;
     opacity: 0.7;
 }
+
+/*панель якорей  на странице серии*/
+
+.panel-anchors {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 3px rgba(191, 191, 191, 0.7);
+    z-index: 1460;
+}
+
+.panel-anchors .anchors-list {
+    display: flex;
+    justify-content: space-between;
+    width: 1200px;
+    margin: 0;
+    padding: 0;
+    margin: 0 auto;
+
+    list-style: none;
+}
+
+.panel-anchors .anchors-list li {
+    padding: 0;
+    margin: 0;
+}
+
+.panel-anchors .anchors-list li::before {
+    display: none;
+}
+
+.panel-anchors .anchors-list a {
+    display: block;
+    padding: 10px 20px;
+}
+
+.panel-anchors .anchors-list .anchor-desc {
+    background-color: #f6f6f7;
+}
+
+.panel-anchors .anchors-list .anchor-toggle {
+}
+
+.panel-anchors .anchors-list .anchor-toggle.active {
+    border-bottom: 4px solid #d33234;
+}
+
+/*ереключатели якорей верхние*/
