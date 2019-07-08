@@ -1922,7 +1922,7 @@ body .top_slider_wrapp .flexslider .slides>li .wrapper_inner>table {
 /*первый уровень*/
 
 .podborki-block .tabs-product-categories ul.categories_list {
-    border-bottom: 1px solid rgba(23, 28, 37, 0.5);
+    border-bottom: 1px solid rgba(101, 104, 109, 0.5);
 }
 
 .podborki-block .tabs-product-categories ul.categories_list li span {
@@ -1938,8 +1938,8 @@ body .top_slider_wrapp .flexslider .slides>li .wrapper_inner>table {
 
 .podborki-block .tabs-product-categories ul.categories_list li.cur span {
     color: #171c25;
-    background-color: #f6f6f7;
-    box-shadow: 0 4px 0 0 #d33234;
+    /*background-color: #f6f6f7;*/
+    box-shadow: 0 4px 0 0 #585b62;
 }
 
 
