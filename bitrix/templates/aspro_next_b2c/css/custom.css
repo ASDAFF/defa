@@ -982,7 +982,7 @@ ul.level-3-wrap.dropdown-menu.active {
 }
 /*БУРГЕР МЕНЮ*/
 .mega_fixed_menu {
-    width: 1200px;
+    width: 1668px;
     margin: 0 auto;
     bottom: auto;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
@@ -991,15 +991,38 @@ ul.level-3-wrap.dropdown-menu.active {
     /*max-height: 450px;*/
 }
 
+.mega_fixed_menu .maxwidth-theme,
+.mega_fixed_menu .menu-only,
+.mega_fixed_menu .col-md-12 {
+    padding: 0;
+}
+
+.mega_fixed_menu .row {
+    margin: 0;
+}
+
 
 .mega_fixed_menu .svg.svg-close, .mega_fixed_menu .svg.svg-inline-close {
     position: absolute;
+    top: auto;
     left: auto;
-    right: 0;
-    top: 30px;
+    bottom: 60px;
+    right: 50px;
     min-width: 18px;
     min-height: 18px;
     cursor: pointer;
+}
+
+
+.mega_fixed_menu .what_do-item-icon {
+    max-width: 50px;
+}
+
+
+.mega_fixed_menu .what_do-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 250px;
 }
 
 .mega_fixed_menu .mega-menu table .menu-item>.wrap>a {
@@ -1012,7 +1035,7 @@ ul.level-3-wrap.dropdown-menu.active {
 }
 
 .mega_fixed_menu .menu-only {
-    padding: 20px;
+    /*padding: 20px;*/
 }
 
 .mega_fixed_menu .mega-menu .table-menu-wrapper {
@@ -1026,6 +1049,7 @@ ul.level-3-wrap.dropdown-menu.active {
 .mega_fixed_menu .mega-menu .table-menu-wrapper .menu-item-wrapper {
     display: flex;
     justify-content: center;
+    padding: 30px 20px;
 }
 
 .mega_fixed_menu .mega-menu .table-menu-wrapper >.menu-item-wrapper > .menu-item {
