@@ -4711,7 +4711,7 @@ $section["COLORS"] = $arColorNew;
         </ul>
     </div>
 
-<?CNext::checkBreadcrumbsChain($arParams, $arSection);?>
+<?CNext::checkBreadcrumbsChain($arParams, $arSection);?>git 
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
 
 <?if(\Bitrix\Main\Loader::includeModule("sotbit.seometa")):?>

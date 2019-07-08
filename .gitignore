@@ -81,3 +81,10 @@ upload/
 
 bitrix/design333222.log
 bitrix/www/bitrix/test333222.log
+
+
+bitrix/modules/aspro.next/install/wizards/aspro/next/site/services/form/sms.php
+bitrix/modules/aspro.next/lang/ru/lib/property/
+bitrix/modules/aspro.next/lib/phoneauth.php
+bitrix/modules/aspro.next/lib/property/
+bitrix/modules/aspro.priority/install/wizards/aspro/priority/site/public/ru/images/company/manufacturer/
