@@ -12,6 +12,13 @@
 /* a.compare_item { display: none !important;  }*/
 
 
+/*верхняя плашка с меню*/
+
+.menu-row .menu-only {
+    position: relative;
+    z-index: -1;
+}
+
 
 .front_page .maxwidth-theme {
     padding: 0 40px;
