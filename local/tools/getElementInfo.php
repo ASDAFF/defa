@@ -181,7 +181,29 @@ elseif($_REQUEST['id']!="") {
     $IBLOCK_ID = 17;
     $IBLOCK_TYPE_ID = 'aspro_next_catalog';
     global $filter;
-    $filter['=ID'] = $_REQUEST['id'];?>
+    $filter['=ID'] = $_REQUEST['id'];
+
+    //x5 определение основного раздела
+    $cache_dir = '/iblock/elems/';
+    $obCache = \Bitrix\Main\Data\Cache::createInstance();
+    if ($obCache->initCache(3600000, serialize(array($IBLOCK_ID)),$cache_dir)) {
+        $sectionId = $obCache->getVars();
+    } elseif ($obCache->startDataCache()) {
+        $arSelect = Array("ID", "IBLOCK_SECTION_ID");
+        $arFilter = Array("IBLOCK_ID"=>$IBLOCK_ID, "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y","ID"=>$_REQUEST['id']);
+        $res = \CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        $arElement = $res->Fetch();
+
+        $sectionId = $arElement['IBLOCK_SECTION_ID'];
+        global $CACHE_MANAGER;
+        if (defined('BX_COMP_MANAGED_CACHE')) {
+            $CACHE_MANAGER->StartTagCache($cache_dir);
+            $CACHE_MANAGER->RegisterTag("iblock_id_" . $IBLOCK_ID);
+            $CACHE_MANAGER->EndTagCache();
+        }
+        $obCache->endDataCache($sectionId);
+    }
+    ?>
 
     <?php
     $arTransferParams = array (
@@ -206,7 +228,7 @@ elseif($_REQUEST['id']!="") {
         'LIST_OFFERS_LIMIT' => '20',
         'CACHE_GROUPS' => 'N',
         'LIST_OFFERS_PROPERTY_CODE' =>
-            array (
+            array(
                 0 => 'ARTICLE',
                 1 => 'COLOR_REF',
                 2 => 'SIZES',
@@ -234,7 +256,7 @@ elseif($_REQUEST['id']!="") {
             array (
             ),
         'PRODUCT_PROPERTIES' =>
-            array (
+            array(
             ),
         'PARTIAL_PRODUCT_PROPERTIES' => 'Y',
         'ADD_PROPERTIES_TO_BASKET' => 'Y',
@@ -347,31 +369,138 @@ elseif($_REQUEST['id']!="") {
                     "PRODUCT_QUANTITY_VARIABLE" => "",
                     "PRODUCT_SUBSCRIPTION" => "Y",
                     "PROPERTY_CODE" => array(
-                        0 => "BRAND",
-                        1 => "CML2_ARTICLE",
-                        2 => "COLOR_REF2",
-                        3 => "PROP_159",
-                        4 => "PROP_2033",
-                        5 => "PROP_2049",
-                        6 => "PROP_2065",
-                        7 => "PROP_2052",
-                        8 => "PROP_2027",
-                        9 => "PROP_2053",
-                        10 => "PROP_2083",
-                        11 => "PROP_2026",
-                        12 => "PROP_2044",
-                        13 => "PROP_162",
-                        14 => "PROP_2054",
-                        15 => "PROP_2017",
-                        16 => "PROP_2055",
-                        17 => "PROP_2069",
-                        18 => "PROP_2062",
-                        19 => "PROP_2061",
-                        20 => "CML2_LINK",),
+                        0 => "671",
+                        1 => "672",
+                        2 => "673",
+                        3 => "674",
+                        4 => "675",
+                        5 => "676",
+                        6 => "677",
+                        7 => "678",
+                        8 => "679",
+                        9 => "680",
+                        10 => "683",
+                        11 => "684",
+                        12 => "685",
+                        13 => "686",
+                        14 => "687",
+                        15 => "688",
+                        16 => "689",
+                        17 => "690",
+                        18 => "691",
+                        19 => "BRAND",
+                        20 => "TYPE_PRODUCT",
+                        21 => "SERIES",
+                        22 => "MODEL",
+                        23 => "CML2_ARTICLE",
+                        24 => "TEXTURE",
+                        25 => "COUNTRY_OF_ORIGIN",
+                        26 => "GARANTY",
+                        27 => "CML2_ATTRIBUTES",
+                        28 => "VIDEO_YOUTUBE",
+                        29 => "VYSOTA_DO_PODLOKOTNIKOV_HEIGHT_PODLOKOTNIK3",
+                        30 => "VYSOTA_MINIMALNAYA_HEIGHT_MIN3",
+                        31 => "VYSOTA_SIDENIYA_HEIGHT_SIDENIYA3",
+                        32 => "VYSOTA_SPINKI_HEIGHT_SPINKI3",
+                        33 => "GLUBINA_MINIMALNAYA_DEPTH_MIN3",
+                        34 => "GLUBINA_SIDENIYA_DEPTH_SIDENIYA3",
+                        35 => "DVERI_DOORS",
+                        36 => "DLINA_SM_LENGTH",
+                        37 => "ZHESTKOST_HARDNESS",
+                        38 => "KARKAS_KASKAS",
+                        39 => "KLASS_MEBELI_MEBELCLASS",
+                        40 => "KOLICHESTVO_MEST_V_SEKTSII_KOLVOMESTVSEKCII3",
+                        41 => "KOLICHESTVO_UPAKOVOK_KOLVOUPAK3",
+                        42 => "KOMPLEKT_KOMPLECT",
+                        43 => "KONSTRUKTSIYA_CONSTRUCTION",
+                        44 => "KRESTOVINA_CROSS",
+                        45 => "KROMKA_RABOCHIKH_POVERKHNOSTEY_KROMKA",
+                        46 => "MATERIAL_MATERIAL",
+                        47 => "MATERIAL_PATTERN",
+                        48 => "MATERIAL_NAPOLNENIYA_FILLING_MATERIAL",
+                        49 => "MATERIAL_OBIVKI_MATERIAL_OBIVKI3",
+                        50 => "MATERIAL_POKRYTIYA_COVER_MATERIAL",
+                        51 => "MEKHANIZM_MEHANIZM3",
+                        52 => "MEKHANIZM_KACHANIYA_MEHANIZM_KACHANIYA3",
+                        53 => "MEKHANIZMY_TILT",
+                        54 => "NAGRUZKA_NAGRUZKA",
+                        55 => "NAPOLNITELI_NAPOLNITELI",
+                        56 => "NAPRAVLYAYUSHCHIE_MDIRECTIONS",
+                        57 => "OBEM_TOVARA_OBYEM3",
+                        58 => "OPORY_OPORY",
+                        59 => "PODGOLOVNIK_PODGOLOVNIK3",
+                        60 => "PODLOKOTNIKI_ARMRESTS",
+                        61 => "PODLOKOTNIKI_PODLOKOTNIK3",
+                        62 => "POLKA_POLKA",
+                        63 => "POTREBLYAEMAYA_MOSHCHNOST_MOSCHNOST",
+                        64 => "POYASNICHNYY_UPOR_LUMBAR_SUPPORT3",
+                        65 => "RABOCHIE_POVERKHNOSTI_R_POVERHNOST",
+                        66 => "REGULIROVKA_VYSOTY_SIDENIYA_REGUL_VYSOTY_SIDEN3",
+                        67 => "REGULIROVKI_REGULATOR",
+                        68 => "ROLIKI_ROLIKI3",
+                        69 => "ROLIKI_SKATES",
+                        70 => "SETKA_V_SPINKE_SETKAVSPINKE3",
+                        71 => "SIDENE_SIDENIE",
+                        72 => "SOEDINITELNAYA_FURNITURA_SOED_FURNITURA",
+                        73 => "STOLESHNITSA_STOLESHNICA",
+                        74 => "TIP_BAZY_TYPE_BASE3",
+                        75 => "TIP_LAMPY_LAMPA_TYPE",
+                        76 => "TOLSHCHINA_THICKNESS",
+                        77 => "FASAD_FACADE",
+                        78 => "SHIRINA_SIDENIYA_WIDTH_SIDENIYA3",
+                        79 => "YASHCHIKI_BOXES",
+                        80 => "MATERIAL_OBIVKI_SPINKI_KRESLA",
+                        81 => "MATERIAL_OBIVKI_SIDENIYA_KRESLA",
+                        82 => "SIZES",
+                        83 => "PROP_159",
+                        84 => "WIDHT",
+                        85 => "DEPTH",
+                        86 => "HEIGHT",
+                        87 => "SHIRINAUPAK",
+                        88 => "VYSOTAUPAK",
+                        89 => "GLUBINAUPAK",
+                        90 => "GABARITYUPAK",
+                        91 => "BRUTTO",
+                        92 => "VOLUME",
+                        93 => "MATERIAL_PETEL",
+                        94 => "AMORTIZATORY_PETEL",
+                        95 => "MATERIAL_RUCHEK",
+                        96 => "DOVODCHIK",
+                        97 => "MATERIAL_KARKASA",
+                        98 => "TEXTURE_KARKASA",
+                        99 => "THICKNESS_KARKAS",
+                        100 => "MATERIAL_ZADNEJ_STENKI_KARKASA",
+                        101 => "TOLSHCHINA_ZADNEJ_STENKI_KARKASA",
+                        102 => "TIP_DVEREJ",
+                        103 => "MATERIAL_DVEREJ",
+                        104 => "TEKSTURA_DVEREJ",
+                        105 => "PROP_2033",
+                        106 => "PROP_2049",
+                        107 => "PROP_2065",
+                        108 => "PROP_2052",
+                        109 => "PROP_2027",
+                        110 => "PROP_2053",
+                        111 => "PROP_2083",
+                        112 => "PROP_2026",
+                        113 => "PROP_2044",
+                        114 => "PROP_162",
+                        115 => "PROP_2054",
+                        116 => "PROP_2017",
+                        117 => "PROP_2055",
+                        118 => "PROP_2069",
+                        119 => "PROP_2062",
+                        120 => "PROP_2061",
+                        121 => "RECOMMEND",
+                        122 => "NEW",
+                        123 => "STOCK",
+                        124 => "VIDEO",
+                        125 => "FILES",
+                        126 => "",
+                    ),
                     "RELATIVE_QUANTITY_FACTOR" => "5",
                     "SECTION_CODE" => "",
                     "SECTION_CODE_PATH" => "",
-                    "SECTION_ID" => $_REQUEST['sectionid'],
+                    "SECTION_ID" => $sectionId,
                     "INCLUDE_SUBSECTIONS" => "Y",
                     "SECTION_URL" => "",
                     "SEF_MODE" => "N",

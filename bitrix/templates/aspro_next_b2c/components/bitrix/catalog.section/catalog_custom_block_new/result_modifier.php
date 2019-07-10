@@ -701,5 +701,53 @@ if (intVal($arParams["IBLOCK_STOCK_ID"])){
     }
 }
 //x5 20190625 end получение акций для товаров
+$armarks = GetMarks();
+$ids = [];
+foreach ($arResult['ITEMS'] as $arItem){
+    if(!in_array($arItem['IBLOCK_SECTION_ID'],$ids))$ids[] = $arItem['IBLOCK_SECTION_ID'];
+}
+if($ids){
+    $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"],'ID'=>$ids);
+    $rsSections = CIBlockSection::GetList(array('SORT' => 'ASC'), $arFilter,false,array('ID','UF_METKA','UF_DISCOUNT'));
+    while ($arSection = $rsSections->GetNext())
+    {
+        $arSections[$arSection['ID']]=$arSection;
+    }
+}
+foreach ($arResult['ITEMS'] as &$arItem){
+    if($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_DISCOUNT']){
+        $arItem['DISCOUNT'] = $arSections[$arItem['IBLOCK_SECTION_ID']]['UF_DISCOUNT'];
+    }
+
+    if($arItem['PROPERTIES']['HIT']['VALUE']){
+        foreach ($arItem['PROPERTIES']['HIT']['VALUE'] as $mark){
+            $arItem['MARKS'][$mark] = $armarks[$mark];
+        }
+    }else{
+        if($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA']){
+            foreach ($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'] as $mark){
+                $arItem['MARKS'][$mark] = $armarks[$mark];
+            }
+        }
+
+    }
+}
+
+
+//x5 20190708 begin
+foreach($arResult['ITEMS'] as &$arItem){
+    $arResult['VISIBLE_PROPS'] = array();
+    if (!empty($arItem['DISPLAY_PROPERTIES'])){
+
+        foreach ($arItem['DISPLAY_PROPERTIES'] as $propKey => $arDispProp){
+            if ('F' == $arDispProp['PROPERTY_TYPE'])
+                unset($arResult['DISPLAY_PROPERTIES'][$propKey]);
+			elseif(!in_array($propKey, array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO")))
+                $arItem['VISIBLE_PROPS'][$propKey] = $arDispProp;
+        }
+    }
+}
+
+//x5 20190708 end
 ?>
 
