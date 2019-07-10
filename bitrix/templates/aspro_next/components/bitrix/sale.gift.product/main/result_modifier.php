@@ -282,6 +282,7 @@ if (!empty($arResult['ITEMS']))
 
 				$offerPictures = CIBlockPriceTools::getDoublePicturesForItem($arOffer, $arParams['ADDITIONAL_PICT_PROP'][$arOffer['IBLOCK_ID']]);
 				$arOffer['OWNER_PICT'] = empty($offerPictures['PICT']);
+				$arOffer['PREVIEW_PICTURE_FIELD'] = $arOffer['PREVIEW_PICTURE'];
 				$arOffer['PREVIEW_PICTURE'] = false;
 				$arOffer['PREVIEW_PICTURE_SECOND'] = false;
 				$arOffer['SECOND_PICT'] = true;
@@ -303,7 +304,7 @@ if (!empty($arResult['ITEMS']))
 						$arOffer["DETAIL_PAGE_URL"] = str_replace($arTmpUrl[0], $arItem["DETAIL_PAGE_URL"], $arOffer["DETAIL_PAGE_URL"]);
 					}
 				}
-				
+
 				$arNewOffers[$keyOffer] = $arOffer;
 			}
 			$arItem['OFFERS'] = $arNewOffers;
@@ -377,7 +378,7 @@ if (!empty($arResult['ITEMS']))
 				//format offer prices when USE_PRICE_COUNT
 				$sPriceMatrix = '';
 				if($arParams['USE_PRICE_COUNT'] == 'Y')
-				{	
+				{
 					$arPriceTypeID = array();
 					if($arOffer['PRICES'])
 					{

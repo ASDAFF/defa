@@ -4964,13 +4964,15 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				}
 			}
 
-			var paySystemNode = BX.findChildren(this.paySystemBlockNode, {className:'bx-soa-pp-company', attribute: {'data-id': currentPaySystem.ID}}, true);
-			if(paySystemNode && paySystemNode.length){
-				var injectNode = BX.findChildren(paySystemNode[0], {className:'bx-soa-pp-company-inject'}, true);
-				if(injectNode && injectNode.length){
-					BX.cleanNode(injectNode[0]);
-					injectNode[0].appendChild(paySystemInfoContainer);
-					BX.removeClass(injectNode[0], 'hidden');
+			if(currentPaySystem){
+				var paySystemNode = BX.findChildren(this.paySystemBlockNode, {className:'bx-soa-pp-company', attribute: {'data-id': currentPaySystem.ID}}, true);
+				if(paySystemNode && paySystemNode.length){
+					var injectNode = BX.findChildren(paySystemNode[0], {className:'bx-soa-pp-company-inject'}, true);
+					if(injectNode && injectNode.length){
+						BX.cleanNode(injectNode[0]);
+						injectNode[0].appendChild(paySystemInfoContainer);
+						BX.removeClass(injectNode[0], 'hidden');
+					}
 				}
 			}
 		},

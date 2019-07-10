@@ -1,7 +1,7 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
 <?$this->setFrameMode(true);?>
 <div class="item-views-wrapper <?=$templateName;?>">
-	
+
 	<?if($arResult['SECTIONS']):?>
 		<div class="maxwidth-theme">
 			<div class="row">
@@ -45,7 +45,12 @@
 												<div class="title"><?=$arItem['NAME'];?></div>
 												<div class="middle-prop">
 													<?if($arItem['PROPERTIES']['MAP']['VALUE']):?>
-														<div class="show_on_map font_upper"><span data-coordinates="<?=$arItem['PROPERTIES']['MAP']['VALUE'];?>">
+														<div class="show_on_map font_upper">
+															<?if($arParams['SHOW_TOP_MAP'] !== 'N'):?>
+																<span data-coordinates="<?=$arItem['PROPERTIES']['MAP']['VALUE'];?>">
+															<?else:?>
+																<span data-event="jqm" data-param-id="map" data-param-type="map" data-name="map" data-id="<?=$arItem['ID'];?>" data-iblock_id="<?=$arParams['IBLOCK_ID'];?>">
+															<?endif;?>
 															<?=CPriority::showIconSvg(SITE_TEMPLATE_PATH.'/images/include_svg/show_on_map.svg');?>
 															<?=GetMessage('SHOW_ON_MAP')?>
 														</span></div>

@@ -1,9 +1,9 @@
 <?if( !defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true ) die();
 if(\Bitrix\Main\Loader::includeModule('aspro.priority'))
 {
-	
+
 	global $arTheme;
-	
+
 	if(!$arTheme)
 	{
 		$arTheme = CPriority::GetFrontParametrsValues(SITE_ID);
@@ -17,7 +17,7 @@ if(\Bitrix\Main\Loader::includeModule('aspro.priority'))
 			$arParams["SHOW_LICENCE"] = $arTheme["SHOW_LICENCE"];
 	}
 	$useBitrixForm = (is_array($arTheme['USE_BITRIX_FORM']) ? $arTheme['USE_BITRIX_FORM']['VALUE'] : $arTheme['USE_BITRIX_FORM']);
-	
+
 	if($useBitrixForm == 'Y' && \Bitrix\Main\Loader::includeModule('form')){?>
 		<?$APPLICATION->IncludeComponent(
 			"bitrix:form",
@@ -267,7 +267,7 @@ if(\Bitrix\Main\Loader::includeModule('aspro.priority'))
 			}
 
 			if(is_array($arResult["QUESTIONS"])){
-				
+
 				foreach( $arResult["QUESTIONS"] as $FIELD_CODE => $arQuestion ){
 					if(isset($_REQUEST[$FIELD_CODE])){
 						$val = !empty( $_REQUEST[$FIELD_CODE] ) ? $_REQUEST[$FIELD_CODE] : $arQuestion["DEFAULT"];
@@ -454,7 +454,7 @@ echo '</pre>';*/
 							}
 						}
 					}
-					
+
 
 					if(is_array($arResult["QUESTIONS"])){
 						foreach( $arResult["QUESTIONS"] as $FIELD_CODE => $arQuestion ){
@@ -583,7 +583,7 @@ echo '</pre>';*/
 					endif;
 				}
 
-				$arResult["isFormErrors"] = count( $arResult["FORM_ERRORS"] ) > 0 ? "Y" : "N";
+				$arResult["isFormErrors"] = (isset($arResult["FORM_ERRORS"]) && count($arResult["FORM_ERRORS"]) > 0 ? "Y" : "N");
 
 				if($arResult["CAPTCHA_TYPE"] == "IMG")
 					$arResult["CAPTCHACode"] = $APPLICATION->CaptchaGetCode();
@@ -646,7 +646,7 @@ echo '</pre>';*/
 						)
 					);
 				}
-				
+
 				$this->initComponentTemplate();
 
 				$this->IncludeComponentTemplate();

@@ -313,7 +313,7 @@ JCSmartFilter.prototype.setUrlSortDisplay = function (url)
 JCSmartFilter.prototype.filterCatalog = function (url, set_disabled)
 {
 	if( window.History.enabled || window.history.pushState != null ){
-		window.History.pushState( null, document.title, url );
+		window.History.pushState( null, document.title, decodeURIComponent(url) );
 	}else{
 		location.href = url;
 	}
@@ -427,7 +427,7 @@ JCSmartFilter.prototype.postHandler = function (result, fromCache)
 
 				url = BX.util.htmlspecialcharsback(result.FILTER_AJAX_URL);
 				// BX.ajax.insertToNode(url+'?ajax_get=Y', "right_block_ajax");
-				
+
 				if(url.indexOf('reset_form=y') != -1)
 				{
 					var arData = [];
@@ -435,7 +435,7 @@ JCSmartFilter.prototype.postHandler = function (result, fromCache)
 						pair = pair_tmp[1].split('&');
 					url = pair_tmp[0];
 				}
-				
+
 				this.filterCatalog(url, "N");
 
 				/*ajax update filter catalog items end*/
@@ -624,7 +624,7 @@ JCSmartFilter.prototype.values2post = function (values)
 
 	if("q" in post)
 		delete post["q"];
-	
+
 	return post;
 };
 
@@ -1054,7 +1054,7 @@ BX.Iblock.SmartFilter = (function()
 				return false;
 			};
 		}
-		
+
 		$('.bx_filter .bx_filter_parameters_box_container input').prop('disabled', false);
 
 		if (!this.isTouch)
@@ -1154,7 +1154,7 @@ BX.Iblock.SmartFilter = (function()
 				return false;
 			};
 		}
-		
+
 		$('.bx_filter .bx_filter_parameters_box_container input').prop('disabled', false);
 
 		if (!this.isTouch)

@@ -29,7 +29,7 @@ $this->setFrameMode(true);
 								<a href="<?=$arItem['SECTION_PAGE_URL']?>"><img src="<?=$imageSectionSrc?>" alt="<?=( $arItem['PICTURE']['ALT'] ? $arItem['PICTURE']['ALT'] : $arItem['NAME']);?>" title="<?=( $arItem['PICTURE']['TITLE'] ? $arItem['PICTURE']['TITLE'] : $arItem['NAME']);?>" class="img-responsive" /></a>
 							</div>
 						<?endif;?>
-						
+
 						<div class="body-info">
 							<?// section name?>
 							<?if(in_array('NAME', $arParams['FIELD_CODE'])):?>
@@ -62,6 +62,6 @@ $this->setFrameMode(true);
 					</div>
 				</div>
 			<?endforeach;?>
-		</div>	
+		</div>
 	</div>
 <?endif;?>

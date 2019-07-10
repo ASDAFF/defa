@@ -1,74 +1,72 @@
 $(document).ready(function(){
-	$('.confirm_region .aprove').on('click', function(e){
+	$(document).on('click', '.confirm_region .aprove', function(){
 		var _this = $(this);
 		$.removeCookie('current_region');
-		
-		if(arPriorityOptions['SITE_ADDRESS'].indexOf(',') != '-1')
-		{
+
+		if(arPriorityOptions['SITE_ADDRESS'].indexOf(',') != '-1'){
 			var arDomains = arPriorityOptions['SITE_ADDRESS'].split(',');
-			if(arDomains)
-			{
-				for(var i in arDomains)
-				{
+			if(arDomains){
+				for(var i in arDomains){
 					var domain_name = arDomains[i].replace("\n", "");
-						domain_name = arDomains[i].replace("'", "");
+					domain_name = arDomains[i].replace("'", "");
 					$.cookie('current_region', _this.data('id'), {path: '/',domain: domain_name});
 				}
 			}
 		}
-		else
+		else{
 			$.cookie('current_region', _this.data('id'), {path: '/',domain: arPriorityOptions['SITE_ADDRESS']});
-		
+		}
+
 		$('.confirm_region').remove();
-		if(typeof _this.data('href') !== 'undefined')
+		if(typeof _this.data('href') !== 'undefined'){
 			location.href = _this.data('href');
-	})
-	$('.js_city_change').on('click', function(){
+		}
+	});
+
+	$(document).on('click', '.js_city_change', function(){
 		var _this = $(this);
 		$('.region_wrapper .dropdown').fadeIn(100);
-		if(_this.closest('.top_mobile_region').length)
-		{
+		if(_this.closest('.top_mobile_region').length){
 			$('.burger').click();
-
 			$('.mobile_regions > ul > li > a').click()
 		}
 		$('.confirm_region').remove();
-	})
-	$('.js_city_chooser').on('click', function(){
+	});
+
+	$(document).on('click', '.js_city_chooser', function(){
 		var _this = $(this);
 		$('.confirm_region').remove();
 		_this.closest('.region_wrapper').find('.dropdown').fadeToggle(100);
-	})
-	/* close search block */
-	$("html, body").on('mousedown', function(e){
-		e.stopPropagation();
-		if(!$(e.target).hasClass('dropdown'))
-		{
-			$('.region_wrapper .dropdown').fadeOut(100);
-		}
+	});
 
-	});
-	$('.region_wrapper').find('*').on('mousedown', function(e){
+	$(document).on('mousedown', '.region_wrapper *', function(e){
 		e.stopPropagation();
 	});
-	$('.region_wrapper .more_item:not(.current) span').on('click', function(e){
+
+	$(document).on('click', '.region_wrapper .more_item:not(.current) span', function(){
 		$.removeCookie('current_region');
-		if(arPriorityOptions['SITE_ADDRESS'].indexOf(',') != '-1')
-		{
+		if(arPriorityOptions['SITE_ADDRESS'].indexOf(',') != '-1'){
 			var arDomains = arPriorityOptions['SITE_ADDRESS'].split(',');
-			if(arDomains)
-			{
-				for(var i in arDomains)
-				{
+			if(arDomains){
+				for(var i in arDomains){
 					var domain_name = arDomains[i].replace("\n", "");
-						domain_name = arDomains[i].replace("'", "");
+					domain_name = arDomains[i].replace("'", "");
 					$.cookie('current_region', $(this).data('region_id'), {path: '/',domain: domain_name});
 				}
 			}
 		}
-		else
+		else{
 			$.cookie('current_region', $(this).data('region_id'), {path: '/',domain: arPriorityOptions['SITE_ADDRESS']});
+		}
 
 		location.href = $(this).data('href');
+	});
+
+	/* close search block */
+	$("html, body").on('mousedown', function(e){
+		e.stopPropagation();
+		if(!$(e.target).hasClass('dropdown')){
+			$('.region_wrapper .dropdown').fadeOut(100);
+		}
 	});
 });

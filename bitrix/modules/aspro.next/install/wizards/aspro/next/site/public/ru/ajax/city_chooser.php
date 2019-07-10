@@ -8,7 +8,9 @@
 
 	<?global $arTheme, $APPLICATION;
 	$arTheme = CNext::GetFrontParametrsValues(SITE_ID);
-	$urlback = $_GET['url'];
+	$arGetVar = '_GET';
+	$arGet = $$arGetVar;
+	$urlback = $arGet['url'];
 	// $urlback = htmlspecialchars($_GET['url']);
 	// if($urlback)
 	// 	$urlback = urldecode($urlback);

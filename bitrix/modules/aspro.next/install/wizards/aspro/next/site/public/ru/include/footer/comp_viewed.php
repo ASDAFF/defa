@@ -22,10 +22,16 @@ if($arViewedIDs){?>
 		<div class="wrapper_inner">
 			<div class="similar_products_wrapp">
 				<?if(!$IsViewedTypeLocal):?>
-					<?$GLOBALS['arrFilterViewed'] = array( "ID" => $arViewedIDs );?>
+					<?
+					$GLOBALS['arrFilterViewed'] = array(
+						"IBLOCK_ID" => "#IBLOCK_CATALOG_ID#",
+						"ID" => $arViewedIDs,
+					);
+					CNext::makeElementFilterInRegion($GLOBALS['arrFilterViewed']);
+					?>
 					<?$APPLICATION->IncludeComponent(
-						"bitrix:catalog.section", 
-						"catalog_viewed_".strtolower($arTheme['VIEWED_TEMPLATE']['VALUE']), 
+						"bitrix:catalog.section",
+						"catalog_viewed_".strtolower($arTheme['VIEWED_TEMPLATE']['VALUE']),
 						array(
 							"IBLOCK_TYPE" => "#IBLOCK_NEXT_CATALOG_TYPE#",
 							"IBLOCK_ID" => "#IBLOCK_CATALOG_ID#",

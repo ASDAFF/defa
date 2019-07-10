@@ -68,7 +68,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 					</td>
 				</tr>
 			</table>
-		<?endif;?>	
+		<?endif;?>
 		<?//show desc block?>
 		<?if($value == "previews_desc"):?>
 			<?if($templateData['PREVIEW_TEXT']):?>
@@ -79,7 +79,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 		<?endif;?>
 		<?if($value == "desc"):?>
 			<?if($templateData['DETAIL_TEXT']):?>
-				<div class="content">				
+				<div class="content">
 					<?// element detail text?>
 					<?if(strlen($templateData['DETAIL_TEXT'])):?>
 						<?=$templateData['DETAIL_TEXT'];?>
@@ -101,7 +101,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?if($arProp['HINT']):?>
 											<span class="hint">
 												<span class="icons" data-toggle="tooltip" data-placement="top" title="<?=$arProp['HINT']?>"></span>
-											</span>																			
+											</span>
 										<?endif;?>
 									</span>
 								</td>
@@ -126,7 +126,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 				</div>
 			</div>
 		<?endif;?>
-		
+
 		<?//show docs block?>
 		<?if($value == "docs" && $templateData['DOCUMENTS']):?>
 			<div class="wraps">
@@ -215,11 +215,14 @@ $bOrderViewBasket = $templateData["ORDER"];
 		<?//show gallery block?>
 		<?if($value == "gallery"):?>
 			<?if(count($templateData['GALLERY_BIG'])):?>
+				<?
+				$bShowSmallGallery = $templateData['GALLERY_TYPE'] === 'small';
+				?>
 				<div class="wraps galerys-block">
-					<span class="switch_gallery"></span>
-					<div class="title small-gallery font_xs"><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
-					<div class="title big-gallery font_xs"><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
-					<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth" id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
+					<span class="switch_gallery<?=($bShowSmallGallery ? ' small' : '');?>"></span>
+					<div class="title small-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
+					<div class="title big-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?>><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
+					<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?> id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
 						<ul class="slides items">
 							<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
 								<li class="col-md-12 item">
@@ -233,7 +236,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 							<?endforeach;?>
 						</ul>
 					</div>
-					<div class="small-gallery-block">
+					<div class="small-gallery-block"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>>
 						<div class="front bigs">
 							<div class="items row">
 								<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
@@ -431,7 +434,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 					false, array("HIDE_ICONS" => "Y")
 				);?>
 			</div>
-		<?endif;?>		
+		<?endif;?>
 		<?if($value == "services"):?>
 			<?if($templateData['LINK_SERVICES']):?>
 				<div class="wraps">
@@ -564,7 +567,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 					</div>
 				</div>
 			<?endif;?>
-		<?endif;?>					
+		<?endif;?>
 		<?//show goods block?>
 
 		<?if($value == "goods"):?>
@@ -1076,6 +1079,6 @@ $bOrderViewBasket = $templateData["ORDER"];
 					false, array("HIDE_ICONS" => "Y")
 				);?>
 			<?endif;?>
-		<?endif;?>					
+		<?endif;?>
 	</div>
 <?endforeach;?>

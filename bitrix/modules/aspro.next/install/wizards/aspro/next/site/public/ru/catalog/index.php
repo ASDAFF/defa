@@ -188,6 +188,7 @@ $APPLICATION->IncludeComponent(
 		"SECTION_PREVIEW_PROPERTY" => "DESCRIPTION",
 		"SHOW_SECTION_PICTURES" => "Y",
 		"SHOW_SECTION_SIBLINGS" => "Y",
+		"USE_DETAIL_PREDICTION" => "N",
 		"DETAIL_PROPERTY_CODE" => array(
 			0 => "BRAND",
 			1 => "CML2_ARTICLE",
@@ -489,8 +490,10 @@ $APPLICATION->IncludeComponent(
 		"CHEAPER_FORM_NAME" => "",
 		"DIR_PARAMS" => CNext::GetDirMenuParametrs(__DIR__),
 		"SHOW_CHEAPER_FORM" => "Y",
+		"SHOW_LANDINGS" => "Y",
 		"LANDING_TITLE" => "Популярные категории",
 		"LANDING_SECTION_COUNT" => "7",
+		"SHOW_LANDINGS_SEARCH" => "Y",
 		"LANDING_SEARCH_TITLE" => "Похожие запросы",
 		"LANDING_SEARCH_COUNT" => "7",
 		"SECTIONS_TYPE_VIEW" => "sections_1",

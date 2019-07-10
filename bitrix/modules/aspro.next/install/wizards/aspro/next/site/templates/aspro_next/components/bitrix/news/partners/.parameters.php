@@ -23,7 +23,7 @@ if(\Bitrix\Main\Loader::includeModule('iblock'))
 				$arProperty_S[$arr["CODE"]] = "[".$arr["CODE"]."] ".$arr["NAME"];
 			elseif($arr["MULTIPLE"] == "Y" && $arr["PROPERTY_TYPE"] == "L")
 				$arProperty_XL[$arr["CODE"]] = "[".$arr["CODE"]."] ".$arr["NAME"];
-			
+
 			$arProperty_ALL[$arr["CODE"]] = "[".$arr["CODE"]."] ".$arr["NAME"];
 		}
 	}
@@ -64,7 +64,7 @@ if ($boolSKU)
 	$arFileOfferPropList = array(
 		'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 	);
-	$arTreeOfferPropList = array(
+	$arTreeOfferPropList = $arShowPreviewPictuteTreeOfferPropList = array(
 		'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 	);
 	$rsProps = CIBlockProperty::GetList(
@@ -92,6 +92,10 @@ if ($boolSKU)
 			|| ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp))
 		)
 			$arTreeOfferPropList[$arProp['CODE']] = $strPropName;
+
+		if ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp) && strlen($arProp['USER_TYPE_SETTINGS']['TABLE_NAME'])){
+			$arShowPreviewPictuteTreeOfferPropList[$arProp['CODE']] = $strPropName;
+		}
 	}
 }
 
@@ -396,6 +400,16 @@ if ($boolSKU)
 		'NAME' => GetMessage('OFFER_HIDE_NAME_PROPS_TITLE'),
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'N',
+	);
+	$arTemplateParameters['OFFER_SHOW_PREVIEW_PICTURE_PROPS']=array(
+		'PARENT' => 'DETAIL_SETTINGS',
+		'NAME' => GetMessage('OFFER_SHOW_PREVIEW_PICTURE_PROPS_TITLE'),
+		'TYPE' => 'LIST',
+		'MULTIPLE' => 'Y',
+		'ADDITIONAL_VALUES' => 'N',
+		'REFRESH' => 'N',
+		'DEFAULT' => '-',
+		'VALUES' => $arShowPreviewPictuteTreeOfferPropList
 	);
 	$arTemplateParameters["LIST_OFFERS_FIELD_CODE"] = CIBlockParameters::GetFieldCode(GetMessage("CP_BC_LIST_OFFERS_FIELD_CODE"), "DETAIL_SETTINGS");
 	$arTemplateParameters["LIST_OFFERS_PROPERTY_CODE"] = array(

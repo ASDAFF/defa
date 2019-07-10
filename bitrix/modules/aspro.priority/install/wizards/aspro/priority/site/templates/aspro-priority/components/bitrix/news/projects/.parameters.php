@@ -103,6 +103,14 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'N',
 	),
+	'GALLERY_TYPE' => array(
+		'PARENT' => 'DETAIL_SETTINGS',
+		'SORT' => 600,
+		'NAME' => GetMessage('GALLERY_TYPE'),
+		'TYPE' => 'LIST',
+		'VALUES' => $arGalleryType,
+		'DEFAULT' => 'big',
+	),
 	'S_ASK_QUESTION' => array(
 		'SORT' => 700,
 		'NAME' => GetMessage('S_ASK_QUESTION'),

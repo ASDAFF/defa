@@ -365,6 +365,7 @@ window.JCCatalogElement = function (arParams)
 		showOfferGroup: false,
 		useCompare: false,
 		showPercentNumber: false,
+		offerShowPreviewPictureProps: false,
 		mainPictureMode: 'IMG',
 		showBasisPrice: false,
 		basketAction: ['BUY'],
@@ -961,6 +962,7 @@ window.JCCatalogElement.prototype.initConfig = function()
 		this.config.showOfferGroup = !!this.params.CONFIG.OFFER_GROUP;
 		this.config.useCompare = !!this.params.CONFIG.DISPLAY_COMPARE;
 		this.config.showPercentNumber = (this.params.SHOW_DISCOUNT_PERCENT_NUMBER == "Y");
+		this.config.offerShowPreviewPictureProps = this.params.OFFER_SHOW_PREVIEW_PICTURE_PROPS;
 		if (!!this.params.CONFIG.MAIN_PICTURE_MODE)
 		{
 			this.config.mainPictureMode = this.params.CONFIG.MAIN_PICTURE_MODE;
@@ -2448,6 +2450,67 @@ window.JCCatalogElement.prototype.RowRight = function()
 	}
 };
 
+window.JCCatalogElement.prototype.UpdateRowsImages = function()
+{
+	if(typeof this.config.offerShowPreviewPictureProps === 'object' && this.config.offerShowPreviewPictureProps.length){
+		var currentTree = this.selectedValues;
+
+		for(var i in this.obTreeRows){
+			if(BX.util.in_array(this.treeProps[i].CODE, this.config.offerShowPreviewPictureProps)){
+				var RowItems = BX.findChildren(this.obTreeRows[i].LIST, {tagName: 'LI'}, false);
+				if(!!RowItems && 0 < RowItems.length){
+					for(var j in RowItems){
+						var ImgItem = BX.findChild(RowItems[j], {className: 'cnt_item'}, true, false);
+						if(ImgItem){
+							var value = RowItems[j].getAttribute('data-onevalue');
+							if(value != 0){
+								var bgi = ImgItem.style.backgroundImage;
+								var obgi = ImgItem.getAttribute('data-obgi');
+								if(!obgi){
+									obgi = bgi;
+									ImgItem.setAttribute('data-obgi', obgi);
+								}
+
+								var boolOneSearch = false;
+								var rowTree = BX.clone(currentTree, true);
+								rowTree['PROP_' + this.treeProps[i].ID] = value;
+
+								for(var m in this.offers){
+									boolOneSearch = true;
+									for(var n in rowTree){
+										if(rowTree[n] !== this.offers[m].TREE[n]){
+											boolOneSearch = false;
+											break;
+										}
+									}
+									if(boolOneSearch){
+										if(typeof this.offers[m].PREVIEW_PICTURE === 'object' && this.offers[m].PREVIEW_PICTURE.SRC){
+											var newBgi = 'url("' + this.offers[m].PREVIEW_PICTURE.SRC + '")';
+											if(bgi !== newBgi){
+												ImgItem.style.backgroundImage = newBgi;
+												BX.addClass(ImgItem, 'pp');
+											}
+										}
+										else{
+											boolOneSearch = false;
+										}
+										break;
+									}
+								}
+
+								if(!boolOneSearch && obgi && bgi !== obgi){
+									ImgItem.style.backgroundImage = obgi;
+									BX.removeClass(ImgItem, 'pp');
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 window.JCCatalogElement.prototype.UpdateRow = function(intNumber, activeID, showID, canBuyID)
 {
 	var i = 0,
@@ -2690,6 +2753,11 @@ window.JCCatalogElement.prototype.ChangeInfo = function()
 			break;
 		}
 	}
+
+	if(this.treeProps){
+		this.UpdateRowsImages();
+	}
+
 	if (-1 < index)
 	{
 		for (i = 0; i < this.offers.length; i++)

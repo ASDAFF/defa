@@ -1,5 +1,5 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
-<?$this->setFrameMode(true);?>	
+<?$this->setFrameMode(true);?>
 <?use \Bitrix\Main\Localization\Loc;?>
 
 <?
@@ -30,6 +30,7 @@ $templateData = array(
 	'FORM_QUESTION' => $arResult['DISPLAY_PROPERTIES']['FORM_QUESTION']['VALUE'],
 	'FORM_ORDER' => $arResult['DISPLAY_PROPERTIES']['FORM_ORDER']['VALUE'],
 	'CATALOG_LINKED_TEMPLATE' => $catalogLinkedTemplate,
+	'GALLERY_TYPE' => isset($arResult['PROPERTIES']['GALLERY_TYPE']) ? ($arResult['PROPERTIES']['GALLERY_TYPE']['VALUE'] === 'small' ? 'small' : 'big') : ($arParams['GALLERY_TYPE'] === 'small' ? 'small' : 'big'),
 );
 
 $bTopImage = ($arResult['DISPLAY_PROPERTIES']['PHOTOPOS']['VALUE_XML_ID'] == 'TOP' && isset($arResult['FIELDS']['DETAIL_PICTURE']) && $arResult['FIELDS']['DETAIL_PICTURE'] ? true : false);
@@ -37,7 +38,7 @@ $bTopImage = ($arResult['DISPLAY_PROPERTIES']['PHOTOPOS']['VALUE_XML_ID'] == 'TO
 if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP']['VALUE_XML_ID'] == 'YES')
 	$templateData['SECTION_BNR_CONTENT'] = true;
 ?>
- 
+
 <?// shot top banners start?>
 <?$bShowTopBanner = (isset($arResult['SECTION_BNR_CONTENT'] ) && $arResult['SECTION_BNR_CONTENT'] == true);?>
 <?if($bShowTopBanner):?>
@@ -114,7 +115,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 		</div>
 	<?elseif($arResult['GALLERY']):?>
 		<div class="head-block">
-			<div class="row flexbox">		
+			<div class="row flexbox">
 				<div class="col-md-6 item info_wrap">
 					<div class="info wti" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 						<?if($arResult['DISPLAY_PROPERTIES_FORMATTED'] || ($bShowAskBlock || $bShowOrderBlock)):?>
@@ -177,7 +178,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 				</div>
 				<div class="gallery_wrap col-md-6 pull-right item">
 					<div class="inner items">
-						<div class="flexslider color-controls dark-nav show-nav-controls" data-plugin-options='{"smoothHeight": true, "animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "counts": [1, 1, 1]}'>
+						<div class="flexslider color-controls dark-nav show-nav-controls" data-plugin-options='{"smoothHeight": true, "animation": "slide", "directionNav": true, "controlNav": true, "animationLoop": true, "slideshow": false, "counts": [1, 1, 1]}'>
 							<ul class="slides items">
 								<?$countAll = count($arResult['GALLERY']);?>
 								<?foreach($arResult['GALLERY'] as $i => $arPhoto):?>
@@ -194,7 +195,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 							</ul>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
 	<?endif;?>
@@ -219,7 +220,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 			<span class="font_upper animate-load" data-event="jqm" data-param-id="<?=CPriority::getFormID("aspro_priority_question");?>" data-autoload-need_product="<?=CPriority::formatJsName($arResult['NAME'])?>" data-name="question"><?=(strlen($arParams['S_ASK_QUESTION']) ? $arParams['S_ASK_QUESTION'] : Loc::getMessage('S_ASK_QUESTION'))?></span>
 		</div>
 	</div>
-	
+
 <?$sFormQuestion = ob_get_contents();
 ob_end_clean();?>
 <div class="maxwidth-theme">
@@ -231,7 +232,7 @@ ob_end_clean();?>
 						<p><?=$arResult['FIELDS']['PREVIEW_TEXT'];?></p>
 					<?else:?>
 						<?=$arResult['FIELDS']['PREVIEW_TEXT'];?>
-					<?endif;?>		
+					<?endif;?>
 				</div>
 			<?endif;?>
 
@@ -254,6 +255,6 @@ ob_end_clean();?>
 			<div class="ask_a_question_wrapper">
 				<?=$sFormQuestion;?>
 			</div>
-		</div>		
+		</div>
 	</div>
 </div>

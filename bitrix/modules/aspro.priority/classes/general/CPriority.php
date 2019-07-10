@@ -22,7 +22,7 @@ class CPriority{
 	const devMode = false; // set to false before release
 
 	static $panelBottom = false;
-	
+
 	static $arParametrsList = array();
 	private static $arMetaParams = array();
 	private static $arComponentsName = array();
@@ -214,16 +214,16 @@ class CPriority{
 							ExecuteModuleEventEx($arEvent, array($arTheme, &$arMainPageOrder));
 					}
 
-					$path = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/b2g/'.SITE_DIR.$type);
+					$path = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.$type);
 					$file = $path.'_'.$arTheme['INDEX_TYPE']['VALUE'].'.php';
 					break;
 			endswitch;
-			
+
 			if ($file) {
 				if(isset($_COOKIE['OVERSITE_PANEL_SHOW']) && $_COOKIE['OVERSITE_PANEL_SHOW'] == 'Y' && (CSite::InDir(SITE_DIR.'index.php') || CSite::InDir(SITE_DIR.'ajax/options_change_oversite.php'))&& ((isset($arTheme['THEME_SWITCHER']['VALUE']) && $arTheme['THEME_SWITCHER']['VALUE'] == 'Y') || isset($arTheme['THEME_SWITCHER']) && $arTheme['THEME_SWITCHER'] == 'Y') && $paramName){
 					$arParams = self::$arParametrsList;
 					$slideshowSpeed = (isset($arTheme['PARTNERSBANNER_SLIDESSHOWSPEED']['VALUE']) && abs(intval($arTheme['PARTNERSBANNER_SLIDESSHOWSPEED']['VALUE'])) ? $arTheme['PARTNERSBANNER_SLIDESSHOWSPEED']['VALUE'] : abs(intval($arTheme['PARTNERSBANNER_SLIDESSHOWSPEED'])));
-					$animationSpeed = (isset($arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE']) && abs(intval($arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE'])) ? $arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE'] : abs(intval($arTheme['PARTNERSBANNER_ANIMATIONSPEED'])));					
+					$animationSpeed = (isset($arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE']) && abs(intval($arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE'])) ? $arTheme['PARTNERSBANNER_ANIMATIONSPEED']['VALUE'] : abs(intval($arTheme['PARTNERSBANNER_ANIMATIONSPEED'])));
 					$indexType = ($arTheme['INDEX_TYPE'] && !is_array($arTheme['INDEX_TYPE']) ? $arTheme['INDEX_TYPE'] : $arTheme['INDEX_TYPE']['VALUE']);
 					$countSubParams = count($arParams['INDEX_PAGE']['OPTIONS']['INDEX_TYPE']['SUB_PARAMS'][$indexType]);
 					$title = $arParams['INDEX_PAGE']['OPTIONS']['INDEX_TYPE']['SUB_PARAMS'][$indexType][$paramName]['TITLE'];
@@ -262,7 +262,7 @@ class CPriority{
 								<span class="action_hide" title="<?=GetMessage('ACTION_DEACTIVATE');?>" data-param_name="<?=$indexType.'_'.$paramName;?>" data-block="<?=$paramName;?>" data-title="<?=$title;?>">
 									<svg width="18" height="18" viewBox="0 0 18 18">
 										<path d="M764,258a9,9,0,1,1,9-9A9,9,0,0,1,764,258Zm0-16a7,7,0,1,0,7,7A7,7,0,0,0,764,242Zm3.723,10.723a1,1,0,0,1-1.414,0L764,250.414l-2.309,2.309a1,1,0,1,1-1.414-1.414L762.586,249l-2.309-2.309a1,1,0,1,1,1.414-1.414L764,247.586l2.309-2.309a1,1,0,1,1,1.414,1.414L765.414,249l2.309,2.309A1,1,0,0,1,767.723,252.723Z" transform="translate(-755 -240)"/>
-									</svg>								
+									</svg>
 								</span>
 							</div>
 						<?else:?>
@@ -272,11 +272,11 @@ class CPriority{
 								</svg>
 							</span>
 						<?endif;?>
-					
+
 						<div class="wrap">
 							<?@include_once $file;?>
 						</div>
-						<?if($componentTemplate):?>	
+						<?if($componentTemplate):?>
 							<?if(!$oneTemplateComponent):?>
 								<span title="<?=GetMessage('ACTION_FORWARD');?>" class="change_params right_params" data-param_name="<?=$paramName?>" data-param_value="<?=(isset($arTheme['TEMPLATE_PARAMS']) && $arTheme['TEMPLATE_PARAMS'][$arTheme['INDEX_TYPE']['VALUE']][$arTheme['INDEX_TYPE']['VALUE'].'_'.$paramName.'_TEMPLATE']['VALUE'] ? intval($arTheme['TEMPLATE_PARAMS'][$arTheme['INDEX_TYPE']['VALUE']][$arTheme['INDEX_TYPE']['VALUE'].'_'.$paramName.'_TEMPLATE']['VALUE']) + 1 : intval($arTheme[$arTheme['INDEX_TYPE'].'_'.$paramName.'_TEMPLATE']) + 1)?>" data-type="<?=$type?>" data-component_template="<?=$componentTemplate?>">
 									<svg class="change_params_svg" width="19" height="10" viewBox="0 0 19 10">
@@ -298,7 +298,7 @@ class CPriority{
 										<path d="M604.41,596.984l3.276,3.276a1.008,1.008,0,0,1-1.426,1.425l-3.276-3.276-3.276,3.276a1.008,1.008,0,0,1-1.425-1.425l3.276-3.276-3.276-3.276a1.008,1.008,0,1,1,1.425-1.426l3.276,3.276,3.276-3.276a1.008,1.008,0,0,1,1.426,1.426Z" transform="translate(-598 -592)"/>
 									</svg>
 								</div>
-							
+
 								<div class="maxwidth-theme">
 									<?if(($paramName == 'HEADER_TYPE' || $paramName == 'FOOTER_TYPE') && $bListTemplates):?>
 										<?
@@ -319,7 +319,7 @@ class CPriority{
 										<?
 										$variantType = $arTheme['TEMPLATE_PARAMS'][$indexType][$indexType.'_'.$paramName.'_TEMPLATE']['VALUE'];
 										?>
-										
+
 										<div class="variant_flexslider items wimage">
 											<ul class="slides">
 												<?foreach($arParams['INDEX_PAGE']['OPTIONS']['INDEX_TYPE']['SUB_PARAMS'][$indexType][$paramName]['TEMPLATE']['LIST'] as $key => $arList):?>
@@ -355,7 +355,7 @@ class CPriority{
 									</svg>
 									<span class="tooltip"><?=GetMessage('ACTION_RESET');?></span>
 								</div>
-							
+
 								<?if($bSaveButton):?>
 									<div class="save_btn changer" title="<?=GetMessage('SAVE_BUTTON');?>">
 										<span>
@@ -371,12 +371,12 @@ class CPriority{
 								<span class="tooltip action_activate"><?=GetMessage('ACTION_ACTIVATE');?></span>
 								<span class="tooltip action_select"><?=GetMessage('ACTION_SELECT_VARIANT');?></span>
 								<div class="slider clearfix">
-									<ul class="slides">									
+									<ul class="slides">
 										<?foreach($arTheme['INDEX_TYPE']['SUB_PARAMS'][$indexType] as $key => $arComponentParams):?>
 											<?
 											$variantType = $arTheme['TEMPLATE_PARAMS'][$indexType][$indexType.'_'.$key.'_TEMPLATE']['VALUE'];
 											?>
-										
+
 											<?if($arComponentParams['VALUE'] == 'N'):?>
 												<?
 												$componentTitle = str_replace('"', '', $arComponentParams['TITLE']);
@@ -391,7 +391,7 @@ class CPriority{
 													<div class="title">
 														<span><?=$componentTitle;?></span>
 													</div>
-													
+
 													<?if(isset($arComponentParams['TEMPLATE']['LIST']) && $arComponentParams['TEMPLATE']['LIST']):?>
 														<div class="variant_panel <?=$key;?>">
 															<div class="close_panel">
@@ -430,7 +430,7 @@ class CPriority{
 							</div>
 						</div>
 						<?self::$panelBottom = true;?>
-					<?endif;?>					
+					<?endif;?>
 				<?
 				}
 				else{
@@ -444,7 +444,7 @@ class CPriority{
 		global $arSite;
 		$arTheme = self::GetFrontParametrsValues(SITE_ID);
 		$text = '<a href="'.SITE_DIR.'">';
-		
+
 		if($arImg = unserialize(Option::get(PRIORITY_MODULE_ID, "LOGO_IMAGE", serialize(array())))){
 			$text .= '<img src="'.CFile::GetPath($arImg[0]).'" alt="'.$arSite["SITE_NAME"].'" title="'.$arSite["SITE_NAME"].'" />';
 		}
@@ -458,17 +458,17 @@ class CPriority{
 
 		return $text;
 	}
-	
+
 	public static function showIconSvg($path){
 		$iconSVG = '';
-		
+
 		if(file_exists($_SERVER['DOCUMENT_ROOT'].$path)){
 			$iconSVG = File::getFileContents($_SERVER['DOCUMENT_ROOT'].$path);
 		}
 
 		return $iconSVG;
 	}
-	
+
 	public static function GetBackParametrsValues($SITE_ID, $bStatic = true){
 		if($bStatic)
 			static $arValues;
@@ -552,7 +552,7 @@ class CPriority{
 				if(isset(self::$arParametrsList['SECTION']['OPTIONS']['MANUFACTURERS_PAGE'])){
 					self::Add2OptionCustomComponentTemplatePageBlocks(self::$arParametrsList['SECTION']['OPTIONS']['MANUFACTURERS_PAGE'], $arTemplate['PATH'].'/components/bitrix/news/manufacturers');
 				}
-				
+
 				// add custom values for SERVICES_PAGE_DETAIL
 				if(isset(self::$arParametrsList['SERVICES_PAGE']['OPTIONS']['SERVICES_PAGE_DETAIL'])){
 					self::Add2OptionCustomComponentTemplatePageBlocksElement(self::$arParametrsList['SERVICES_PAGE']['OPTIONS']['SERVICES_PAGE_DETAIL'], $arTemplate['PATH'].'/components/bitrix/news/services');
@@ -577,12 +577,12 @@ class CPriority{
 				if(isset(self::$arParametrsList['CATALOG_PAGE']['OPTIONS']['ELEMENTS_PRICE_TYPE_VIEW'])){
 					self::Add2OptionCustomComponentTemplatePageBlocksElement(self::$arParametrsList['CATALOG_PAGE']['OPTIONS']['ELEMENTS_PRICE_TYPE_VIEW'], $arTemplate['PATH'].'/components/bitrix/news/catalog', 'ELEMENTS_PRICE');
 				}
-				
+
 				// add custom values for SECTIONS_TYPE_VIEW
 				if(isset(self::$arParametrsList['CATALOG_PAGE']['OPTIONS']['SECTIONS_TYPE_VIEW'])){
 					self::Add2OptionCustomComponentTemplatePageBlocks(self::$arParametrsList['CATALOG_PAGE']['OPTIONS']['SECTIONS_TYPE_VIEW'], $arTemplate['PATH'].'/components/bitrix/news/catalog', 'SECTIONS_TYPE_VIEW');
 				}
-				
+
 				// add custom values for SECTIONS_TYPE_VIEW
 				if(isset(self::$arParametrsList['SERVICES_PAGE']['OPTIONS']['SERVICES_SECTIONS_TYPE_VIEW'])){
 					self::Add2OptionCustomComponentTemplatePageBlocks(self::$arParametrsList['SERVICES_PAGE']['OPTIONS']['SERVICES_SECTIONS_TYPE_VIEW'], $arTemplate['PATH'].'/components/bitrix/news/services', 'SECTIONS_TYPE_VIEW');
@@ -594,7 +594,7 @@ class CPriority{
 				foreach(self::$arParametrsList as $blockCode => $arBlock)
 				{
 					if($arBlock['OPTIONS'] && is_array($arBlock['OPTIONS']))
-					{						
+					{
 						foreach($arBlock['OPTIONS'] as $optionCode => $arOption)
 						{
 							if($arOption['TYPE'] !== 'note' && $arOption['TYPE'] !== 'includefile'){
@@ -631,7 +631,7 @@ class CPriority{
 													foreach($arOption['SUB_PARAMS'][$key] as $key2 => $arSubOptions)
 													{
 														$arDefaultValues[$key.'_'.$key2] = $arSubOptions['DEFAULT'];
-														
+
 														//set default template index components
 														if(isset($arSubOptions['TEMPLATE']) && $arSubOptions['TEMPLATE'])
 														{
@@ -1039,7 +1039,7 @@ class CPriority{
 						$includefile = str_replace('//', '/', str_replace('#SITE_DIR#', $arTab['SITE_DIR'].'/', $includefile));
 						if(strpos($includefile, '#') === false){
 							$template = (isset($arOption['TEMPLATE']) && strlen($arOption['TEMPLATE']) ? 'include_area.php' : $arOption['TEMPLATE']);
-							$href = (!strlen($includefile) ? "javascript:;" : "javascript: new BX.CAdminDialog({'content_url':'/bitrix/admin/public_file_edit.php?site=".$arTab['SITE_ID']."&bxpublic=Y&from=includefile&templateID=".TEMPLATE_NAME."&path=".$includefile."&lang=".LANGUAGE_ID."&template=".$template."&subdialog=Y&siteTemplateId=".TEMPLATE_NAME."','width':'1009','height':'503'}).Show();");
+							$href = (!strlen($includefile) ? "javascript:;" : "javascript: new BX.CAdminDialog({'content_url':'/bitrix/admin/public_file_edit.php?site=".$arTab['SITE_ID']."&bxpublic=Y&from=includefile&templateID="."TEMPLATE_NAME"."&path=".$includefile."&lang=".LANGUAGE_ID."&template=".$template."&subdialog=Y&siteTemplateId="."TEMPLATE_NAME"."','width':'1009','height':'503'}).Show();");
 							?><a class="adm-btn" href="<?=$href?>" name="<?=htmlspecialcharsbx($optionCode)."_".$optionsSiteID?>" title="<?=GetMessage('OPTIONS_EDIT_BUTTON_TITLE')?>"><?=GetMessage('OPTIONS_EDIT_BUTTON_TITLE')?></a>&nbsp;<?
 						}
 					}
@@ -1120,10 +1120,10 @@ class CPriority{
 										{
 											if($optionCode == 'BASE_COLOR_CUSTOM' || $optionCode == 'CUSTOM_BGCOLOR_THEME')
 												$_REQUEST[$optionCode] = self::CheckColor($_REQUEST[$optionCode]);
-											
+
 											if($optionCode == 'BASE_COLOR' && $_REQUEST[$optionCode] === 'CUSTOM')
 												Option::set(self::MODULE_ID, "NeedGenerateCustomTheme", 'Y', SITE_ID);
-											
+
 											if($optionCode == 'CUSTOM_BGCOLOR_THEME' && $_REQUEST[$optionCode] === 'CUSTOM')
 												Option::set(self::MODULE_ID, "NeedGenerateCustomThemeBG", 'Y', SITE_ID);
 
@@ -1167,11 +1167,11 @@ class CPriority{
 															//set default template index components
 															if(isset($arSubvalue['TEMPLATE']) && $arSubvalue['TEMPLATE'])
 															{
-																
+
 																$code_tmp = $propValue.'_'.$subkey.'_TEMPLATE';
 																if($_REQUEST[$code_tmp])
 																	$_SESSION['THEME'][SITE_ID][$code_tmp] = $_REQUEST[$code_tmp];
-															}															
+															}
 														}
 
 														//sort order prop for main page
@@ -1374,7 +1374,7 @@ class CPriority{
 							{
 								if($bCustom)
 									Option::set(self::MODULE_ID, 'LastGeneratedBaseColorCustom', $baseColorCustom, SITE_ID);
-								
+
 								self::GenerateMinCss($themeDirPath.'colors.css');
 							}
 						}
@@ -1407,7 +1407,7 @@ class CPriority{
 							{
 								if($bCustom)
 									Option::set(self::MODULE_ID, 'LastGeneratedBaseColorBGCustom', $baseColorBGCustom, SITE_ID);
-								
+
 								self::GenerateMinCss($themeDirPath.'bgcolors.css');
 							}
 						}
@@ -1497,7 +1497,7 @@ class CPriority{
 		}
 		$frm = explode('.', $file['FILE_NAME']);
 		$frm = $frm[1];
-		
+
 		switch($frm){
 			case 'doc':
 				$type = 'doc';
@@ -1536,7 +1536,7 @@ class CPriority{
 				$type = '';
 				break;
 		}
-		
+
 		return $arr = array('TYPE' => $type, 'FILE_SIZE' => $file['FILE_SIZE'], 'SRC' => $file['SRC'], 'DESCRIPTION' => $file['DESCRIPTION'], 'ORIGINAL_NAME' => $file['ORIGINAL_NAME']);
 	}
 
@@ -1559,6 +1559,8 @@ class CPriority{
 				foreach($input as $i => $arItem){
 					if($arItem['DEPTH_LEVEL'] > $lastDepthLevel){
 						if($i > 0){
+							if(!$input[$i - 1]['IS_PARENT'])
+								$input[$i - 1]['NO_PARENT'] = false;
 							$input[$i - 1]['IS_PARENT'] = 1;
 						}
 					}
@@ -1588,13 +1590,12 @@ class CPriority{
 			}
 		}
 		$start = $i;
-
 		if(is_array($childs)){
 			foreach($childs as $j => $item){
 				if($item['PARAMS']){
 					$md5 = md5($item['TEXT'].$item['LINK'].$item['SELECTED'].$item['PERMISSION'].$item['ITEM_TYPE'].$item['IS_PARENT'].serialize($item['ADDITIONAL_LINKS']).serialize($item['PARAMS']));
 
-					// check if repeat in one section chids list
+ 				// check if repeat in one section chids list
 					if(isset($arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']])){
 						if(isset($arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']][$level]) || ($item['DEPTH_LEVEL'] === 1 && !$level)){
 							unset($childs[$j]);
@@ -1606,6 +1607,7 @@ class CPriority{
 					}
 					else{
 						$arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']][$level] = true;
+
 					}
 				}
 			}
@@ -1666,7 +1668,7 @@ class CPriority{
 		if($arTheme['SHOW_BG_BLOCK'] == 'Y')
 		{
 			$arBanner = self::checkBgImage($siteID);
-			// print_r($arBanner); 
+			// print_r($arBanner);
 			// die();
 			if($arBanner)
 			{
@@ -1749,14 +1751,27 @@ class CPriority{
 		return $arBanner;
 	}
 
-	public static function getSectionChilds($PSID, &$arSections, &$arSectionsByParentSectionID, &$arItemsBySectionID, &$aMenuLinksExt){
+	public static function getSectionChilds($PSID, &$arSections, &$arSectionsByParentSectionID, &$arItemsBySectionID, &$aMenuLinksExt, $IBlockID = false){
 		if($arSections && is_array($arSections)){
-			foreach($arSections as $arSection){
+			$arElements = array();
+
+			$arSectionsID = array_column($arSections, 'ID');
+			if($arSectionsID){
+				if($arItemsBySectionID){
+					$arElements = CCache::CIblockElement_GetList(array("CACHE" => array("TAG" => CCache::GetIBlockCacheTag($IBlockID), "MULTI" => "N", 'GROUP' => 'ID')), array('IBLOCK_ID' => $IBlockID, 'IBLOCK_SECTION_ID' => $arSectionsID, 'ACTIVE' => 'Y', 'GLOBAL_ACTIVE' => 'Y'), false, false, array('IBLOCK_ID', 'IBLOCK_SECTION_ID', 'PROPERTY_LINK_REGION'));
+				}
+			}
+
+			foreach($arSections as $key => $arSection){
 				if($arSection['IBLOCK_SECTION_ID'] == $PSID){
-					$arItem = array($arSection['NAME'], $arSection['SECTION_PAGE_URL'], array(), array('FROM_IBLOCK' => 1, 'DEPTH_LEVEL' => $arSection['DEPTH_LEVEL'], 'PICTURE' => $arSection['PICTURE'], 'ICON' => $arSection['UF_ICON'], 'ICON_BACKGROUND' => $arSection['UF_BACKGROUND']));
+					$arItem = array($arSection['NAME'], $arSection['SECTION_PAGE_URL'], array(), array('FROM_IBLOCK' => 1, 'DEPTH_LEVEL' => $arSection['DEPTH_LEVEL'], 'ICON' => $arSection['UF_ICON'], 'ICON_BACKGROUND' => $arSection['UF_BACKGROUND']));
 					$arItem[3]['IS_PARENT'] = (isset($arItemsBySectionID[$arSection['ID']]) || isset($arSectionsByParentSectionID[$arSection['ID']]) ? 1 : 0);
+					if($arSection["PICTURE"])
+						$arItem[3]["PICTURE"]=$arSection["PICTURE"];
+
 					$aMenuLinksExt[] = $arItem;
 					if($arItem[3]['IS_PARENT']){
+						$arItem[3]['ID'] = $arSection['ID'];
 						// subsections
 						self::getSectionChilds($arSection['ID'], $arSections, $arSectionsByParentSectionID, $arItemsBySectionID, $aMenuLinksExt);
 						// section elements
@@ -1770,13 +1785,39 @@ class CPriority{
 										$arItem['DETAIL_PAGE_URL'] = $arItem['DETAIL_PAGE_URL'][key($arItem['DETAIL_PAGE_URL'])];
 									}
 								}
-								$aMenuLinksExt[] = array($arItem['NAME'], $arItem['DETAIL_PAGE_URL'], array(), array('FROM_IBLOCK' => 1, 'DEPTH_LEVEL' => ($arSection['DEPTH_LEVEL'] + 1), 'IS_ITEM' => 1));
+								$arTmpLink = array();
+								if($arItem['LINK_REGION']){
+									$arTmpLink['LINK_REGION'] = $arItem['LINK_REGION'];
+								}
+								if($arElements[$arItem['ID']]['PROPERTY_LINK_REGION_VALUE']){
+									$arTmpLink['LINK_REGION'] = $arElements[$arItem['ID']]['PROPERTY_LINK_REGION_VALUE'];
+								}
+								else{
+									$arTmpLink['LINK_REGION'] = '';
+								}
+
+								$aMenuLinksExt[] = array($arItem['NAME'], $arItem['DETAIL_PAGE_URL'], array(), array_merge(array('FROM_IBLOCK' => 1, 'DEPTH_LEVEL' => ($arSection['DEPTH_LEVEL'] + 1), 'IS_ITEM' => 1), $arTmpLink));
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+
+	public static function unique_multidim_array($array, $key) {
+	    $temp_array = array();
+	    $i = 0;
+	    $key_array = array();
+
+	    foreach($array as $val) {
+	        if (!in_array($val[$key], $key_array)) {
+	            $key_array[$i] = $val[$key];
+	            $temp_array[$i] = $val;
+	        }
+	        $i++;
+	    }
+	    return $temp_array;
 	}
 
 	public static function isChildsSelected($arChilds){
@@ -1794,10 +1835,10 @@ class CPriority{
 		global $arSite;
 		$arFrontParametrs = CPriority::GetFrontParametrsValues(SITE_ID);
 		$tmp = $arFrontParametrs['DATE_FORMAT'];
-		$DATE_MASK = ($tmp == 'DOT' ? 'd.m.y' : ($tmp == 'HYPHEN' ? 'd-m-y' : ($tmp == 'SPACE' ? 'd m y' : ($tmp == 'SLASH' ? 'd/m/y' : 'd:m:y'))));
+		$DATE_MASK = ($tmp == 'DOT' ? 'dd.mm.yyyy' : ($tmp == 'HYPHEN' ? 'dd-mm-yyyy' : ($tmp == 'SPACE' ? 'dd mm yyyy' : ($tmp == 'SLASH' ? 'dd/mm/yyyy' : 'dd:mm:yyyy'))));
 		$VALIDATE_DATE_MASK = ($tmp == 'DOT' ? '^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$' : ($tmp == 'HYPHEN' ? '^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4}$' : ($tmp == 'SPACE' ? '^[0-9]{1,2} [0-9]{1,2} [0-9]{4}$' : ($tmp == 'SLASH' ? '^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$' : '^[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{4}$'))));
 		$DATE_PLACEHOLDER = ($tmp == 'DOT' ? GetMessage('DATE_FORMAT_DOT') : ($tmp == 'HYPHEN' ? GetMessage('DATE_FORMAT_HYPHEN') : ($tmp == 'SPACE' ? GetMessage('DATE_FORMAT_SPACE') : ($tmp == 'SLASH' ? GetMessage('DATE_FORMAT_SLASH') : GetMessage('DATE_FORMAT_COLON')))));
-		$DATETIME_MASK = ($tmp == 'DOT' ? 'd.m.y' : ($tmp == 'HYPHEN' ? 'd-m-y' : ($tmp == 'SPACE' ? 'd m y' : ($tmp == 'SLASH' ? 'd/m/y' : 'd:m:y')))).' h:s';
+		$DATETIME_MASK = ($tmp == 'DOT' ? 'dd.mm.yyyy' : ($tmp == 'HYPHEN' ? 'dd-mm-yyyy' : ($tmp == 'SPACE' ? 'dd mm yyyy' : ($tmp == 'SLASH' ? 'dd/mm/yyyy' : 'dd:mm:yyyy')))).' HH:ss';
 		$DATETIME_PLACEHOLDER = ($tmp == 'DOT' ? GetMessage('DATE_FORMAT_DOT') : ($tmp == 'HYPHEN' ? GetMessage('DATE_FORMAT_HYPHEN') : ($tmp == 'SPACE' ? GetMessage('DATE_FORMAT_SPACE') : ($tmp == 'SLASH' ? GetMessage('DATE_FORMAT_SLASH') : GetMessage('DATE_FORMAT_COLON'))))).' '.GetMessage('TIME_FORMAT_COLON');
 		$VALIDATE_DATETIME_MASK = ($tmp == 'DOT' ? '^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'HYPHEN' ? '^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'SPACE' ? '^[0-9]{1,2} [0-9]{1,2} [0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'SLASH' ? '^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : '^[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$'))));
 
@@ -1811,7 +1852,7 @@ class CPriority{
 		if($arDomains)
 			array_unique($arDomains);
 		$strListDomains = implode(',', $arDomains);
-		
+
 		?>
 		<script>
 		var arBasketItems = {};
@@ -1936,7 +1977,6 @@ class CPriority{
 					);
 				}
 				else{
-
 					echo CFileInput::Show($name.'['.$key.']', $file_id,
 						array(
 							'IMAGE' => $arOption['IMAGE'],
@@ -2105,8 +2145,8 @@ class CPriority{
 			unset($arFilter['SECTION_GLOBAL_ACTIVE']);
 		}
 		if(!$arFilter['SECTION_ID'] && $arVariables['SECTION_CODE'])
-			$arFilter['SECTION_CODE'] = $arVariables['SECTION_CODE'];		
-		
+			$arFilter['SECTION_CODE'] = $arVariables['SECTION_CODE'];
+
 		if(strlen($arParams['FILTER_NAME'])){
 			$GLOBALS[$arParams['FILTER_NAME']] = (array)$GLOBALS[$arParams['FILTER_NAME']];
 			foreach($arUnsetFilterFields = array('SECTION_ID', 'SECTION_CODE', 'SECTION_ACTIVE', 'SECTION_GLOBAL_ACTIVE') as $filterUnsetField){
@@ -2225,6 +2265,7 @@ class CPriority{
 
 		foreach(self::$arMetaParams as $metaName => $metaValue){
 			if(strlen($metaValue = strip_tags($metaValue))){
+				$metaValue = str_replace('#REGION_TAG_', '#REGION_STRIP_TAG_', $metaValue);
 				$APPLICATION->AddHeadString('<meta property="'.$metaName.'" content="'.$metaValue.'" />', true);
 				if($metaName === 'og:image'){
 					$APPLICATION->AddHeadString('<link rel="image_src" href="'.$metaValue.'"  />', true);
@@ -2300,7 +2341,7 @@ class CPriority{
 			$html .= '<a class="personal-link dark-color animate-load" data-event="jqm" data-param-type="auth" data-param-backurl="'.$url.'" data-name="auth" href="'.SITE_DIR.'cabinet/">';
 			if($icon){
 				$html .= self::showIconSvg(SITE_TEMPLATE_PATH.'/images/include_svg/user.svg');
-				
+
 			}
 
 			if($text)
@@ -2345,7 +2386,7 @@ class CPriority{
 		</button>
 		<?
 	}
-	
+
 	public static function ShowBasketLink($class_link='top-btn hover', $class_icon='', $txt='', $show_price = false, $ignoreHide = false){
 		$html = '';
 		$userID = self::GetUserID();
@@ -2391,7 +2432,7 @@ class CPriority{
 		global $APPLICATION, $arTheme;
 
 		if($arTheme['CABINET']['VALUE'] === 'Y'){
-			?>			
+			?>
 			<?$APPLICATION->IncludeComponent(
 				"bitrix:menu",
 				"cabinet_mobile",
@@ -2441,7 +2482,7 @@ class CPriority{
 			<?
 		}
 	}
-	
+
 	public static function ShowBurger($class_icon=''){
 		?>
 		<div class="burger pull-left">
@@ -2494,7 +2535,7 @@ class CPriority{
 										  <path data-name="Rounded Rectangle 568 copy 16" class="cls-1" d="M1009.4,953l5.32,5.315a0.987,0.987,0,0,1,0,1.4,1,1,0,0,1-1.41,0L1008,954.4l-5.32,5.315a0.991,0.991,0,0,1-1.4-1.4L1006.6,953l-5.32-5.315a0.991,0.991,0,0,1,1.4-1.4l5.32,5.315,5.31-5.315a1,1,0,0,1,1.41,0,0.987,0.987,0,0,1,0,1.4Z" transform="translate(-1001 -946)"/>
 										</svg>
 									</li>
-								
+
 									<li class="menu_back">
 										<a href="" class="dark-color" rel="nofollow">
 											<svg class="svg svg-back" width="16" height="12" viewBox="0 0 16 12">
@@ -2586,7 +2627,7 @@ class CPriority{
 			"aspro:regionality.list.priority",
 			strtolower($arTheme["USE_REGIONALITY"]["DEPENDENT_PARAMS"]["REGIONALITY_VIEW"]["VALUE"]),
 			Array(
-				
+
 			),false, array('HIDE_ICONS' => 'Y')
 		);?>
 		<?$frame->end();?>
@@ -2720,7 +2761,7 @@ class CPriority{
 	public static function formatJsName($name = ''){
 		return htmlspecialcharsbx($name);
 	}
-	
+
 	public static function GetUserID(){
 		static $userID;
 		if($userID === NULL)
@@ -2828,7 +2869,7 @@ class CPriority{
 
 			if($arTheme['CUSTOM_FONT']){
 				$APPLICATION->AddHeadString('<'.$arTheme['CUSTOM_FONT'].'>');
-				
+
 				$string = str_replace('link href=', '', $arTheme['CUSTOM_FONT']);
 				$stringLength = strlen($string);
 				$startLetter = strpos($string, '=');
@@ -2843,7 +2884,7 @@ class CPriority{
 				$md5Content = md5($content);
 				$customFontHash = $arTheme['CUSTOM_FONT_HASH'];
 				$bPutContent = ($customFontHash == $md5Content ? false : true);
-				
+
 				if($bPutContent /*&& file_exists($path)*/){
 					file_put_contents($path, $content);
 					COption::SetOptionString(self::MODULE_ID, 'CUSTOM_FONT_HASH', $md5Content, false, $siteID);
@@ -2854,7 +2895,7 @@ class CPriority{
 			else
 				$font_family = self::$arParametrsList['MAIN']['OPTIONS']['FONT_STYLE']['LIST'][$arTheme['FONT_STYLE']]['LINK'];
 
-			if(strlen($font_family)){ 
+			if(strlen($font_family)){
 				$APPLICATION->SetAdditionalCSS(/*(CMain::IsHTTPS() ? 'https' : 'http').*/'https://fonts.googleapis.com/css?family='.$font_family);
 			}
 
@@ -2870,6 +2911,7 @@ class CPriority{
 			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/jquery.mCustomScrollbar.min.css');
 			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animation_ext.css');
 			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/jquery.onoff.css');
+			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/bootstrap-datetimepicker.min.css');
 
 			if ($arTheme['H1_STYLE']=='2') // 2 - Normal
 				$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/h1-normal.css');
@@ -2902,13 +2944,15 @@ class CPriority{
 			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.autoresize.min.js');
 			//$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/modernizr.js');
 			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/velocity.min.js');
+			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/bootstrap-datetimepicker.min.js');
+			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/bootstrap-datetimepicker.ru.js');
 			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/general.js');
 			$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/custom.js');
 
 
 			if(strlen($arTheme['FAVICON_IMAGE']))
 				$APPLICATION->AddHeadString('<link rel="shortcut icon" href="'.$arTheme['FAVICON_IMAGE'].'" type="image/x-icon" />', true);
-			
+
 			if(strlen($arTheme['APPLE_TOUCH_ICON_IMAGE']))
 				$APPLICATION->AddHeadString('<link rel="apple-touch-icon" sizes="180x180" href="'.$arTheme['APPLE_TOUCH_ICON_IMAGE'].'" />', true);
 
@@ -2952,7 +2996,7 @@ class CPriority{
 		if(($siteID)){
 			if(!is_array($arValue))
 				$arValue=unserialize($arValue);
-			
+
 			if($arValue[0]){
 				$imageSrc = $_SERVER['DOCUMENT_ROOT'].CFile::GetPath($arValue[0]);
 			}
@@ -3113,7 +3157,7 @@ class CPriority{
 
     	return $arResult;
     }
-	
+
     public static function GetComponentTemplatePageBlocksParams($arPageBlocks){
     	$arResult = array();
 
@@ -3206,7 +3250,7 @@ class CPriority{
 
    protected function IsComponentTemplateHasModuleElementsPageBlocksParam($templateName, $arExtParams = array()){
     	$section_param = ((isset($arExtParams['SECTION']) && $arExtParams['SECTION']) ? $arExtParams['SECTION'] : 'SECTION');
-		$template_param = ((isset($arExtParams['OPTION']) && $arExtParams['OPTION']) ? $arExtParams['OPTION'] : strtoupper($templateName));	
+		$template_param = ((isset($arExtParams['OPTION']) && $arExtParams['OPTION']) ? $arExtParams['OPTION'] : strtoupper($templateName));
 
 	    return $templateName && isset(self::$arParametrsList[$section_param]['OPTIONS'][$template_param.'_PAGE']);
     }
@@ -3221,7 +3265,7 @@ class CPriority{
     	$section_param = ((isset($arExtParams['SECTION']) && $arExtParams['SECTION']) ? $arExtParams['SECTION'] : 'SECTION');
     	$template_param = ((isset($arExtParams['OPTION']) && $arExtParams['OPTION']) ? $arExtParams['OPTION'] : strtoupper($templateName));
 		$custom_param = (isset($arExtParams['CUSTOM_PARAM']) && strlen($arExtParams['CUSTOM_PARAM']) ? strtoupper($arExtParams['CUSTOM_PARAM']) : '');
-		
+
 		if(isset($arExtParams['CUSTOM_PARAM']) && strlen($arExtParams['CUSTOM_PARAM'])){
 			return $templateName && isset(self::$arParametrsList[$section_param]['OPTIONS'][$arExtParams['CUSTOM_PARAM']]);
 		}
@@ -3234,7 +3278,7 @@ class CPriority{
     	if($templateAbsPath && $arParams && is_array($arParams)){
     		$templateAbsPath = str_replace('//', '//', $templateAbsPath).'/';
     		$templateName = basename($templateAbsPath);
-			
+
     		if(self::IsComponentTemplateHasModuleElementsPageBlocksParam($templateName, $arExtParams)){
     			$arParams['SECTION_ELEMENTS_TYPE_VIEW']['VALUES'] = array_merge(array('FROM_MODULE' => GetMessage('M_FROM_MODULE_PARAMS')), $arParams['SECTION_ELEMENTS_TYPE_VIEW']['VALUES']);
     			$arParams['SECTION_ELEMENTS_TYPE_VIEW']['DEFAULT'] = 'FROM_MODULE';
@@ -3314,7 +3358,7 @@ class CPriority{
 			}
 		}
     }
-	
+
 	public static function OnSearchGetURL($arFields)
     {
     	if(strpos($arFields["URL"], "#YEAR#") !== false)
@@ -3622,20 +3666,18 @@ class CPriority{
 	<?}
 
 	public static function checkBasketItems(){
-		if(!defined(ADMIN_SECTION) && !CSite::inDir(SITE_DIR.'/ajax/')){
-			?>
+		if(!defined('ADMIN_SECTION') && !CSite::inDir(SITE_DIR.'/ajax/')):?>
 			<script>
 				var arBasketItems = <?=CUtil::PhpToJSObject(self::getBasketItems(), false)?>;
 			</script>
-			<?
-		}
+		<?endif;
 	}
 
 	public static function getBasketItems(){
 		global $APPLICATION, $arSite, $USER;
 		CModule::IncludeModule('iblock');
 
-		if(!defined(ADMIN_SECTION)){
+		if(!defined('ADMIN_SECTION')){
 			$userID = CUser::GetID();
 			$userID = ($userID > 0 ? $userID : 0);
 			$arBackParametrs = self::GetFrontParametrsValues(SITE_ID);
@@ -3825,13 +3867,30 @@ class CPriority{
 						<?endif;?>
 						<div class="input">
 							<?
-							if(strpos($arQuestion["HTML_CODE"], "class=") === false)
-							{
-								$arQuestion["HTML_CODE"] = str_replace('input', 'input class=""', $arQuestion["HTML_CODE"]);
-							}
-							$arQuestion["HTML_CODE"] = str_replace('class="', 'class="form-control ', $arQuestion["HTML_CODE"]);
-							$arQuestion["HTML_CODE"] = str_replace('class="', 'id="'.$type.'_'.$FIELD_SID.'" class="', $arQuestion["HTML_CODE"]);
+							if($arQuestion['STRUCTURE'][0]['FIELD_TYPE'] === "date"){
+								if(preg_match('/<input[^>]*>/i', $arQuestion["HTML_CODE"], $arMatches)){
+									$inputHtml = $arMatches[0];
+									if(strpos($inputHtml, "class=") === false)
+									{
+										$inputHtml = str_replace('input', 'input class=""', $inputHtml);
+									}
+									$inputHtml = str_replace('class="', 'class="form-control date ', $inputHtml);
+									$inputHtml = str_replace('class="', 'id="'.$type.'_'.$FIELD_SID.'" class="', $inputHtml);
+									$arQuestion["HTML_CODE"] = str_replace($arMatches[0], $inputHtml, $arQuestion["HTML_CODE"]);
 
+									if(preg_match('/field:\'([^\']*)\'/', $arQuestion["HTML_CODE"], $arMatch)){
+										$arQuestion["HTML_CODE"] = str_replace($arMatch[1], $type.'_'.$FIELD_SID, $arQuestion["HTML_CODE"]);
+									}
+								}
+							}
+							else{
+								if(strpos($arQuestion["HTML_CODE"], "class=") === false)
+								{
+									$arQuestion["HTML_CODE"] = str_replace('input', 'input class=""', $arQuestion["HTML_CODE"]);
+								}
+								$arQuestion["HTML_CODE"] = str_replace('class="', 'class="form-control ', $arQuestion["HTML_CODE"]);
+								$arQuestion["HTML_CODE"] = str_replace('class="', 'id="'.$type.'_'.$FIELD_SID.'" class="', $arQuestion["HTML_CODE"]);
+							}
 
 							if(is_array($arResult["FORM_ERRORS"]) && array_key_exists($FIELD_SID, $arResult['FORM_ERRORS'])){
 								$arQuestion["HTML_CODE"] = str_replace('class="', 'class="error ', $arQuestion["HTML_CODE"]);
@@ -3902,10 +3961,10 @@ class CPriority{
 			$obParser = new CTextParser;
 			$text = $obParser->html_cut($text, intval($length));
 		}
-		
+
 		return $text;
 	}
-	
+
 	public static function Vail($count, $arMessages, $bStrOnly = false){
 		$ost10 = $count % 10;
 		$ost100 = $count % 100;
@@ -3922,7 +3981,7 @@ class CPriority{
 
 		return (!$bStrOnly ? intval($count).' ' : '').$arMessages[2];
 	}
-	
+
 	public static function checkShowForm($showFormValue = '', $arParams = array()){
 		if($showFormValue && $showFormValue == 'Y'){
 		?>
@@ -3938,7 +3997,7 @@ class CPriority{
 						<?elseif($arParams['FORM_NAME'] == 'map'):?>
 							<?=CPriority::showIconSvg(SITE_TEMPLATE_PATH.'/images/include_svg/map.svg');?>
 						<?endif?>
-					
+
 						<?=$arParams['FORM_TEXT'];?>
 					</span>
 				</span>
@@ -3946,13 +4005,13 @@ class CPriority{
 		<?
 		}
 	}
-	
+
 	public static function checkContentFile($path){
 		if(File::isFileExists($_SERVER['DOCUMENT_ROOT'].$path))
 			$content = File::getFileContents($_SERVER['DOCUMENT_ROOT'].$path);
 		return (!empty($content));
 	}
-	
+
 	public static function get_banners_position($position) {
 		$arTheme = self::GetFrontParametrsValues(SITE_ID);
 		if ($arTheme["ADV_".$position] == 'Y') {

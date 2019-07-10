@@ -6,9 +6,43 @@ $searchQuery = $arResult['REQUEST']['QUERY']; // to use this variable in catalog
 if($arParams["FROM_AJAX"] == "Y"){
 	$this->SetViewTarget("search_content");
 }
+
+$siteId = defined('SITE_ID') ? SITE_ID : 's1';
+$dbSite = CSite::GetByID($siteId);
+if($arSite = $dbSite->Fetch()){
+	$siteDir = $arSite['DIR'];
+}
+
+// catalog page
+$catalogPage = trim(CNext::GetFrontParametrValue("CATALOG_PAGE_URL"));
+if(!strlen($catalogPage)){
+	// catalog iblock id
+	if(defined('URLREWRITE_SEARCH_LANDING_CONDITION_CATALOG_IBLOCK_ID_'.$siteId)){
+		$catalogIblockId = constant('URLREWRITE_SEARCH_LANDING_CONDITION_CATALOG_IBLOCK_ID_'.$siteId);
+	}
+	if(!$catalogIblockId){
+		$catalogIblockId = \Bitrix\Main\Config\Option::get(
+			'aspro.next',
+			'CATALOG_IBLOCK_ID',
+			CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0],
+			SITE_ID
+		);
+	}
+	if($catalogIblockId && isset(CNextCache::$arIBlocksInfo[$catalogIblockId])){
+		$catalogPage = CNextCache::$arIBlocksInfo[$catalogIblockId]['LIST_PAGE_URL'];
+	}
+}
+
+// catalog page script
+$catalogScriptConst = 'ASPRO_CATALOG_SCRIPT_'.$siteId;
+$catalogScript = defined($catalogScriptConst) && strlen(constant($catalogScriptConst)) ? constant($catalogScriptConst) : 'index.php';
+
+// catalog full url
+$pathFile = str_replace(array('#'.'SITE_DIR#', $catalogScript), array($siteDir, ''), $catalogPage).$catalogScript;
+$pathFile = str_replace('/index.php', '/', $pathFile);
 ?>
 <div class="search-page-wrap">
-<form action="" method="get">
+<form action="<?=($pathFile ? $pathFile : '')?>" method="get">
 	<div class="form-control">
 		<?if($arParams["USE_SUGGEST"] === "Y"):
 			if(strlen($arResult["REQUEST"]["~QUERY"]) && is_object($arResult["NAV_RESULT"]))
@@ -37,7 +71,7 @@ if($arParams["FROM_AJAX"] == "Y"){
 		{
 			foreach($_REQUEST as $key => $value)
 			{
-				if($key != "q" && $key != "how")
+				if($key != "q" && $key != "how" && $key != "section_id")
 				{
 					if((strpos($key, "section_id") !== false || strpos($key, "searchFilter") !== false || strpos($key, "set_filter") !== false))
 					{?>

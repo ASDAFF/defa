@@ -23,7 +23,7 @@ Email: #EMAIL#<br />
 Название товара: #PRODUCT_NAME#<br />
 ID товара: #PRODUCT_ID#<br />
 Сообщение: #MESSAGE#<br /><br />
-	
+
 Запрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -54,7 +54,7 @@ Email: #EMAIL#<br />
 ID товара: #PRODUCT_ID#<br />
 #SHOP_LINK# - Ссылка на товар другого магазина#<br />
 Сообщение: #MESSAGE#<br /><br />
-	
+
 Запрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -78,7 +78,7 @@ $MESS["NEW_ASK_EMAIL_TEXT"] = "Новый вопрос на сайте #SITE_NAM
 Телефон:#PHONE#<br />
 Email:#EMAIL#<br />
 Вопрос:#QUESTION#<br /><br />
-	
+
 Вопрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -100,7 +100,7 @@ $MESS["NEW_FEEDBACK_EMAIL_TEXT"] = "Новый вопрос на сайте #SIT
 Телефон:#PHONE#<br />
 Email:#EMAIL#<br />
 Вопрос:#POST#<br /><br />
-	
+
 Вопрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -131,7 +131,7 @@ Email:#EMAIL#<br />
 Желаемая должность:#POST#<br />
 Файл резюме:#FILE#<br />
 Текст резюме:#RESUME_TEXT#<br /><br />
-	
+
 Резюме отправлено: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -156,7 +156,7 @@ $MESS["NEW_SERVICES_EMAIL_TEXT"] = "Заполнена форма \"Заказа
 Email: #EMAIL#<br />
 Название услуги: #SERVICE#<br />
 Сообщение: #QUESTION#<br /><br />
-	
+
 Запрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -181,10 +181,10 @@ $MESS["NEW_PROJECTS_EMAIL_TEXT"] = "Заполнена форма \"Заказа
 Email: #EMAIL#<br />
 Название услуги: #PROJECT#<br />
 Сообщение: #QUESTION#<br /><br />
-	
+
 Запрос отправлен: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
-	
+
 /* CALLBACK */
 $MESS["CALLBACK_FORM_NAME"] = "Заказать звонок";
 $MESS["CALLBACK_BUTTON_NAME"] = "Отправить";
@@ -197,11 +197,11 @@ $MESS["NEW_CALLBACK_EMAIL_SUBJECT"] = "Заказ звонка с сайта #SI
 $MESS["NEW_CALLBACK_EMAIL_TEXT"] = "Заказ звонка с сайта #SITE_NAME# (#RS_RESULT_ID#)<br />
 Имя посетителя: #CLIENT_NAME#<br />
 Телефон:#PHONE#<br />
-	
+
 Заявка отправлена: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
-/* ONE CLICK */	
+/* ONE CLICK */
 $MESS["NEW_ONE_CLICK_BUY_EMAIL_SUBJECT"] = "Новый быстрый заказ с сайта #SITE_NAME#";
 $MESS["NEW_ONE_CLICK_BUY_EMAIL_TEXT"] =    "Новый быстрый заказ с сайта #SITE_NAME# (#RS_ORDER_ID#)<br />
 Имя посетителя: #CLIENT_NAME#<br />
@@ -210,10 +210,10 @@ $MESS["NEW_ONE_CLICK_BUY_EMAIL_TEXT"] =    "Новый быстрый заказ
 Стоимость заказа:#ORDER_PRICE#<br />
 Комментарий:#COMMENT#<br /><br />
 Номер заказа:#ACCOUNT_NUMBER#<br /><br />
-	
+
 Заказ создан: #RS_DATE_CREATE#
 Просмотр заказа на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/sale_order_detail.php?ID=#RS_ORDER_ID#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/sale_order_detail.php?ID=#RS_ORDER_ID#</a>";
-	
+
 /* KSHOP X3 ( */
 $MESS["NEW_PRODUCT_REQUEST_EMAIL_SUBJECT"] = "Заявка на товар с сайта #SITE_NAME#";
 $MESS["NEW_PRODUCT_REQUEST_EMAIL_TEXT"] =  "Новая заявка на товар на сайте (#RS_RESULT_ID#)<br />
@@ -221,7 +221,7 @@ $MESS["NEW_PRODUCT_REQUEST_EMAIL_TEXT"] =  "Новая заявка на тов�
 Телефон:#PHONE#<br />
 Товар:#PRODUCT#<br />
 Комментарий:#COMMENT#<br /><br />
-	
+
 Заявка отправлена: #RS_DATE_CREATE#
 Просмотр результата на сайте: <a href='http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#' target='_blank'>http://#SERVER_NAME#/bitrix/admin/form_result_edit.php?lang=ru&WEB_FORM_ID=#RS_FORM_ID#&RESULT_ID=#RS_RESULT_ID#&WEB_FORM_NAME=#RS_FORM_NAME#</a>";
 
@@ -246,4 +246,11 @@ $MESS["NEW_SEND_GIFT_EMAIL_SUBJECT"] = "Подарок с сайта #SITE_NAME#
 $MESS["NEW_SEND_GIFT_EMAIL_TEXT"] = "<p>Здравствуйте, #CLIENT_NAME#!</p>
 <p>Мы узнали, что #FIO# мечтает о таком подарке из нашего интернет-магазина. Воспользуйтесь подсказкой, чтобы порадовать подарком!</p>
 <p>Смотреть подарок <a href='#PRODUCT_LINK#'>#PRODUCT_NAME#</a></p><br />";
+
+// sms SMS_USER_AUTH_CODE
+$MESS["PHONE_AUTH_EVENT_NAME_ru"] = "Авторизация на сайте по СМС";
+$MESS["PHONE_AUTH_EVENT_DESCRIPTION_ru"] = "#USER_PHONE# - номер телефона\n#CODE# - код авторизации";
+$MESS["PHONE_AUTH_EVENT_NAME_en"] = "Authorize using SMS";
+$MESS["PHONE_AUTH_EVENT_DESCRIPTION_en"] = "#USER_PHONE# - phone number\n#CODE# - auth code";
+$MESS["PHONE_AUTH_TEMPLATE_MESSAGE"] = "Код авторизации #CODE#";
 ?>

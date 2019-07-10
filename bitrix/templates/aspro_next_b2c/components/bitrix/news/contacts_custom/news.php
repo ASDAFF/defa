@@ -1,4 +1,5 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+
 <?$this->setFrameMode(true);?>
 <?
 use \Bitrix\Main\Localization\Loc;
@@ -381,6 +382,7 @@ if($arItems)
 
                 });
                 console.log(placemarks);
+
             </script>
             <div class="map-info">
                 <div class="map-info-wrap">
@@ -529,9 +531,9 @@ if($arItems)
 </div>
 
 <div id="printContent" style="display: none;">
-    вот это вот напечатай
-    <img src="https://static-maps.yandex.ru/1.x/?{параметры URL}">
-    <img src="https://static-maps.yandex.ru/1.x/?ll=37.620070,55.753630&size=450,450&z=13&l=map&pt=37.620070,55.753630,pmwtm1~37.64,55.76363,pmwtm99">
+    <img id="printContentImg" src="">
+    <script>
+    </script>
 </div>
 
 <script>
@@ -539,6 +541,12 @@ if($arItems)
     $(document).ready(function() {
         $.fn.extend({
             print: function() {
+
+        var mapCenter =  myMap.getCenter();
+        var mapUrl = 'https://static-maps.yandex.ru/1.x/?ll=' + mapCenter.reverse() + '&size=600,450&z=' + myMap.getZoom() + '&l=map&pt=' + mapCenter + ',pm2rdm';
+        $('#printContentImg').attr('src', mapUrl);
+
+
                 var frameName = 'printIframe';
                 var doc = window.frames[frameName];
                 if (!doc) {
@@ -550,10 +558,8 @@ if($arItems)
                 return this;
             }
         });
-
     });
 
 
 
 </script>
-

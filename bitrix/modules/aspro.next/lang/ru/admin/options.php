@@ -219,6 +219,7 @@ $MESS["ONE_CLICK_BUY_OPTIONS"] = "Покупка в 1 клик";
 $MESS["ONE_CLICK_BUY_DELIVERY_OPTIONS"] = "Способ доставки";
 $MESS["ONE_CLICK_BUY_PAYMENT_OPTIONS"] = "Способ оплаты";
 $MESS["ONE_CLICK_BUY_CURRENCY_OPTIONS"] = "Валюта";
+$MESS["PHONE_AUTH_DISABLED_TITLE"] = "Необходимо установить модуль «Служба сообщений» (messageservice) и опцию «Регистрировать пользователей по номеру телефона» в настройках главного модуля";
 
 $MESS["MAIN_OPTIONS_SITE_YM"] = "Настройка загрузки отзывов с Яндекс.Маркет";
 $MESS["MAIN_OPTIONS_YM_HINT"] = "Загрузка отзывов с Яндекс.Маркет происходит через <a href=\"https://tech.yandex.ru/market/content-data/\" target=\"_blank\"\">Контентный API</a>.<br>Чтобы у товаров начали отображаться отзывы, необходимо в свойстве с кодом <b>\"YM_ELEMENT_ID\"</b> проставить числовой идентификатор с Яндекс.Маркета, например, <b>10622531</b>";

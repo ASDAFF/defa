@@ -28,7 +28,7 @@
 							<span><?=$arItem["NAME"]?></span>
 							<div class="price cost prices">
 								<div class="title-search-price">
-									<?if($arElement["MIN_PRICE"]){?>
+									<?if(isset($arElement["MIN_PRICE"]) && $arElement["MIN_PRICE"]){?>
 										<?if($arElement["MIN_PRICE"]["DISCOUNT_VALUE"] < $arElement["MIN_PRICE"]["VALUE"]):?>
 											<div class="price"><?=$arElement["MIN_PRICE"]["PRINT_DISCOUNT_VALUE"]?></div>
 											<div class="price discount">

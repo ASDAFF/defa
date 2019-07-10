@@ -11,15 +11,16 @@ $arAllSections = $arProperties = array();
 
 if($arItems){
 	$arAllSections = CPriority::GetSections($arItems, $arParams);
-	
+
 	$dbRes = CIBlock::GetProperties($arParams['IBLOCK_ID']);
 	while($arRes = $dbRes->Fetch()){
 		$arProperties[$arRes['CODE']] = $arRes;
 	}
 }
-?>
 
-<?if($arParams['SHOW_TOP_MAP'] != 'Y'):?>
+$bUseMap = CPriority::GetFrontParametrValue('CONTACTS_USE_MAP', SITE_ID) != 'N';
+?>
+<?if($bUseMap):?>
 	<div class="contacts-page-top">
 		<div class="contacts maxwidth-theme">
 			<div class="row">

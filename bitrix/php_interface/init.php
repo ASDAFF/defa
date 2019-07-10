@@ -1479,9 +1479,7 @@ class EventSend
 				}
 			}
 			
-			$f = fopen ($_SERVER['DOCUMENT_ROOT'] . '/sale.log', 'a');
-			fwrite($f, var_export($arSaleCut, true));
-			return $arSaleCut;
+			
 		}
 	}
 
@@ -1810,11 +1808,14 @@ $log = fopen($_SERVER['DOCUMENT_ROOT']."/log/OnBeforeEventSend.log", "a+");
 				$emails[] = $arProps["EMAIL"]["VALUE"];
 			}
 			$emails = implode(",", $emails);
-			$arFields["DEFAULT_EMAIL_FROM"] = $emails;
+			$arFields["FORM_EMAIL_TO"] = $emails;
 		}
 		if ($_SERVER['HTTP_REFERER'])
 		$arFields['HTTP_REFERER'] = $_SERVER['HTTP_REFERER'];
 	}
+if ($arFields["EMAIL_RAW"])
+	$arFields["EMAIL"] = $arFields["EMAIL_RAW"];
+
 	fwrite($log, "\n-----------------------------emails: ------------------------------------\n");
 	fwrite($log, var_export($emails, true));
 	fwrite($log, "\n-----------------------------end emails ---------------------------------\n");

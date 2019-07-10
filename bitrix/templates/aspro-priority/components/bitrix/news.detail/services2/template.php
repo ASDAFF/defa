@@ -1,5 +1,5 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
-<?$this->setFrameMode(true);?>	
+<?$this->setFrameMode(true);?>
 
 <?
 global $isMenu, $arTheme;
@@ -38,6 +38,7 @@ $templateData = array(
 	'FORM_QUESTION' => $arResult['DISPLAY_PROPERTIES']['FORM_QUESTION']['VALUE_XML_ID'],
 	'PRICE' => $arResult['PROPERTIES']['PRICE']['VALUE'],
 	'PRICE_OLD' => $arResult['PROPERTIES']['PRICE_OLD']['VALUE'],
+	'GALLERY_TYPE' => isset($arResult['PROPERTIES']['GALLERY_TYPE']) ? ($arResult['PROPERTIES']['GALLERY_TYPE']['VALUE'] === 'small' ? 'small' : 'big') : ($arParams['GALLERY_TYPE'] === 'small' ? 'small' : 'big'),
 );
 if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP']['VALUE_XML_ID'] == 'YES')
 	$templateData['SECTION_BNR_CONTENT'] = true;

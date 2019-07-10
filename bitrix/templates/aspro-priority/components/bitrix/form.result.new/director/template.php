@@ -35,7 +35,7 @@
 					</div>
 				</div>
 			<?endif;?>
-			
+
 			<div class="form_result <?=($arResult["isFormErrors"] == "Y" ? 'error' : 'success')?>">
 				<?if($arResult["isFormErrors"] == "Y"):?>
 					<?=$arResult["FORM_ERRORS_TEXT"]?>
@@ -171,14 +171,31 @@
 					}
 				});
 			}
-			
-			if(arPriorityOptions['THEME']['DATE_MASK'].length)
-				$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false  });
+
+			if(arPriorityOptions['THEME']['DATE_MASK'].length){
+				$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.date').inputmask('datetime', {
+					inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+					placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+					showMaskOnHover: false
+				});
+			}
+
+			if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+				$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.datetime').inputmask('datetime', {
+					inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+					placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+					showMaskOnHover: false
+				});
+			}
 
 			$('.jqmClose').on('click', function(e){
 				e.preventDefault();
 				$(this).closest('.jqmWindow').jqmHide();
-			})
+			});
+
+			if($('#licenses_popup').length){
+				$('#licenses_popup').onoff();
+			}
 
 			$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 			$(document).on('change', 'input[type=file]', function(){

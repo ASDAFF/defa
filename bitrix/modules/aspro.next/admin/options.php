@@ -426,7 +426,7 @@ if($RIGHT >= "R"){
 										$arOption["TITLE"] = GetMessage('CONTACTS_OPTIONS_EDIT_LINK_NOTE', array('#CONTACTS_HREF#' => $contactsHref));
 									}
 									?>
-									<tr data-option_code="<?=$optionCode;?>">
+									<tr data-optioncode="<?=$optionCode;?>">
 										<td colspan="2" align="center">
 											<?=BeginNote('align="center" name="'.htmlspecialcharsbx($optionCode)."_".$optionsSiteID.'"');?>
 											<?=$arOption["TITLE"]?>
@@ -794,6 +794,7 @@ if($RIGHT >= "R"){
 						jsAjaxUtil.ShowLocalWaitWindow('id', 'next_options', true);
 						$(this).find('input').removeAttr('disabled');
 					});
+
 					$('select[name^="INDEX_TYPE"]').change(function() {
 						var value = $(this).val()
 							sub_block = $('tr.block[data-parent='+$(this).attr('name')+']');
@@ -803,6 +804,7 @@ if($RIGHT >= "R"){
 							$('tr.block.'+value+'[data-parent='+$(this).attr('name')+']').css({'display':'table-row'});
 						}
 					});
+
 					$('input.depend-check').change(function() {
 						var ischecked = $(this).prop('checked'),
 							depend_block = $('.depend-block[data-parent='+$(this).attr('id')+']');
@@ -812,330 +814,362 @@ if($RIGHT >= "R"){
 							{
 								if(depend_block.data('show') == 'Y')
 								{
-									if(ischecked)
+									if(ischecked){
 										depend_block.fadeIn();
-									else
+									}
+									else{
 										depend_block.fadeOut();
+									}
 								}
 								else
 								{
-									if(ischecked)
+									if(ischecked){
 										depend_block.fadeOut();
-									else
+									}
+									else{
 										depend_block.fadeIn();
+									}
 								}
 							}
 						}
 					});
 
-				})
-				$('select[name^="USE_FORMS_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var isNone = $(this).val().indexOf('NONE') != -1;
-						var isCommon = $(this).val().indexOf('COMMON') != -1;
+					$('select[name^="USE_FORMS_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var isNone = $(this).val().indexOf('NONE') != -1;
+							var isCommon = $(this).val().indexOf('COMMON') != -1;
+							var itrGNote = $(this).parents('table').first().find('tr.GOALS_NOTE');
+							if(!isNone){
+								if(isCommon){
+									itrGNote.find('[data-value=common]').show();
+									itrGNote.find('[data-value=single]').hide();
+								}
+								else{
+									itrGNote.find('[data-value=common]').hide();
+									itrGNote.find('[data-value=single]').show();
+								}
+								itrGNote.find('[data-goal=form]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=form]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="USE_BASKET_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
+							var ischecked = $(this).attr('checked');
+							if(typeof(ischecked) != 'undefined'){
+								itrGNote.find('[data-goal=basket]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=basket]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="USE_1CLICK_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
+							var ischecked = $(this).attr('checked');
+							if(typeof(ischecked) != 'undefined'){
+								itrGNote.find('[data-goal=1click]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=1click]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="USE_FASTORDER_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
+							var ischecked = $(this).attr('checked');
+							if(typeof(ischecked) != 'undefined'){
+								itrGNote.find('[data-goal=fastorder]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=fastorder]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="USE_FULLORDER_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
+							var ischecked = $(this).attr('checked');
+							if(typeof(ischecked) != 'undefined'){
+								itrGNote.find('[data-goal=fullorder]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=fullorder]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="USE_DEBUG_GOALS"]').change(function() {
+						var parent = $(this).closest('tr').data('parent');
+						var inUAC = $(this).parents('table').first().find('input#'+parent);
+						if(inUAC.length && inUAC.attr('checked')){
+							var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
+							var ischecked = $(this).attr('checked');
+							if(typeof(ischecked) != 'undefined'){
+								itrGNote.find('[data-goal=debug]').show();
+							}
+							else{
+								itrGNote.find('[data-goal=debug]').hide();
+							}
+						}
+
+						checkGoalsNote();
+					});
+
+					$('input[name^="YA_GOALS"]').change(function(){
+						var itrYACID = $(this).parents('table').first().find('tr.YA_COUNTER_ID');
+						var itrUFG = $(this).parents('table').first().find('tr.USE_FORMS_GOALS');
+						var itrUBG = $(this).parents('table').first().find('tr.USE_BASKET_GOALS');
+						var itrU1CG = $(this).parents('table').first().find('tr.USE_1CLICK_GOALS');
+						var itrUQOG = $(this).parents('table').first().find('tr.USE_FASTORDER_GOALS');
+						var itrUFOG = $(this).parents('table').first().find('tr.USE_FULLORDER_GOALS');
+						var itrUDG = $(this).parents('table').first().find('tr.USE_DEBUG_GOALS');
 						var itrGNote = $(this).parents('table').first().find('tr.GOALS_NOTE');
-						if(!isNone){
-							if(isCommon){
-								itrGNote.find('[data-value=common]').show();
-								itrGNote.find('[data-value=single]').hide();
-							}
-							else{
-								itrGNote.find('[data-value=common]').hide();
-								itrGNote.find('[data-value=single]').show();
-							}
-							itrGNote.find('[data-goal=form]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=form]').hide();
-						}
-					}
-
-					checkGoalsNote();
-				});
-				$('input[name^="USE_BASKET_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
 						var ischecked = $(this).attr('checked');
 						if(typeof(ischecked) != 'undefined'){
-							itrGNote.find('[data-goal=basket]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=basket]').hide();
-						}
-					}
+							itrYACID.fadeIn();
+							itrUFG.fadeIn();
+							var valUFG = itrUFG.find('select').val();
 
-					checkGoalsNote();
-				});
-				$('input[name^="USE_1CLICK_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
-						var ischecked = $(this).attr('checked');
-						if(typeof(ischecked) != 'undefined'){
-							itrGNote.find('[data-goal=1click]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=1click]').hide();
-						}
-					}
-
-					checkGoalsNote();
-				});
-				$('input[name^="USE_FASTORDER_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
-						var ischecked = $(this).attr('checked');
-						if(typeof(ischecked) != 'undefined'){
-							itrGNote.find('[data-goal=fastorder]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=fastorder]').hide();
-						}
-					}
-
-					checkGoalsNote();
-				});
-				$('input[name^="USE_FULLORDER_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
-						var ischecked = $(this).attr('checked');
-						if(typeof(ischecked) != 'undefined'){
-							itrGNote.find('[data-goal=fullorder]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=fullorder]').hide();
-						}
-					}
-
-					checkGoalsNote();
-				});
-				$('input[name^="USE_DEBUG_GOALS"]').change(function() {
-					var parent = $(this).closest('tr').data('parent');
-					var inUAC = $(this).parents('table').first().find('input#'+parent);
-					if(inUAC.length && inUAC.attr('checked')){
-						var itrGNote = $(this).parents('table').first().find('tr[data-optioncode=GOALS_NOTE]');
-						var ischecked = $(this).attr('checked');
-						if(typeof(ischecked) != 'undefined'){
-							itrGNote.find('[data-goal=debug]').show();
-						}
-						else{
-							itrGNote.find('[data-goal=debug]').hide();
-						}
-					}
-
-					checkGoalsNote();
-				});
-				$('input[name^="YA_GOALS"]').change(function(){
-					var itrYACID = $(this).parents('table').first().find('tr.YA_COUNTER_ID');
-					var itrUFG = $(this).parents('table').first().find('tr.USE_FORMS_GOALS');
-					var itrUBG = $(this).parents('table').first().find('tr.USE_BASKET_GOALS');
-					var itrU1CG = $(this).parents('table').first().find('tr.USE_1CLICK_GOALS');
-					var itrUQOG = $(this).parents('table').first().find('tr.USE_FASTORDER_GOALS');
-					var itrUFOG = $(this).parents('table').first().find('tr.USE_FULLORDER_GOALS');
-					var itrUDG = $(this).parents('table').first().find('tr.USE_DEBUG_GOALS');
-					var itrGNote = $(this).parents('table').first().find('tr.GOALS_NOTE');
-					var ischecked = $(this).attr('checked');
-					if(typeof(ischecked) != 'undefined'){
-						itrYACID.fadeIn();
-						itrUFG.fadeIn();
-						var valUFG = itrUFG.find('select').val();
-
-						if(valUFG.indexOf('NONE') == -1){
-							var isCommon = valUFG.indexOf('COMMON') != -1;
-							if(isCommon){
-								itrGNote.find('[data-value=common]').show();
-								itrGNote.find('[data-value=single]').hide();
+							if(valUFG.indexOf('NONE') == -1){
+								var isCommon = valUFG.indexOf('COMMON') != -1;
+								if(isCommon){
+									itrGNote.find('[data-value=common]').show();
+									itrGNote.find('[data-value=single]').hide();
+								}
+								else{
+									itrGNote.find('[data-value=common]').hide();
+									itrGNote.find('[data-value=single]').show();
+								}
 							}
-							else{
-								itrGNote.find('[data-value=common]').hide();
-								itrGNote.find('[data-value=single]').show();
-							}
+							itrUBG.fadeIn();
+							itrU1CG.fadeIn();
+							itrUQOG.fadeIn();
+							itrUFOG.fadeIn();
+							itrUDG.fadeIn();
 						}
-						itrUBG.fadeIn();
-						itrU1CG.fadeIn();
-						itrUQOG.fadeIn();
-						itrUFOG.fadeIn();
-						itrUDG.fadeIn();
-					}
-					else{
-						itrYACID.fadeOut();
-						itrUFG.fadeOut();
-						itrUBG.fadeOut();
-						itrU1CG.fadeOut();
-						itrUQOG.fadeOut();
-						itrUFOG.fadeOut();
-						itrUDG.fadeOut();
-						itrGNote.fadeOut();
-					}
-					checkGoalsNote();
-				});
-
-				$('input[name^="USE_WORD_EXPRESSION"], select[name^="BUYMISSINGGOODS"]').change(function() {
-					CheckActive();
-				});
-
-				$('select[name^="SHOW_SECTION_DESCRIPTION"]').change(function(){
-					if($(this).val() != 'BOTH')
-						$('select[name*="SECTION_DESCRIPTION_POSITION"]').closest('tr').css('display','none');
-					else
-						$('select[name*="SECTION_DESCRIPTION_POSITION"]').closest('tr').css('display','');
-				});
-
-				$('select[name^="SHOW_QUANTITY_FOR_GROUPS"]').change(function() {
-					var val = $(this).val();
-					var tab = $(this).parents('.adm-detail-content-item-block');
-					var sqcg = tab.find('select[name^="SHOW_QUANTITY_COUNT_FOR_GROUPS"]');
-
-					var isAll = false;
-					if(val){
-						isAll = val.indexOf('2') !== -1;
-					}
-
-					if(!isAll){
-						$(this).find('option').each(function() {
-							if($(this).attr('selected') != 'selected'){
-								sqcg.find('option[value="' + $(this).attr('value') + '"]').removeAttr('selected');
-							}
-						});
-					}
-				});
-
-				$('select[name^="SHOW_QUANTITY_COUNT_FOR_GROUPS"]').change(function(e) {
-					e.stopPropagation();
-					var val = $(this).val();
-					var tab = $(this).parents('.adm-detail-content-item-block');
-					var sqg_val = tab.find('select[name^="SHOW_QUANTITY_FOR_GROUPS"]').val();
-
-					if(!sqg_val){
-						$(this).find('option').removeAttr('selected');
-						return;
-					}
-
-					var isAll = false;
-					if(sqg_val){
-						isAll = sqg_val.indexOf('2') !== -1;
-					}
-
-					if(!isAll && val){
-						for(i in val){
-							var g = val[i];
-							if(sqg_val.indexOf(g) === -1){
-								$(this).find('option[value="' + g + '"]').removeAttr('selected');
-							}
+						else{
+							itrYACID.fadeOut();
+							itrUFG.fadeOut();
+							itrUBG.fadeOut();
+							itrU1CG.fadeOut();
+							itrUQOG.fadeOut();
+							itrUFOG.fadeOut();
+							itrUDG.fadeOut();
+							itrGNote.fadeOut();
 						}
-					}
-				});
+						checkGoalsNote();
+					});
 
-				$('select[name^="ONECLICKBUY_PERSON_TYPE"]').change(function() {
-					if(typeof arOrderPropertiesByPerson !== 'undefined'){
-						var table = $(this).parents('table').first();
-						var value = $(this).val();
-						if(typeof value !== 'undefined' && typeof arOrderPropertiesByPerson[value] !== 'undefined'){
-							var arSelects = [table.find('select[name^=ONECLICKBUY_PROPERTIES]'), table.find('select[name^=ONECLICKBUY_REQUIRED_PROPERTIES]')];
-							for(var i in arSelects){
-								var $fields = arSelects[i];
-								if($fields.length){
-									var fields = $fields.val();
-									$fields.find('option').remove();
-									for(var j in arOrderPropertiesByPerson[value]){
-										var selected = '';
-										if(fields)
-											selected = (fields.indexOf(j) !== -1 ? ' selected="selected"' : '');
-										$fields.append('<option value="' + j + '"' + selected + '>' + arOrderPropertiesByPerson[value][j] + '</option>');
-									}
-									$fields.find('option').eq(0).attr('selected', 'selected');
-									$fields.find('option').eq(1).attr('selected', 'selected');
+					$('input[name^="USE_WORD_EXPRESSION"], select[name^="BUYMISSINGGOODS"]').change(function() {
+						CheckActive();
+					});
+
+					$('select[name^="SHOW_SECTION_DESCRIPTION"]').change(function(){
+						if($(this).val() != 'BOTH'){
+							$('select[name*="SECTION_DESCRIPTION_POSITION"]').closest('tr').css('display','none');
+						}
+						else{
+							$('select[name*="SECTION_DESCRIPTION_POSITION"]').closest('tr').css('display','');
+						}
+					});
+
+					$('select[name^="SHOW_QUANTITY_FOR_GROUPS"]').change(function() {
+						var val = $(this).val();
+						var tab = $(this).parents('.adm-detail-content-item-block');
+						var sqcg = tab.find('select[name^="SHOW_QUANTITY_COUNT_FOR_GROUPS"]');
+
+						var isAll = false;
+						if(val){
+							isAll = val.indexOf('2') !== -1;
+						}
+
+						if(!isAll){
+							$(this).find('option').each(function() {
+								if($(this).attr('selected') != 'selected'){
+									sqcg.find('option[value="' + $(this).attr('value') + '"]').removeAttr('selected');
+								}
+							});
+						}
+					});
+
+					$('select[name^="SHOW_QUANTITY_COUNT_FOR_GROUPS"]').change(function(e) {
+						e.stopPropagation();
+						var val = $(this).val();
+						var tab = $(this).parents('.adm-detail-content-item-block');
+						var sqg_val = tab.find('select[name^="SHOW_QUANTITY_FOR_GROUPS"]').val();
+
+						if(!sqg_val){
+							$(this).find('option').removeAttr('selected');
+							return;
+						}
+
+						var isAll = false;
+						if(sqg_val){
+							isAll = sqg_val.indexOf('2') !== -1;
+						}
+
+						if(!isAll && val){
+							for(i in val){
+								var g = val[i];
+								if(sqg_val.indexOf(g) === -1){
+									$(this).find('option[value="' + g + '"]').removeAttr('selected');
 								}
 							}
 						}
-					}
-				});
+					});
 
-				$('select[name^="ONECLICKBUY_PROPERTIES"]').change(function() {
-					var table = $(this).parents('table').first();
-					$(this).find('option').eq(0).attr('selected', 'selected');
-					$(this).find('option').eq(1).attr('selected', 'selected');
-					var fiedsValue = $(this).val();
-					var $requiredFields = table.find('select[name^=ONECLICKBUY_REQUIRED_PROPERTIES]');
-					var requiredFieldsValue = $requiredFields.val();
-					for(var i in requiredFieldsValue){
-						if(fiedsValue === null || fiedsValue.indexOf(requiredFieldsValue[i]) === -1){
-							$requiredFields.find('option[value=' + requiredFieldsValue[i] + ']').removeAttr('selected');
+					$('select[name^="ONECLICKBUY_PERSON_TYPE"]').change(function() {
+						if(typeof arOrderPropertiesByPerson !== 'undefined'){
+							var table = $(this).parents('table').first();
+							var value = $(this).val();
+							if(typeof value !== 'undefined' && typeof arOrderPropertiesByPerson[value] !== 'undefined'){
+								var arSelects = [table.find('select[name^=ONECLICKBUY_PROPERTIES]'), table.find('select[name^=ONECLICKBUY_REQUIRED_PROPERTIES]')];
+								for(var i in arSelects){
+									var $fields = arSelects[i];
+									if($fields.length){
+										var fields = $fields.val();
+										$fields.find('option').remove();
+										for(var j in arOrderPropertiesByPerson[value]){
+											var selected = '';
+											if(fields)
+												selected = (fields.indexOf(j) !== -1 ? ' selected="selected"' : '');
+											$fields.append('<option value="' + j + '"' + selected + '>' + arOrderPropertiesByPerson[value][j] + '</option>');
+										}
+										$fields.find('option').eq(0).attr('selected', 'selected');
+										$fields.find('option').eq(1).attr('selected', 'selected');
+									}
+								}
+							}
 						}
-					}
-				});
+					});
 
-				$('select[name^="ONECLICKBUY_REQUIRED_PROPERTIES"]').change(function() {
-					var table = $(this).parents('table').first();
-					$(this).find('option').eq(0).attr('selected', 'selected');
-					$(this).find('option').eq(1).attr('selected', 'selected');
-					var requiredFieldsValue = $(this).val();
-					var $fieds = table.find('select[name^=ONECLICKBUY_PROPERTIES]');
-					var fiedsValue = $fieds.val();
-					var $FIO = $(this).find('option[value^=FIO]');
-					var $PHONE = $(this).find('option[value^=PHONE]');
-					for(var i in requiredFieldsValue){
-						if(fiedsValue === null || fiedsValue.indexOf(requiredFieldsValue[i]) === -1){
-							$(this).find('option[value=' + requiredFieldsValue[i] + ']').removeAttr('selected');
+					$('select[name^="ONECLICKBUY_PROPERTIES"]').change(function() {
+						var table = $(this).parents('table').first();
+						$(this).find('option').eq(0).attr('selected', 'selected');
+						$(this).find('option').eq(1).attr('selected', 'selected');
+						var fiedsValue = $(this).val();
+						var $requiredFields = table.find('select[name^=ONECLICKBUY_REQUIRED_PROPERTIES]');
+						var requiredFieldsValue = $requiredFields.val();
+						for(var i in requiredFieldsValue){
+							if(fiedsValue === null || fiedsValue.indexOf(requiredFieldsValue[i]) === -1){
+								$requiredFields.find('option[value=' + requiredFieldsValue[i] + ']').removeAttr('selected');
+							}
 						}
-					}
-				});
+					});
 
-				$('input[name^="USE_GOOGLE_RECAPTCHA"]').change(function(){
-					if($(this).attr('checked') != 'checked')
-						$(this).closest('.adm-detail-content-table').find('tr[data-optioncode^="GOOGLE_RECAPTCHA"]').each(function(){
-							$(this).css('display','none');
-						});
-					else
-						$(this).closest('.adm-detail-content-table').find('tr[data-optioncode^="GOOGLE_RECAPTCHA"]').each(function(){
-							$(this).css('display','');
-						});
-					$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change();
-				});
+					$('select[name^="ONECLICKBUY_REQUIRED_PROPERTIES"]').change(function() {
+						var table = $(this).parents('table').first();
+						$(this).find('option').eq(0).attr('selected', 'selected');
+						$(this).find('option').eq(1).attr('selected', 'selected');
+						var requiredFieldsValue = $(this).val();
+						var $fieds = table.find('select[name^=ONECLICKBUY_PROPERTIES]');
+						var fiedsValue = $fieds.val();
+						var $FIO = $(this).find('option[value^=FIO]');
+						var $PHONE = $(this).find('option[value^=PHONE]');
+						for(var i in requiredFieldsValue){
+							if(fiedsValue === null || fiedsValue.indexOf(requiredFieldsValue[i]) === -1){
+								$(this).find('option[value=' + requiredFieldsValue[i] + ']').removeAttr('selected');
+							}
+						}
+					});
 
-				$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change(function() {
-					var val = $(this).val();
-					var tab = $(this).parents('.adm-detail-content-item-block');
-					if(tab.find('input[name^="USE_GOOGLE_RECAPTCHA"]').attr('checked') == 'checked')
-					{
-						if(val != 'INVISIBLE')
+					$('input[name^="USE_GOOGLE_RECAPTCHA"]').change(function(){
+						if($(this).attr('checked') != 'checked')
+							$(this).closest('.adm-detail-content-table').find('tr[data-optioncode^="GOOGLE_RECAPTCHA"]').each(function(){
+								$(this).css('display','none');
+							});
+						else
+							$(this).closest('.adm-detail-content-table').find('tr[data-optioncode^="GOOGLE_RECAPTCHA"]').each(function(){
+								$(this).css('display','');
+							});
+						$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change();
+					});
+
+					$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change(function() {
+						var val = $(this).val();
+						var tab = $(this).parents('.adm-detail-content-item-block');
+						if(tab.find('input[name^="USE_GOOGLE_RECAPTCHA"]').attr('checked') == 'checked')
+						{
+							if(val != 'INVISIBLE')
+							{
+								tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_SHOW_LOGO"]').css('display','none');
+								tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_BADGE"]').css('display','none');
+							}
+							else
+							{
+								tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_SHOW_LOGO"]').css('display','');
+								tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_BADGE"]').css('display','');
+							}
+						}
+						else
 						{
 							tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_SHOW_LOGO"]').css('display','none');
 							tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_BADGE"]').css('display','none');
 						}
-						else
-						{
-							tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_SHOW_LOGO"]').css('display','');
-							tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_BADGE"]').css('display','');
+					});
+
+					$('input[name^="USE_PHONE_AUTH"]').change(function(){
+						if($(this).prop('disabled')){
+							$(this).prop('checked', false);
+							$(this).closest('td').find('label').attr('title', '<?=GetMessage('PHONE_AUTH_DISABLED_TITLE')?>');
 						}
-					}
-					else
-					{
-						tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_SHOW_LOGO"]').css('display','none');
-						tab.find('tr[data-optioncode^="GOOGLE_RECAPTCHA_BADGE"]').css('display','none');
-					}
-				})
 
-				$('select[name^="ONECLICKBUY_PERSON_TYPE"]').change();
-				$('input[name^="YA_GOALS"]').change();
-				$('select[name^="USE_FORMS_GOALS"]').change();
-				$('input[name^="USE_BASKET_GOALS"]').change();
-				$('input[name^="USE_1CLICK_GOALS"]').change();
-				$('input[name^="USE_FASTORDER_GOALS"]').change();
-				$('input[name^="USE_FULLORDER_GOALS"]').change();
-				$('input[name^="USE_DEBUG_GOALS"]').change();
+						var tab = $(this).parents('.adm-detail-content-item-block');
+						var itrUPANote = tab.find('tr[data-optioncode=USE_PHONE_AUTH_NOTE]');
+						if(itrUPANote.length){
+							var bChecked = $(this).prop('checked') && !$(this).prop('disabled');
+							if(bChecked){
+								itrUPANote.show();
+							}
+							else{
+								itrUPANote.hide();
+							}
+						}
+					});
 
-				$('input[name^="USE_GOOGLE_RECAPTCHA"]').change();
-				$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change();
+					$('select[name^="ONECLICKBUY_PERSON_TYPE"]').change();
+					$('input[name^="YA_GOALS"]').change();
+					$('select[name^="USE_FORMS_GOALS"]').change();
+					$('input[name^="USE_BASKET_GOALS"]').change();
+					$('input[name^="USE_1CLICK_GOALS"]').change();
+					$('input[name^="USE_FASTORDER_GOALS"]').change();
+					$('input[name^="USE_FULLORDER_GOALS"]').change();
+					$('input[name^="USE_DEBUG_GOALS"]').change();
+					$('input[name^="USE_GOOGLE_RECAPTCHA"]').change();
+					$('select[name^="GOOGLE_RECAPTCHA_SIZE"]').change();
+					$('select[name^="SHOW_SECTION_DESCRIPTION"]').change();
+					$('input[name^="USE_PHONE_AUTH"]').change();
+				});
 			</script>
 		</form>
 		<?$tabControl->End();?>

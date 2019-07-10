@@ -144,8 +144,9 @@ use \Bitrix\Main\Localization\Loc;
 	<?$this->EndViewTarget();?>
 <?endif;?>
 
-<?if($arResult["PROPERTIES"]["SECTION"]["VALUE"]):?>
+<?if($arParams['SHOW_LANDINGS'] !== 'N' && $arResult["PROPERTIES"]["SECTION"]["VALUE"]):?>
 	<?$GLOBALS["arLandingSections"] = array("PROPERTY_SECTION" => $arResult["PROPERTIES"]["SECTION"]["VALUE"], "!ID" => $arResult["ID"]);?>
+	<?$this->SetViewTarget("langing_sections");?>
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:news.list",
 		"landings_list",
@@ -208,4 +209,5 @@ use \Bitrix\Main\Localization\Loc;
 		),
 		false, array("HIDE_ICONS" => "Y")
 	);?>
+	<?$this->EndViewTarget();?>
 <?endif;?>

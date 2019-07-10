@@ -321,6 +321,7 @@ $(document).ready(function () {
             }]
 
     });
+
 });
 
 
@@ -538,7 +539,7 @@ $(document).ready(function() {
                     ]
                 });
 
-    })
+    });
 
 //табы на странице одной серии
 $(document).ready(function() {
@@ -739,9 +740,5 @@ $(document).ready(function () {
         });
     };
 });
-
-
-
-
 
 

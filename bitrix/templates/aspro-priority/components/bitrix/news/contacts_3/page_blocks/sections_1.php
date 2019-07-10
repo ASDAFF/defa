@@ -16,15 +16,15 @@ foreach($arItems as $arItem){
 		$mapLAT += $arCoords[0];
 		$mapLON += $arCoords[1];
 		$html = '';
-		
+
 		$html .= '<div class="title">'.$arItem['NAME'].'</div>';
-		
+
 		if(strlen($arItem['PROPERTY_SCHEDULE_VALUE']['TEXT']) || $arItem['PROPERTY_PHONE_VALUE'] || $arItem['PROPERTY_METRO_VALUE'] || $arItem['PROPERTY_EMAIL_VALUE']){
 			$html .= '<div class="properties">';
-				
+
 				$html .= (strlen($arItem['PROPERTY_METRO_VALUE']) ? '<div class="property schedule"><div class="title-prop font_upper">'.$arProperties['METRO']['NAME'].'</div><div class="value font_sm">'.$arItem['PROPERTY_METRO_VALUE'].'</div></div>' : '');
 				$html .= (strlen($arItem['PROPERTY_SCHEDULE_VALUE']['TEXT']) ? '<div class="property schedule"><div class="title-prop font_upper">'.$arProperties['SCHEDULE']['NAME'].'</div><div class="value font_sm">'.$arItem['PROPERTY_SCHEDULE_VALUE']['TEXT'].'</div></div>' : '');
-				
+
 				if($arItem['PROPERTY_PHONE_VALUE']){
 					$phone = '';
 					if(is_array($arItem['PROPERTY_PHONE_VALUE'])){
@@ -34,16 +34,16 @@ foreach($arItems as $arItem){
 					}
 					else{
 						$phone = '<div class="value font_sm"><a rel= "nofollow" href="tel:'.str_replace(array(' ', ',', '-', '(', ')'), '', $arItem['PROPERTY_PHONE_VALUE']).'">'.$arItem['PROPERTY_PHONE_VALUE'].'</a></div>';
-					
-						
+
+
 					}
 					$html .= '<div class="property phone"><div class="title-prop font_upper">'.$arProperties['PHONE']['NAME'].'</div>'.$phone.'</div>';
 				}
-			
+
 				$html .= (strlen($arItem['PROPERTY_EMAIL_VALUE']) ? '<div class="property email"><div class="title-prop font_upper">'.$arProperties['EMAIL']['NAME'].'</div><div class="value font_sm"><a href="'.$arItem['PROPERTY_EMAIL_VALUE'].'">'.$arItem['PROPERTY_EMAIL_VALUE'].'</a></div></div>' : '');
 			$html .= '</div>';
 		}
-		
+
 
 		$arPlacemarks[] = array(
 			"ID" => $arItem["ID"],
@@ -60,10 +60,8 @@ foreach($arItems as $arItem){
 if($iCountShops && $bUseMap)
 {
 	$mapLAT = floatval($mapLAT / $iCountShops);
-	$mapLON = floatval($mapLON / $iCountShops);?>
-	<?if($arParams['SHOW_TOP_MAP'] == 'Y'):?>
-		<?$this->SetViewTarget('yandex_map');?>
-	<?endif;?>
+	$mapLON = floatval($mapLON / $iCountShops);
+	?>
 	<div class="contacts-page-map">
 		<?$APPLICATION->IncludeComponent(
 			"bitrix:map.yandex.view",
@@ -88,9 +86,6 @@ if($iCountShops && $bUseMap)
 			false
 		);?>
 	</div>
-	<?if($arParams['SHOW_TOP_MAP'] == 'Y'):?>
-		<?$this->EndViewTarget();?>
-	<?endif;?>
 <?}?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
@@ -145,6 +140,7 @@ if($iCountShops && $bUseMap)
 		"IBLOCK_URL"	=>	$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["news"],
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"SHOW_DETAIL_LINK" => $arParams["SHOW_DETAIL_LINK"],
+		"SHOW_TOP_MAP" => $bUseMap ? 'Y' : 'N',
 	),
 	$component
 );?>

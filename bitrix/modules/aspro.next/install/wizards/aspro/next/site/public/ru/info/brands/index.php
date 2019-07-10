@@ -2,8 +2,8 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Партнеры");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:news", 
-	"partners", 
+	"bitrix:news",
+	"partners",
 	array(
 		"ADD_ELEMENT_CHAIN" => "Y",
 		"ADD_SECTIONS_CHAIN" => "Y",
@@ -134,7 +134,7 @@ $APPLICATION->SetTitle("Партнеры");
 			1 => "COLOR_REF",
 			2 => "SIZES2",
 		),
-		"LIST_OFFERS_LIMIT" => "20",
+		"LIST_OFFERS_LIMIT" => "10",
 		"DEFAULT_LIST_TEMPLATE" => "block",
 		"IBLOCK_CATALOG_TYPE" => "#IBLOCK_NEXT_CATALOG_TYPE#",
 		"IBLOCK_CATALOG_ID" => "#IBLOCK_CATALOG_ID#",

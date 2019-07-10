@@ -484,8 +484,7 @@ if ($arResult['CATALOG'] && isset($arResult['OFFERS']) && !empty($arResult['OFFE
 	$arResult['OFFERS'] = $arNewOffers;
 	$arResult['SHOW_OFFERS_PROPS'] = $boolSKUDisplayProps;
 
-	$arUsedFields = array();
-	$arSortFields = array();
+	$arUsedFields = $arSortFields = $arPropSKU = array();
 
 	foreach ($arSKUPropIDs as $propkey => $strOneCode)
 	{
@@ -500,15 +499,25 @@ if ($arResult['CATALOG'] && isset($arResult['OFFERS']) && !empty($arResult['OFFE
 				$arResult['OFFERS'][$keyOffer]['SKU_SORT_'.$strOneCode] = $arMatrix[$keyOffer][$strOneCode]['SORT'];
 				$arUsedFields[$strOneCode] = true;
 				$arSortFields['SKU_SORT_'.$strOneCode] = SORT_NUMERIC;
+
+				$arPropSKU[$strOneCode][$arMatrix[$keyOffer][$strOneCode]["VALUE"]] = $arSKUPropList[$strOneCode]["VALUES"][$arMatrix[$keyOffer][$strOneCode]["VALUE"]];
 			}
 			else
 			{
 				unset($arMatrix[$keyOffer][$strOneCode]);
 			}
 		}
+
+		if($arPropSKU[$strOneCode]){
+			// sort sku prop values
+			Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_STRING, SORT_ASC)));
+			$arSKUPropList[$strOneCode]["VALUES"] = $arPropSKU[$strOneCode];
+		}
 	}
 	$arResult['OFFERS_PROP'] = $arUsedFields;
 	$arResult['OFFERS_PROP_CODES'] = (!empty($arUsedFields) ? base64_encode(serialize(array_keys($arUsedFields))) : '');
+
+	unset($arPropSKU);
 
 	Collection::sortByColumn($arResult['OFFERS'], $arSortFields);
 
@@ -571,7 +580,7 @@ if ($arResult['CATALOG'] && isset($arResult['OFFERS']) && !empty($arResult['OFFE
 			/*if ($arItem['OFFER_ID_SELECTED'] > 0 || $arOffer['CAN_BUY'] && $intSelected < 0){
 				$intSelected = $keyOffer;
 			}*/
-			
+
 			if ($arResult['OFFER_ID_SELECTED'] > 0)
 				$foundOffer = ($arResult['OFFER_ID_SELECTED'] == $arOffer['ID']);
 			if ($foundOffer)
@@ -1109,7 +1118,7 @@ if (intVal($arParams["IBLOCK_STOCK_ID"]))
 				{
 					if($arResult["STOCK"][$key])
 						unset($arResult["STOCK"][$key]);
-					
+
 					$arParamsTmp['CUSTOM_FILTER'] = $arSale['~PROPERTY_LINK_GOODS_FILTER_VALUE'];
 					$arTmpParams = $obCatalogSection->onPrepareComponentParams($arParamsTmp);
 
