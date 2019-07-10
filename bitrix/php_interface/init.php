@@ -12,7 +12,8 @@ if(file_exists(__DIR__.'/debug.php')) {
 if(file_exists(__DIR__.'/functions.php')) {
 	require_once __DIR__.'/functions.php';
 }
-
+//x5 20190628
+\XFive\Events\EventManager::initEvents();
 
 \Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'onSaleAdminOrderInfoBlockShow', 'onSaleAdminOrderInfoBlockShow');// Split delivery in order_view for managers
 AddEventHandler("sale", "OnOrderNewSendEmail", "OnOrderNewSendMailHandler");

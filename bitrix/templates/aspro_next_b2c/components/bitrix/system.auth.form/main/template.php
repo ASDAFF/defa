@@ -1,6 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?/*<link rel="stylesheet" type="text/css" href="/bitrix/js/socialservices/css/ss.css">*/?>
-<?if( $arResult["FORM_TYPE"] == "login" ){?>
+<? global $USER;?>
+<?if( $arResult["FORM_TYPE"] == "login" || $arParams['CUSTOM_ITS_NOT_FROM_POPUP']=='Y'){?>
 	<div id="ajax_auth">
 		<div class="auth_wrapp form-block">
 			<div class="wrap_md1">
@@ -149,7 +150,7 @@
 					</div>
 				</div>
 			<?endif;?>
-
+            <?if(!$USER->IsAuthorized()):?>
 			<div class="form-footer socserv1">
 				<div class="inner-table-block">
 				<!--noindex--><a href="<?=$arResult["AUTH_REGISTER_URL"];?>" rel="nofollow" class="btn transparent bold register" tabindex="6"><?=GetMessage("AUTH_REGISTER_NEW")?></a><!--/noindex-->
@@ -160,7 +161,18 @@
 					</div>
 				</div>
 			</div>
-				
+            <?elseif($arParams['CUSTOM_ITS_NOT_FROM_POPUP']=='Y'):?>
+                <div class="form-footer socserv1">
+                    <div class="inner-table-block">
+                        <!--noindex--><a href="#" rel="nofollow" class="btn transparent bold register" tabindex="6"><?=GetMessage("AUTH_REQUEST_ACCESS")?></a><!--/noindex-->
+                    </div>
+                    <div class="inner-table-block">
+                        <div class="more_text_small">
+                            <?=GetMessage("AUTH_REQUEST_ACCESS_TEXT")?>
+                        </div>
+                    </div>
+                </div>
+			<?endif;?>
 		</div>
 	</div>
 <?}else{?>
