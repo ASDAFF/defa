@@ -5078,8 +5078,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 .floating-tizer-link.drop {
     position: relative;
     right: 58px;
-    /*background-color: #d33234;*/
-    background-color: yellow;
+    background-color: #d33234;
 }
 
 .floating-tizer-block.drop:hover .hide-tizer,
