@@ -9,13 +9,13 @@ $bCabinet = ($arTheme["CABINET"]["VALUE"]=='Y' ? true : false);
 		<svg class="svg svg-close" width="14" height="14" viewBox="0 0 14 14">
 		  <path data-name="Rounded Rectangle 568 copy 16" d="M1009.4,953l5.32,5.315a0.987,0.987,0,0,1,0,1.4,1,1,0,0,1-1.41,0L1008,954.4l-5.32,5.315a0.991,0.991,0,0,1-1.4-1.4L1006.6,953l-5.32-5.315a0.991,0.991,0,0,1,1.4-1.4l5.32,5.315,5.31-5.315a1,1,0,0,1,1.41,0,0.987,0.987,0,0,1,0,1.4Z" transform="translate(-1001 -946)"></path>
 		</svg>
+		<i class="svg svg-close mask arrow"></i>
+		<div class="logo<?=$logoClass?>">
+			<?=CPriority::ShowLogo();?>
+		</div>
 		<div class="row">
 			<div class="col-md-9">
 				<div class="left_block">
-					<i class="svg svg-close mask arrow"></i>
-					<div class="logo<?=$logoClass?>">
-						<?=CPriority::ShowLogo();?>
-					</div>
 					<?CPriority::ShowPageType('search_title_component_mega_menu');?>
 					<?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
 						array(

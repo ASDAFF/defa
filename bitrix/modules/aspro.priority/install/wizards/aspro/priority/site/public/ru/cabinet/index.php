@@ -11,7 +11,7 @@ $APPLICATION->SetTitle("Личный кабинет");?>
 		"confirm" => "confirm-password/",
 		"confirm_registration" => "confirm-registration/",
 	),
-	"PERSONAL" => "#SITE_DIR#personal/"
+	"PERSONAL" => "#SITE_DIR#cabinet/"
 	),
 	false
 );?>

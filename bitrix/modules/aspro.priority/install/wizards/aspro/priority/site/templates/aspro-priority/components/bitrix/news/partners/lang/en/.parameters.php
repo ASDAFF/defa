@@ -37,4 +37,9 @@ $MESS['NEWS_IBLOCK_ID'] = 'ИД инфоблока с новостями';
 $MESS['FAQ_IBLOCK_ID'] = 'ИД инфоблока с faq';
 $MESS['VACANCYS_IBLOCK_ID'] = 'ИД инфоблока с вакансиями';
 $MESS['SERTIFICATES_IBLOCK_ID'] = 'ИД инфоблока с лицензиями и сертификатами';
+$MESS['ITEM_COUNT_1'] = '1';
+$MESS['ITEM_COUNT_2'] = '2';
+$MESS['ITEM_COUNT_3'] = '3';
+$MESS['ITEM_COUNT_4'] = '4';
+$MESS['ITEM_COUNT_5'] = '5';
 ?>

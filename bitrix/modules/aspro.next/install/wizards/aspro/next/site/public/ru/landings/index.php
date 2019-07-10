@@ -3,8 +3,8 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetPageProperty("title", "Обзоры");
 $APPLICATION->SetTitle("Обзоры");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:catalog", 
-	"landings", 
+	"bitrix:catalog",
+	"landings",
 	array(
 		"COMPONENT_TEMPLATE" => "landings",
 		"IBLOCK_TYPE" => "#IBLOCK_NEXT_CATALOG_TYPE#",
@@ -218,6 +218,8 @@ $APPLICATION->SetTitle("Обзоры");
 		"SORT_PRICES" => "MINIMUM_PRICE",
 		"DEFAULT_LIST_TEMPLATE" => "block",
 		"SECTION_DISPLAY_PROPERTY" => "UF_SECTION_TEMPLATE",
+		"SHOW_LANDINGS" => "Y",
+		"LANDING_POSITION" => "AFTER_DETAIL_TEXT",
 		"LANDING_TITLE" => "Популярные категории",
 		"LANDING_SECTION_COUNT" => "7",
 		"SECTION_ELEMENTS_TYPE_VIEW" => "list_elements_2",
@@ -271,7 +273,7 @@ $APPLICATION->SetTitle("Обзоры");
 			2 => "COLOR_REF",
 			3 => "",
 		),
-		"LIST_OFFERS_LIMIT" => "5",
+		"LIST_OFFERS_LIMIT" => "10",
 		"DETAIL_OFFERS_FIELD_CODE" => array(
 			0 => "",
 			1 => "",

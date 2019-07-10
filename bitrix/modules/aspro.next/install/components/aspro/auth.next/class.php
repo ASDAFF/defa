@@ -37,7 +37,7 @@ class CAsproAuth extends CBitrixComponent{
 				$this->arParams["SEF_FOLDER"],
 				$arUrlTemplates,
 				$arVariables
-			);	
+			);
 
 			if($_REQUEST)
 			{
@@ -88,7 +88,8 @@ class CAsproAuth extends CBitrixComponent{
 			$this->errorsFatal[htmlspecialcharsEx($e->getCode())] = htmlspecialcharsEx( $e->getMessage() );
 		}
 
-		if(isset($_REQUEST['backurl']) && $_REQUEST['backurl']) // fix ajax url
+		// 24.05.2019: if unrem than not working forgot and change password by phone http://joxi.ru/brRnKB5U78eWKr
+		/*if(isset($_REQUEST['backurl']) && $_REQUEST['backurl']) // fix ajax url
 		{
 			if($_REQUEST['backurl'] != $_SERVER['REQUEST_URI'])
 			{
@@ -96,7 +97,7 @@ class CAsproAuth extends CBitrixComponent{
 				$_SERVER['REQUEST_URI'] = $_REQUEST['backurl'];
 				$APPLICATION->reinitPath();
 			}
-		}
+		}*/
 
 		global $arTheme;
 

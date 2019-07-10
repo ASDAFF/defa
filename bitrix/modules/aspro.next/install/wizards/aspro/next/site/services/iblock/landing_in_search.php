@@ -1,6 +1,7 @@
 <?
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 if(!CModule::IncludeModule("iblock")) return;
+if(!CModule::IncludeModule("catalog")) return;
 
 if(!defined("WIZARD_SITE_ID")) return;
 if(!defined("WIZARD_SITE_DIR")) return;
@@ -33,7 +34,12 @@ if ($arIBlock = $rsIBlock->Fetch()) {
 
 if(WIZARD_INSTALL_DEMO_DATA){
 	if(!$iblockID){
+		$skuIBlockID = false;
 		if($catalogIBlockID = CNextCache::$arIBlocks[WIZARD_SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0]){
+			if($arSku = CCatalogSKU::GetInfoByProductIBlock($catalogIBlockID)){
+				$skuIBlockID = $arSku['IBLOCK_ID'];
+			}
+
 			$vannaSectionID = CNextCache::CIBlockSection_GetList(
 				array(
 					'CACHE' => array(
@@ -152,6 +158,10 @@ if(WIZARD_INSTALL_DEMO_DATA){
 			if($akkumSectionID){
 				CWizardUtil::ReplaceMacros($_SERVER["DOCUMENT_ROOT"].$iblockXMLFile, Array("IN_XML_AKKUM_SECTION_ID" => $akkumSectionID));
 			}
+		}
+
+		if($skuIBlockID){
+			CWizardUtil::ReplaceMacros($_SERVER["DOCUMENT_ROOT"].$iblockXMLFile, Array("IN_XML_SKU_IBLOCK_ID" => $skuIBlockID));
 		}
 
 		$iblockID = WizardServices::ImportIBlockFromXML($iblockXMLFile, $iblockCODE, $iblockTYPE, WIZARD_SITE_ID, $permissions);
@@ -379,10 +389,19 @@ if(WIZARD_INSTALL_DEMO_DATA){
 	$ibp = new CIBlockProperty;
 	$ibp->Update($arProperty["URL_CONDITION"], array("HINT" => GetMessage("WZD_OPTION_334_HINT")));
 	unset($ibp);
+	$ibp = new CIBlockProperty;
+	$ibp->Update($arProperty["I_SKU_PAGE_TITLE"], array("HINT" => GetMessage("WZD_OPTION_367_HINT")));
+	unset($ibp);
+	$ibp = new CIBlockProperty;
+	$ibp->Update($arProperty["I_SKU_PREVIEW_PICTURE_FILE_TITLE"], array("HINT" => GetMessage("WZD_OPTION_368_HINT")));
+	unset($ibp);
+	$ibp = new CIBlockProperty;
+	$ibp->Update($arProperty["I_SKU_PREVIEW_PICTURE_FILE_ALT"], array("HINT" => GetMessage("WZD_OPTION_369_HINT")));
+	unset($ibp);
 
 	// edit form user oprions
 	CUserOptions::SetOption("form", "form_element_".$iblockID, array(
-		"tabs" => 'edit1--#--'.GetMessage("WZD_OPTION_90").'--,--ACTIVE--#--'.GetMessage("WZD_OPTION_2").'--,--NAME--#--'.GetMessage("WZD_OPTION_54").'--,--XML_ID--#--'.GetMessage("WZD_OPTION_219").'--,--SORT--#--'.GetMessage("WZD_OPTION_44").'--,--IBLOCK_ELEMENT_PROPERTY--#--'.GetMessage("WZD_OPTION_128").'--,--IBLOCK_ELEMENT_PROP_VALUE--#--'.GetMessage("WZD_OPTION_130").'--,--PROPERTY_'.$arProperty["QUERY"].'--#--'.GetMessage("WZD_OPTION_324").'--,--PROPERTY_'.$arProperty["IS_INDEX"].'--#--'.GetMessage("WZD_OPTION_323").'--,--PROPERTY_'.$arProperty["IS_SEARCH_TITLE"].'--#--'.GetMessage("WZD_OPTION_361").'--,--PROPERTY_'.$arProperty["URL_CONDITION"].'--#--'.GetMessage("WZD_OPTION_334").'--,--PROPERTY_'.$arProperty["REDIRECT_URL"].'--#--'.GetMessage("WZD_OPTION_325").'--,--PROPERTY_'.$arProperty["QUERY_REPLACEMENT"].'--#--'.GetMessage("WZD_OPTION_331").'--,--PROPERTY_'.$arProperty["CUSTOM_FILTER"].'--#--'.GetMessage("WZD_OPTION_332").'--,--PROPERTY_'.$arProperty["CUSTOM_FILTER_TYPE"].'--#--'.GetMessage("WZD_OPTION_333").'--,--PROPERTY_'.$arProperty["SIMILAR"].'--#--'.GetMessage("WZD_OPTION_326").'--,--PROPERTY_'.$arProperty["LINK_REGION"].'--#--'.GetMessage("WZD_OPTION_310").'--;--cedit1--#--'.GetMessage("WZD_OPTION_108").'--,--PROPERTY_'.$arProperty["FORM_QUESTION"].'--#--'.GetMessage("WZD_OPTION_327").'--,--PROPERTY_'.$arProperty["H3_GOODS"].'--#--'.GetMessage("WZD_OPTION_300").'--,--PROPERTY_'.$arProperty["TIZERS"].'--#--'.GetMessage("WZD_OPTION_292").'--,--DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_122").'--,--PREVIEW_TEXT--#--'.GetMessage("WZD_OPTION_14").'--,--DETAIL_TEXT--#--'.GetMessage("WZD_OPTION_110").'--;--edit14--#--'.GetMessage("WZD_OPTION_18").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_TITLE--#--'.GetMessage("WZD_OPTION_20").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_KEYWORDS--#--'.GetMessage("WZD_OPTION_22").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_DESCRIPTION--#--'.GetMessage("WZD_OPTION_24").'--,--IPROPERTY_TEMPLATES_ELEMENT_PAGE_TITLE--#--'.GetMessage("WZD_OPTION_26").'--,--IPROPERTY_TEMPLATES_ELEMENTS_PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_28").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--IPROPERTY_TEMPLATES_ELEMENTS_DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_36").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--IPROPERTY_TEMPLATES_MANAGEMENT--#--'.GetMessage("WZD_OPTION_38").'--,--IPROPERTY_CLEAR_VALUES--#--'.GetMessage("WZD_OPTION_40").'--,--SEO_ADDITIONAL--#--'.GetMessage("WZD_OPTION_42").'--,--TAGS--#--'.GetMessage("WZD_OPTION_46").'--;--edit2--#--'.GetMessage("WZD_OPTION_82").'--,--SECTIONS--#--'.GetMessage("WZD_OPTION_82").'--;--cedit2--#--'.GetMessage("WZD_OPTION_328").'--,--PROPERTY_'.$arProperty["META_HASH"].'--#--'.GetMessage("WZD_OPTION_329").'--,--PROPERTY_'.$arProperty["META_DATA"].'--#--'.GetMessage("WZD_OPTION_330").'--;--;--',
+		"tabs" => 'edit1--#--'.GetMessage("WZD_OPTION_90").'--,--ACTIVE--#--'.GetMessage("WZD_OPTION_2").'--,--NAME--#--'.GetMessage("WZD_OPTION_54").'--,--XML_ID--#--'.GetMessage("WZD_OPTION_219").'--,--SORT--#--'.GetMessage("WZD_OPTION_44").'--,--IBLOCK_ELEMENT_PROP_VALUE--#--'.GetMessage("WZD_OPTION_130").'--,--PROPERTY_'.$arProperty["QUERY"].'--#--'.GetMessage("WZD_OPTION_324").'--,--PROPERTY_'.$arProperty["IS_INDEX"].'--#--'.GetMessage("WZD_OPTION_323").'--,--PROPERTY_'.$arProperty["IS_SEARCH_TITLE"].'--#--'.GetMessage("WZD_OPTION_361").'--,--PROPERTY_'.$arProperty["URL_CONDITION"].'--#--'.GetMessage("WZD_OPTION_334").'--,--PROPERTY_'.$arProperty["REDIRECT_URL"].'--#--'.GetMessage("WZD_OPTION_325").'--,--PROPERTY_'.$arProperty["QUERY_REPLACEMENT"].'--#--'.GetMessage("WZD_OPTION_331").'--,--PROPERTY_'.$arProperty["CUSTOM_FILTER"].'--#--'.GetMessage("WZD_OPTION_332").'--,--PROPERTY_'.$arProperty["CUSTOM_FILTER_TYPE"].'--#--'.GetMessage("WZD_OPTION_333").'--,--PROPERTY_'.$arProperty["SIMILAR"].'--#--'.GetMessage("WZD_OPTION_326").'--,--PROPERTY_'.$arProperty["LINK_REGION"].'--#--'.GetMessage("WZD_OPTION_310").'--;--cedit1--#--'.GetMessage("WZD_OPTION_108").'--,--PROPERTY_'.$arProperty["HIDE_QUERY_INPUT"].'--#--'.GetMessage("WZD_OPTION_370").'--,--PROPERTY_'.$arProperty["FORM_QUESTION"].'--#--'.GetMessage("WZD_OPTION_327").'--,--PROPERTY_'.$arProperty["H3_GOODS"].'--#--'.GetMessage("WZD_OPTION_300").'--,--PROPERTY_'.$arProperty["TIZERS"].'--#--'.GetMessage("WZD_OPTION_292").'--,--DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_122").'--,--PREVIEW_TEXT--#--'.GetMessage("WZD_OPTION_14").'--,--DETAIL_TEXT--#--'.GetMessage("WZD_OPTION_110").'--;--edit14--#--'.GetMessage("WZD_OPTION_18").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_TITLE--#--'.GetMessage("WZD_OPTION_20").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_KEYWORDS--#--'.GetMessage("WZD_OPTION_22").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_DESCRIPTION--#--'.GetMessage("WZD_OPTION_24").'--,--IPROPERTY_TEMPLATES_ELEMENT_PAGE_TITLE--#--'.GetMessage("WZD_OPTION_26").'--,--IPROPERTY_TEMPLATES_ELEMENTS_PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_28").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--IPROPERTY_TEMPLATES_ELEMENTS_DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_36").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--SEO_ADDITIONAL--#--'.GetMessage("WZD_OPTION_42").'--,--TAGS--#--'.GetMessage("WZD_OPTION_46").'--,--IPROPERTY_TEMPLATES_ELEMENTS--#--'.GetMessage("WZD_OPTION_362").'--,--PROPERTY_'.$arProperty["I_ELEMENT_PAGE_TITLE"].'--#--'.GetMessage("WZD_OPTION_363").'--,--PROPERTY_'.$arProperty["I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE"].'--#--'.GetMessage("WZD_OPTION_364").'--,--PROPERTY_'.$arProperty["I_ELEMENT_PREVIEW_PICTURE_FILE_ALT"].'--#--'.GetMessage("WZD_OPTION_365").'--,--IPROPERTY_TEMPLATES_SKU--#--'.GetMessage("WZD_OPTION_366").'--,--PROPERTY_'.$arProperty["I_SKU_PAGE_TITLE"].'--#--'.GetMessage("WZD_OPTION_367").'--,--PROPERTY_'.$arProperty["I_SKU_PREVIEW_PICTURE_FILE_TITLE"].'--#--'.GetMessage("WZD_OPTION_368").'--,--PROPERTY_'.$arProperty["I_SKU_PREVIEW_PICTURE_FILE_ALT"].'--#--'.GetMessage("WZD_OPTION_369").'--;--edit2--#--'.GetMessage("WZD_OPTION_82").'--,--SECTIONS--#--'.GetMessage("WZD_OPTION_82").'--;--cedit2--#--'.GetMessage("WZD_OPTION_328").'--,--PROPERTY_'.$arProperty["META_HASH"].'--#--'.GetMessage("WZD_OPTION_329").'--,--PROPERTY_'.$arProperty["META_DATA"].'--#--'.GetMessage("WZD_OPTION_330").'--;--;--',
 	));
 	// list user options
 	CUserOptions::SetOption("list", "tbl_iblock_list_".md5($iblockTYPE.".".$iblockID), array(

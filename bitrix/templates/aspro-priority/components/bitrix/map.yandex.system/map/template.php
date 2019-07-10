@@ -32,29 +32,27 @@ function init_<?echo $arParams['MAP_ID']?>()
 		type: 'yandex#<?=$arResult['ALL_MAP_TYPES'][$arParams['INIT_MAP_TYPE']]?>',
 		// adjustZoomOnTypeChange: true
 	});
-	
+
 	map.geoObjects.events.add('balloonclose', function (e){
 		setTimeout(function(){
 			$('.ymaps-image-with-content').each(function(){
-				if(!$(this).find('.marker').length){
-					$(this).prepend('<div class="marker">'+markerSVG+'</div>');
-				}
+				$('<div class="marker">'+markerSVG+'</div>').insertBefore($(this));
+				$(this).remove();
 			});
 		}, 20);
 	});
-	
+
 	map.events.add('boundschange', function (e) {
 		//$('.ymaps-image-with-content .marker').remove();
 		setTimeout(function(){
 			$('.ymaps-image-with-content').each(function(){
-				if(!$(this).find('.marker').length){
-					$(this).prepend('<div class="marker">'+markerSVG+'</div>');
-				}
+				$('<div class="marker">'+markerSVG+'</div>').insertBefore($(this));
+				$(this).remove();
 			});
 			//$(window).resize();
 		}, 300);
 	});
-	
+
 	if($('.contacts.type_4')){
 		ymaps.ready(function(){
 			$('.contacts.type_4 .bx-yandex-view-map').css('opacity', 0);
@@ -156,13 +154,12 @@ function BXMapLoader_<?echo $arParams['MAP_ID']?>()
 	endif;
 else: // $arParams['DEV_MODE'] == 'Y'
 ?>
-			
+
 (function bx_ymaps_waiter(){
 	setTimeout(function(){
 		$('.ymaps-image-with-content').each(function(){
-			if(!$(this).find('.marker').length){
-				$(this).prepend('<div class="marker">'+markerSVG+'</div>');
-			}
+			$('<div class="marker">'+markerSVG+'</div>').insertBefore($(this));
+			$(this).remove();
 			setTimeout(function(){
 				$(window).resize();
 			}, 300);
@@ -171,14 +168,14 @@ else: // $arParams['DEV_MODE'] == 'Y'
 			$('.fly_forms .button span.disabled').on('click', function(e){
 				$('.jqmOverlay').click();
 			});
-		}, 500);		
+		}, 500);
 	}, isMobile ? 3000 : 1500);
 	if(typeof ymaps !== 'undefined'){
 		ymaps.ready(init_<?echo $arParams['MAP_ID']?>);
 	}
 	else
 		setTimeout(bx_ymaps_waiter, 100);
-	
+
 })();
 
 <?

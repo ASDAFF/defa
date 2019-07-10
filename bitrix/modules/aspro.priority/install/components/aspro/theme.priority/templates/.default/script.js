@@ -308,13 +308,13 @@ $(document).ready(function() {
 			if(!_this.hasClass('init_toggle')){
 				InitToggle($('.block-item.active .sup-params').length ? '.block-item.active .sup-params.active .custom-switch' : '.block-item.active .custom-switch');
 			}
-			
+
 			_this.addClass('init_toggle');
 		}, 0);
 	});
 
 	//admin save
-	$('.style-switcher .can_save .save_btn').on('click', function(){
+	$(document).on('click', '.style-switcher .can_save .save_btn', function(){
 		var _this = $(this);
 
 		if(timerHide){
@@ -1147,7 +1147,7 @@ $(document).ready(function() {
 							$('.rolldown>span').on('click', function(){
 								openerFunc($(this));
 							});
-							
+
 							$('.item-views.tarifs .item .prices .all_price .price').on('click', function(){
 								var _this = $(this),
 									price = _this.data('price'),
@@ -1179,7 +1179,7 @@ $(document).ready(function() {
 									_this.data('item', json)
 								}
 							});*/
-							
+
 							TemplateTarifsScript();
 							sliceProps();
 							$('.item-views.tarifs .property').on('mouseenter', function(){
@@ -1187,13 +1187,13 @@ $(document).ready(function() {
 
 								$('.item-views.tarifs .property').each(function(){
 									var thisIndex = $(this).index();
-									
+
 									if(thisIndex == index){
 										$(this).addClass('onhover');
 									}
 								});
 							});
-							
+
 							$('.item-views.tarifs .property').on('mouseleave', function(){
 								$('.item-views.tarifs .property').removeClass('onhover');
 							});

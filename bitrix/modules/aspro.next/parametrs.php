@@ -1253,7 +1253,7 @@ $moduleClass::$arParametrsList = array(
 				'TYPE' => 'selectbox',
 				'LIST' => array(
 					'NO' => GetMessage('NO'),
-					'fast_view_1' => 1,
+					'fast_view_1' => GetMessage('YES'),
 				),
 				'DEFAULT' => 'fast_view_1',
 				'THEME' => 'Y',
@@ -1394,8 +1394,8 @@ $moduleClass::$arParametrsList = array(
 				'TITLE' => GetMessage('TOP_SECTION_DESCRIPTION_POSITION_TITLE'),
 				'TYPE' => 'selectbox',
 				'LIST' => array(
-					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').'(DESCRIPTION)',
-					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').'(UF_SECTION_DESCR)',
+					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').' (DESCRIPTION)',
+					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').' (UF_SECTION_DESCR)',
 				),
 				'DEFAULT' => 'UF_SECTION_DESCR',
 				'THEME' => 'N',
@@ -1404,10 +1404,24 @@ $moduleClass::$arParametrsList = array(
 				'TITLE' => GetMessage('BOTTOM_SECTION_DESCRIPTION_POSITION_TITLE'),
 				'TYPE' => 'selectbox',
 				'LIST' => array(
-					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').'(DESCRIPTION)',
-					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').'(UF_SECTION_DESCR)',
+					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').' (DESCRIPTION)',
+					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').' (UF_SECTION_DESCR)',
 				),
 				'DEFAULT' => 'DESCRIPTION',
+				'THEME' => 'N',
+			),
+			'PRIORITY_SECTION_DESCRIPTION_SOURCE' => array(
+				'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_TITLE'),
+				'TYPE' => 'selectbox',
+				'LIST' => array(
+					'NOT' => array(
+						'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_NOT'),
+					),
+					'IBLOCK' => array(
+						'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_IBLOCK'),
+					),
+				),
+				'DEFAULT' => 'NOT',
 				'THEME' => 'N',
 			),
 			'ITEM_STICKER_CLASS_SOURCE' => array(
@@ -2514,6 +2528,13 @@ $moduleClass::$arParametrsList = array(
 		'TITLE' => GetMessage('LK_OPTIONS'),
 		'THEME' => 'Y',
 		'OPTIONS' => array(
+			'LOGIN_EQUAL_EMAIL' => array(
+				'TITLE' => GetMessage('LOGIN_EQUAL_EMAIL_TITLE'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'THEME' => 'Y',
+				'ONE_ROW' => 'Y',
+			),
 			'PERSONAL_ONEFIO' => array(
 				'TITLE' => GetMessage('PERSONAL_ONEFIO_TITLE'),
 				'TYPE' => 'checkbox',
@@ -2521,12 +2542,16 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'Y',
 				'ONE_ROW' => 'Y',
 			),
-			'LOGIN_EQUAL_EMAIL' => array(
-				'TITLE' => GetMessage('LOGIN_EQUAL_EMAIL_TITLE'),
+			'USE_PHONE_AUTH' => array(
+				'TITLE' => GetMessage('USE_PHONE_AUTH_TITLE'),
 				'TYPE' => 'checkbox',
-				'DEFAULT' => 'Y',
-				'THEME' => 'Y',
-				'ONE_ROW' => 'Y',
+				'DEFAULT' => 'N',
+				'THEME' => 'N',
+			),
+			'USE_PHONE_AUTH_NOTE' => array(
+				'TITLE' => GetMessage('USE_PHONE_AUTH_NOTE_TITLE'),
+				'TYPE' => 'note',
+				'THEME' => 'N',
 			),
 		)
 	),

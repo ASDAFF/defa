@@ -8,7 +8,7 @@
 	Loader::includeModule('iblock');
 	$arSKU = false;
 	$boolSKU = false;
-	
+
 
 	$arSort = CIBlockParameters::GetElementSortFields(
 		array('SHOWS', 'SORT', 'TIMESTAMP_X', 'NAME', 'ID', 'ACTIVE_FROM', 'ACTIVE_TO'),
@@ -23,7 +23,7 @@
 	$arIBlocks=Array();
 	$db_iblock = CIBlock::GetList(Array("SORT"=>"ASC"), Array("SITE_ID"=>$_REQUEST["site"], "TYPE" => ($arCurrentValues["IBLOCK_BANNERS_TYPE"]!="-"?$arCurrentValues["IBLOCK_BANNERS_TYPE"]:"")));
 	while($arRes = $db_iblock->Fetch()) $arIBlocks[$arRes["ID"]] = $arRes["NAME"];
-	
+
 	$arTypes = array();
 	if ($arCurrentValues["IBLOCK_BANNERS_TYPE_ID"])
 	{
@@ -31,8 +31,8 @@
 		while($arr=$rsTypes->Fetch()) $arTypes[$arr["ID"]] = "[".$arr["ID"]."] ".$arr["NAME"];
 	}
 	$arTypesEx = CIBlockParameters::GetIBlockTypes(Array("-"=>" "));
-	
-	
+
+
 	$arPrice = array();
 	if (Loader::includeModule("catalog"))
 	{
@@ -81,12 +81,6 @@
 				"TYPE" => "CHECKBOX",
 				"DEFAULT" => "N",
 		),
-		"SHOW_ITEMS" => Array(
-				"NAME" => GetMessage("SHOW_ITEMS"),
-				"TYPE" => "CHECKBOX",
-				"PARENT" => "DETAIL_SETTINGS",
-				"DEFAULT" => "Y",
-		),
 		"SORT_BUTTONS" => Array(
 			"SORT" => 100,
 			"NAME" => GetMessage("SORT_BUTTONS"),
@@ -115,8 +109,8 @@
 			"ADDITIONAL_VALUES" => "Y",
 		),
 	));
-		
-		
+
+
 	if(is_array($arCurrentValues["SORT_BUTTONS"])){
 		if (in_array("PRICE", $arCurrentValues["SORT_BUTTONS"])){
 			$arTemplateParametersParts[]["SORT_PRICES"] = Array(
@@ -128,11 +122,10 @@
 				"PARENT" => "LIST_SETTINGS",
 				"MULTIPLE" => "N",
 			);
-		}	
+		}
 	}
 
-
-	$arTemplateParametersParts[] = array(	
+	$arTemplateParametersParts[] = array(
 		"DEFAULT_LIST_TEMPLATE" => Array(
 				"NAME" => GetMessage("DEFAULT_LIST_TEMPLATE"),
 				"TYPE" => "LIST",
@@ -191,7 +184,7 @@
 			"DEFAULT" => "-",
 			"ADDITIONAL_VALUES" => "Y",
 			"VALUES" => array_merge(Array("-"=>" "), $arProperty_S),
-		),		
+		),
 		"SHOW_DISCOUNT_PERCENT" => array(
 			'PARENT' => 'VISUAL',
 			'NAME' => GetMessage('CP_BC_TPL_SHOW_DISCOUNT_PERCENT'),
@@ -223,31 +216,50 @@
 			'TYPE' => 'CHECKBOX',
 			'DEFAULT' => 'N',
 		),
-	);
-	
-	$arTemplateParametersParts[] = Array(
-		"LANDING_TITLE" => Array(
-			"NAME" => GetMessage("LANDING_TITLE"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "",
-			"PARENT" => "LIST_SETTINGS",
-		),
-		"LANDING_SECTION_COUNT" => Array(
-			"NAME" => GetMessage("LANDING_SECTION_COUNT"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "7",
-			"PARENT" => "LIST_SETTINGS",
-		),
 		"LIST_FIELD_CODE" => CIBlockParameters::GetFieldCode(GetMessage("IBLOCK_FIELD"), "LIST_SETTINGS"),
-		/*"AJAX_FILTER_CATALOG" => Array(
-			"NAME" => GetMessage("AJAX_FILTER_CATALOG_TITLE"),
+		"SHOW_ITEMS" => Array(
+			"NAME" => GetMessage("SHOW_ITEMS"),
 			"TYPE" => "CHECKBOX",
-			"DEFAULT" => "N",
-			"REFRESH" => "N",
-			"PARENT" => "FILTER_SETTINGS",
-		),*/
+			"PARENT" => "DETAIL_SETTINGS",
+			"DEFAULT" => "Y",
+		),
+		"SHOW_LANDINGS" => array(
+			'PARENT' => 'DETAIL_SETTINGS',
+			'NAME' => GetMessage('SHOW_LANDINGS_TITLE'),
+			'TYPE' => 'CHECKBOX',
+			'DEFAULT' => 'Y',
+			'REFRESH' => 'Y',
+		),
 	);
-	
+
+	if($arCurrentValues["SHOW_LANDINGS"] !== 'N'){
+		$arTemplateParametersParts[] = Array(
+			"LANDING_POSITION" => Array(
+				"NAME" => GetMessage("LANDING_POSITION_TITLE"),
+				"TYPE" => "LIST",
+				"DEFAULT" => "BEFORE_PRODUCTS",
+				"PARENT" => "DETAIL_SETTINGS",
+				"VALUES" => array(
+					'BEFORE_PRODUCTS' => GetMessage('LANDING_POSITION_BEFORE_PRODUCTS'),
+					'AFTER_PRODUCTS' => GetMessage('LANDING_POSITION_AFTER_PRODUCTS'),
+					'AFTER_DETAIL_TEXT' => GetMessage('LANDING_POSITION_AFTER_DETAIL_TEXT'),
+				),
+			),
+			"LANDING_TITLE" => Array(
+				"NAME" => GetMessage("LANDING_TITLE_TITLE"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "",
+				"PARENT" => "DETAIL_SETTINGS",
+			),
+			"LANDING_SECTION_COUNT" => Array(
+				"NAME" => GetMessage("LANDING_SECTION_COUNT_TITLE"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "7",
+				"PARENT" => "DETAIL_SETTINGS",
+			),
+		);
+	}
+
 	$arAllPropList = array();
 	$arFilePropList = array(
 		'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
@@ -274,15 +286,15 @@
 			$arListPropList[$arProp['CODE']] = $strPropName;
 		if ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp))
 			$arHighloadPropList[$arProp['CODE']] = $strPropName;
-	}	
-	
+	}
+
 	if ($boolSKU)
 	{
 		$arAllOfferPropList = array();
 		$arFileOfferPropList = array(
 			'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 		);
-		$arTreeOfferPropList = array(
+		$arTreeOfferPropList = $arShowPreviewPictuteTreeOfferPropList = array(
 			'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 		);
 		$rsProps = CIBlockProperty::GetList(
@@ -307,6 +319,10 @@
 				|| ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp))
 			)
 				$arTreeOfferPropList[$arProp['CODE']] = $strPropName;
+
+			if ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp) && strlen($arProp['USER_TYPE_SETTINGS']['TABLE_NAME'])){
+				$arShowPreviewPictuteTreeOfferPropList[$arProp['CODE']] = $strPropName;
+			}
 		}
 		$arTemplateParametersParts[] = array(
 			'OFFER_ADD_PICT_PROP' => array(
@@ -340,8 +356,20 @@
 				'DEFAULT' => 'N',
 			)
 		);
+		$arTemplateParametersParts[]=array(
+			'OFFER_SHOW_PREVIEW_PICTURE_PROPS' => array(
+				'PARENT' => 'OFFERS_SETTINGS',
+				'NAME' => GetMessage('OFFER_SHOW_PREVIEW_PICTURE_PROPS_TITLE'),
+				'TYPE' => 'LIST',
+				'MULTIPLE' => 'Y',
+				'ADDITIONAL_VALUES' => 'N',
+				'REFRESH' => 'N',
+				'DEFAULT' => '-',
+				'VALUES' => $arShowPreviewPictuteTreeOfferPropList
+			)
+		);
 	}
-	//merge parameters to one array 
+	//merge parameters to one array
 	$arTemplateParameters = array();
 	foreach($arTemplateParametersParts as $i => $part) { $arTemplateParameters = array_merge($arTemplateParameters, $part); }
 ?>

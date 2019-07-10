@@ -118,7 +118,7 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'NAME' => GetMessage('T_SHOW_BRAND_DETAIL'),
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'Y',
-	),	
+	),
 	'SERVICES_LINK_ELEMENTS_TEMPLATE' => array(
 		'PARENT' => 'BASE',
 		'SORT' => 1000,
@@ -167,6 +167,13 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'Y',
 	),
+	'INCLUDE_SUBSECTIONS' => array(
+		'PARENT' => 'LIST_SETTINGS',
+		'SORT' => 700,
+		'NAME' => GetMessage('INCLUDE_SUBSECTIONS'),
+		'TYPE' => 'CHECKBOX',
+		'DEFAULT' => 'N',
+	),
 	'SHOW_CHILD_SECTIONS' => array(
 		'PARENT' => 'LIST_SETTINGS',
 		'SORT' => 700,
@@ -174,13 +181,21 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'Y',
 		'REFRESH' => 'Y',
-	),	
+	),
 	'USE_SHARE' => array(
 		'PARENT' => 'DETAIL_SETTINGS',
 		'SORT' => 600,
 		'NAME' => GetMessage('USE_SHARE'),
 		'TYPE' => 'CHECKBOX',
 		'DEFAULT' => 'N',
+	),
+	'GALLERY_TYPE' => array(
+		'PARENT' => 'DETAIL_SETTINGS',
+		'SORT' => 600,
+		'NAME' => GetMessage('GALLERY_TYPE'),
+		'TYPE' => 'LIST',
+		'VALUES' => $arGalleryType,
+		'DEFAULT' => 'big',
 	),
 	'LANDING_IBLOCK_ID' => array(
 		'SORT' => 1,
@@ -335,7 +350,7 @@ $arTemplateParameters = array_merge($arPageBlocksParams, array(
 		'NAME' => GetMessage('COUNT_IN_FILTER'),
 		'TYPE' => 'TEXT',
 		'DEFAULT' => '4',
-	),	
+	),
 	'TARIFS_IBLOCK_ID' => array(
 		'SORT' => 704,
 		'NAME' => GetMessage('TARIFS_IBLOCK_ID'),

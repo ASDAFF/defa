@@ -133,7 +133,7 @@ $APPLICATION->SetTitle("Партнеры");
 			0 => "COLOR_REF",
 			1 => "SIZES",
 		),
-		"LIST_OFFERS_LIMIT" => "20",
+		"LIST_OFFERS_LIMIT" => "10",
 		"DEFAULT_LIST_TEMPLATE" => "block",
 		"IBLOCK_CATALOG_TYPE" => "aspro_next_catalog",
 		"IBLOCK_CATALOG_ID" => "17",

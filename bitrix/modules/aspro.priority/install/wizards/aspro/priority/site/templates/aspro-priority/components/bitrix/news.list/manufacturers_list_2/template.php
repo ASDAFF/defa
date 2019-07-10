@@ -1,11 +1,17 @@
-<?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
-<?$this->setFrameMode(true);?>
-<?use \Bitrix\Main\Localization\Loc;?>
+<?
+if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+$this->setFrameMode(true);
+
+use \Bitrix\Main\Localization\Loc;
+
+$arParams['COUNT_IN_LINE'] = (isset($arParams['COUNT_IN_LINE']) ? intval($arParams['COUNT_IN_LINE']) : 3);
+$arParams['COUNT_IN_LINE'] = (($arParams['COUNT_IN_LINE'] > 1 && $arParams['COUNT_IN_LINE'] < 6) ? $arParams['COUNT_IN_LINE'] : 3);
+?>
 <?if($arResult['ITEMS']):?>
 	<div class="item-views partners list list-type-block within">
 		<?// top pagination?>
 		<?if($arParams["DISPLAY_TOP_PAGER"]):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult["NAV_STRING"]?>
 			</div>
 		<?endif;?>
@@ -22,7 +28,7 @@
 				$imageSrc = ($bImage ? $arItem['FIELDS']['PREVIEW_PICTURE']['SRC'] : false);
 				$imageDetailSrc = ($bImage ? $arItem['FIELDS']['DETAIL_PICTURE']['SRC'] : false);
 				?>
-				
+
 				<div class="item border shadow <?=(isset($arParams['IMG_PADDING']) && $arParams['IMG_PADDING'] == 'Y' ? 'padding-img' : '');?> <?=($bImage ? '' : ' wti')?> clearfix" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
 					<div class="wrap">
 						<?if($bImage):?>
@@ -55,13 +61,13 @@
 									<?endif;?>
 								</div>
 							<?endif;?>
-							
+
 							<?// element post?>
 							<?if(strlen($arItem['DISPLAY_PROPERTIES']['POST']['VALUE'])):?>
 								<div class="post"><?=$arItem['DISPLAY_PROPERTIES']['POST']['VALUE']?></div>
 								<?unset($arItem['DISPLAY_PROPERTIES']['POST']);?>
 							<?endif;?>
-							
+
 							<?// element preview text?>
 							<?if(strlen($arItem['FIELDS']['PREVIEW_TEXT'])):?>
 								<div class="previewtext">
@@ -72,7 +78,7 @@
 									<?endif;?>
 								</div>
 							<?endif;?>
-							
+
 							<?// element display properties?>
 							<?if($arItem['DISPLAY_PROPERTIES']):?>
 								<div class="properties">
@@ -113,9 +119,9 @@
 			<?endforeach;?>
 		</div>
 		<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult["NAV_STRING"]?>
 			</div>
-		<?endif;?>								
+		<?endif;?>
 	</div>
 <?endif;?>

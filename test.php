@@ -1,9 +1,18 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Новая страница");
-?>
 
-<?global $arTheme;?>
+
+$mail="ka@defo.ru"; // ваша почта
+$subject ="Test123" ; // тема письма
+$text= "Line 1\nLine 2\nLine 3"; // текст письма
+if( mail($mail, $subject, $text) )
+{
+echo 'Успешно отправлено!'; }
+else{
+echo 'Отправка не удалась!';
+}
+global $arTheme;?>
 <?CNextB2c::ShowPageType('header_fixed');?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:menu",

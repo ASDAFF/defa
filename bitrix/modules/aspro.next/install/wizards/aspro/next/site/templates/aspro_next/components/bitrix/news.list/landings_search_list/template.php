@@ -5,7 +5,7 @@ $this->setFrameMode(true);
 <?if($arResult['ITEMS']):?>
 	<div class="items landings_list">
 		<?if($arParams["TITLE_BLOCK"]):?>
-			<div class="title_block"><?=$arParams["TITLE_BLOCK"];?></div>
+			<h4><?=$arParams["TITLE_BLOCK"];?></h4>
 		<?endif;?>
 		<div class="wrap">
 			<ul class="clearfix">

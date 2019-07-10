@@ -1,3 +1,4 @@
+<?global $arTheme, $arRegion;?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.detail",
 	"partners",
@@ -53,8 +54,12 @@
 
 <? // link goods?>
 <?if($arParams["SHOW_LINKED_PRODUCTS"] == "Y" && strlen($arParams["LINKED_PRODUCTS_PROPERTY"])):?>
-	<?global $arTheme?>
-	<?$arItems = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag($arTheme["CATALOG_IBLOCK_ID"]["VALUE"]))), array("IBLOCK_ID" => $arTheme["CATALOG_IBLOCK_ID"]["VALUE"], "ACTIVE"=>"Y", "PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"], 'SECTION_GLOBAL_ACTIVE' => 'Y' ), false, false, array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID"));
+	<?
+	$catalogIBlockID = ($arParams["IBLOCK_CATALOG_ID"] ? $arParams["IBLOCK_CATALOG_ID"] : $arTheme["CATALOG_IBLOCK_ID"]["VALUE"]);
+
+	$arItemsFilter = array("IBLOCK_ID" => $catalogIBlockID, "ACTIVE"=>"Y", "PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"], 'SECTION_GLOBAL_ACTIVE' => 'Y');
+	$arItems = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag($arTheme["CATALOG_IBLOCK_ID"]["VALUE"]))), $arItemsFilter, false, false, array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID"));
+
 	if($arItems)
 	{
 		$arSectionsID = array();
@@ -68,8 +73,11 @@
 					$arSectionsID[] = $arItem["IBLOCK_SECTION_ID"];
 			}
 		}
-		if($arSectionsID)
+
+		if($arSectionsID){
 			$arSectionsID = array_unique($arSectionsID);
+		}
+
 		if($arSectionsID):?>
 			<div class="wraps goods-block with-padding">
 				<h5><?=str_replace("#BRAND_NAME#", $arElement["NAME"], (strlen($arParams['T_GOODS_SECTION']) ? $arParams['T_GOODS_SECTION'] : GetMessage('T_GOODS_SECTION')))?></h5>

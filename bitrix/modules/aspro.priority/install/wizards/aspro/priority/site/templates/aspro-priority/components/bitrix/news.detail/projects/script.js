@@ -1,6 +1,6 @@
 function templateScript(){
 	/*var headBlockHeight = $('.head-block').height();
-	
+
 	if(window.matchMedia('(min-width: 768px)').matches){
 		$('.head-block .gallery_wrap .item>.wrap').outerHeight(headBlockHeight);
 	}
@@ -33,17 +33,17 @@ $(document).ready(function(){
 		$('.docs-block .blocks .inner-wrapper').sliceHeight({'row': '.blocks', 'item': '.inner-wrapper'});
 	if($('.projects.item-views').length)
 		$('.projects.item-views .item').sliceHeight();
-	
+
 	$('.switch_gallery').on('click', function(){
 		var $this = $(this),
 			animationTime = 200;
-		
+
 		if(!$this.hasClass('small')){
 			$this.addClass('small');
 			$this.closest('.galerys-block').find('.title.big-gallery').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.title.small-gallery').fadeIn(animationTime);
 			});
-			
+
 			$this.closest('.galerys-block').find('.big-gallery-block').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.small-gallery-block').fadeIn(animationTime);
 			});
@@ -53,31 +53,39 @@ $(document).ready(function(){
 			$this.closest('.galerys-block').find('.title.small-gallery').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.title.big-gallery').fadeIn(animationTime);
 			});
-			
+
 			$this.closest('.galerys-block').find('.small-gallery-block').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.big-gallery-block').fadeIn(animationTime);
 			});
+
+			if(!$this.closest('.galerys-block').hasClass('initFlexslider')){
+				setTimeout(function(){
+					InitFlexSlider();
+				}, 300);
+
+				$this.closest('.galerys-block').addClass('initFlexslider');
+			}
 		}
-		
+
 		setTimeout(function(){
 			$('.detail .galerys-block .small-gallery-block .item>.wrap').sliceHeight({'lineheight': -3});
 		}, animationTime);
 	});
-	
+
 	//$('.head-block .col-md-6.item').sliceHeight();
-	
-	
+
+
 	$('.detail .galerys-block .small-gallery-block .item').on('click', function(){
 		var $this = $(this),
 			index = $this.parent().index();
-			
+
 		$this.closest('.galerys-block').find('.switch_gallery').click();
-		
+
 		setTimeout(function(){
 			$this.closest('.galerys-block').find('.big-gallery-block.flexslider').flexslider(index);
 		}, 300);
 	});
-	
+
 	templateScript();
 });
 

@@ -20,6 +20,8 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 		"DISPLAY_COMPARE" => $arParams["USE_COMPARE"],
 		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
 		"IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0],
+		"SHOW_LANDINGS" => $arParams["SHOW_LANDINGS"],
+		"LANDING_POSITION" => $arParams["LANDING_POSITION"],
 		"LANDING_TITLE" => $arParams["LANDING_TITLE"],
 		"LANDING_SECTION_COUNT" => $arParams["LANDING_SECTION_COUNT"],
 		"PROPERTY_CODE" => $arParams["DETAIL_PROPERTY_CODE"],
@@ -91,7 +93,6 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 		"USE_ELEMENT_COUNTER" => $arParams["USE_ELEMENT_COUNTER"],
 		'STRICT_SECTION_CHECK' => (isset($arParams['DETAIL_STRICT_SECTION_CHECK']) ? $arParams['DETAIL_STRICT_SECTION_CHECK'] : ''),
 		'RELATIVE_QUANTITY_FACTOR' => (isset($arParams['RELATIVE_QUANTITY_FACTOR']) ? $arParams['RELATIVE_QUANTITY_FACTOR'] : ''),
-
 		"USE_RATING" => $arParams["USE_RATING"],
 		"USE_REVIEW" => $arParams["USE_REVIEW"],
 		"FORUM_ID" => $arParams["FORUM_ID"],
@@ -121,22 +122,17 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 		"SALE_STIKER" => $arParams["SALE_STIKER"],
 		"STIKERS_PROP" => $arParams["STIKERS_PROP"],
 		"SHOW_RATING" => $arParams["SHOW_RATING"],
-
 		"OFFERS_LIMIT" => $arParams["DETAIL_OFFERS_LIMIT"],
-
 		'SHOW_BASIS_PRICE' => (isset($arParams['DETAIL_SHOW_BASIS_PRICE']) ? $arParams['DETAIL_SHOW_BASIS_PRICE'] : 'Y'),
 		"DETAIL_PICTURE_MODE" => (isset($arTheme["DETAIL_PICTURE_MODE"]["VALUE"]) ? $arTheme["DETAIL_PICTURE_MODE"]["VALUE"] : 'POPUP'),
-
 		'DISABLE_INIT_JS_IN_COMPONENT' => (isset($arParams['DISABLE_INIT_JS_IN_COMPONENT']) ? $arParams['DISABLE_INIT_JS_IN_COMPONENT'] : ''),
 		'COMPATIBLE_MODE' => (isset($arParams['COMPATIBLE_MODE']) ? $arParams['COMPATIBLE_MODE'] : ''),
 		'SET_VIEWED_IN_COMPONENT' => (isset($arParams['DETAIL_SET_VIEWED_IN_COMPONENT']) ? $arParams['DETAIL_SET_VIEWED_IN_COMPONENT'] : ''),
-
 		'SHOW_SLIDER' => (isset($arParams['DETAIL_SHOW_SLIDER']) ? $arParams['DETAIL_SHOW_SLIDER'] : ''),
 		'SLIDER_INTERVAL' => (isset($arParams['DETAIL_SLIDER_INTERVAL']) ? $arParams['DETAIL_SLIDER_INTERVAL'] : ''),
 		'SLIDER_PROGRESS' => (isset($arParams['DETAIL_SLIDER_PROGRESS']) ? $arParams['DETAIL_SLIDER_PROGRESS'] : ''),
 		'USE_ENHANCED_ECOMMERCE' => (isset($arParams['USE_ENHANCED_ECOMMERCE']) ? $arParams['USE_ENHANCED_ECOMMERCE'] : ''),
 		'DATA_LAYER_NAME' => (isset($arParams['DATA_LAYER_NAME']) ? $arParams['DATA_LAYER_NAME'] : ''),
-
 		"USE_GIFTS_DETAIL" => $arParams['USE_GIFTS_DETAIL']?: 'Y',
 		"USE_GIFTS_MAIN_PR_SECTION_LIST" => $arParams['USE_GIFTS_MAIN_PR_SECTION_LIST']?: 'Y',
 		"GIFTS_SHOW_DISCOUNT_PERCENT" => $arParams['GIFTS_SHOW_DISCOUNT_PERCENT'],
@@ -148,12 +144,17 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 		"GIFTS_SHOW_NAME" => $arParams['GIFTS_SHOW_NAME'],
 		"GIFTS_SHOW_IMAGE" => $arParams['GIFTS_SHOW_IMAGE'],
 		"GIFTS_MESS_BTN_BUY" => $arParams['GIFTS_MESS_BTN_BUY'],
-
 		"GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT" => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT'],
 		"GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE" => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE'],
 	),
 	$component
 );?>
+<?
+// popular sections
+if(!$arParams['LANDING_POSITION'] || $arParams['LANDING_POSITION'] === 'BEFORE_PRODUCTS'){
+	echo $APPLICATION->ShowViewContent('langing_sections');
+}
+?>
 <div class="catalog" id="right_block_ajax">
 <?if($arParams["SHOW_ITEMS"] != "N"):?>
 	<?include_once(__DIR__."/../filter.php");?>
@@ -216,8 +217,10 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 			"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 			"OFFER_ADD_PICT_PROP" => $arParams["OFFER_ADD_PICT_PROP"],
 			"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
+			"OFFER_SHOW_PREVIEW_PICTURE_PROPS" => $arParams["OFFER_SHOW_PREVIEW_PICTURE_PROPS"],
+			"IBINHERIT_TEMPLATES" => $arElement ? $arIBInheritTemplates : array(),
 		);?>
-		
+
 		<?if($isAjax=="N"){?>
 			<div class="ajax_load <?=$display;?> js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
 		<?}?>
@@ -249,7 +252,6 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 					"TYPE_SKU" => $arTheme["TYPE_SKU"]["VALUE"],
 					"PROPERTY_CODE" => $arParams["LIST_PROPERTY_CODE"],
 					"SHOW_DISCOUNT_TIME_EACH_SKU" => $arParams["SHOW_DISCOUNT_TIME_EACH_SKU"],
-
 					"OFFERS_FIELD_CODE" => $arParams["LIST_OFFERS_FIELD_CODE"],
 					"OFFERS_PROPERTY_CODE" => $arParams["LIST_OFFERS_PROPERTY_CODE"],
 					"OFFERS_SORT_FIELD" => $arParams["OFFERS_SORT_FIELD"],
@@ -257,9 +259,8 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 					"OFFERS_SORT_FIELD2" => $arParams["OFFERS_SORT_FIELD2"],
 					"OFFERS_SORT_ORDER2" => $arParams["OFFERS_SORT_ORDER2"],
 					'OFFER_TREE_PROPS' => $arParams['OFFER_TREE_PROPS'],
-
+					'OFFER_SHOW_PREVIEW_PICTURE_PROPS' => $arParams['OFFER_SHOW_PREVIEW_PICTURE_PROPS'],
 					"OFFERS_LIMIT" => $arParams["LIST_OFFERS_LIMIT"],
-
 					"SECTION_URL" => "",
 					"DETAIL_URL" => "",
 					"BASKET_URL" => $arParams["BASKET_URL"],
@@ -297,14 +298,12 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 					"OFFERS_CART_PROPERTIES" => $arParams["OFFERS_CART_PROPERTIES"],
 					"DISPLAY_TOP_PAGER" => $arParams["DISPLAY_TOP_PAGER"],
 					"DISPLAY_BOTTOM_PAGER" => $arParams["DISPLAY_BOTTOM_PAGER"],
-
 					"PAGER_TITLE" => $arParams["PAGER_TITLE"],
 					"PAGER_SHOW_ALWAYS" => $arParams["PAGER_SHOW_ALWAYS"],
 					"PAGER_TEMPLATE" => $arParams["PAGER_TEMPLATE"],
 					"PAGER_DESC_NUMBERING" => $arParams["PAGER_DESC_NUMBERING"],
 					"PAGER_DESC_NUMBERING_CACHE_TIME" => $arParams["PAGER_DESC_NUMBERING_CACHE_TIME"],
 					"PAGER_SHOW_ALL" => $arParams["PAGER_SHOW_ALL"],
-
 					"AJAX_OPTION_ADDITIONAL" => "",
 					"ADD_CHAIN_ITEM" => "N",
 					"SHOW_QUANTITY" => $arParams["SHOW_QUANTITY"],
@@ -339,6 +338,8 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 					"SET_META_DESCRIPTION" => "N",
 					"SET_META_KEYWORDS" => "N",
 					"SET_BROWSER_TITLE" => "N",
+					"SET_SKU_TITLE" => (($arTheme["TYPE_SKU"]["VALUE"] == "TYPE_1" && $arTheme["CHANGE_TITLE_ITEM"]["VALUE"] == "Y") ? "Y" : ""),
+					"IBINHERIT_TEMPLATES" => $arElement ? $arIBInheritTemplates : array(),
 				), $component, array("HIDE_ICONS" => $isAjax)
 			);?>
 		<?if($isAjax=="N"){?>
@@ -353,8 +354,20 @@ $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/animation/animate.min.cs
 		}?>
 	</div>
 <?endif;?>
-	<?=$APPLICATION->ShowViewContent('langing_detail_text')?>
 	<?
+	// popular sections
+	if($arParams['LANDING_POSITION'] === 'AFTER_PRODUCTS'){
+		echo $APPLICATION->ShowViewContent('langing_sections');
+	}
+
+	// detail text
+	echo $APPLICATION->ShowViewContent('langing_detail_text');
+
+	// popular sections
+	if($arParams['LANDING_POSITION'] === 'AFTER_DETAIL_TEXT'){
+		echo $APPLICATION->ShowViewContent('langing_sections');
+	}
+
 	$langing_seo_h1 = ($arElement["IPROPERTY_VALUES"]["ELEMENT_PAGE_TITLE"] != "" ? $arElement["IPROPERTY_VALUES"]["ELEMENT_PAGE_TITLE"] : $arElement["NAME"]);
 	$langing_seo_title = ($arElement["IPROPERTY_VALUES"]["ELEMENT_META_TITLE"] != "" ? $arElement["IPROPERTY_VALUES"]["ELEMENT_META_TITLE"] : $arElement["NAME"]);
 

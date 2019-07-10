@@ -8,16 +8,22 @@
 	$isAjaxFilter="Y";
 }?>
 <?global $arTheme, $arRegion;?>
-<?if(!in_array($arParams["LIST_OFFERS_FIELD_CODE"], "DETAIL_PAGE_URL"))
-	$arParams["LIST_OFFERS_FIELD_CODE"][] = "DETAIL_PAGE_URL";?>
-<?$catalogIBlockID = ($arParams["IBLOCK_CATALOG_ID"] ? $arParams["IBLOCK_CATALOG_ID"] : $arTheme["CATALOG_IBLOCK_ID"]["VALUE"]);?>
 <div class="right_block wide_N">
 	<div class="middle">
 		<?
-		if($arParams["FILTER_NAME"] == '' || !preg_match("/^[A-Za-z_][A-Za-z01-9_]*$/", $arParams["FILTER_NAME"]))
+		if($arParams["FILTER_NAME"] == '' || !preg_match("/^[A-Za-z_][A-Za-z01-9_]*$/", $arParams["FILTER_NAME"])){
 			$arParams["FILTER_NAME"] = "arrFilter";
-		?>
-		<?$arItems = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag($catalogIBlockID))), array("IBLOCK_ID" => $catalogIBlockID, "ACTIVE"=>"Y", "PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"], 'SECTION_GLOBAL_ACTIVE' => 'Y' ), false, false, array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID"));
+		}
+
+		if(!in_array($arParams["LIST_OFFERS_FIELD_CODE"], "DETAIL_PAGE_URL")){
+			$arParams["LIST_OFFERS_FIELD_CODE"][] = "DETAIL_PAGE_URL";
+		}
+
+		$catalogIBlockID = ($arParams["IBLOCK_CATALOG_ID"] ? $arParams["IBLOCK_CATALOG_ID"] : $arTheme["CATALOG_IBLOCK_ID"]["VALUE"]);
+
+		$arItemsFilter = array("IBLOCK_ID" => $catalogIBlockID, "ACTIVE"=>"Y", "PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"], 'SECTION_GLOBAL_ACTIVE' => 'Y');
+		CNext::makeElementFilterInRegion($arItemsFilter);
+		$arItems = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag($catalogIBlockID))), $arItemsFilter, false, false, array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID"));
 		$arAllSections = $arSectionsID = $arItemsID = array();
 
 		$arParams["AJAX_FILTER_CATALOG"] = "N";
@@ -44,13 +50,13 @@
 					}
 				}
 			}
+
 			if($arAllSections)
 			{
 				$arSectionsID = array_keys($arAllSections);
 				$arSections = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "GROUP" => "ID", "TAG" => CNextCache::GetIBlockCacheTag($catalogIBlockID))), array("ID" => $arSectionsID, "IBLOCK_ID" => $catalogIBlockID), false, array("ID", "IBLOCK_ID", "NAME"));
 			}
 			?>
-
 			<?$setionIDRequest = (isset($_GET["section_id"]) && $_GET["section_id"] ? $_GET["section_id"] : 0);?>
 			<?ob_start()?>
 				<?if(count($arAllSections) > 1):?>
@@ -173,6 +179,7 @@
 							unset($arParams['STORES'][$key]);
 					}
 				}
+
 				if($arRegion)
 				{
 					if($arRegion['LIST_PRICES'])
@@ -196,11 +203,13 @@
 					}
 				}
 
-				$GLOBALS[$arParams["FILTER_NAME"]][] = array("PROPERTY_".$arParams["LINKED_PRODUCTS_PROPERTY"] => $arElement["ID"]);
+				$GLOBALS[$arParams["FILTER_NAME"]]['ID'] = array_column($arItems, 'ID');
 				$GLOBALS[$arParams["FILTER_NAME"]]['SECTION_GLOBAL_ACTIVE'] = 'Y';
+
+				if($setionIDRequest){
+					$GLOBALS[$arParams["FILTER_NAME"]][] = array("SECTION_ID" => $setionIDRequest);
+				}
 				?>
-				<?if($setionIDRequest)
-					$GLOBALS[$arParams["FILTER_NAME"]][] = array("SECTION_ID" => $setionIDRequest);?>
 
 				<?=$htmlSections;?>
 				<div class="inner_wrapper">
@@ -256,7 +265,7 @@
 						"USE_REGION" => ($arRegion ? "Y" : "N"),
 						"STORES" => $arParams["STORES"],
 						"DEFAULT_COUNT" => $arParams["DEFAULT_COUNT"],
-						"BASKET_URL" => $arParams["BASKET_URL"],
+						//"BASKET_URL" => $arTheme["BASKET_PAGE_URL"]["VALUE"],
 						"OFFERS_CART_PROPERTIES" => $arParams["OFFERS_CART_PROPERTIES"],
 						"PRODUCT_PROPERTIES" => $arParams["PRODUCT_PROPERTIES"],
 						"PARTIAL_PRODUCT_PROPERTIES" => $arParams["PARTIAL_PRODUCT_PROPERTIES"],
@@ -265,6 +274,7 @@
 						"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 						"OFFER_ADD_PICT_PROP" => $arParams["OFFER_ADD_PICT_PROP"],
 						"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
+						"OFFER_SHOW_PREVIEW_PICTURE_PROPS" => $arParams["OFFER_SHOW_PREVIEW_PICTURE_PROPS"],
 					);?>
 
 					<div class="ajax_load <?=$display;?> js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
@@ -389,6 +399,7 @@
 								"SHOW_RATING" => ($arParams["SHOW_RATING"] ? $arParams["SHOW_RATING"] : "Y"),
 								"DISPLAY_COMPARE" => ($arParams["DISPLAY_COMPARE"] ? $arParams["DISPLAY_COMPARE"] : "Y"),
 								"ADD_PICT_PROP" => $arParams["ADD_PICT_PROP"],
+								"OFFER_SHOW_PREVIEW_PICTURE_PROPS" => $arParams["OFFER_SHOW_PREVIEW_PICTURE_PROPS"],
 							), $component, array("HIDE_ICONS" => $isAjax)
 						);?>
 						<?if($isAjax=="Y" && $isAjaxFilter != "Y"):?>

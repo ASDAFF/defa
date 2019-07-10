@@ -106,6 +106,7 @@ $MESS["DISPLAY_COMPARE"] = "Отображать кнопку сравнения
 $MESS["DISPLAY_WISH_BUTTONS"] = "Отображать кнопку отложить";
 $MESS["SHOW_RATING"] = "Отображать рейтинг";
 $MESS["OFFER_HIDE_NAME_PROPS_TITLE"] = "Скрывать названия свойств торговых предложений";
+$MESS["OFFER_SHOW_PREVIEW_PICTURE_PROPS_TITLE"] = "Выводить анонсную картинку предложения в свойствах для отбора";
 $MESS["CP_BC_LIST_OFFERS_FIELD_CODE"] = "Поля торговых предложений";
 $MESS["CP_BC_LIST_OFFERS_PROPERTY_CODE"] = "Свойства торговых предложений";
 $MESS["CP_BC_LIST_PRODUCT_PROPERTY_CODE"] = "Свойства товаров";

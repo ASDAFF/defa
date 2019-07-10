@@ -35,7 +35,7 @@ if($RIGHT >= "R")
 		$arSite['DIR'] = str_replace('//', '/', '/'.$arSite['DIR']);
 		if(!strlen($arSite['DOC_ROOT']))
 			$arSite['DOC_ROOT'] = $_SERVER['DOCUMENT_ROOT'];
-		
+
 		$arSite['DOC_ROOT'] = str_replace('//', '/', $arSite['DOC_ROOT'].'/');
 		$siteDir = str_replace('//', '/', $arSite['DOC_ROOT'].$arSite['DIR']);
 		$optionsSiteID = $arSite["ID"];
@@ -131,13 +131,13 @@ if($RIGHT >= "R")
 		{
 			if($_POST["DOMAIN"] && $_POST["TOKEN"] && $_POST["LOGIN"])
 			{
-				$url = str_replace("#DOMAIN#", $_POST["DOMAIN"], \Aspro\Functions\CAsproNextCRMB2c::AMO_CRM_PATH);
+				$url = str_replace("#DOMAIN#", $_POST["DOMAIN"], \Aspro\Functions\CAsproNextCRM::AMO_CRM_PATH);
 
 				$arPostFields = array(
 					"USER_HASH" => $_POST["TOKEN"],
 					"USER_LOGIN" => $_POST["LOGIN"],
 				);
-				echo \Aspro\Functions\CAsproNextCRMB2c::query($url, \Aspro\Functions\CAsproNextCRMB2c::$arCrmMethods['AMO_CRM']['AUTH'], $arPostFields, true, true);
+				echo \Aspro\Functions\CAsproNextCRM::query($url, \Aspro\Functions\CAsproNextCRM::$arCrmMethods['AMO_CRM']['AUTH'], $arPostFields, true, true);
 			}
 			else
 			{
@@ -155,9 +155,9 @@ if($RIGHT >= "R")
 		{
 			if($_POST["SITE_ID"] && $_POST["FORM_ID"] && $_POST["RESULT_ID"])
 			{
-				$url = str_replace('#DOMAIN#', Option::get($moduleID, 'DOMAIN_AMO_CRM', '', $_POST["SITE_ID"]), \Aspro\Functions\CAsproNextCRMB2c::AMO_CRM_PATH);
+				$url = str_replace('#DOMAIN#', Option::get($moduleID, 'DOMAIN_AMO_CRM', '', $_POST["SITE_ID"]), \Aspro\Functions\CAsproNextCRM::AMO_CRM_PATH);
 				$dataDeal = array(
-					'name' => iconv(LANG_CHARSET, 'UTF-8', 'пїЅпїЅпїЅпїЅпїЅ')
+					'name' => iconv(LANG_CHARSET, 'UTF-8', 'Текст')
 				);
 				$data['request']['leads']['add'] = array($dataDeal);
 				/*$arFields = array(
@@ -169,7 +169,7 @@ if($RIGHT >= "R")
 						)
 					)
 				);*/
-				// $result_text = \Aspro\Functions\CAsproNextCRMB2c::query($url, "/private/api/v2/json/accounts/current/", $data, true, true);
+				// $result_text = \Aspro\Functions\CAsproNextCRM::query($url, "/private/api/v2/json/accounts/current/", $data, true, true);
 				// echo $result_text;
 				// \Aspro\Functions\CAsproNext::set_log('crm', 'test_create_lead_response', json_decode($result_text, true));
 
@@ -191,7 +191,7 @@ if($RIGHT >= "R")
 		{
 			foreach($arTabs as $key => $arTab)
 			{
-				$optionsSiteID = $arSite["ID"];
+				$optionsSiteID = $arTab["SITE_ID"];
 				foreach($arTab["ITEMS"] as $groupCode => $arOptions)
 				{
 					foreach($arOptions["ITEMS"] as $optionCode => $arOption)
@@ -220,12 +220,12 @@ if($RIGHT >= "R")
 				$val = "";
 				if($domain && $token && $login)
 				{
-					$url = str_replace("#DOMAIN#", $domain, \Aspro\Functions\CAsproNextCRMB2c::AMO_CRM_PATH);
+					$url = str_replace("#DOMAIN#", $domain, \Aspro\Functions\CAsproNextCRM::AMO_CRM_PATH);
 					$arPostFields = array(
 						"USER_HASH" => $token,
 						"USER_LOGIN" => $login,
 					);
-					$result = json_decode(\Aspro\Functions\CAsproNextCRMB2c::query($url, "/private/api/auth.php?type=json", $arPostFields, true), true);
+					$result = json_decode(\Aspro\Functions\CAsproNextCRM::query($url, "/private/api/auth.php?type=json", $arPostFields, true), true);
 
 					if(isset($result["response"]) && ($result["response"] && isset($result["response"]["auth"]) && $result["response"]["auth"]))
 						$val = "Y";
@@ -258,7 +258,7 @@ if($RIGHT >= "R")
 			}
 		}
 	}
-	
+
 	CJSCore::Init(array("jquery"));
 	CAjax::Init();?>
 	<?if(!count($arTabs)):?>
@@ -358,7 +358,7 @@ if($RIGHT >= "R")
 											{
 
 												//auth
-												$result = \Aspro\Functions\CAsproNextCRMB2c::authAmoCrm($optionsSiteID);
+												$result = \Aspro\Functions\CAsproNextCRM::authAmoCrm($optionsSiteID);
 
 												if(isset($result["response"]) && ($result["response"] && isset($result["response"]["auth"]) && $result["response"]["auth"]))
 												{

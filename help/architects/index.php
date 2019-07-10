@@ -1,6 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Дизайнерам и архитектор");
+$APPLICATION->SetTitle("Дизайнерам и архитекторам");
 ?><div class="row architects">
 	<div class="col-lg-12 big-banner">
 		<div class="background-opacity">

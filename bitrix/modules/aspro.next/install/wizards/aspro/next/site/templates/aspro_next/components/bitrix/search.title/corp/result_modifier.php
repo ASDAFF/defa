@@ -172,6 +172,7 @@ if (!empty($arResult["ELEMENTS"]) && CModule::IncludeModule("iblock"))
 		"DETAIL_PAGE_URL",
 		"ACTIVE_FROM",
 		"PROPERTY_REDIRECT",
+		"SECTION_ID",
 	);
 	$arFilter = array(
 		"IBLOCK_LID" => SITE_ID,
@@ -240,6 +241,16 @@ if (!empty($arResult["ELEMENTS"]) && CModule::IncludeModule("iblock"))
 			}
 		}
 
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y'){
+			if($arSectionsIds_NotInRegion = CNext::getSectionsIds_NotInRegion($arElement["IBLOCK_ID"])){
+				if(in_array($arElement['IBLOCK_SECTION_ID'], $arSectionsIds_NotInRegion)){
+					$arDeleteIDs[$arElement["ID"]] = $arElement["ID"];
+					unset($arResult["ELEMENTS"][$arElement["ID"]]);
+					continue;
+				}
+			}
+		}
+
 		if($bHideNotAvailable)
 			$arUnDeleteIDs[$arElement["ID"]] = $arElement["ID"];
 
@@ -297,7 +308,7 @@ if (!empty($arResult["ELEMENTS"]) && CModule::IncludeModule("iblock"))
 		{
 			if(isset($arItem["ITEM_ID"]))
 			{
-				if($arResult["ELEMENTS"][$arItem["ITEM_ID"]]["PROPERTY_REDIRECT_VALUE"])
+				if(isset($arResult["ELEMENTS"][$arItem["ITEM_ID"]]["PROPERTY_REDIRECT_VALUE"]) && $arResult["ELEMENTS"][$arItem["ITEM_ID"]]["PROPERTY_REDIRECT_VALUE"])
 				{
 					$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]["URL"] = $arResult["ELEMENTS"][$arItem["ITEM_ID"]]["PROPERTY_REDIRECT_VALUE"];
 				}

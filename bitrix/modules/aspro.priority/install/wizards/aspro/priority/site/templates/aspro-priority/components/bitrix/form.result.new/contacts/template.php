@@ -69,7 +69,7 @@
 												<?CPriority::drawFormField($FIELD_SID, $arQuestion, "INLINE_".$arResult["arForm"]["ID"]);?>
 											<?endforeach;?>
 										<?endif;?>
-										
+
 										<?if($arResult["isUseCaptcha"] == "Y"):?>
 											<div class="form-control captcha-row clearfix">
 												<label><span><?=GetMessage("FORM_CAPRCHE_TITLE")?>&nbsp;<span class="star">*</span></span></label>
@@ -138,7 +138,7 @@
 							}
 						});
 
-						
+
 						if(arPriorityOptions['THEME']['PHONE_MASK'].length){
 							var base_mask = arPriorityOptions['THEME']['PHONE_MASK'].replace( /(\d)/g, '_' );
 							$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.phone').inputmask('mask', {'mask': arPriorityOptions['THEME']['PHONE_MASK'], 'showMaskOnHover': false });
@@ -150,14 +150,31 @@
 								}
 							});
 						}
-						
-						if(arPriorityOptions['THEME']['DATE_MASK'].length)
-							$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false  });
+
+						if(arPriorityOptions['THEME']['DATE_MASK'].length){
+							$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.date').inputmask('datetime', {
+								inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+								placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+								showMaskOnHover: false
+							});
+						}
+
+						if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+							$('form[name="<?=$arResult["arForm"]["VARNAME"]?>"] input.datetime').inputmask('datetime', {
+								inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+								placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+								showMaskOnHover: false
+							});
+						}
 
 						$('.jqmClose').on('click', function(e){
 							e.preventDefault();
 							$(this).closest('.jqmWindow').jqmHide();
-						})
+						});
+
+						if($('#licenses_popup').length){
+							$('#licenses_popup').onoff();
+						}
 
 						$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 						$(document).on('change', 'input[type=file]', function(){

@@ -47,7 +47,7 @@
 							$(window).scroll();
 						</script>
 					<?endif;?>
-				</div>	
+				</div>
 				<?if( $arParams["DISPLAY_CLOSE_BUTTON"] == "Y" ){?>
 					<div class="button">
 						<button class="btn-lg btn btn-default refresh-page"><?=($arParams["CLOSE_BUTTON_NAME"] ? $arParams["CLOSE_BUTTON_NAME"] : GetMessage("RELOAD_PAGE"));?></button>
@@ -68,15 +68,15 @@
 					</div>
 				<?endif;?>
 			</div>
-		
+
 			<?if($arResult["isFormErrors"] == "Y"):?>
 				<div class="form-error alert alert-danger"><?=$arResult["FORM_ERRORS_TEXT"]?></div>
-			<?endif;?>		
+			<?endif;?>
 			<div class="form-body">
 				<?if(is_array($arResult["QUESTIONS"])):?>
 					<?foreach($arResult["QUESTIONS"] as $FIELD_SID => $arQuestion):?>
 						<?CPriority::drawFormField($FIELD_SID, $arQuestion, 'POPUP');?>
-					<?endforeach;?>				
+					<?endforeach;?>
 				<?endif;?>
 				<?if($arResult["isUseCaptcha"] == "Y"):?>
 					<div class="captcha-row">
@@ -111,7 +111,7 @@
 			<?=$arResult["FORM_FOOTER"]?>
 		<?}?>
 		<!--/noindex-->
-		
+
 		<script type="text/javascript">
 		var bFormNote = <?=CUtil::PhpToJSObject($arResult['FORM_NOTE']);?>;
 		$(document).ready(function(){
@@ -162,7 +162,7 @@
 				  }
 				}
 			});
-			
+
 			if(arPriorityOptions['THEME']['PHONE_MASK'].length){
 				var base_mask = arPriorityOptions['THEME']['PHONE_MASK'].replace( /(\d)/g, '_' );
 				$('.popup form input.phone').inputmask('mask', {'mask': arPriorityOptions['THEME']['PHONE_MASK'], 'showMaskOnHover': false });
@@ -174,14 +174,31 @@
 					}
 				});
 			}
-			
-			if(arPriorityOptions['THEME']['DATE_MASK'].length)
-				$('.popup form input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false  });
+
+			if(arPriorityOptions['THEME']['DATE_MASK'].length){
+				$('.popup form input.date').inputmask('datetime', {
+					inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+					placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+					showMaskOnHover: false
+				});
+			}
+
+			if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+				$('.popup form input.datetime').inputmask('datetime', {
+					inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+					placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+					showMaskOnHover: false
+				});
+			}
 
 			$('.jqmClose').on('click', function(e){
 				e.preventDefault();
 				$(this).closest('.jqmWindow').jqmHide();
-			})
+			});
+
+			if($('#licenses_popup').length){
+				$('#licenses_popup').onoff();
+			}
 
 			$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 			$(document).on('change', 'input[type=file]', function(){
@@ -196,33 +213,33 @@
 			})
 			$('.form .add_file').on('click', function(){
 				var index = $(this).closest('.input').find('input[type=file]').length+1;
-				
+
 				$(this).closest('.form-group').find('.input').append('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />');
 				//$('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />').closest()($(this));
 				$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 			});
-			
+
 			$('.form .add_file').on('click', function(){
 				var index = $(this).closest('.input').find('input[type=file]').length+1;
-				
+
 				$(this).closest('.form-group').find('.input').append('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />');
 				//$('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />').closest()($(this));
 				$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 			});
-			
+
 			$('.form .add_text').on('click', function(){
 				var input = $(this).closest('.form-group').find('input[type=text]').first(),
 					index = $(this).closest('.form-group').find('input[type=text]').length,
 					name = input.attr('id').split('POPUP_')[1];
-				
+
 				$(this).closest('.form-group').find('.input').append('<input type="text" id="POPUP_'+name+'" name="'+name+'['+index+']"  class="form-control " value="" />');
 			});
-			
+
 			setTimeout(function(){
 				$('.fly_forms .button span.disabled').on('click', function(e){
 					$('.jqmOverlay').click();
 				});
-			}, 500);			
+			}, 500);
 		});
 		</script>
 	</div>

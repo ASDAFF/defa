@@ -903,14 +903,16 @@ if(!funcDefined('onLoadjqm')){
 
 		hash.w.addClass('show').css({
 			'margin-left': ($(window).width() > hash.w.outerWidth() ? '-' + hash.w.outerWidth() / 2 + 'px' : '-' + $(window).width() / 2 + 'px'),
+			'opacity': 1,
+		});
+
+		hash.w.addClass('show').css({
 			// 'top': $(document).scrollTop() + (($(window).height() > hash.w.outerHeight() ? ($(window).height() - hash.w.outerHeight()) / 2 : 10))   + 'px',
 			'top': (($(window).height() > hash.w.height()) ? Math.floor(($(window).height() - hash.w.height()) / 2) : 0) + 'px',
-			'opacity': 1
 		});
 
 		var eventdata = {action:'loadForm'};
 		BX.onCustomEvent('onCompleteAction', [eventdata, $(hash.t)[0]]);
-
 
 		if(typeof(requestData) == 'undefined'){
 			requestData = '';
@@ -948,15 +950,13 @@ if(!funcDefined('onLoadjqm')){
 						return false
 					}
 					else if(!$(this).find('#one_click_buy_form_button').hasClass('clicked')){
+						$(this).find('#one_click_buy_form_button').addClass("clicked");
 
-						if(!$(this).find('#one_click_buy_form_button').hasClass("clicked"))
-							$(this).find('#one_click_buy_form_button').addClass("clicked");
 						var form_url = $(this).attr('action');
-
 						var bSend = true;
 						if(window.renderRecaptchaById && window.asproRecaptcha && window.asproRecaptcha.key)
 						{
-							if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined')
+							if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined' && arNextOptions.THEME.ONE_CLICK_BUY_CAPTCHA === 'Y')
 							{
 								if($('#one_click_buy_form').find('.g-recaptcha-response').val())
 								{
@@ -971,6 +971,7 @@ if(!funcDefined('onLoadjqm')){
 								}
 							}
 						}
+
 						if(bSend)
 						{
 							$.ajax({
@@ -1065,15 +1066,13 @@ if(!funcDefined('onLoadjqm')){
 						return false
 					}
 					else if(!$(this).find('#one_click_buy_form_button').hasClass('clicked')){
+						$(this).find('#one_click_buy_form_button').addClass("clicked");
 
-						if(!$(this).find('#one_click_buy_form_button').hasClass("clicked"))
-							$(this).find('#one_click_buy_form_button').addClass("clicked");
 						var form_url = $(this).attr('action');
-
 						var bSend = true;
 						if(window.renderRecaptchaById && window.asproRecaptcha && window.asproRecaptcha.key)
 						{
-							if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined')
+							if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined' && arNextOptions.THEME.ONE_CLICK_BUY_CAPTCHA === 'Y')
 							{
 								if($('#one_click_buy_form').find('.g-recaptcha-response').val())
 								{
@@ -1088,6 +1087,7 @@ if(!funcDefined('onLoadjqm')){
 								}
 							}
 						}
+
 						if(bSend)
 						{
 							$.ajax({
@@ -1132,7 +1132,7 @@ if(!funcDefined('onLoadjqm')){
 													success: function( respond, textStatus, jqXHR ){
 														$('.one_click_buy_result').show();
 														$('.one_click_buy_result_success').show();
-														purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["ONE_CLICK"]);
+														purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["QUICK_ORDER"]);
 													}
 												})
 											}
@@ -1140,7 +1140,7 @@ if(!funcDefined('onLoadjqm')){
 											{
 												$('.one_click_buy_result').show();
 												$('.one_click_buy_result_success').show();
-												purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["ONE_CLICK"]);
+												purchaseCounter(data.message, arNextOptions["COUNTERS"]["TYPE"]["QUICK_ORDER"]);
 											}
 										}
 										else
@@ -3275,7 +3275,7 @@ $(document).ready(function(){
 		$mobileMenu.isOpen = $mobileMenu.hasClass('show')
 		$mobileMenu.isDowndrop = $mobileMenu.find('>.scroller').hasClass('downdrop')
 
-		$('#mobileheader .burger').click(function(){
+		$(document).on('click', '#mobileheader .burger', function(){
 			SwipeMobileMenu()
 		})
 
@@ -3302,14 +3302,14 @@ $(document).ready(function(){
 			});
 		}
 		else{
-			$('#mobileheader').click(function(e){
+			$(document).on('click', '#mobileheader', function(e){
 				if(!$(e.target).closest('#mobilemenu').length && !$(e.target).closest('.burger').length && $mobileMenu.isOpen){
 					CloseMobileMenu()
 				}
 			});
 		}
 
-		$('#mobilemenu .menu a,#mobilemenu .social-icons a').click(function(e){
+		$(document).on('click', '#mobilemenu .menu a,#mobilemenu .social-icons a', function(e){
 			var $this = $(this)
 			if($this.hasClass('parent')){
 				e.preventDefault()
@@ -3328,11 +3328,12 @@ $(document).ready(function(){
 				}
 			}
 			else{
-				if($this.closest('li').hasClass('counters')){
+				if(!$this.hasClass('city_item')){
 					var href = $this.attr('href')
-					if(typeof href !== 'undefined'){
+					if(typeof href !== 'undefined' && href.length){
+						e.preventDefault()
 						window.location.href = href
-						window.location.reload()
+						//window.location.reload()
 					}
 				}
 
@@ -3342,7 +3343,7 @@ $(document).ready(function(){
 			}
 		})
 
-		$('#mobilemenu .dropdown .menu_back').click(function(e){
+		$(document).on('click', '#mobilemenu .dropdown .menu_back', function(e){
 			e.preventDefault()
 			var $this = $(this)
 			MoveMobileMenuWrapPrev()
@@ -3709,7 +3710,7 @@ $(document).ready(function(){
 		}
 	})
 
-	$('.mobile_regions .city_item').on('click', function(e){
+	$(document).on('click', '.mobile_regions .city_item', function(e){
     	e.preventDefault();
     	var _this = $(this);
     	$.removeCookie('current_region');
@@ -4981,15 +4982,15 @@ $(document).ready(function(){
 	$('.fancybox').fancybox();
 
 	$(".video_link").fancybox({
-			type: "iframe",
-            maxWidth    : 800,
-            maxHeight   : 600,
-            fitToView   : false,
-            width       : '70%',
-            height      : '70%',
-            autoSize    : false,
-            closeClick  : false,
-        });
+		type: "iframe",
+        maxWidth    : 800,
+        maxHeight   : 600,
+        fitToView   : true,
+        //width       : '70%',
+        //height      : '70%',
+        autoSize    : true,
+        closeClick  : false,
+    });
 
 	$('.tabs>li').on('click', function(){
 		var parent = $(this).parent();

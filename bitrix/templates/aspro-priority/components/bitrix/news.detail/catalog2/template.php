@@ -34,6 +34,7 @@ $templateData = array(
 	'ORDER' => $bOrderViewBasket,
 	'TIZERS' => $arResult['TIZERS'],
 	'CATALOG_LINKED_TEMPLATE' => $catalogLinkedTemplate,
+	'GALLERY_TYPE' => isset($arResult['PROPERTIES']['GALLERY_TYPE']) ? ($arResult['PROPERTIES']['GALLERY_TYPE']['VALUE'] === 'small' ? 'small' : 'big') : ($arParams['GALLERY_TYPE'] === 'small' ? 'small' : 'big'),
 );
 if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP']['VALUE_XML_ID'] == 'YES')
 	$templateData['SECTION_BNR_CONTENT'] = true;
@@ -54,7 +55,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 	<?endif;?>
 	<div class="head<?=($arResult['GALLERY'] ? '' : ' wti')?>">
 		<div class="maxwidth-theme">
-			<div class="row">			
+			<div class="row">
 				<div class="item col-md-4 col-sm-6<?=(isset($arParams['IMAGE_CATALOG_POSITION']) && $arParams['IMAGE_CATALOG_POSITION'] == 'left' ? ' image_left' : '');?>">
 					<div class="info<?=(strlen($arResult['FIELDS']['DETAIL_TEXT']) ? ' wpadding' : '');?>" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 						<?
@@ -122,7 +123,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 											<span class="btn btn-default animate-load" data-event="jqm" data-param-id="<?=CPriority::getFormID("aspro_priority_order_product");?>" data-name="order_product" data-autoload-product="<?=CPriority::formatJsName($arResult['NAME'])?>"><?=(strlen($arParams['S_ORDER_SERVISE']) ? $arParams['S_ORDER_SERVISE'] : Loc::getMessage('S_ORDER_SERVISE'))?></span>
 										</div>
 									<?endif;?>
-									<?if($bFormQuestion && $arResult['DISPLAY_PROPERTIES']['FORM_QUESTION']['VALUE_XML_ID'] == 'YES'):?>								
+									<?if($bFormQuestion && $arResult['DISPLAY_PROPERTIES']['FORM_QUESTION']['VALUE_XML_ID'] == 'YES'):?>
 										<div class="wrapper">
 											<span class="btn btn-default wide-block animate-load btn-transparent" data-event="jqm" data-param-id="<?=CPriority::getFormID("aspro_priority_question");?>" data-autoload-need_product="<?=CPriority::formatJsName($arResult['NAME'])?>" data-name="question"><span><?=(strlen($arParams['S_ASK_QUESTION']) ? $arParams['S_ASK_QUESTION'] : Loc::getMessage('S_ASK_QUESTION'))?></span></span>
 										</div>
@@ -131,7 +132,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 							<?else:?>
 								<?if($arResult['PROPERTIES']['LINK_TARIF']['VALUE']):?>
 									</div>
-								<?endif;?>						
+								<?endif;?>
 							<?endif;?>
 						</div>
 						<?if(isset($arResult['DISPLAY_PROPERTIES']['DELIVERY']) && strlen($arResult['DISPLAY_PROPERTIES']['DELIVERY']['DISPLAY_VALUE'])):?>
@@ -149,7 +150,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 									<?=$arResult['FIELDS']['PREVIEW_TEXT'];?>
 								<?endif;?>
 							</div>
-						<?endif;?>					
+						<?endif;?>
 						<?$frame->end();?>
 					</div>
 					<?if(strlen($arResult['FIELDS']['DETAIL_TEXT'])):?>
@@ -220,7 +221,7 @@ if(isset($arResult['PROPERTIES']['BNR_TOP']) && $arResult['PROPERTIES']['BNR_TOP
 							</div>
 						</div>
 					</div>
-				<?endif;?>			
+				<?endif;?>
 			</div>
 		</div>
 	</div>

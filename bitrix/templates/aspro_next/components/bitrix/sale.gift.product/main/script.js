@@ -46,10 +46,10 @@ if (!window.JCCatalogSectionOnlyElement)
 
 		setPriceAction: function()
 		{
-			this.set_quantity = this.params.MIN_QUANTITY_BUY;			
+			this.set_quantity = this.params.MIN_QUANTITY_BUY;
 			if($(this.obProduct).find('input[name=quantity]').length)
 				this.set_quantity = $(this.obProduct).find('input[name=quantity]').val();
-			
+
 			this.checkPriceRange(this.set_quantity);
 
 			$(this.obProduct).find('.not_matrix').hide();
@@ -76,7 +76,7 @@ if (!window.JCCatalogSectionOnlyElement)
 				}
 			}
 			$(this.obProduct).find('.with_matrix .sale_block .text .values_wrapper').html(getCurrentPrice(this.currentPrices[this.currentPriceSelected].DISCOUNT, this.currentPrices[this.currentPriceSelected].CURRENCY, this.currentPrices[this.currentPriceSelected].PRINT_DISCOUNT));
-			
+
 			$(this.obProduct).find('.with_matrix').show();
 
 			if(arNextOptions['THEME']['SHOW_TOTAL_SUMM'] == 'Y')
@@ -91,7 +91,7 @@ if (!window.JCCatalogSectionOnlyElement)
 				return;
 
 			var range, found = false;
-			
+
 			for (var i in this.currentQuantityRanges)
 			{
 				if (this.currentQuantityRanges.hasOwnProperty(i))
@@ -207,6 +207,7 @@ window.JCSaleGiftProduct = function (arParams)
 	this.showPercent = false;
 	this.showSkuProps = false;
 	this.showPercentNumber = false;
+	this.offerShowPreviewPictureProps = false;
 	this.visual = {
 		ID: '',
 		PICT_ID: '',
@@ -306,6 +307,7 @@ window.JCSaleGiftProduct = function (arParams)
 		this.showPercent = !!arParams.SHOW_DISCOUNT_PERCENT;
 		this.showSkuProps = !!arParams.SHOW_SKU_PROPS;
 		this.showPercentNumber = (arParams.SHOW_DISCOUNT_PERCENT_NUMBER == "Y");
+		this.offerShowPreviewPictureProps = arParams.OFFER_SHOW_PREVIEW_PICTURE_PROPS;
 
 		this.visual = arParams.VISUAL;
 		switch (this.productType)
@@ -477,7 +479,7 @@ window.JCSaleGiftProduct.prototype.Init = function()
 					LIST: BX(strPrefix+this.treeProps[i].ID+'_list'),
 					CONT: BX(strPrefix+this.treeProps[i].ID+'_cont')
 				};
-				
+
 				if (!this.obTreeRows[i].LIST || !this.obTreeRows[i].CONT)
 				{
 					this.errorCode = -512;
@@ -514,7 +516,7 @@ window.JCSaleGiftProduct.prototype.Init = function()
 			this.obSkuProps = BX(this.visual.DISPLAY_PROP_DIV);
 		}
 	}
-	
+
 	if (0 === this.errorCode)
 	{
 		if (this.showQuantity)
@@ -1008,6 +1010,67 @@ window.JCSaleGiftProduct.prototype.RowRight = function()
 	}
 };
 
+window.JCSaleGiftProduct.prototype.UpdateRowsImages = function()
+{
+	if(typeof this.offerShowPreviewPictureProps === 'object' && this.offerShowPreviewPictureProps.length){
+		var currentTree = this.selectedValues;
+
+		for(var i in this.obTreeRows){
+			if(BX.util.in_array(this.treeProps[i].CODE, this.offerShowPreviewPictureProps)){
+				var RowItems = BX.findChildren(this.obTreeRows[i].LIST, {tagName: 'LI'}, false);
+				if(!!RowItems && 0 < RowItems.length){
+					for(var j in RowItems){
+						var ImgItem = BX.findChild(RowItems[j], {className: 'cnt_item'}, true, false);
+						if(ImgItem){
+							var value = RowItems[j].getAttribute('data-onevalue');
+							if(value != 0){
+								var bgi = ImgItem.style.backgroundImage;
+								var obgi = ImgItem.getAttribute('data-obgi');
+								if(!obgi){
+									obgi = bgi;
+									ImgItem.setAttribute('data-obgi', obgi);
+								}
+
+								var boolOneSearch = false;
+								var rowTree = BX.clone(currentTree, true);
+								rowTree['PROP_' + this.treeProps[i].ID] = value;
+
+								for(var m in this.offers){
+									boolOneSearch = true;
+									for(var n in rowTree){
+										if(rowTree[n] !== this.offers[m].TREE[n]){
+											boolOneSearch = false;
+											break;
+										}
+									}
+									if(boolOneSearch){
+										if(typeof this.offers[m].PREVIEW_PICTURE_FIELD === 'object' && this.offers[m].PREVIEW_PICTURE_FIELD.SRC){
+											var newBgi = 'url("' + this.offers[m].PREVIEW_PICTURE_FIELD.SRC + '")';
+											if(bgi !== newBgi){
+												ImgItem.style.backgroundImage = newBgi;
+												BX.addClass(ImgItem, 'pp');
+											}
+										}
+										else{
+											boolOneSearch = false;
+										}
+										break;
+									}
+								}
+
+								if(!boolOneSearch && obgi && bgi !== obgi){
+									ImgItem.style.backgroundImage = obgi;
+									BX.removeClass(ImgItem, 'pp');
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 window.JCSaleGiftProduct.prototype.UpdateRow = function(intNumber, activeID, showID, canBuyID)
 {
 	var i = 0,
@@ -1236,6 +1299,11 @@ window.JCSaleGiftProduct.prototype.ChangeInfo = function()
 			break;
 		}
 	}
+
+	if(this.treeProps){
+		this.UpdateRowsImages();
+	}
+
 	if (-1 < index)
 	{
 		if (!!this.obPict)
@@ -1251,7 +1319,7 @@ window.JCSaleGiftProduct.prototype.ChangeInfo = function()
 			}
 			BX.adjust(BX.findChild(this.obPict, {"tag": "img"}), obData);
 		}
-		
+
 		if (this.showSkuProps && !!this.obSkuProps)
 		{
 			if (0 === this.offers[index].DISPLAY_PROPERTIES.length)
@@ -1778,7 +1846,7 @@ function bx_sale_gift_product_load(injectId, localAjaxData, additionalData)
 			BX.ajax.processScripts(ob.SCRIPT);
 			initCountdown();
 
-			
+
 		}
 	});
 }
@@ -1798,15 +1866,15 @@ BX.addCustomEvent('onSlideInit', function(eventdata) {
 					$(document).find('.bx_item_list_you_looked_horizontal.detail .footer_button').css('height', '');
 				}
 				var tabsContentHover = tabsContentUnhover + itemsButtonsHeight+50;
-				
-				$('.bx_item_list_you_looked_horizontal.detail .slides').equalize({children: '.item-title'}); 
-				$('.bx_item_list_you_looked_horizontal.detail .slides').equalize({children: '.item_info'}); 
+
+				$('.bx_item_list_you_looked_horizontal.detail .slides').equalize({children: '.item-title'});
+				$('.bx_item_list_you_looked_horizontal.detail .slides').equalize({children: '.item_info'});
 				$('.bx_item_list_you_looked_horizontal.detail .slides').equalize({children: '.catalog_item'});
 
 				$('.bx_item_list_you_looked_horizontal.detail .all_wrapp .content_inner').attr('data-unhover', tabsContentUnhover);
 				$('.bx_item_list_you_looked_horizontal.detail .all_wrapp .content_inner').attr('data-hover', tabsContentHover);
 				$('.bx_item_list_you_looked_horizontal.detail .all_wrapp').height(tabsContentUnhover);
-				$('.bx_item_list_you_looked_horizontal.detail .all_wrapp .content_inner').addClass('absolute');	
+				$('.bx_item_list_you_looked_horizontal.detail .all_wrapp .content_inner').addClass('absolute');
 			}
 		}
 	}

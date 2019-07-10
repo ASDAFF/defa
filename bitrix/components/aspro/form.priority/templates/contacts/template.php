@@ -199,8 +199,21 @@
 			});
 		}
 
-		if(arPriorityOptions['THEME']['DATE_MASK'].length)
-			$('.contacts form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false });
+		if(arPriorityOptions['THEME']['DATE_MASK'].length){
+			$('.contacts form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.date').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
+
+		if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+			$('.contacts form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.datetime').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
 
 		$("input[type=file]").uniform({ fileButtonHtml: BX.message("JS_FILE_BUTTON_NAME"), fileDefaultHtml: BX.message("JS_FILE_DEFAULT") });
 		$(document).on('change', 'input[type=file]', function(){

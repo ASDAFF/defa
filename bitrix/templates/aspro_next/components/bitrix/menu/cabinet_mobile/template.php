@@ -6,7 +6,7 @@
 <div class="menu middle">
 	<ul>
 		<li<?=(CNext::isPersonalPage() ? ' class="selected"' : '')?>>
-			<?$link = str_replace('/', SITE_DIR, \Bitrix\Main\Config\Option::get('aspro.next', 'PERSONAL_PAGE_URL', SITE_DIR.'personal/'));?>
+			<?$link = str_replace('//', '/', str_replace('#SITE_DIR#', SITE_DIR, \Bitrix\Main\Config\Option::get('aspro.next', 'PERSONAL_PAGE_URL', SITE_DIR.'personal/')));?>
 			<a rel="nofollow" class="dark-color<?=($bParent ? ' parent' : '')?>" href="<?=$link;?>">
 				<?=CNext::showIconSvg("cabinet", SITE_TEMPLATE_PATH."/images/svg/".($USER->IsAuthorized() ? 'User' : 'Lock')."_black.svg");?>
 				<span><?=GetMessage('CABINET_LINK2')?></span>

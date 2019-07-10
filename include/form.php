@@ -41,7 +41,7 @@ if(\Bitrix\Main\Loader::includeModule("aspro_next_b2c"))
 			"IGNORE_CUSTOM_TEMPLATE" => "N",
 			"USE_EXTENDED_ERRORS" => "Y",
 			"CACHE_GROUPS" => "N",
-			"CACHE_TYPE" => "A",
+			"CACHE_TYPE" => "N",
 			"CACHE_TIME" => "3600000",
 			"AJAX_OPTION_JUMP" => "N",
 			"AJAX_OPTION_STYLE" => "Y",

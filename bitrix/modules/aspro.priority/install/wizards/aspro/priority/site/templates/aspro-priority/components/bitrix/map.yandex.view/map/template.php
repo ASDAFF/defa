@@ -47,7 +47,7 @@ var clusterSVG = '<div class="cluster_custom"><span>$[properties.geoObjects.leng
 						+'<circle data-name="Ellipse 276 copy" class="cls-cluster3" cx="28" cy="28" r="18"/>'
 					+'</svg>'
 				+'</div>';
-				
+
 var closeSVG = '<svg class="svg svg-close" width="14" height="14" viewBox="0 0 14 14">'
 					+'<path data-name="Rounded Rectangle 568 copy 16" class="cls-1" d="M1009.4,953l5.32,5.315a0.987,0.987,0,0,1,0,1.4,1,1,0,0,1-1.41,0L1008,954.4l-5.32,5.315a0.991,0.991,0,0,1-1.4-1.4L1006.6,953l-5.32-5.315a0.991,0.991,0,0,1,1.4-1.4l5.32,5.315,5.31-5.315a1,1,0,0,1,1.41,0,0.987,0.987,0,0,1,0,1.4Z" transform="translate(-1001 -946)"></path>'
 				+'</svg>';
@@ -88,7 +88,7 @@ function BX_SetPlacemarks_<?echo $arParams['MAP_ID']?>(map)
 if( is_array($arResult['POSITION']['PLACEMARKS']) && ($cnt = count($arResult['POSITION']['PLACEMARKS'])) ){
 	for( $i = 0; $i < $cnt; $i++ ){
 ?>
-arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?echo CUtil::PhpToJsObject($arResult['POSITION']['PLACEMARKS'][$i])?><?if(count($arResult['POSITION']['PLACEMARKS'])>1):?>, true<?endif;?>);<?	
+arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?echo CUtil::PhpToJsObject($arResult['POSITION']['PLACEMARKS'][$i])?><?if(count($arResult['POSITION']['PLACEMARKS'])>1):?>, true<?endif;?>);<?
 	}
 }
 ?>
@@ -100,7 +100,7 @@ arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?e
 	arObjects.POLYLINES[arObjects.POLYLINES.length] = BX_YMapAddPolyline(map, <?echo CUtil::PhpToJsObject($arResult['POSITION']['POLYLINES'][$i])?>);
 <?
 		endfor;
-	endif;	
+	endif;
 
 	if ($arParams['ONMAPREADY']):
 ?>
@@ -113,7 +113,7 @@ arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?e
 ?>
 	/* set dynamic zoom for ballons */
 	// map.setBounds(map.geoObjects.getBounds(), {checkZoomRange: true});
-	   
+
 	map.geoObjects.events.add('click', function (e) {
 		setTimeout(function(){
 			$('.ymaps-b-balloon .ymaps-b-balloon__close').html(closeSVG);
@@ -150,11 +150,10 @@ arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?e
 				});
 			}, 1000);
 		});	*/
-	<?endif;?>	
-	
-	
+	<?endif;?>
+
+
 	$('.contacts.front.type_2 .detail_desc_items .top-close').on('click', function(){
-		console.log('<?=count($arResult['POSITION']['PLACEMARKS'])?>')
 		<?if(count($arResult['POSITION']['PLACEMARKS'])>1):?>
 			map.setBounds(clusterer.getBounds(), {
 				checkZoomRange: true
@@ -172,19 +171,19 @@ arObjects.PLACEMARKS[arObjects.PLACEMARKS.length] = BX_YMapAddPlacemark(map, <?e
 				});
 			}, 1000);
 		}*/
-	});	
+	});
 }
 
 $(document).ready(function(){
 	setTimeout(function(){
 		$('.contacts.front .bx-yandex-map').css('opacity', 1);
 	}, 1100);
-	$('.contacts-stores .item .top-wrap .show_on_map>span').on('click', function(){
+	$('.contacts-stores .item .top-wrap .show_on_map>span[data-coordinates]').on('click', function(){
 		var arCoordinates = $(this).data('coordinates').split(','),
 			mapOffsetTop = $('.contacts-page-map').offset().top;
-			
+
 		$('html, body').animate({scrollTop: mapOffsetTop - (isMobile ? 20 : 180)}, 300);
-		
+
 		map.setCenter([arCoordinates[0], arCoordinates[1]], '<?=$arResult['POSITION']['yandex_scale']?>');
 		/*setTimeout(function(){
 			$('.ymaps-image-with-content').each(function(){
@@ -194,11 +193,11 @@ $(document).ready(function(){
 			});
 		}, 800);*/
 	});
-	
-	
-	$('.contacts.front.type_2 .items .item').on('click', function(){
+
+
+	$('.contacts.front.type_2 .items .item[data-coordinates]').on('click', function(){
 		var arCoordinates = $(this).data('coordinates').split(',');
-			
+
 		map.setCenter([arCoordinates[0], arCoordinates[1]], '<?=$arResult['POSITION']['yandex_scale']?>');
 		/*if(isMobile){
 			setTimeout(function(){

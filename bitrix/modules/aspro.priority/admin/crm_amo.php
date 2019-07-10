@@ -35,7 +35,7 @@ if($RIGHT >= "R")
 		$arSite['DIR'] = str_replace('//', '/', '/'.$arSite['DIR']);
 		if(!strlen($arSite['DOC_ROOT']))
 			$arSite['DOC_ROOT'] = $_SERVER['DOCUMENT_ROOT'];
-		
+
 		$arSite['DOC_ROOT'] = str_replace('//', '/', $arSite['DOC_ROOT'].'/');
 		$siteDir = str_replace('//', '/', $arSite['DOC_ROOT'].$arSite['DIR']);
 		$optionsSiteID = $arSite["ID"];
@@ -191,7 +191,7 @@ if($RIGHT >= "R")
 		{
 			foreach($arTabs as $key => $arTab)
 			{
-				$optionsSiteID = $arSite["ID"];
+				$optionsSiteID = $arTab["SITE_ID"];
 				foreach($arTab["ITEMS"] as $groupCode => $arOptions)
 				{
 					foreach($arOptions["ITEMS"] as $optionCode => $arOption)
@@ -258,7 +258,7 @@ if($RIGHT >= "R")
 			}
 		}
 	}
-	
+
 	CJSCore::Init(array("jquery"));
 	CAjax::Init();?>
 	<?if(!count($arTabs)):?>
@@ -663,7 +663,7 @@ if($RIGHT >= "R")
 								$('.response').removeClass('success').addClass('error').text('error');
 							}
 						});
-						
+
 						return false;
 					})
 					$('select[name^="WEB_FORM_AMO_CRM"]').on('change', function(){

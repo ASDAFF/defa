@@ -87,6 +87,7 @@ $arAccessories=CNextCache::CIBlockElement_GetProperty($arParams["IBLOCK_ID"], $E
 if($arAccessories){
 	$arAllValues["ASSOCIATED"]=$arAccessories;
 }
+
 ?>
 
 <?if(($arAccessories || $arElement["PROPERTY_ASSOCIATED_FILTER_VALUE"]) || ($arExpValues || $arElement["PROPERTY_EXPANDABLES_FILTER_VALUE"]) || (ModuleManager::isModuleInstalled("sale") && (!isset($arParams['USE_BIG_DATA']) || $arParams['USE_BIG_DATA'] != 'N'))){?>
@@ -95,7 +96,7 @@ if($arAccessories){
 	$arTab=array();
 	$arTmpExp = json_decode($arElement["PROPERTY_EXPANDABLES_FILTER_VALUE"], true);
 	$arTmpAssoc = json_decode($arElement["PROPERTY_ASSOCIATED_FILTER_VALUE"], true);
-	
+
 	if($arExpValues || ($arElement["PROPERTY_EXPANDABLES_FILTER_VALUE"] && $arTmpExp["CHILDREN"])){
 		$arTab["EXPANDABLES"]["TITLE"]=($arParams["DETAIL_EXPANDABLES_TITLE"] ? $arParams["DETAIL_EXPANDABLES_TITLE"] : GetMessage("EXPANDABLES_TITLE"));
 		if($arElement["PROPERTY_EXPANDABLES_FILTER_VALUE"])
@@ -130,15 +131,22 @@ if($arAccessories){
 								<?if($code=="RECOMENDATION"){?>
 									<?
 									$GLOBALS["CATALOG_CURRENT_ELEMENT_ID"] = $ElementID;
+
+									$GLOBALS['arrFilter'.$code]['IBLOCK_ID'] = $arParams["IBLOCK_ID"];
+									CNext::makeElementFilterInRegion($GLOBALS['arrFilter'.$code]);
 									?>
 									<?include_once('page_blocks/'.$sViewBigDataTemplate.'.php');?>
-									
+
 								<?}else{?>
 									<div class="flexslider loading_state shadow border custom_flex top_right" data-plugin-options='{"animation": "slide", "animationSpeed": 600, "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "controlsContainer": ".tabs_slider_navigation.<?=$code?>_nav", "counts": [4,3,3,2,1]}'>
 										<ul class="tabs_slider <?=$code?>_slides slides">
 											<?
 											if(array_key_exists($code, $arAllValues) && $arAllValues[$code])
-												$GLOBALS['arrFilter'.$code] = array( "ID" => $arAllValues[$code] );?>
+												$GLOBALS['arrFilter'.$code] = array( "ID" => $arAllValues[$code] );
+
+											$GLOBALS['arrFilter'.$code]['IBLOCK_ID'] = $arParams["IBLOCK_ID"];
+											CNext::makeElementFilterInRegion($GLOBALS['arrFilter'.$code]);
+											?>
 											<?$APPLICATION->IncludeComponent(
 												"bitrix:catalog.top",
 												"main",
@@ -249,22 +257,33 @@ if($arAccessories){
 				<?endforeach;?>
 			</ul>
 		</div>
-	
-		<?$disply_elements=($arParams["DISPLAY_ELEMENT_SLIDER"] ? $arParams["DISPLAY_ELEMENT_SLIDER"] : 10);?>
+
+		<?
+		$disply_elements=($arParams["DISPLAY_ELEMENT_SLIDER"] ? $arParams["DISPLAY_ELEMENT_SLIDER"] : 10);
+		?>
 		<ul class="tabs_content">
-			<?foreach($arTab as $code=>$arValue){?>
+			<?foreach($arTab as $code=>$arValue){
+				?>
 				<li class="tab <?=$code?>_wrapp" data-code="<?=$code?>">
 					<?if($code=="RECOMENDATION"){?>
 						<?
 						$GLOBALS["CATALOG_CURRENT_ELEMENT_ID"] = $ElementID;
+
+						$GLOBALS['arrFilter'.$code]['IBLOCK_ID'] = $arParams["IBLOCK_ID"];
+						CNext::makeElementFilterInRegion($GLOBALS['arrFilter'.$code]);
 						?>
 						<?include_once('page_blocks/'.$sViewBigDataTemplate.'.php');?>
-					<?}else{?>
+					<?}else{
+						?>
 						<div class="flexslider loading_state shadow border custom_flex top_right" data-plugin-options='{"animation": "slide", "animationSpeed": 600, "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "controlsContainer": ".tabs_slider_navigation.<?=$code?>_nav", "counts": [4,3,3,2,1]}'>
 						<ul class="tabs_slider <?=$code?>_slides slides">
 							<?
 							if(array_key_exists($code, $arAllValues) && $arAllValues[$code])
-								$GLOBALS['arrFilter'.$code] = array( "ID" => $arAllValues[$code] );?>
+								$GLOBALS['arrFilter'.$code] = array( "ID" => $arAllValues[$code] );
+
+							$GLOBALS['arrFilter'.$code]['IBLOCK_ID'] = $arParams["IBLOCK_ID"];
+							CNext::makeElementFilterInRegion($GLOBALS['arrFilter'.$code]);
+							?>
 							<?$APPLICATION->IncludeComponent(
 								"bitrix:catalog.top",
 								"main",

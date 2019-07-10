@@ -92,6 +92,7 @@ class aspro_next extends CModule {
 		RegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\CustomFilter', "OnIBlockPropertyBuildList");
 		RegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\Service', "OnIBlockPropertyBuildList");
 		RegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\YaDirectQuery', "OnIBlockPropertyBuildList");
+		RegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\IBInherited', "OnIBlockPropertyBuildList");
 
 		RegisterModuleDependences("sale", "OnBasketAdd", $this->MODULE_ID, self::moduleClassEvents, "clearBasketCacheHandler");
 		RegisterModuleDependences("sale", "OnBeforeBasketUpdate", $this->MODULE_ID, self::moduleClassEvents, "OnBeforeBasketUpdateHandler");
@@ -163,6 +164,7 @@ class aspro_next extends CModule {
 		UnRegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\CustomFilter', "OnIBlockPropertyBuildList");
 		UnRegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\Service', "OnIBlockPropertyBuildList");
 		UnRegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\YaDirectQuery', "OnIBlockPropertyBuildList");
+		UnRegisterModuleDependences("iblock", "OnIBlockPropertyBuildList", $this->MODULE_ID, 'Aspro\Next\Property\IBInherited', "OnIBlockPropertyBuildList");
 
 		UnRegisterModuleDependences("sale", "OnBasketAdd", $this->MODULE_ID, self::moduleClassEvents, "clearBasketCacheHandler");
 		UnRegisterModuleDependences("sale", "OnBeforeBasketUpdate", $this->MODULE_ID, self::moduleClassEvents, "OnBeforeBasketUpdateHandler");

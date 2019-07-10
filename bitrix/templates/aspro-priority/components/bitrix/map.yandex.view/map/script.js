@@ -1,4 +1,3 @@
-
 window.BX_YMapAddPlacemark = function(map, arPlacemark, isClustered){
 	if (null == map)
 		return false;
@@ -8,14 +7,14 @@ window.BX_YMapAddPlacemark = function(map, arPlacemark, isClustered){
 
 	var props = {};
 	var markerSVG = ymaps.templateLayoutFactory.createClass([
-	'<svg xmlns="http://www.w3.org/2000/svg";; width="46" height="57" viewBox="0 0 46 57">',
+	'<div class="marker"><svg xmlns="http://www.w3.org/2000/svg" width="46" height="57" viewBox="0 0 46 57">',
 	'<defs><style>.cls-marker, .cls-marker3 {fill: #fff;}.cls-marker, .cls-marker2 {fill-rule: evenodd;}.cls-marker {opacity: 0.5;}.cls-marker2 {fill: #247ee3;}</style></defs>',
 	'<path data-name="Ellipse 275 copy" class="cls-marker" d="M142.976,200.433L143,200.469s-7.05,5.826-10,10.375c-2.263,3.489-2.974,6.153-5,6.156s-2.737-2.667-5-6.156c-2.95-4.549-10-10.375-10-10.375l0.024-.036A23,23,0,1,1,142.976,200.433Z" transform="translate(-105 -160)"/>',
 	'<path data-name="Ellipse 253 copy 4" class="cls-marker2" d="M140,198.971L140,199s-6.362,5.91-8.092,8.456C128.351,212.69,128,215,128,215s-0.307-2.084-3.826-7.448C121.8,203.935,116,199,116,199l0-.029A20,20,0,1,1,140,198.971Z" transform="translate(-105 -160)"/>',
 	'<circle data-name="Ellipse 254 copy 5" class="cls-marker3" cx="23" cy="23" r="12"/>',
-	'</svg>'
+	'</svg></div>'
 	].join(''));
-	
+
 	if (null != arPlacemark.TEXT && arPlacemark.TEXT.length > 0)
 	{
 		var value_view = '';

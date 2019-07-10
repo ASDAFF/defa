@@ -4,7 +4,7 @@ $APPLICATION->SetTitle("Услуги");
 ?>
 <?if ($APPLICATION->GetCurPage() == "/services/dizayn-proekt/"){?>
 	<?include("design-project.php");?>
-<?}//else{?>
+<?}//else{ ?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news", 
 	"services", 
@@ -148,5 +148,4 @@ $APPLICATION->SetTitle("Услуги");
 	),
 	false
 );?>
-<?//}?>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+<?//}?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
