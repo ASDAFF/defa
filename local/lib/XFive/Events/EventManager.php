@@ -12,7 +12,7 @@ class EventManager
     {
         $bxEventManager = \Bitrix\Main\EventManager::getInstance();
 
-		$bxEventManager->addEventHandler(
+        $bxEventManager->addEventHandler(
             "",
             "ModelOnAfterAdd",
             array(
@@ -36,6 +36,15 @@ class EventManager
                 "OnUpdateModelHL"
             )
         );
+        //x5 20190702 отправка сообщения о регистрации ар
+        $bxEventManager->addEventHandler(
+            "main",
+            "OnAfterUserRegister",
+            array(
+                "XFive\Events\EventManager",
+                "OnAfterArchitectRegister"
+            )
+        );
 
 
     }
@@ -43,8 +52,35 @@ class EventManager
     /**x5 20190628 сбрасываем тэгированный кэш хайлоаблока Model
      * @param \Bitrix\Main\Entity\Event $event
      */
-    public static function OnUpdateModelHL(\Bitrix\Main\Entity\Event $event){
+    public static function OnUpdateModelHL(\Bitrix\Main\Entity\Event $event)
+    {
         global $CACHE_MANAGER;
         $CACHE_MANAGER->ClearByTag('xaiload_model');
     }
+
+    /**
+     * x5 20190702 отправляем письмо о регистрации архитектора
+     */
+    public static function OnAfterArchitectRegister(&$arFields)
+    {
+        if ($arFields['UF_ARCHITECT'] == '1') {
+            \Bitrix\Main\Mail\Event::send(array(
+                "EVENT_NAME" => "CUSTOM_ARCHITECT_IS_REGISTERED",
+                "LID" => $arFields['LID'],
+                "C_FIELDS" => array(
+                    'USER_ID' =>  $arFields['USER_ID'],
+                    'LOGIN' =>  $arFields['LOGIN'],
+                    'EMAIL' =>  $arFields['EMAIL'],
+                    'NAME' => $arFields['NAME'],
+                    'SECOND_NAME' => $arFields['SECOND_NAME'],
+                    'LAST_NAME' => $arFields['LAST_NAME'],
+                    'PERSONAL_PHONE' => $arFields['PERSONAL_PHONE'],
+                    'USER_IP' =>  $arFields['USER_IP'],
+                    'USER_HOST' =>  $arFields['USER_HOST']
+                ),
+            ));
+        }
+    }
+
+
 }
