@@ -3115,8 +3115,8 @@ body .tabs_slider .catalog_item .inner_wrap {
 }
 
 .series-item .series-main.current {
+    max-width: 100%;
     height: auto;
-    overflow: inherit;
 }
 
 /*табы*/

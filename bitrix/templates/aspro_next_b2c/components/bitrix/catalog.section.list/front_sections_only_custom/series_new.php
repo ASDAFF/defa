@@ -381,7 +381,7 @@ if($arResult['SECTIONS'])
                                 <div class="row series-main sets-block"  data-tab="2">
                                         <div class="img col-lg-4 col-sm-12 sets-demonstration">
                                             <div class="series-slider-wrapper">
-                                                <div class="slick-slider put-arrows main-slide slider-for slider-single">
+                                                <div class="slick-slider put-arrows main-slide slider-for-sets slider-single">
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                     {
                                                         ?>
@@ -399,7 +399,7 @@ if($arResult['SECTIONS'])
                                                 if(!empty($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']]))
                                                 {
                                                     ?>
-                                                    <div class="series-item__thumbs slick-nav preview-slide slider-nav">
+                                                    <div class="series-item__thumbs slick-nav preview-slide slider-nav-sets">
                                                         <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                         {
                                                             ?>
