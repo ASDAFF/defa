@@ -5981,7 +5981,7 @@ body .tabs_slider .catalog_item .inner_wrap {
     height: 470px;
     top: auto;
     bottom: 39px;
-
+    
 }
 
 
@@ -6653,8 +6653,86 @@ body.compensate-for-scrollbar {
 
 
 
+/*ТАБЫ (ДОСТАВКА, СБОРКА, ВЫВОЗ УПАКОВКИ)*/
+.catalog_detail .tabs-block {
+    margin-bottom: 40px;
+}
+
+.catalog_detail .tabs-block .tabs-item {
+    background: rgb(246,246,247);
+
+}
+
+.catalog_detail .tabs-block .tabs-item a{
+    border-left: 1px solid rgb(230,230,230);
+    border-right: 1px solid rgb(230,230,230);
+    padding: 10px 23.8px;
+    display: inline-block;
+    margin-right: -4px;
+}
+
+.catalog_detail .tabs-block .tabs-item a:nth-of-type(1) {
+    border-left: 2px solid transparent;
+}
+
+.catalog_detail .tabs-block .tabs-item a:nth-of-type(1).active {
+    border-left: 2px solid rgb(230,230,230);
+}
+
+.catalog_detail .tabs-block .tabs-item a:nth-last-of-type(1) {
+    border-right: none;
+}
+
+.catalog_detail .tabs-block .tabs-item a:nth-last-of-type(1).active {
+    border-right: 2px solid rgb(230,230,230);
+}
+
+.catalog_detail .tabs-block .tabs-item a.active {
+    background: white;
+    border-left: 1px solid rgb(230,230,230);
+    border-top: 2px solid rgb(230,230,230);
+    border-right: 1px solid rgb(230,230,230);
+    position: relative;
+}
+
+.catalog_detail .tabs-block .tabs-item a.active:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    height: 3px;
+    width: 100%;
+}
+
+
+.catalog_detail .tabs-block .tabs-content {
+    border: 2px solid rgb(230,230,230);
+    padding: 20px;
+}
+
+.catalog_detail .tabs-block .tabs-content .item {
+    display: none;
+}
+
+.catalog_detail .tabs-block .tabs-content .item a{
+    color: #2c69bd;
+    display: block;
+}
+
+.catalog_detail .tabs-block .tabs-content .item.active {
+    display: block;
+}
+
+
+
+
 /*БЛОК ДОСТАВКИ*/
-.catalog_detail .product_delivery,
+.catalog_detail .product_delivery {
+    margin-bottom: 0;
+}
+
+
 .alphabet-demo-product .product_delivery {
     margin-bottom: 40px;
 }
@@ -6956,7 +7034,7 @@ body.compensate-for-scrollbar {
 
 /*кастомизация слайдера Модификаций*/
 .catalog_detail .modification {
-    margin: 0 -15px 0;
+    margin: 0;
 }
 
 .catalog_detail .modification .tabs_goods {
@@ -7043,11 +7121,48 @@ body.compensate-for-scrollbar {
 
 
 
+/*Баннер СКИДКИ ДЛЯ ОПТОВЫХ ПОКУПАТЕЛЕЙ*/
+.sale-banner {
+    margin-top: 40px;
+}
 
 
+.sale-banner a {
+    display: block;
+    background: url(../images/sale-banner-bg.png);
+    background-position: left top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px 20px 30px;
+    position: relative;
+}
+
+.sale-banner a:after {
+    position: absolute;
+    content: '';
+    background: url("../images/man.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 171px;
+    height: 180px;
+    right: 0;
+    bottom: 0;
 
 
+}
 
+
+.sale-banner a p {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.sale-banner a span {
+    font-size: 14px;
+    color: #84878c;
+}
 
 
 /*Блок на всю ширину под основной информацией */

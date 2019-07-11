@@ -962,9 +962,40 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="item"></div>
-                                    <div class="item"></div>
-                                    <div class="item"></div>
+                                    <div class="item">
+                                        <!--СБОРКА-->
+                                        <ul>
+                                            <li>Быстро и профессионально</li>
+                                            <li>Грамотная реализация дизайн-проекта</li>
+                                            <li>Полное соблюдение технологии</li>
+                                        </ul>
+                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
+                                        <a href="javascript:;">Детальная информация</a>
+                                    </div>
+                                    <div class="item">
+                                        <!--ВЫВОЗ УПАКОВКИ-->
+                                        <ul>
+                                            <li>Экономия сил и времени</li>
+                                            <li>Утилизация упаковки</li>
+                                            <li>Чистота окружающего пространства</li>
+                                        </ul>
+                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
+                                        <a href="javascript:;">Детальная информация</a>
+                                    </div>
+                                    <div class="item">
+                                        <!--ГАРАНТИЯ-->
+                                        <ul>
+                                            <li>Квалифицированные специалисты</li>
+                                            <li>Оперативность гарантийных работ</li>
+                                            <li>Косметический ремонт мебели</li>
+                                            <li>Замена деталей и фурнитуры</li>
+                                            <li>Выезд мастера на дом для ремонта</li>
+                                            <li>Возврат денежных средств</li>
+                                        </ul>
+                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
+                                        <a href="javascript:;">Детальная информация</a>
+
+                                    </div>
                                 </div>
                             </div>
                             <!---->
@@ -989,7 +1020,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 
                 <div class="row">
                     <?if($arTmpModif["CHILDREN"]){?>
-                    <div class="col-md-12">
+                    <div class="col-md-8">
 
                         <div class="modification">
                             <div class="wraps hidden_print addon_type">
@@ -1098,6 +1129,17 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                     <?}?>
 
                 </div>
+
+                <div class="sale-banner">
+                    <a href="javascript:;">
+                        <p>Предоставляем скидки для<br>больших партий товара</p>
+                        <span>Индивидуальное предложение</span>
+                    </a>
+                </div>
+
+
+
+
 
 
 
@@ -2065,7 +2107,7 @@ $showProps = false;
 
 
         <!--ТИЗЕРЫ-->
-        <div class="page-tizers">
+        <!--<div class="page-tizers">
             <div class="row">
                 <div class="col-md-3">
                     <a href="/services/dostavka/" class="page-tizers-item">
@@ -2236,7 +2278,7 @@ $showProps = false;
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
 

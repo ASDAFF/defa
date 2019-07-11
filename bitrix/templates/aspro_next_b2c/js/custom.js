@@ -113,41 +113,44 @@ $(document).ready(function () {
 
 //карта из плавающих тизеров
 
-window.onload=function () {
-    var btn = document.querySelector("#callMap");
-    var map = document.querySelector(".map-fly");
-    var close = document.querySelector(".button-close");
-    // var gift = document.querySelector(".gift-activate");
-    // var giftBanner = document.querySelector(".gift-banner");
-    // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
-    // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
+$(document).ready(function () {
+    if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
+        var btn = document.querySelector("#callMap");
+        var map = document.querySelector(".map-fly");
+        var close = document.querySelector(".button-close");
+        // var gift = document.querySelector(".gift-activate");
+        // var giftBanner = document.querySelector(".gift-banner");
+        // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
+        // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
 
-    btn.addEventListener("click", function (evt) {
-        evt.preventDefault();
-        map.classList.add("show");
-    });
+        btn.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            map.classList.add("show");
+        });
 
-    close.addEventListener("click", function (evt) {
-        evt.preventDefault();
-        map.classList.remove("show");
-    });
+        close.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            map.classList.remove("show");
+        });
 
-    window.addEventListener("keydown", function (evt) {
-        if (evt.keyCode === 27) {
-            if (map.classList.contains("show")) {
-                evt.preventDefault();
+        window.addEventListener("keydown", function (evt) {
+            if (evt.keyCode === 27) {
+                if (map.classList.contains("show")) {
+                    evt.preventDefault();
+                    map.classList.remove("show");
+                }
+            }
+        });
+
+        $(document).mouseup(function (e){
+            var div = $(".map-fly");
+            if (!div.is(e.target)
+                && div.has(e.target).length === 0) {
                 map.classList.remove("show");
             }
-        }
-    });
+        });
+    };
 
-    $(document).mouseup(function (e){
-        var div = $(".map-fly");
-        if (!div.is(e.target)
-            && div.has(e.target).length === 0) {
-            map.classList.remove("show");
-        }
-    });
 
 //подарок
 
@@ -209,29 +212,33 @@ window.onload=function () {
     // });
 
 
-};
+});
 
 window.addEventListener("load", function () {
     //открытие бокового меню по клику
 
-    if ( $(window).width() <= 1366 ) {
+    if ($('#callMenu').length || $("#hideMenu").length) {
+        if ( $(window).width() <= 1366 ) {
 
-        var callMenu = document.querySelector("#callMenu");
-        var hideMenu = document.querySelector("#hideMenu");
+            var callMenu = document.querySelector("#callMenu");
+            var hideMenu = document.querySelector("#hideMenu");
 
-        callMenu.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
-                callMenu.classList.add("special-move-translate");
-                hideMenu.classList.add("special-move-right");
-            } else {
-                callMenu.classList.remove("special-move-translate");
-                hideMenu.classList.remove("special-move-right");
-            }
+            callMenu.addEventListener("click", function (evt) {
+                evt.preventDefault();
+                if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
+                    callMenu.classList.add("special-move-translate");
+                    hideMenu.classList.add("special-move-right");
+                } else {
+                    callMenu.classList.remove("special-move-translate");
+                    hideMenu.classList.remove("special-move-right");
+                }
 
-        });
+            });
 
+        }
     }
+
+
 
 });
 
@@ -738,6 +745,17 @@ $(document).ready(function () {
             }
         });
     };
+});
+
+
+
+/*ТАБЫ (ДОСТАВКА, ВЫВОЗ МУСОРА, СБОРКА)*/
+$(document).ready(function () {
+    $('.catalog_detail .info_item .tabs-block .tabs-item a').click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        /*$('.answer-accordion .item .question').not(this).removeClass('active').next().slideUp();*/
+        $('.tabs-content .item').removeClass('active').eq($(this).index()).addClass('active');
+    });
 });
 
 
