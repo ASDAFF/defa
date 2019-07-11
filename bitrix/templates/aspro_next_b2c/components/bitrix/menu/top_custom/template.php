@@ -135,7 +135,7 @@ $iVisibleItemsMenu = ($arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] ? $arTheme['MA
                                 </a>
                             </div>
                             <div class="what_do-item-wrapper">
-                                <a href="" class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
+                                <a href="<?=SITE_DIR ?>services/konsultatsiya-eksperta/" class="what_do-item">
                                     <div class="what_do-item-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
                                             <path style="fill:none;stroke:#4c4e54;stroke-miterlimit:100; stroke-linecap:round;stroke-linejoin:round;stroke-width:8.5039;" d="M16.8 35.6v8.7M63.2 35.6v8.7"></path>
@@ -147,7 +147,7 @@ $iVisibleItemsMenu = ($arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] ? $arTheme['MA
                                 </a>
                             </div>
                             <div class="what_do-item-wrapper">
-                                <a href="<?=SITE_DIR ?>services/test-drayv/" class="what_do-item">
+                                <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                                     <div class="what_do-item-icon">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
