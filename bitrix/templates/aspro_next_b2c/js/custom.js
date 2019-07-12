@@ -747,10 +747,6 @@ $(document).ready(function () {
     };
 });
 
-
-
-
-
 /*ТАБЫ (ДОСТАВКА, ВЫВОЗ МУСОРА, СБОРКА)*/
 $(document).ready(function () {
     $('.catalog_detail .info_item .tabs-block .tabs-item a').click(function () {
