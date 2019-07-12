@@ -755,7 +755,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.catalog_detail .info_item .tabs-block .tabs-item a').click(function () {
         $(this).addClass('active').siblings().removeClass('active');
-        /*$('.answer-accordion .item .question').not(this).removeClass('active').next().slideUp();*/
         $('.tabs-content .item').removeClass('active').eq($(this).index()).addClass('active');
     });
 });

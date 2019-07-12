@@ -24,7 +24,7 @@
 
 .menu-row .menu-only {
     position: relative;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 
 
