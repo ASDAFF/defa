@@ -425,88 +425,95 @@ $(document).ready(function() {
 //слайдер на странице серий
     $(document).ready(function() {
         if ($(".sections_wrapper.series").length > 0){
-                $('.slider-for').each(function(key, item) {
 
-                    var sliderIdName = 'slider' + key;
-                    var sliderNavIdName = 'sliderNav' + key;
+            $('.series-desc-block .slider-for').each(function(key, item) {
 
-                    this.id = sliderIdName;
-                    $('.slider-nav')[key].id = sliderNavIdName;
+                var sliderIdNameDesc = 'sliderDesc' + key;
+                var sliderNavIdNameDesc = 'sliderDescNav' + key;
 
-                    var sliderId = '#' + sliderIdName;
-                    var sliderNavId = '#' + sliderNavIdName;
+                this.id = sliderIdNameDesc;
+                $('.series-desc-block .slider-nav')[key].id = sliderNavIdNameDesc;
 
-                    $(sliderId).slick({
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        arrows: true,
-                        fade: true,
-                        asNavFor: sliderNavId
-                    });
+                var sliderIdDesc = '#' + sliderIdNameDesc;
+                var sliderNavIdDesc = '#' + sliderNavIdNameDesc;
 
-                    $(sliderNavId).slick({
-                        slidesToShow: 4,
-                        slidesToScroll: 1,
-                        asNavFor: sliderId,
-                        dots: false,
-                        arrows: false,
-                        centerMode: false,
-                        infinite: true,
-                        focusOnSelect: true,
-                        responsive: [
-                            {
-                                breakpoint: 1367,
-                                settings: {
-                                    slidesToShow: 4,
-                                    slidesToScroll: 4
-                                }
-                            }
-                        ]
-                    });
-
+                $(sliderIdDesc).slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    fade: true,
+                    adaptiveHeight: true,
+                    asNavFor: sliderNavIdDesc
                 });
 
+                $(sliderNavIdDesc).slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: sliderIdDesc,
+                    dots: false,
+                    arrows: false,
+                    centerMode: false,
+                    infinite: true,
+                    focusOnSelect: true,
+                    adaptiveHeight: true,
+                    responsive: [
+                        {
+                            breakpoint: 1367,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        }
+                    ]
+                });
 
-                // $('.sets-block .slider-for').each(function(key, item) {
-                //
-                //     var sliderIdName = 'slider' + key;
-                //     var sliderNavIdName = 'sliderNav' + key;
-                //
-                //     this.id = sliderIdName;
-                //     $('.sets-block .slider-nav')[key].id = sliderNavIdName;
-                //
-                //     var sliderId = '#' + sliderIdName;
-                //     var sliderNavId = '#' + sliderNavIdName;
-                //
-                //     $(sliderId).slick({
-                //         slidesToShow: 1,
-                //         slidesToScroll: 1,
-                //         arrows: true,
-                //         fade: true,
-                //         asNavFor: sliderNavId
-                //     });
-                //
-                //     $(sliderNavId).slick({
-                //         slidesToShow: 4,
-                //         slidesToScroll: 1,
-                //         asNavFor: sliderId,
-                //         dots: false,
-                //         arrows: false,
-                //         centerMode: false,
-                //         infinite: true,
-                //         focusOnSelect: true,
-                //         responsive: [
-                //             {
-                //                 breakpoint: 1367,
-                //                 settings: {
-                //                     slidesToShow: 4,
-                //                     slidesToScroll: 4
-                //                 }
-                //             }
-                //         ]
-                //     });
-                //
-                // });
+            });
+
+            $('.series-main.sets-block .slider-for-sets').each(function(key, item) {
+
+                var sliderIdNameSets = 'sliderSets' + key;
+                var sliderNavIdNameSets = 'sliderSetsNav' + key;
+
+                this.id = sliderIdNameSets;
+                $('.series-main.sets-block .slider-nav-sets')[key].id = sliderNavIdNameSets;
+
+                var sliderIdSets = '#' + sliderIdNameSets;
+                var sliderNavIdSets = '#' + sliderNavIdNameSets;
+
+                $(sliderIdSets).slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    fade: true,
+                    adaptiveHeight: true,
+                    asNavFor: sliderNavIdSets
+                });
+
+                $(sliderNavIdSets).slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: sliderIdSets,
+                    dots: false,
+                    arrows: false,
+                    centerMode: false,
+                    infinite: true,
+                    focusOnSelect: true,
+                    adaptiveHeight: true,
+                    responsive: [
+                        {
+                            breakpoint: 1367,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        }
+                    ]
+                });
+
+            });
+
+
+
 
         }
 
