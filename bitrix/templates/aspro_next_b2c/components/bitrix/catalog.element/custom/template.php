@@ -920,6 +920,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 
                             <!--Табы-->
                             <div class="tabs-block">
+
                                 <div class="tabs-item">
                                     <a href="javascript:;" class="active">Доставка</a>
                                     <a href="javascript:;">Сборка</a>
