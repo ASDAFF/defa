@@ -3168,9 +3168,10 @@ console.info(slideHtml);
 			container.find('.thumbs').removeData("bxSlider");
 
 			window["obSliderSKU"] = container.find('.thumbs .slides_block').bxSlider({
-				mode: 'horizontal',
+				mode: 'vertical',
+				
 				infiniteLoop: false,
-                slideWidth: 124,
+                slideWidth: 126,
 				minSlides: 5,
 				maxSlides: 5,
 				slideMargin: 10,

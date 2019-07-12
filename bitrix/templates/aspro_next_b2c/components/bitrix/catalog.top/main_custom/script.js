@@ -61,13 +61,13 @@ $(document).ready(function () {
 
 
     $(".catalog-detail-slider-modif").slick({
-        slidesToShow: 5,
+        slidesToShow: 3,
         arrows: true,
         responsive: [
             {
                 breakpoint: 991,
                 settings: {
-                    slidesToShow: 4
+                    slidesToShow: 3
                 }
             },
             {
@@ -79,7 +79,7 @@ $(document).ready(function () {
             {
                 breakpoint: 576,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 2,
                     arrows: false,
                     centerMode: true
                 }
