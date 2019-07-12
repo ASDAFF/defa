@@ -970,8 +970,8 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             <li>Грамотная реализация дизайн-проекта</li>
                                             <li>Полное соблюдение технологии</li>
                                         </ul>
-                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
-                                        <a href="javascript:;">Детальная информация</a>
+                                        <a class="help_me animated-load" data-event="jqm" data-param-form_id="ASK" data-name="question">Получить консультацию</a>
+                                        <a href="/services/sborka/">Детальная информация</a>
                                     </div>
                                     <div class="item">
                                         <!--ВЫВОЗ УПАКОВКИ-->
@@ -980,8 +980,8 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             <li>Утилизация упаковки</li>
                                             <li>Чистота окружающего пространства</li>
                                         </ul>
-                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
-                                        <a href="javascript:;">Детальная информация</a>
+                                        <a class="help_me animated-load" data-event="jqm" data-param-form_id="ASK" data-name="question">Получить консультацию</a>
+                                        <a href="/services/vyvoz-musora/">Детальная информация</a>
                                     </div>
                                     <div class="item">
                                         <!--ГАРАНТИЯ-->
@@ -993,36 +993,23 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             <li>Выезд мастера на дом для ремонта</li>
                                             <li>Возврат денежных средств</li>
                                         </ul>
-                                        <a href="javascript:;" class="help_me">Получить консультацию</a>
-                                        <a href="javascript:;">Детальная информация</a>
+                                        <a class="help_me animated-load" data-event="jqm" data-param-form_id="ASK" data-name="question">Получить консультацию</a>
+                                        <a href="/services/dostavka/">Детальная информация</a>
 
                                     </div>
                                 </div>
                             </div>
                             <!---->
-
-
-
-
-
-
-
-
-
-
                             <!--3D-расстановка-->
                             <div class="arrangement-block">
                                 <a href="javascript:;" target="_blank">Посмотреть в планировщике</a>
                             </div>
-
-						</div>
-
+                        </div>
                 </div>
 
                 <div class="row">
                     <?if($arTmpModif["CHILDREN"]){?>
                     <div class="col-md-8">
-
                         <div class="modification">
                             <div class="wraps hidden_print addon_type">
 
@@ -1132,7 +1119,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                 </div>
 
                 <div class="sale-banner">
-                    <a href="javascript:;">
+                    <a href="" class="animated-load" data-event="jqm" data-param-form_id="COMMERCIAL_OFFER" data-name="question">
                         <p>Предоставляем скидки для<br>больших партий товара</p>
                         <span>Индивидуальное предложение</span>
                     </a>

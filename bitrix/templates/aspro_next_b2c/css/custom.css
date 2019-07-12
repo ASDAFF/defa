@@ -5506,9 +5506,10 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 
 /*СЕТКА ФОТОК И ИНФОРМАЦИИ*/
-
-
-
+.catalog_detail .item_main_info>.col-md-8 {
+    position: sticky;
+    top: 100px;
+}
 
 .catalog_detail .item_main_info .item_slider {
     width: 100%;
@@ -6715,9 +6716,26 @@ body.compensate-for-scrollbar {
     display: none;
 }
 
-.catalog_detail .tabs-block .tabs-content .item a{
-    color: #2c69bd;
-    display: block;
+.catalog_detail .tabs-block .tabs-content .item a {
+    display: inline-block;
+    width: 50%;
+    margin-right: -4px;
+    text-align: center;
+    color: rgb(31,34,41);
+    background: white;
+    text-transform: uppercase;
+    border: 1px solid rgb(31,34,41);
+    transition: 0.3s;
+    padding: 5px 10px;
+}
+
+.catalog_detail .tabs-block .tabs-content .item a:hover {
+    color: white;
+    background: rgb(31,34,41);
+}
+
+.catalog_detail .tabs-block .tabs-content .item a:nth-last-of-type(1) {
+    border-left: none;
 }
 
 .catalog_detail .tabs-block .tabs-content .item.active {
