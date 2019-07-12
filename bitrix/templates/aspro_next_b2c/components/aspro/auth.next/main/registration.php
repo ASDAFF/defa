@@ -14,13 +14,13 @@ if( !$USER->IsAuthorized() ){?>
 		"main",
 		Array(
 			"USER_PROPERTY_NAME" => "",
-			"SHOW_FIELDS" => array( "LOGIN", "LAST_NAME", "NAME", "SECOND_NAME", "EMAIL", "PERSONAL_PHONE" ),
+			"SHOW_FIELDS" => array( "LOGIN", "LAST_NAME", "NAME", "SECOND_NAME", "EMAIL", "PERSONAL_PHONE"),
 			"REQUIRED_FIELDS" => array( "NAME","PERSONAL_PHONE", "EMAIL" ),
 			"AUTH" => "Y",
 			"USE_BACKURL" => "Y",
 			"SUCCESS_PAGE" => "",
 			"SET_TITLE" => "N",
-			"USER_PROPERTY" => array()
+			"USER_PROPERTY" => array("UF_ARCHITECT","UF_CITY","UF_ADDIT_INFO")
 		)
 	);?>
 <?}else{

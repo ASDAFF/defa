@@ -1,6 +1,12 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 <?$this->setFrameMode(true);?>
 <?
+//x5 20190628 подтягиваем js компонента catalog.section, чтобы работал сниппет в меню Модели
+\Bitrix\Main\Page\Asset::getInstance()->addJs(SITE_TEMPLATE_PATH."/components/bitrix/catalog.section/catalog_custom_block_new/script.js");
+//x5 20190627 begin
+\Bitrix\Main\Page\Asset::getInstance()->addJs(SITE_TEMPLATE_PATH."/js/x5slider.js");
+\Bitrix\Main\Page\Asset::getInstance()->addCss(SITE_TEMPLATE_PATH."/css/x5slider.css");
+//x5 20190627 end
 global $arTheme;
 $iVisibleItemsMenu = ($arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] ? $arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] : 10);
 ?>
