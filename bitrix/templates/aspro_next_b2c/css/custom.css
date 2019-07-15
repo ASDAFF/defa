@@ -3438,7 +3438,10 @@ body .tabs_slider .catalog_item .inner_wrap {
     display: block;
 }
 
-/*готовые наборы*/
+/*готовые проекты*/
+.series-tabs-projects .bottom_nav {
+    display: none;
+}
 
 /*cредняя колонка*/
 .series-item-color-top {
