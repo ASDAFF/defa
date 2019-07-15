@@ -26,7 +26,7 @@
                                 <h5>Серии</h5>
                             </li>
                             <? foreach ($data["SERIES"] as $seria) { ?>
-                                <li class="alphabet-hide-list-item">
+                                <li data-id="<?= $seria["ID"] ?>" class="alphabet-hide-list-item seria_hover">
                                     <p>
                                         <?= $seria["NAME"] ?>
                                     </p>
@@ -38,8 +38,10 @@
                                 <h5>Товары</h5>
                             </li>
                             <? foreach ($data["ELEMENTS"] as $element) { ?>
-                                <li class="alphabet-hide-list-item">
-                                    <p><?= $element["NAME"] ?></p>
+                                <li data-id="<?= $element["ID"] ?>" class="alphabet-hide-list-item element_hover">
+                                    <p>
+                                        <?= $element["NAME"] ?>
+                                    </p>
                                 </li>
                             <? } ?>
                         </ul>
