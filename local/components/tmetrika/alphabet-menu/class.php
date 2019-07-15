@@ -44,24 +44,89 @@ class AlphabetMenu extends CBitrixComponent
 
     public function executeComponent()
     {
-        $t = "sdfg";
-
-        dd($t);
-
         $data = [];
+
+        foreach ($this->alphabet as $letter) {
+            $letter = mb_strtoupper($letter);
+
+            $letterData = $this->getDataForLetter($letter);
+
+            // не добавляем пустые буквы
+            if ($letterData !== false) {
+                $data[$letter] = $letterData;
+            }
+
+        }
 
         $this->arResult["LETTERS"] = $data;
 
         $this->includeComponentTemplate();
     }
 
+
+    /**
+     * Получение данных для буквы
+     * @param $letter
+     * @return array
+     */
     public function getDataForLetter($letter)
     {
-        $sections = CIBlockSection::GetList([
+        $query = CIBlockSection::GetList([
             "NAME" => "ASC",
         ], [
-            "IBLOCK_ID" => $this->catalogId
+            "ACTIVE" => "Y",
+            "IBLOCK_ID" => $this->catalogId,
+            "UF_SERIES" => 0,
+            "NAME" => "{$letter}%"
         ]);
+
+        $sections = [];
+
+        while ($section = $query->GetNext()) {
+            $sections[] = $section;
+        }
+
+        $query = CIBlockSection::GetList([
+            "NAME" => "ASC",
+        ], [
+            "ACTIVE" => "Y",
+            "IBLOCK_ID" => $this->catalogId,
+            "UF_SERIES" => 1,
+            "NAME" => "{$letter}%"
+        ]);
+
+        $series = [];
+
+        while ($seria = $query->GetNext()) {
+            $series[] = $seria;
+        }
+
+        $query = CIBlockElement::GetList([
+            "NAME" => "ASC",
+        ], [
+            "IBLOCK_ID" => $this->catalogId,
+            "ACTIVE" => "Y",
+            "NAME" => "{$letter}%"
+        ]);
+
+        $elements = [];
+
+        while ($element = $query->GetNext()) {
+            $elements[] = $element;
+        }
+
+        $count = count($sections) + count($series) + count($elements);
+
+        if ($count > 0) {
+            return [
+                "SECTIONS" => $sections,
+                "SERIES" => $series,
+                "ELEMENTS" => $elements
+            ];
+        }
+
+        return false;
+
     }
 
 

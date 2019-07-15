@@ -290,9 +290,7 @@
                             </div>
                         </div>
 
-                        <? $APPLICATION->IncludeComponent("tmetrika:alphabet-menu", ".default", [
-
-                        ]); ?>
+                        <? $APPLICATION->IncludeComponent("tmetrika:alphabet-menu", ".default", []); ?>
 
         <?
         $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/_common.css',true);
