@@ -472,6 +472,11 @@ ul li:before {
     padding-right: 0!important;
 }
 
+
+.with_dropdown .dropdown {
+    z-index: 11;
+}
+
 .with_dropdown:after {
     display: none;
     /*content: "";
@@ -3126,6 +3131,8 @@ body .tabs_slider .catalog_item .inner_wrap {
     max-width: 100%;
     height: auto;
 }
+
+
 
 /*табы*/
 
