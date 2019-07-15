@@ -1822,4 +1822,15 @@ if ($arFields["EMAIL_RAW"])
 	fwrite($log, "\n-----------------------------end emails ---------------------------------\n");
 }
 
+AddEventHandler('form', 'onBeforeResultAdd', 'onBeforeResultAddHandle');
+function onBeforeResultAddHandle($WEB_FORM_ID, &$arFields, &$arrVALUES){
+    global $APPLICATION;
+    global $arRegion;
+
+    foreach ($arrVALUES as $key=>$item){
+        if(preg_match("/^form_hidden_\d+$/", $key) && $item == "REGION"){
+        	$arrVALUES[$key] = $arRegion["NAME"];
+        }
+	}
+}
 ?>
