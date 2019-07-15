@@ -2,7 +2,7 @@
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
-$element = CIBlockElement::GetByID($_POST["id"])->GetNextElement();
+$element = CIBlockElement::GetByID($_REQUEST["id"])->GetNextElement();
 $fields = $element->GetFields();
 $properties = $element->GetProperties();
 
@@ -80,9 +80,11 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
             <a href="">Другие товары акции</a>
         </div>
         <ul class="characters">
-            <li>ткань или экокожа</li>
-            <li>механизм качания с фиксацией в рабочем положении</li>
-            <li>ткань или экокожа</li>
+            <? foreach (data_get($properties, "CML2_ATTRIBUTES.VALUE") as $item) { ?>
+                <li>
+                    <?= $item ?>
+                </li>
+            <? } ?>
         </ul>
         <a href="" class="blue-link">Все характеристики</a>
         <div class="product_delivery">

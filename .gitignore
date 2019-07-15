@@ -11,6 +11,8 @@ Thumbs.db
 ._.DS_Store
 .ht*
 
+local/vendor/illuminate
+
 
 bitrix/activities/
 bitrix/admin/

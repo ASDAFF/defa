@@ -1,14 +1,13 @@
 {
     "name": "defo/site",
     "type": "project",
-    "require": {},
+    "require": {
+        "symfony/var-dumper": "^4.3",
+        "illuminate/support": "^5.8"
+    },
     "autoload": {
         "psr-4": {
-            "Defo\\": "lib/Defo/",
-            "XFive\\": "lib/XFive/"
+            "Defo\\": "lib/Defo/"
         }
-    },
-    "require-dev": {
-        "kint-php/kint": "^3.2"
     }
 }
