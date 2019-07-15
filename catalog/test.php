@@ -1,6 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("test");  
+$APPLICATION->SetTitle("Тестовый вариант");  
 ?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section", 
