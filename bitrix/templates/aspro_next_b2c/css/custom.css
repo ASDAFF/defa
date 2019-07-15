@@ -5506,7 +5506,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 
 /*СЕТКА ФОТОК И ИНФОРМАЦИИ*/
-.catalog_detail .item_main_info>.col-md-8 {
+.catalog_detail .item_main_info>.col-lg-8 {
     position: sticky;
     top: 100px;
 }
@@ -5532,6 +5532,25 @@ body .tabs_slider .catalog_item .inner_wrap {
     padding: 29px 56px 29px 56px;
     float: none;
 }
+
+
+@media (max-width: 1200px) {
+    /*СЕТКА ФОТОК И ИНФОРМАЦИИ*/
+    .catalog_detail .item_main_info>.col-lg-8 {
+        position: sticky;
+        top: 80px;
+    }
+}
+
+
+@media (max-width: 991px) {
+    /*СЕТКА ФОТОК И ИНФОРМАЦИИ*/
+    .catalog_detail .item_main_info>.col-lg-8 {
+        position: static;
+        /*top: 100px;*/
+    }
+}
+
 
 
 /*АРТИКУЛ*/
@@ -5965,17 +5984,20 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 
 .catalog_detail .item_main_info.type_clothes .item_slider.has_more {
-    padding-left: 110px;
+    padding-left: 170px;
     padding-top: 39px;
 }
 
 
 .catalog_detail .type_clothes .item_slider:not(.flex) .slides {
-    max-width: 800px;
-    height: 630px;
-    line-height: 630px;
+    max-width: 700px;
+    height: 550px;
+    line-height: 550px;
     margin-bottom: 50px;
 }
+
+
+
 /*превью слайдов*/
 .catalog_detail .img_wrapper .wrapp_thumbs.top-small-wrapper {
     width: auto;
@@ -6060,6 +6082,59 @@ body .tabs_slider .catalog_item .inner_wrap {
     position: relative;
     background: white;
 }
+
+
+
+
+@media (max-width: 1200px) {
+    /*ОСНОВНЫЕ КАРТИНКИ*/
+    .catalog_detail .item_main_info.type_clothes .item_slider.has_more {
+        padding-left: 140px;
+        padding-top: 39px;
+    }
+
+
+
+    .catalog_detail .type_clothes .item_slider:not(.flex) .slides {
+        max-width: 400px;
+        height: 350px;
+        line-height: 350px;
+        margin-bottom: 50px;
+    }
+
+    /*превью слайдов*/
+    .catalog_detail .img_wrapper .wrapp_thumbs.top-small-wrapper {
+        width: auto;
+        height: 340px;
+        top: auto;
+        bottom: 39px;
+
+    }
+
+
+    .catalog_detail .img_wrapper .wrapp_thumbs.top-small-wrapper .inner_slider{
+        max-height: 340px;
+    }
+
+
+
+    .catalog_detail .img_wrapper .wrapp_thumbs.top-small-wrapper .bx-viewport.long {
+        height: auto!important;
+    }
+
+
+
+    .catalog_detail .item_slider .thumbs .slides_block li {
+        width: 100px !important;
+        height: 60px;
+        line-height: 60px;
+        border: 1px solid #ffffff;
+        background: white;
+    }
+
+
+}
+
 
 
 /*информация*/
@@ -6661,15 +6736,23 @@ body.compensate-for-scrollbar {
 
 .catalog_detail .tabs-block .tabs-item {
     background: rgb(246,246,247);
+    display: flex;
 
 }
 
 .catalog_detail .tabs-block .tabs-item a{
     border-left: 1px solid rgb(230,230,230);
     border-right: 1px solid rgb(230,230,230);
-    padding: 10px 23.8px;
-    display: inline-block;
-    margin-right: -4px;
+    flex-basis: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    padding: 10px;
+    text-align: center;
+    /*padding: 10px 23.8px;*/
+    /*display: inline-block;*/
+    /*margin-right: -4px;*/
 }
 
 .catalog_detail .tabs-block .tabs-item a:nth-of-type(1) {
@@ -6742,6 +6825,55 @@ body.compensate-for-scrollbar {
     display: block;
 }
 
+@media (max-width: 1600px) {
+    /*ТАБЫ (ДОСТАВКА, СБОРКА, ВЫВОЗ УПАКОВКИ)*/
+    .catalog_detail .tabs-block .tabs-item a{
+        border-left: 1px solid rgb(230,230,230);
+        border-right: 1px solid rgb(230,230,230);
+        /*padding: 10px 20px;*/
+        /*display: inline-block;*/
+        /*margin-right: -4px;*/
+    }
+
+}
+
+
+@media (max-width: 1500px) {
+    /*ТАБЫ (ДОСТАВКА, СБОРКА, ВЫВОЗ УПАКОВКИ)*/
+    .catalog_detail .tabs-block .tabs-item a{
+        border-left: 1px solid rgb(230,230,230);
+        border-right: 1px solid rgb(230,230,230);
+        /*padding: 10px 12px;*/
+        font-size: 14px;
+        /*display: inline-block;*/
+        /*margin-right: -4px;*/
+    }
+
+}
+
+@media (max-width: 576px) {
+    .catalog_detail .tabs-block .tabs-item a {
+        font-size: 12px;
+        padding: 10px 2px;
+    }
+
+    .catalog_detail .tabs-block .tabs-content .item a {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        text-align: center;
+        color: rgb(31,34,41);
+        background: white;
+        text-transform: uppercase;
+        border: 1px solid rgb(31,34,41);
+        transition: 0.3s;
+        padding: 5px 10px;
+    }
+    .catalog_detail .tabs-block .tabs-content .item a:nth-last-of-type(1) {
+        border-left: 1px solid rgb(31,34,41);
+    }
+
+}
 
 
 
