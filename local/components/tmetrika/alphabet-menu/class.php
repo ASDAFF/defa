@@ -107,6 +107,8 @@ class AlphabetMenu extends CBitrixComponent
             "IBLOCK_ID" => $this->catalogId,
             "ACTIVE" => "Y",
             "NAME" => "{$letter}%"
+        ], false, [
+            "nPageSize" => 15,
         ]);
 
         $elements = [];
