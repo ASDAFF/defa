@@ -2,13 +2,21 @@
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
-
+$seria = CIBlockSection::GetList([], [
+    "ID" => $_POST["id"]
+], false, [
+    "UF_*",
+])->GetNext();
 ?>
 
 <div class="alphabet-demo-series alphabet-demo-item active">
     <div class="column img">
-        <h3 class="series-name">Нью-Вашингтон</h3>
-        <h4 class="series-subname">Президент-комплект для руководителя</h4>
+        <h3 class="series-name">
+            <?= $seria["NAME"] ?>
+        </h3>
+        <h4 class="series-subname">
+            <?= $seria["~DESCRIPTION"] ?>
+        </h4>
         <div class="series-slider-wrapper">
             <div class="main-img main-slide">
                 <img src="/images/trevizo-demo.jpg" alt="" width="1020" height="683"

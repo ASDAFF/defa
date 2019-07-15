@@ -1,4 +1,6 @@
 .seria_hover,
-.element_hover {
+.element_hover,
+.alphabet-toggle {
     cursor: pointer;
 }
+

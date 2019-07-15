@@ -16,7 +16,10 @@
                             <? foreach ($data["SECTIONS"] as $section) { ?>
                                 <li class="alphabet-hide-list-item">
                                     <p>
-                                        <?= $section["NAME"] ?>
+                                        <a href="<?= $section["SECTION_PAGE_URL"] ?>">
+                                            <?= $section["NAME"] ?>
+                                        </a>
+
                                     </p>
                                 </li>
                             <? } ?>

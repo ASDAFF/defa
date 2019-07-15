@@ -13,6 +13,7 @@ $(function () {
 
         $.ajax({
             url: "/ajax/tmetrika/" + url,
+            type: "POST",
             data: {
                 id: id,
             },

@@ -2,14 +2,22 @@
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
+$element = CIBlockElement::GetByID($_POST["id"])->GetNextElement();
+$fields = $element->GetFields();
+$properties = $element->GetProperties();
+
+$detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
+
 ?>
 
 <div class="alphabet-demo-product alphabet-demo-item active">
     <div class="column img">
         <div class="product-img-wrap">
-            <img id="" src="/images/iq.jpg" alt="" title="" class="product-photo">
+            <img src="<?= $detailPicture ?>" alt="" title="" class="product-photo">
         </div>
-        <h3 class="product-name">Кресло IQ</h3>
+        <h3 class="product-name">
+            <?= $fields["NAME"] ?>
+        </h3>
         <div class="rating">
             <div class="iblock-vote small">
                 <table class="table-no-border">
