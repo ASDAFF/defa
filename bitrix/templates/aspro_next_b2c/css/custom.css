@@ -5006,6 +5006,10 @@ body .tabs_slider .catalog_item .inner_wrap {
     padding: 0;
 }
 
+#headerfixed .inner-table-block.menu-block {
+    margin-left: 150px;
+}
+
 .logo-row.wproduct > div.product_block {
     display: flex;
 }
