@@ -285,7 +285,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 <div class="item_main_info type_clothes <?=(!$showCustomOffer ? "noffer" : "");?> <?=($arParams["SHOW_UNABLE_SKU_PROPS"] != "N" ? "show_un_props" : "unshow_un_props");?>" id="<?=$arItemIDs["strMainID"];?>">
 
 
-    <div class="col-md-8">
+    <div class="col-lg-8 col-md-7">
         <div class="img_wrapper swipeignore">
 
 
@@ -545,7 +545,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
         </div>
     </div>
 
-	<div class="col-md-4 right_info">
+	<div class="col-lg-4 col-md-5 right_info">
 		<div class="info_item">
 
 			<div class="middle_info main_item_wrapper">
@@ -1007,8 +1007,10 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                         </div>
                 </div>
 
+
+                <?if($arTmpModif["CHILDREN"]){?>
                 <div class="row">
-                    <?if($arTmpModif["CHILDREN"]){?>
+
                     <div class="col-md-8">
                         <div class="modification">
                             <div class="wraps hidden_print addon_type">
@@ -1114,10 +1116,12 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                         </div>
 
                     </div>
-                    <?}?>
+
 
                 </div>
+                <?}?>
 
+                
                 <div class="sale-banner">
                     <a href="" class="animated-load" data-event="jqm" data-param-form_id="COMMERCIAL_OFFER" data-name="question">
                         <p>Предоставляем скидки для<br>больших партий товара</p>
