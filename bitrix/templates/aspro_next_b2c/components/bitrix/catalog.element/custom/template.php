@@ -1007,8 +1007,10 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                         </div>
                 </div>
 
+
+                <?if($arTmpModif["CHILDREN"]){?>
                 <div class="row">
-                    <?if($arTmpModif["CHILDREN"]){?>
+
                     <div class="col-md-8">
                         <div class="modification">
                             <div class="wraps hidden_print addon_type">
@@ -1114,10 +1116,12 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                         </div>
 
                     </div>
-                    <?}?>
+
 
                 </div>
+                <?}?>
 
+                
                 <div class="sale-banner">
                     <a href="" class="animated-load" data-event="jqm" data-param-form_id="COMMERCIAL_OFFER" data-name="question">
                         <p>Предоставляем скидки для<br>больших партий товара</p>
