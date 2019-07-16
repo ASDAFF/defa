@@ -151,8 +151,8 @@ $iVisibleItemsMenu = ($arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] ? $arTheme['MA
                                     <div class="what_do-item-icon">
 
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-                                            <path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M58 70.5H17c-1.6 0-3-1.3-3-3v-50c0-1.6 1.4-3 3-3h41c1.6 0 3 1.3 3 3v50c0 1.7-1.4 3-3 3zM24 26.5h27M24 34.5h27M24 42.5h27M24 50.5h27"/>
-                                            <path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M19 14.6v-2c0-1.6 1.4-3 3-3h41c1.6 0 3 1.4 3 3v50c0 1.7-1.4 3-3 3h-2.1"/>
+                                            <path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M58 70.5H17c-1.6 0-3-1.3-3-3v-50c0-1.6 1.4-3 3-3h41c1.6 0 3 1.3 3 3v50c0 1.7-1.4 3-3 3zM24 26.5h27M24 34.5h27M24 42.5h27M24 50.5h27"></path>
+                                            <path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M19 14.6v-2c0-1.6 1.4-3 3-3h41c1.6 0 3 1.4 3 3v50c0 1.7-1.4 3-3 3h-2.1"></path>
                                         </svg>
 
                                     </div>
