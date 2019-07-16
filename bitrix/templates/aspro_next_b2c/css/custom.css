@@ -15619,6 +15619,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 /*панель якорей  на странице серии*/
 
 .panel-anchors {
+    display: none;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -15626,6 +15627,10 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     background-color: #ffffff;
     box-shadow: 0 0 10px 3px rgba(191, 191, 191, 0.7);
     z-index: 1460;
+}
+
+.panel-anchor.show {
+    display: block;
 }
 
 .panel-anchors .anchors-list {
