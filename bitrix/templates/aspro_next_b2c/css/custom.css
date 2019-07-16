@@ -1316,7 +1316,8 @@ body .mega_fixed_menu .mega-menu .table-menu-wrapper .wrap > .dropdown-menu li:f
 }*/
 
 #headerfixed .logo-row.v2 {
-    display: table;
+    /*display: table;*/
+    display: flex;
     width: 100%;
 }
 #headerfixed .logo-row .logo {
@@ -1337,8 +1338,12 @@ body .mega_fixed_menu .mega-menu .table-menu-wrapper .wrap > .dropdown-menu li:f
 */
 
 #headerfixed .logo-row.v2 .logo-block {
-    min-width: 110px;
-    max-width: 110px;
+    min-width: 90px;
+    max-width: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 90px;
 }
 
 #headerfixed .logo-row .logo a {
@@ -4988,21 +4993,166 @@ body .tabs_slider .catalog_item .inner_wrap {
     background: none;
 }
 
+/*изменение фиксированной шапки*/
 
+.product_block .what-do,
+.product_block .foto-cell,
+.product_block .like_icons.full {
+    width: auto!important;
+    padding: 0!important;
+}
 
+#headerfixed .inner-table-block {
+    padding: 0;
+}
+
+.logo-row.wproduct > div.product_block {
+    display: flex;
+}
+
+#headerfixed .logo-row.wproduct > div.product_block {
+    margin: 0;
+    margin-left: 150px;
+    height: 80px;
+}
+
+.logo-row.wproduct > div.product_block .module_products_list,
+.item.main_item_wrapper,
+.wrapper_td,
+.inner_table {
+    display: flex;
+    width: 100%;
+}
+
+.panel-up-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.product_block .what_do-item {
+    display: flex;
+    padding: 27px 29px;
+    padding-right: 20px;
+    align-items: center;
+    width: 307px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.product_block .what_do-item:hover,
+.product_block .what_do-item:focus {
+    background-color: #f6f6f7;
+}
+
+.product_block .what_do-item-wrapper {
+    display: flex;
+}
+
+.product_block .what_do-item-icon {
+    min-width: 31px;
+    margin-right: 15px;
+    min-height: 31px;
+}
+
+.product_block .what_do-item span {
+    font-size: 14px;
+    text-align: left;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.product_block .what-do,
+.product_block .foto-cell {
+    display: flex;
+}
+
+.product_block .foto-cell .product-wrap {
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 27px 29px;
+}
+
+.product_block .foto-cell .product-wrap:hover,
+.product_block .foto-cell .product-wrap:focus {
+    background-color: #f6f6f7;
+}
+
+.product-wrap .product-wrap-column {
+    margin-left: 25px;
+    margin-right: 40px;
+}
+
+.module_products_list .title {
+    margin-bottom: 5px;
+}
+
+.module_products_list .title span {
+    font-size: 15px;
+    color: #000000;
+}
+
+.product-wrap-column .cost.prices {
+    display: flex;
+    align-items: flex-end;
+}
+
+.product-wrap-column .cost.prices .price {
+    margin: 0;
+    margin-right: 12px;
+    font-weight: 500;
+    color: #505358;
+}
+
+.product-wrap-column .cost.prices .price.discount {
+    font-size: 15px;
+}
+
+.module_products_list .like_icons.full {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: center;
+}
+
+.module_products_list .wrapp_stockers .like_icons.iblock {
+    display: flex;
+}
+
+.module_products_list .wrapp_stockers .like_icons {
+    position: relative;
+    top: auto;
+    right: auto;
+}
+
+.module_products_list .wrapp_stockers .wish_item {
+    display: block!important;
+}
 
 /*Кнопки в фиксированной шапке*/
-.catalog_page #headerfixed .btn.btn-default {
-    background-color: white;
-    border-color: rgb(31,34,41);
-    color: rgb(31,34,41);
+.product_block .foto-cell .btn.btn-default {
+    width: 110px;
+    padding: 5px 19px;
+    color: #393c42;
+    font-size: 10px;
     font-weight: 400;
-    transition: 0.2s;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    background-color: #f1f1f1;
+    box-sizing: border-box;
 }
-.catalog_page #headerfixed .btn.btn-default:hover {
-    background-color: rgb(31, 34, 41);
-    border-color: rgb(31, 34, 41);
-    color: white;
+/*.catalog_page #headerfixed .btn.btn-default:hover {*/
+    /*background-color: rgb(31, 34, 41);*/
+    /*border-color: rgb(31, 34, 41);*/
+    /*color: white;*/
+/*}*/
+
+.product_block .foto-cell .product-wrap:hover .btn.btn-default,
+.product_block .foto-cell .product-wrap:focus .btn.btn-default {
+    background-color: #393c42;
+    color: #ffffff;
 }
 
 

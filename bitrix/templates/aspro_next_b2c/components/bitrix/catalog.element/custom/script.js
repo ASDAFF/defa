@@ -55,21 +55,27 @@ function setNewHeader(){
 
 
 	$('#headerfixed .logo-row').html('<div class="inner-table-block nopadding logo-block">'+$('.logo-row .logo-block').html()+'</div><div class="inner-table-block product_block table">'+
-		'<table class="module_products_list"><tbody><tr class="item main_item_wrapper">'+
-			'<td class="wrapper_td">'+
-				'<table class="inner_table"><tbody><tr>'+
-					'<td class="foto-cell"><div class="image_wrapper_block">'+imgHtml+'</div></td>'+
-					'<td class="item-name-cell"><div class="title"><span>'+$('#pagetitle').text()+'</span></div>'+
+		'<div class="module_products_list"><div class="item main_item_wrapper">'+
+			'<div class="wrapper_td">'+
+				'<div class="inner_table"><div class="panel-up-wrapper">'+
+					'<div class="what-do"><div class="what_do-item-wrapper"><a href="/services/vyezd-spetsialista/" class="what_do-item"><div class="what_do-item-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path style="fill:none;stroke:#4c4e54;stroke-width:2.8346;stroke-miterlimit:10" d="M37 54.9l-22-4.4c-1.6 0-3-1.4-3-3v-14c0-1.7 1.4-3 3-3h50c1.7 0 3 1.4 3 3v14c0 1.6-1.3 3-3 3l-22 4.4"></path><path style="fill:none;stroke:#4c4e54;stroke-width:2.8346;stroke-miterlimit:10" d="M65 50.5v20c0 1.7-1.3 3-3 3H18c-1.6 0-3-1.3-3-3v-20M46 31.5v-5.2c0-.4-.3-.8-.7-.8H34.7c-.4 0-.7.4-.7.8v5.2"></path><path style="fill:none;stroke:#4c4e54;stroke-width:2.8346;stroke-miterlimit:10" d="M38 52.5h4v7h-4z"></path>' +
+		'</svg></div><span>Вызвать специалиста в офис</span></a></div></div>'+
+					'<div class="what-do"><div class="what_do-item-wrapper"><a href="/services/konsultatsiya-eksperta/" class="what_do-item"><div class="what_do-item-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path style="fill:none;stroke:#4c4e54;stroke-miterlimit:100; stroke-linecap:round;stroke-linejoin:round;stroke-width:8.5039;" d="M16.8 35.6v8.7M63.2 35.6v8.7"></path><path style="fill:none; stroke:#4c4e54; stroke-width:5.669; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:10;" d="M35.3 65h8.6"></path><path style="fill:none;stroke:#4c4e54;stroke-miterlimit:10; stroke-width:2.8346;" d="M34 65c-9.1 0-16.5-9.8-16.5-21.9M18.9 36.2C18.9 24.5 28.3 15 40 15s21.2 9.5 21.2 21.2"></path>' +
+		'</svg></div><span>Получить консультацию эксперта</span></a></div></div>'+
+					'<div class="what-do"><div class="what_do-item-wrapper"><a href="/partner/b2g/" class="what_do-item"><div class="what_do-item-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M58 70.5H17c-1.6 0-3-1.3-3-3v-50c0-1.6 1.4-3 3-3h41c1.6 0 3 1.3 3 3v50c0 1.7-1.4 3-3 3zM24 26.5h27M24 34.5h27M24 42.5h27M24 50.5h27"></path><path style="fill:none; stroke:#4c4e54; stroke-width:2.8346; stroke-miterlimit:10;" d="M19 14.6v-2c0-1.6 1.4-3 3-3h41c1.6 0 3 1.4 3 3v50c0 1.7-1.4 3-3 3h-2.1"></path>' +
+		'</svg></div><span>Подготовить документацию под ФЗ-44 и ФЗ-223</span></a></div></div>'+
+					'<div class="foto-cell"><div class="product-wrap"><div class="image_wrapper_block">'+imgHtml+'</div>'+'<div class="product-wrap-column">'+'<div class="title"><span>'+$('#pagetitle').text()+'</span></div>'+'<div class="cost prices">'+priceHtml+'</div>'+'</div><div class="button_block">'+buttonHtml+'</div>'+'</div></div>'+
+					// '<td class="item-name-cell"><div class="title"><span>'+$('#pagetitle').text()+'</span></div>'+
 						//выводит рейтинг на страницу
-						ratingHtml+
-						($('.middle_info .item-stock').length ? '<div class="item-stock">'+$('.middle_info .item-stock').html()+'</div>' : '')+
-					'</td>'+
-					'<td class="price-cell"><div class="cost prices">'+priceHtml+'</div></td>'+
-					'<td class="but-cell"><div class="button_block">'+buttonHtml+'</div></td>'+
-					($('.item_main_info .like_wrapper').length ? '<td class="like_icons full"><div class="wrapp_stockers">'+$('.item_main_info .like_wrapper').html()+'</div></td>' : '')+
-				'</tr></tbody></table>'+
-			'</td>'+
-		'</tr></tbody></table></div>');
+						// ratingHtml+
+						// ($('.middle_info .item-stock').length ? '<div class="item-stock">'+$('.middle_info .item-stock').html()+'</div>' : '')+
+					'</div>'+
+					// '<td class="price-cell"><div class="cost prices">'+priceHtml+'</div></td>'+
+					// '<td class="but-cell"><div class="button_block">'+buttonHtml+'</div></td>'+
+					($('.item_main_info .like_wrapper').length ? '<div class="like_icons full"><div class="wrapp_stockers">'+$('.item_main_info .like_wrapper').html()+'</div></div>' : '')+
+				'</div></div>'+
+			'</div>'+
+		'</div></div></div>');
 	//.insertAfter($('#headerfixed .logo-row .logo-block'));
 }
 
