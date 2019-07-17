@@ -6728,7 +6728,7 @@ body.compensate-for-scrollbar {
 /*СХЕМА*/
 .catalog_detail .middle_info .right-info .product_scheme {
     margin-bottom: 45px;
-    height: 140px;
+    height: 170px;
 }
 
 
@@ -13658,7 +13658,19 @@ div#ajax-sectionContainer {
 
 
 /*АКЦИИ В МЕНЮ*/
-.sectionContainer .another-sale {
+.sectionContainer .stock_wrapper .stock_board {
+    padding: 22px 0 22px 58px;
+}
+
+.stock_wrapper .stock_board:before {
+    top: 12px;
+}
+
+.sectionContainer .stock_wrapper .stock_board .title {
+    margin-top: 0!important;
+}
+
+/*.sectionContainer .another-sale {
     margin-bottom: 20px;
 }
 
@@ -13677,7 +13689,7 @@ div#ajax-sectionContainer {
     position: absolute;
     left: 0;
     top: 0;
-}
+}*/
 
 /*ХАРАКТЕРИСТИКИ В МЕНЮ*/
 .sectionContainer .props {
