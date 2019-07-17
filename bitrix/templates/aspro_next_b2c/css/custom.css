@@ -6207,6 +6207,88 @@ body .tabs_slider .catalog_item .inner_wrap {
     margin: auto;
 }
 
+
+/*цена с классом offer*/
+.catalog_detail .middle_info .left-info .prices_block .price {
+    margin-bottom: 0!important;
+}
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price {
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price_old {
+    font-size: 25px;
+    margin-top: 0;
+    font-weight: 300;
+    line-height: normal;
+    margin-bottom: 5px;
+    margin-left: 50px;
+}
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price_old span{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 300;
+    position: relative;
+}
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price_old span:after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #888;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price .link-modal {
+    position: absolute;
+    right: -25px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 13px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #1d2029;
+    border-radius: 50px;
+    text-align: center;
+    transition: 0.3s;
+}
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price .link-modal:hover {
+    border: 1px solid #d33234;
+    color: #d33234;
+}
+
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .value {
+    background: #d33234;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 24px;
+}
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .text {
+    background: none;
+    border-radius: 0;
+    font-size: 14px;
+}
+
+.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .text .title{
+    font-size: 14px;
+}
+
+
+
+
 /*скидка*/
 .catalog_detail .middle_info .left-info .prices_block .cost-block .cost.prices .sale_block .value {
     border-radius: 0;
@@ -6371,62 +6453,6 @@ body.compensate-for-scrollbar {
     .price-modal h4.card-pay {
         margin-bottom: 30px;
     }
-}
-
-.catalog_detail .middle_info .left-info .prices_block .price {
-    margin-bottom: 0!important;
-}
-
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price, .catalog_detail .cost.prices .price {
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 5px;
-    position: relative;
-    display: inline-block;
-}
-
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price .link-modal {
-    position: absolute;
-    right: -25px;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    font-size: 13px;
-    width: 18px;
-    height: 18px;
-    border: 1px solid #1d2029;
-    border-radius: 50px;
-    text-align: center;
-    transition: 0.3s;
-}
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price .link-modal:hover {
-    border: 1px solid #d33234;
-    color: #d33234;
-}
-
-
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .value {
-    background: #d33234;
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 24px;
-}
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .text {
-    background: none;
-    border-radius: 0;
-    font-size: 14px;
-}
-
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .sale_block .text .title{
-    font-size: 14px;
-}
-
-.catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price_old {
-    font-size: 25px;
-    margin-top: 0;
-    font-weight: 300;
-    line-height: normal;
-    margin-bottom: 5px;
 }
 
 
