@@ -529,7 +529,7 @@
                     "CATALOG" => "/catalog/",
                     "COMPOSITE_FRAME_MODE" => "A",
                     "COMPOSITE_FRAME_TYPE" => "AUTO",
-                    "TITLE_BLOCK" => "Популярные серии"
+                    "TITLE_BLOCK" => "Многим нравится"
                 ),
                 false
             );?>
@@ -802,7 +802,7 @@
                         "rss" => "rss/",
                         "rss_section" => "#SECTION_ID#/rss/",
                     ),
-                    "TITLE_BLOCK" => "Пресс-центр",
+                    "TITLE_BLOCK" => "Наши новости",
                     "ALL_URL" => "company/news/",
                 ),
                 false
