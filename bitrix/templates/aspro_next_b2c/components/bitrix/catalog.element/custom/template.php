@@ -782,17 +782,12 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                 <?elseif($arResult["OFFERS"] && $arParams['TYPE_SKU'] == 'TYPE_1'):?>
                                     <div class="offer_buy_block buys_wrapp" style="display:none;">
                                         <div class="counter_wrapp"></div>
-
-
-                                        <span class="animate-load more-quantity" data-event="jqm" data-param-form_id="MORE_QUANTITY" data-name="MORE_QUANTITY" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Нужно большое количество?</span>
-
-
-
                                     </div>
                                 <?elseif($arResult["OFFERS"] && $arParams['TYPE_SKU'] != 'TYPE_1'):?>
                                     <span class="btn btn-default btn-lg slide_offer transition_bg type_block"><i></i><span><?=\Bitrix\Main\Config\Option::get('aspro.next', "EXPRESSION_READ_MORE_OFFERS_DEFAULT", GetMessage("MORE_TEXT_BOTTOM"));?></span></span>
                                 <?endif;?>
                                 <?endif;?>
+                            <span class="animate-load more-quantity" data-event="jqm" data-param-form_id="MORE_QUANTITY" data-name="MORE_QUANTITY" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Нужно большое количество?</span>
                         </div>
 
 
