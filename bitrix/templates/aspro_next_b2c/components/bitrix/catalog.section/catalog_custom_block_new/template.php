@@ -487,7 +487,9 @@ else
 				</div>
 			</div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
+
+                <?if(is_array($arItem["STOCK"]) && $arItem["STOCK"]):?>
+
                     <div class="stock_wrapper">
                         <?foreach($arResult["STOCK"] as $key => $arStockItem):
                             if(!in_array($arItem['ID'],$arStockItem['PROPERTY_LINK_GOODS_VALUE'])) continue;
@@ -500,6 +502,7 @@ else
                         <?endforeach;?>
                     </div>
                 <?endif;?>
+
                 <?
                 /*x5 20190627 использую PROPERTIES для отладки, т.к. DISPLAY_PROPERTIES было пустое для модели, которая отображалась - после тестирования вернуть DISPLAY_PROPERTIES*/
                 if($arItem['DISPLAY_PROPERTIES']):?>
@@ -511,6 +514,24 @@ else
                                     <div class="name"><?=$prop['NAME']?></div>
                                     <div class="value"><?=$prop['DISPLAY_VALUE']?></div>
                                 </div>
+=======
+
+                
+                <?if($arItem['DISPLAY_PROPERTIES']):?>
+                <div class="props">
+                        <div class="title">Характеристики:</div>
+                            <?/*dump($arItem['DISPLAY_PROPERTIES']);*/?>
+                            <?$i = 0?>
+                            <?foreach($arItem['DISPLAY_PROPERTIES'] as $key=>$prop):?>
+                                <? $i++;?>
+                            <?if($i <= 5):?>
+                            <div class="prop-item">
+                                <div class="name"><?=$prop['NAME']?></div>
+                                <div class="value"><?=$prop['VALUE']?></div>
+                            </div>
+                            <?endif;?>
+
+>>>>>>> ec0f719dbb9e9f4d463efe179df9ee5da69b58dc
                             <?endforeach;?>
 
                             <?//x5 20190701 при переносе работ закомментировал, т.к. этого блока не было на момент выполнения задачи по характеристикам и задача выполнена без его использования

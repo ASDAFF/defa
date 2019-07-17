@@ -622,7 +622,18 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                 <?endif;?>
                             </div>
 
-
+                            <!--АКЦИЯ-->
+                            <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
+                                <div class="stock_wrapper">
+                                    <?foreach($arResult["STOCK"] as $key => $arStockItem):?>
+                                        <div class="stock_board <?=($arStockItem["PREVIEW_TEXT"] ? '' : 'nt');?>">
+                                            <div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>"><?=$arStockItem["NAME"];?></a></div>
+                                            <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>
+                                        </div>
+                                    <?endforeach;?>
+                                </div>
+                            <?endif;?>
+                            <!---->
 
                             <!--КОЛИЧЕСТВО-->
                             <div class="quantity_block_wrapper">
@@ -812,16 +823,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 
 
 						<div class="col-md-12 right-info">
-                        <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
-                            <div class="stock_wrapper">
-                                <?foreach($arResult["STOCK"] as $key => $arStockItem):?>
-                                    <div class="stock_board <?=($arStockItem["PREVIEW_TEXT"] ? '' : 'nt');?>">
-                                        <div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>"><?=$arStockItem["NAME"];?></a></div>
-                                        <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>
-                                    </div>
-                                <?endforeach;?>
-                            </div>
-			               <?endif;?>
+
                         <?if($arResult['VISIBLE_PROPS']):?>
 						<?$iCountProps = count($arResult['VISIBLE_PROPS']);?>
 							<?$bShowMoreLink = ($iCountProps > $arParams['VISIBLE_PROP_COUNT']);?>
