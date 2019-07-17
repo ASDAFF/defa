@@ -6741,6 +6741,7 @@ body.compensate-for-scrollbar {
     height: 48px;
     width: 102px;
     position: relative;
+    text-align: left;
 }
 
 .catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
@@ -6751,8 +6752,8 @@ body.compensate-for-scrollbar {
 }
 
 .catalog_detail .middle_info .left-info .counter_block.big_basket>span {
-    height: 48px;
-    width: 28px;
+    height: 24px;
+    width: 44px;
     line-height: 48px;
     position: absolute;
 }
