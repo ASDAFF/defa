@@ -6574,18 +6574,52 @@ body.compensate-for-scrollbar {
     margin: 0 10px 0 0;
     display: inline-block;
     height: 48px;
+    width: 102px;
+    position: relative;
 }
 
 .catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
     font-size: 13px;
     height: 48px;
-    width: 65px;
+    width: 56px;
+    border-right: 1px solid #e6e6e6;
 }
 
 .catalog_detail .middle_info .left-info .counter_block.big_basket>span {
     height: 48px;
     width: 28px;
     line-height: 48px;
+    position: absolute;
+}
+
+.catalog_detail .middle_info .left-info .counter_block.big_basket span.minus {
+    bottom: 0;
+    right: 0;
+}
+
+.counter_block.big_basket > span.minus:before {
+    background-position: -21px -193px;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+.catalog_detail .middle_info .left-info .counter_block.big_basket span.plus {
+    top: 0;
+    right: 0;
+}
+.counter_block.big_basket > span.plus:before {
+    background-position: 5px -193px;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .catalog_detail .middle_info .left-info .btn.btn-default {
