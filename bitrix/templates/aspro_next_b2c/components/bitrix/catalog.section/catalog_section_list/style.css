@@ -1,0 +1,11 @@
+.more_items{
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+}
+.group_block{
+    padding-top: 55px;
+    margin-top: -55px;
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
+}
