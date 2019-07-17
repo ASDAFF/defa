@@ -152,15 +152,26 @@ else
 					<div class="catalog_item main_item_wrapper item_wrap <?=(($_GET['q'])) ? 's' : ''?>" id="<?=$arItemIDs["strMainID"];?>">
 						<div>
 							<div class="image_wrapper_block">
-								<div class="stickers">
-									<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
-										<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
-									<?endforeach;?>
-									<?if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
-										<div><div class="sticker_sale_text"><?=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-									<?}?>
-								</div>
+                                <?if($arItem['MARKS']){?>
+                                    <ul class="series-item-pros quick-metki-list" style="text-align: left; display: grid">
+                                        <? foreach($arItem['MARKS'] as $arMetka) { ?>
+                                            <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
+                                                <div class="pros-icon">
+                                                    <img src="<?=$arMetka['SRC']?>" alt="">
+                                                </div>
+                                            </li>
+                                        <? } ?>
+                                    </ul>
+                                <?}?>
+								<!--<div class="stickers">
+									<?/*$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");*/?>
+									<?/*foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):*/?>
+										<div><div class="<?/*=$arSticker['CLASS']*/?>"><?/*=$arSticker['VALUE']*/?></div></div>
+									<?/*endforeach;*/?>
+									<?/*if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){*/?>
+										<div><div class="sticker_sale_text"><?/*=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];*/?></div></div>
+									<?/*}*/?>
+								</div>-->
 								<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N" || $arParams["DISPLAY_COMPARE"] == "Y"):?>
 									<div class="like_icons">
 										<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N"):?>
@@ -476,38 +487,41 @@ else
 				</div>
 			</div>
             <div class="col-md-6 col-sm-6 col-xs-6">
+
                 <?if(is_array($arItem["STOCK"]) && $arItem["STOCK"]):?>
+
                     <div class="stock_wrapper">
-                        <?foreach($arItem["STOCK"] as $key => $arStockItem):?>
+                        <?foreach($arResult["STOCK"] as $key => $arStockItem):
+                            if(!in_array($arItem['ID'],$arStockItem['PROPERTY_LINK_GOODS_VALUE'])) continue;
+                            ?>
                             <div class="stock_board <?=($arStockItem["PREVIEW_TEXT"] ? '' : 'nt');?>">
-                                <div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>"><?=$arStockItem["NAME"];?></a></div>
-                                <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>
+                                <div class="title" style="margin-top:5px;"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>">Другие товары акции</a></div>
+                                <?/*<div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>">Другие товары акции "<?=$arStockItem["NAME"];?>"</a></div>
+                                <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>*/?>
                             </div>
                         <?endforeach;?>
                     </div>
                 <?endif;?>
 
-                
-                <?if($arItem['DISPLAY_PROPERTIES']):?>
-                <div class="props">
-                        <div class="title">Характеристики:</div>
-                            <?/*dump($arItem['DISPLAY_PROPERTIES']);*/?>
-                            <?$i = 0?>
-                            <?foreach($arItem['DISPLAY_PROPERTIES'] as $key=>$prop):?>
-                                <? $i++;?>
-                            <?if($i <= 5):?>
-                            <div class="prop-item">
-                                <div class="name"><?=$prop['NAME']?></div>
-                                <div class="value"><?=$prop['VALUE']?></div>
-                            </div>
-                            <?endif;?>
-
+                <?
+                /*x5 20190627 использую PROPERTIES для отладки, т.к. DISPLAY_PROPERTIES было пустое для модели, которая отображалась - после тестирования вернуть DISPLAY_PROPERTIES*/
+                if($arItem['DISPLAY_PROPERTIES']):?>
+                    <div class="title characteristiky_title">Характеристики: <a class="characteristiky_expander" href="javascript:void(0)" style="display:none;">Развернуть</a></div>
+                    <div>
+                        <div class="props">
+                            <?foreach($arItem['VISIBLE_PROPS'] as $key=>$prop):?>
+                                <div class="prop-item">
+                                    <div class="name"><?=$prop['NAME']?></div>
+                                    <div class="value"><?=$prop['DISPLAY_VALUE']?></div>
+                                </div>
                             <?endforeach;?>
-                        
-                        <?if ($i>5) :?>
-                            <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="all-props">Все характеристики</a>
-                        <?endif;?>
-                </div>
+
+                            <?//x5 20190701 при переносе работ закомментировал, т.к. этого блока не было на момент выполнения задачи по характеристикам и задача выполнена без его использования
+                            /*if ($i>5) :?>
+                                <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="all-props">Все характеристики</a>
+                            <?endif;*/?>
+                        </div>
+                    </div>
                 <?endif;?>
 
                 <!--БЛОК ДОСТАВКИ-->
