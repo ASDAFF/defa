@@ -476,7 +476,6 @@ else
 				</div>
 			</div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-
                 <?if(is_array($arItem["STOCK"]) && $arItem["STOCK"]):?>
                     <div class="stock_wrapper">
                         <?foreach($arItem["STOCK"] as $key => $arStockItem):?>
