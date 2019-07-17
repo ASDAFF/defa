@@ -487,6 +487,7 @@ else
                     </div>
                 <?endif;?>
 
+                
                 <?if($arItem['DISPLAY_PROPERTIES']):?>
                 <div class="props">
                         <div class="title">Характеристики:</div>
