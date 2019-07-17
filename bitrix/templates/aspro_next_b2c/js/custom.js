@@ -519,9 +519,6 @@ $(document).ready(function() {
 
             });
 
-
-
-
         }
 
     //    выбор отображения списка серий
@@ -570,6 +567,14 @@ $(document).ready(function() {
                 content.addClass('active');
             });
     // }
+
+    
+//панель якорей ТОЛЬКО для страницы одной серии
+
+    if($('.series-item').hasClass('inner')){
+        $('.panel-anchors').addClass('show');
+    };
+
 
 //арендодателям, переключение склад-салон
     if ($(".tenants").length > 0) {

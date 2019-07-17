@@ -1822,4 +1822,41 @@ if ($arFields["EMAIL_RAW"])
 	fwrite($log, "\n-----------------------------end emails ---------------------------------\n");
 }
 
+AddEventHandler('form', 'onBeforeResultAdd', 'onBeforeResultAddHandle');
+function onBeforeResultAddHandle($WEB_FORM_ID, &$arFields, &$arrVALUES){
+    global $APPLICATION;
+    global $arRegion;
+
+    foreach ($arrVALUES as $key=>$item){
+        if(preg_match("/^form_hidden_\d+$/", $key) && $item == "REGION"){
+        	$arrVALUES[$key] = $arRegion["NAME"];
+        }
+	}
+}
+
+function GetMarks($select = ['*'], $filter = [])
+{
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(15)->fetch();
+    $entity=Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass=$entity->getDataClass();
+    $res=$entityClass::getList([
+        'select'=>$select,
+		'filter' => $filter,
+    ]);
+    $tizers=[];
+    while($el=$res->fetch())
+    {        $tizers[$el['ID']]=
+            [
+                'ID'=>$el['ID'],
+                'NAME'=>$el['UF_DESC'],
+                'UF_DESCRIPTION'=>$el['UF_DESCRIPTION'],
+                'TAB_NAME' => $el['UF_NAME'],
+                'UF_XML_ID' => $el['UF_XML_ID'],
+                'SRC'=>CFile::GetPath($el['UF_PICTURE']),
+            ];
+    }
+    return $tizers;
+
+}
+
 ?>

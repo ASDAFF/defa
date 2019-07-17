@@ -450,7 +450,7 @@ if ($arResult['CATALOG'] && isset($arResult['OFFERS']) && !empty($arResult['OFFE
 			foreach($arOffer['MORE_PHOTO'] as $i => $arImage){
 				if($arImage["ID"]){
 					$arOffer['MORE_PHOTO'][$i]["BIG"]['src'] = CFile::GetPath($arImage["ID"]);
-					$arOffer['MORE_PHOTO'][$i]["SMALL"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 800, "height" => 630), BX_RESIZE_IMAGE_PROPORTIONAL, true, array());
+					$arOffer['MORE_PHOTO'][$i]["SMALL"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 700, "height" => 550), BX_RESIZE_IMAGE_PROPORTIONAL, true, array());
 					$arOffer['MORE_PHOTO'][$i]["THUMB"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 52, "height" => 70), BX_RESIZE_IMAGE_PROPORTIONAL, true, array());
 				}
 			}
