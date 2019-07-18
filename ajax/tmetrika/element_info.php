@@ -8,9 +8,15 @@ $properties = $element->GetProperties();
 
 $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
 
+$hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
+
+
 ?>
 
 <div class="alphabet-demo-product alphabet-demo-item active">
+
+    <div hidden> <?= $fields["DETAIL_PAGE_URL"] ?></div>
+
     <div class="column img">
         <div class="product-img-wrap">
             <img src="<?= $detailPicture ?>" alt="" title="" class="product-photo">
@@ -53,6 +59,7 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
             <span class="sale">-30%</span>
         </div>
         <a href="" class="blue-link">Гарантируем лучшие условия</a>
+
         <div class="color-wrap">
             <span>Цвета и отделки:</span>
             <div class="colors-wrapper">
@@ -65,6 +72,7 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
                 <div class="color-item">
                     <img src="https://via.placeholder.com/33x33" alt="">
                 </div>
+
                 <div class="color-item">
                     <img src="https://via.placeholder.com/33x33" alt="">
                 </div>
@@ -80,10 +88,19 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
             <a href="">Другие товары акции</a>
         </div>
         <ul class="characters">
-            <? foreach (data_get($properties, "CML2_ATTRIBUTES.VALUE") as $item) { ?>
-                <li>
-                    <?= $item ?>
-                </li>
+            <? foreach ($properties as $item) {
+                $showProperty = $item["USER_TYPE"] === null &&
+                    data_get($item, "VALUE") &&
+                    $item["PROPERTY_TYPE"] !== "F" &&
+                    !is_array(data_get($item, "VALUE")) &&
+                    !in_array($item["CODE"], $hideProps);
+
+                if ($showProperty) {
+                    ?>
+                    <li>
+                        <?= data_get($item, "NAME") ?>: <?= data_get($item, "VALUE") ?>
+                    </li>
+                <? } ?>
             <? } ?>
         </ul>
         <a href="" class="blue-link">Все характеристики</a>
@@ -120,9 +137,12 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
                       data-autoload-product_id="8901">Нужно быстрее?</span>
             </div>
         </div>
-        <div class="product_scheme">
-            <img src="/upload/iblock/e27/e276f068f4ec27b6ca8f979a94c3849d.jpg"
-                 alt="product scheme defo.ru" class="product_scheme__img">
-        </div>
+        <? if (data_get($properties, "PRODUCT_SCHEME.VALUE")) { ?>
+            <div class="product_scheme">
+                <img src="<?= CFile::GetPath(data_get($properties, "PRODUCT_SCHEME.VALUE")) ?>"
+                     alt="product scheme defo.ru" class="product_scheme__img">
+            </div>
+        <? } ?>
+
     </div>
 </div>
