@@ -11,6 +11,13 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
 $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
 
 
+$offers = CCatalogSKU::getOffersList($fields["ID"]);
+
+foreach ($offers[$fields["ID"]] as $key => $offer){
+    $offerData = CIBlockElement::GetByID($key)->GetNextElement();
+}
+
+
 ?>
 
 <div class="alphabet-demo-product alphabet-demo-item active">
@@ -84,9 +91,23 @@ $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VID
         </div>
     </div>
     <div class="column info">
-        <div class="another-sale">
-            <a href="">Другие товары акции</a>
-        </div>
+
+        <!-- акции -->
+        <? foreach (data_get($properties, "LINK_SALE.VALUE") as $saleId) {
+            $sale = CIBlockElement::GetByID($saleId)->GetNextElement();
+
+            $saleProps = $sale->GetProperties();
+            $saleFields = $sale->GetFields();
+
+            $img = CFile::GetPath($saleFields["PREVIEW_PICTURE"]);
+            ?>
+            <div class="another-sale">
+
+                <a href="<?= $saleFields["DETAIL_PAGE_URL"] ?>">
+                    <img class="another-sale_img" src="<?= $img ?>" alt=""> <?= $saleFields["NAME"] ?>
+                </a>
+            </div>
+        <? } ?>
         <ul class="characters">
             <? foreach ($properties as $item) {
                 $showProperty = $item["USER_TYPE"] === null &&
@@ -95,8 +116,7 @@ $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VID
                     !is_array(data_get($item, "VALUE")) &&
                     !in_array($item["CODE"], $hideProps);
 
-                if ($showProperty) {
-                    ?>
+                if ($showProperty) { ?>
                     <li>
                         <?= data_get($item, "NAME") ?>: <?= data_get($item, "VALUE") ?>
                     </li>

@@ -13077,19 +13077,23 @@ table.contacts-stores tr.item td:last-of-type {
     position: relative;
     display: block;
     padding-top: 12px;
+    /*
     padding-left: 60px;
+    */
     margin-bottom: 15px;
     font-size: 12px;
     line-height: 24px;
     color: rgba(23, 28, 37, 0.8);
 }
 
+/*
 .alphabet-demo-product .another-sale a::before {
     content: url("/images/sale_ellipse.png");
     position: absolute;
     left: 0;
     top: 0;
 }
+*/
 
 .alphabet-demo-product .characters li {
     position: relative;

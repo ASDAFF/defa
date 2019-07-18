@@ -4,3 +4,10 @@
     cursor: pointer;
 }
 
+.another-sale_img {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+
