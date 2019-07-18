@@ -338,13 +338,13 @@
 <!-- new! -->
 <div class="maxwidth-theme">
         <div class="podborki-block">
-            <div class="tabs tabs-product-categories">
-                <ul class="categories_list">
-                    <li class="cur"><span>Кресла и стулья</span></li>
-                    <li><span>Офисная мебель</span></li>
-                    <li><span>Офисная мебель</span></li>
-                </ul>
-            </div>
+<!--            <div class="tabs tabs-product-categories">-->
+<!--                <ul class="categories_list">-->
+<!--                    <li class="cur"><span>Кресла и стулья</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                </ul>-->
+<!--            </div>-->
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
                 array(
                     "COMPONENT_TEMPLATE" => ".default",

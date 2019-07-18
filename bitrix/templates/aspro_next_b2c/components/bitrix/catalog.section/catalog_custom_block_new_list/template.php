@@ -160,15 +160,26 @@ else
 					<div class="catalog_item main_item_wrapper item_wrap <?=(($_GET['q'])) ? 's' : ''?>" id="<?=$arItemIDs["strMainID"];?>">
 						<div>
 							<div class="image_wrapper_block">
-								<div class="stickers">
-									<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
-										<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
-									<?endforeach;?>
-									<?if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
-										<div><div class="sticker_sale_text"><?=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-									<?}?>
-								</div>
+                                <?if($arItem['MARKS']){?>
+                                    <ul class="series-item-pros quick-metki-list" style="text-align: left;    display: grid;">
+                                        <? foreach($arItem['MARKS'] as $arMetka) { ?>
+                                            <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
+                                                <div class="pros-icon">
+                                                    <img src="<?=$arMetka['SRC']?>" alt="">
+                                                </div>
+                                            </li>
+                                        <? } ?>
+                                    </ul>
+                                <?}?>
+								<!--<div class="stickers">
+									<?/*$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");*/?>
+									<?/*foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):*/?>
+										<div><div class="<?/*=$arSticker['CLASS']*/?>"><?/*=$arSticker['VALUE']*/?></div></div>
+									<?/*endforeach;*/?>
+									<?/*if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){*/?>
+										<div><div class="sticker_sale_text"><?/*=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];*/?></div></div>
+									<?/*}*/?>
+								</div>-->
 								<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N" || $arParams["DISPLAY_COMPARE"] == "Y"):?>
 									<div class="like_icons">
 										<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N"):?>

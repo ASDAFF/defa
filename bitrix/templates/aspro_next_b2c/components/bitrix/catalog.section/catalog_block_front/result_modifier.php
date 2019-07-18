@@ -263,4 +263,35 @@ if (!empty($arResult['ITEMS'])){
 
 	unset($arNewItemsList);
 	$arResult['CURRENCIES'] = array();
-}?>
+}
+$armarks = GetMarks();
+$ids = [];
+foreach ($arResult['ITEMS'] as $arItem){
+    if(!in_array($arItem['IBLOCK_SECTION_ID'],$ids))$ids[] = $arItem['IBLOCK_SECTION_ID'];
+}
+if($ids){
+    $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"],'ID'=>$ids);
+    $rsSections = CIBlockSection::GetList(array('SORT' => 'ASC'), $arFilter,false,array('ID','UF_METKA','UF_DISCOUNT'));
+    while ($arSection = $rsSections->GetNext())
+    {
+        $arSections[$arSection['ID']]=$arSection;
+    }
+}
+foreach ($arResult['ITEMS'] as &$arItem){
+    if($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_DISCOUNT']){
+        $arItem['DISCOUNT'] = $arSections[$arItem['IBLOCK_SECTION_ID']]['UF_DISCOUNT'];
+    }
+
+if($arItem['PROPERTIES']['HIT']['VALUE']){
+    foreach ($arItem['PROPERTIES']['HIT']['VALUE'] as $mark){
+        $arItem['MARKS'][$mark] = $armarks[$mark];
+    }
+}else{
+    if($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA']){
+        foreach ($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'] as $mark){
+            $arItem['MARKS'][$mark] = $armarks[$mark];
+        }
+    }
+
+}
+}

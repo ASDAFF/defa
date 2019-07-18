@@ -24,6 +24,7 @@ $bIncludedModule = (\Bitrix\Main\Loader::includeModule("aspro.next.b2c"));?>
 		CNextB2c::Start(SITE_ID);?>
 </head>
 <?$bIndexBot = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false);?>
+
 <body class="<?=($bIndexBot ? "wbot" : "");?> site_<?=SITE_ID?> <?=($bIncludedModule ? "fill_bg_".strtolower(CNextB2c::GetFrontParametrValue("SHOW_BG_BLOCK")) : "");?>" id="main">
 	<div id="panel"><?$APPLICATION->ShowPanel();?></div>
 	<?if(!$bIncludedModule):?>
