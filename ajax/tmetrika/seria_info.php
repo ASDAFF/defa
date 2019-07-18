@@ -19,9 +19,9 @@ if ($gallery) {
     $photos = $gallery->GetProperties()["PICTURES"]["VALUE"];
 }
 
-$photos = array_slice($photos, 0, 4);
-
 $description = Str::words(strip_tags($seria["~DESCRIPTION"]), 20);
+
+$photos = array_slice($photos, 0, 4);
 
 //todo в класс
 $query = CIBlockElement::GetByID($seria["UF_PROS_SERIES"]);
@@ -36,33 +36,39 @@ if ($advantages) {
         ];
     }
 }
+
+$parent = CIBlockSection::GetByID($seria["IBLOCK_SECTION_ID"])->GetNext();
+
 ?>
 
 <div class="alphabet-demo-series alphabet-demo-item active">
+
+    <div hidden><?= $seria["ID"] ?></div>
+
     <div class="column img">
         <h3 class="series-name">
             <?= $seria["NAME"] ?>
         </h3>
         <h4 class="series-subname">
-            <?= $description ?>
+            <?= $parent["NAME"] ?>
         </h4>
         <div class="series-slider-wrapper">
             <div class="main-img main-slide">
-                <img src="<?= CFile::GetPath($seria["PICTURE"]) ?>" alt="" width="1020" height="683"
-                     class="series-item__main-photo">
+                <img src="<?= CFile::GetPath($seria["PICTURE"]) ?>" class="series-item__main-photo">
             </div>
             <div class="toggle-img">
                 <? foreach ($photos as $photo) { ?>
                     <div class="toggle-img-item">
-                        <img src="<?= CFile::GetPath($photo) ?>" alt="" width="1020" height="683">
+                        <img src="<?= CFile::GetPath($photo) ?>">
                     </div>
                 <? } ?>
             </div>
         </div>
     </div>
     <div class="column info">
-        <p class="series-item-info">Серия для руководителей TREVIZO – это интерьер, способный
-            заявить о чувстве вкуса своего владельца, но ни в коем случае не кричащий о нем.</p>
+        <p class="series-item-info">
+            <?= $description ?>
+        </p>
         <ul class="series-item-pros">
             <? foreach ($advantages as $advantage) { ?>
                 <li class="series-item-pros-element">
@@ -109,7 +115,9 @@ if ($advantages) {
         </div>
         <div class="series-item-buttons">
             <a class="btn" href="#">Заказать тест-драйв</a>
-            <a class="btn" href="#">Подробнее о серии</a>
+            <a class="btn" href="<?= $seria["SECTION_PAGE_URL"] ?>">
+                Подробнее о серии
+            </a>
         </div>
     </div>
 

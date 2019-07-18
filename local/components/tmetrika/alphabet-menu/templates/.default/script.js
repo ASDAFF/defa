@@ -1,9 +1,10 @@
 $(function () {
 
-    $(".element_hover, .seria_hover").hover(function () {
+    $(".element_hover, .seria_hover").click(function () {
 
         var $this = $(this);
 
+        $(".element_hover, .seria_hover").removeClass("active");
         $this.addClass("active");
 
         var type = $this.attr("data-type");
@@ -20,13 +21,7 @@ $(function () {
             success: function (data) {
                 var element = $this.closest(".alphabet-item").find(".alphabet-demo");
                 element.html(data).addClass("active");
-                console.log("AJAX");
             }
         });
-    }, function () {
-        $(this).removeClass("active");
     });
-
-
-    console.log("script");
 });
