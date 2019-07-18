@@ -6647,9 +6647,6 @@ body.compensate-for-scrollbar {
 
 /*КОЛИЧЕСТВО*/
 .catalog_detail .middle_info .left-info .quantity_block_wrapper {
-    /*position: absolute;
-    top: 45px;
-    right: 22px;*/
     padding: 0;
     margin-top: 0;
 }
