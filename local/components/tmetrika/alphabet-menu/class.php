@@ -63,42 +63,72 @@ class AlphabetMenu extends CBitrixComponent
         $this->includeComponentTemplate();
     }
 
+    protected function getIdsForLetter($letter)
+    {
+        $baseFilter = [
+            "ACTIVE" => "Y",
+            "IBLOCK_ID" => $this->catalogId,
+        ];
+
+        $nameFilter = ["NAME" => "{$letter}%"];
+        $rusNameFilter = ["UF_NAME_RUS" => "{$letter}%"];
+
+        $query = CIBlockSection::GetList([], $baseFilter + $nameFilter);
+
+        $ids = [];
+
+        while ($element = $query->GetNext()) {
+            $ids[] = $element["ID"];
+        }
+
+        $query = CIBlockSection::GetList([], $baseFilter + $rusNameFilter);
+
+
+        while ($element = $query->GetNext()) {
+            $ids[] = $element["ID"];
+        }
+
+        return array_unique($ids);
+    }
+
 
     /**
      * Получение данных для буквы
      * @param $letter
-     * @return array
+     * @return array|bool
      */
     public function getDataForLetter($letter)
     {
-        $query = CIBlockSection::GetList([
-            "NAME" => "ASC",
-        ], [
-            "ACTIVE" => "Y",
-            "IBLOCK_ID" => $this->catalogId,
-            "UF_SERIES" => 0,
-            "NAME" => "{$letter}%"
-        ]);
-
+        $ids = $this->getIdsForLetter($letter);
         $sections = [];
-
-        while ($section = $query->GetNext()) {
-            $sections[] = $section;
-        }
-
-        $query = CIBlockSection::GetList([
-            "NAME" => "ASC",
-        ], [
-            "ACTIVE" => "Y",
-            "IBLOCK_ID" => $this->catalogId,
-            "UF_SERIES" => 1,
-            "NAME" => "{$letter}%"
-        ]);
-
         $series = [];
 
-        while ($seria = $query->GetNext()) {
-            $series[] = $seria;
+        if ($ids) {
+            $query = CIBlockSection::GetList([
+                "NAME" => "ASC",
+
+            ], [
+                "UF_SERIES" => 0,
+                "IBLOCK_ID" => $this->catalogId,
+                "ID" => $ids
+            ]);
+
+            while ($section = $query->GetNext()) {
+                $sections[] = $section;
+            }
+
+            $query = CIBlockSection::GetList([
+                "NAME" => "ASC",
+            ], [
+                "UF_SERIES" => 1,
+                "IBLOCK_ID" => $this->catalogId,
+                "ID" => $ids
+            ]);
+
+
+            while ($seria = $query->GetNext()) {
+                $series[] = $seria;
+            }
         }
 
         $query = CIBlockElement::GetList([
@@ -106,9 +136,13 @@ class AlphabetMenu extends CBitrixComponent
         ], [
             "IBLOCK_ID" => $this->catalogId,
             "ACTIVE" => "Y",
-            "NAME" => "{$letter}%"
+            [
+                "LOGIC" => "OR",
+                "NAME" => "{$letter}%",
+                "PROPERTY_RUSSIAN_NAME" => "{$letter}%",
+            ]
         ], false, [
-            "nPageSize" => 15,
+            "nPageSize" => 150,
         ]);
 
         $elements = [];
@@ -117,6 +151,7 @@ class AlphabetMenu extends CBitrixComponent
             $elements[] = $element;
         }
 
+        // в букве есть что-то для вывода
         $count = count($sections) + count($series) + count($elements);
 
         if ($count > 0) {
