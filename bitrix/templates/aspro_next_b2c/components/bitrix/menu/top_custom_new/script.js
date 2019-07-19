@@ -123,7 +123,8 @@ $(document).ready(function(){
             propid: propid,
             sessid: BX.bitrix_sessid()
         };
-console.log(postData);
+
+
         BX.ajax({
             timeout: 30,
             method: 'POST',
@@ -148,7 +149,60 @@ console.log(postData);
 
     });
 
+    $(document).on('mouseenter','.collections.js-series.mlist li',function(){
+         var id = $(this).data('id');
 
+         //$('.model-elements-list.model'+id + ' ul .js-desc-series').addClass('active');
+         $('.model-elements-list.model'+id + ' li:first').addClass('active');
+
+    });
+
+    $(document).on('mouseenter','.collections:not(.js-series) li',function() { // наведение мыши на офисные кресла -> модели
+        var id = $(this).data('id');
+
+        var modelId = $('.model'+id+' .mlist li:first').data('id');
+        var sectionid = $('.model'+id+' .mlist li:first').data('sectionid');
+        var propid = $('.model'+id+' .mlist li:first').data('propid');
+
+        $('.model-elements-list li').removeClass('active');
+        $('.model'+id+' .mlist li:first').addClass('active');
+
+
+
+        BX.showWait();
+        var postData = {
+            id: modelId,
+            sectionid: sectionid,
+            propid: propid,
+            sessid: BX.bitrix_sessid()
+        };
+
+
+        /* ---------------------------------------------- */
+        BX.ajax({
+            //timeout: 30,
+            method: 'POST',
+            dataType: 'html',
+            url: '/local/tools/getElementInfo.php',
+            data: postData,
+            onsuccess: function (result)
+            {
+                BX.closeWait();
+                $('.ajax-element').html(result);
+                //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
+                ElementInfoJsOnLoad();
+            },
+            onfailure : function()
+            {
+                BX.closeWait();
+
+                $('#ajax-element').html('Ошибка');
+            }
+        });
+        return false;
+        /* ---------------------------------------------- */
+
+    });
     $(document).on('mouseenter','.js-series li,.js-desc-series',function(){
         var id = $(this).data('id');
         var sectionid = $(this).data('sectionid');
@@ -163,7 +217,7 @@ console.log(postData);
             sessid: BX.bitrix_sessid()
         };
 
-        console.log(postData);
+
         BX.ajax({
             timeout: 30,
             method: 'POST',
@@ -202,7 +256,7 @@ console.log(postData);
             sessid: BX.bitrix_sessid()
         };
 
-        console.log(postData);
+
         BX.ajax({
             timeout: 30,
             method: 'POST',

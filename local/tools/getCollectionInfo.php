@@ -7,7 +7,8 @@ if(!CModule::IncludeModule("sale") || !CModule::IncludeModule("catalog") || !CMo
 }
 
 \Bitrix\Main\Loader::IncludeModule('aspro.next');
-
+if ($menuSeriesId)
+    $_REQUEST['id'] = $menuSeriesId;
 if($_REQUEST['id']) {
     $IBLOCK_ID = 17;
     $IBLOCK_TYPE_ID = 'aspro_next_catalog';
