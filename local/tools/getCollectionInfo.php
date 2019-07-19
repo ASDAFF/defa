@@ -8,7 +8,9 @@ if (!CModule::IncludeModule("sale") || !CModule::IncludeModule("catalog") || !CM
 
 \Bitrix\Main\Loader::IncludeModule('aspro.next');
 
-if ($_REQUEST['id']) {
+if ($menuSeriesId)
+    $_REQUEST['id'] = $menuSeriesId;
+if($_REQUEST['id']) {
     $IBLOCK_ID = 17;
     $IBLOCK_TYPE_ID = 'aspro_next_catalog';
     $colorsAddProps = array('PROPERTY_TEXTURE_KARKASA', 'PROPERTY_TEKSTURA_DVEREJ');

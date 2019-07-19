@@ -5,6 +5,10 @@ if(!CModule::IncludeModule("sale") || !CModule::IncludeModule("catalog") || !CMo
     echo "failure";
     return;
 }
+if ($elementId)
+    $_REQUEST["id"] = $elementId;
+if ($elpropid)
+    $_REQUEST['propid'] = $elpropid;
 
 \Bitrix\Main\Loader::IncludeModule('aspro.next');
 
@@ -186,7 +190,7 @@ elseif($_REQUEST['id']!="") {
     //x5 определение основного раздела
     $cache_dir = '/iblock/elems/';
     $obCache = \Bitrix\Main\Data\Cache::createInstance();
-    if ($obCache->initCache(3600000, serialize(array($IBLOCK_ID)),$cache_dir)) {
+    if ($obCache->initCache(3600000, serialize(array($IBLOCK_ID, $_REQUEST['id'])),$cache_dir)) {
         $sectionId = $obCache->getVars();
     } elseif ($obCache->startDataCache()) {
         $arSelect = Array("ID", "IBLOCK_SECTION_ID");
@@ -266,7 +270,6 @@ elseif($_REQUEST['id']!="") {
         'PRODUCT_QUANTITY_VARIABLE' => 'quantity',
     );
     ?>
-
     <div class="js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
         <div class="block">
             <?
