@@ -3326,6 +3326,8 @@ body .tabs_slider .catalog_item .inner_wrap {
     width: 5%;
     min-width: 30px;
     margin-right: 5px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     vertical-align: middle;
 
 }
