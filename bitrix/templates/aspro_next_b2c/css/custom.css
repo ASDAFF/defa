@@ -13946,14 +13946,24 @@ div#ajax-sectionContainer {
     height: auto;
 }
 
+.sectionContainer .block .catalog_block .catalog_item_wrapp .catalog_item {
+    box-shadow: none;
+}
+
+
+
 
 /*АКЦИИ В МЕНЮ*/
 .sectionContainer .stock_wrapper .stock_board {
     padding: 22px 0 22px 58px;
+    border:none;
 }
 
-.stock_wrapper .stock_board:before {
-    top: 12px;
+.sectionContainer .stock_wrapper .stock_board:before {
+    background: url("/images/sale-icon-fill.svg");
+    top: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 .sectionContainer .stock_wrapper .stock_board .title {
@@ -13982,6 +13992,14 @@ div#ajax-sectionContainer {
 }*/
 
 /*ХАРАКТЕРИСТИКИ В МЕНЮ*/
+.sectionContainer .ajax-element .characteristiky_title .characteristiky_expander {
+    border-bottom: 1px dotted;
+    cursor: pointer;
+    position: relative;
+    color: #2c69bd;
+    font-size: 13px;
+}
+
 .sectionContainer .props {
     margin-bottom: 20px;
 }
