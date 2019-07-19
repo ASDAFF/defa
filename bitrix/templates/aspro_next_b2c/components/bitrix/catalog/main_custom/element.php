@@ -115,4 +115,5 @@ if($bFastViewMode)
 	include_once('element_fast_view.php');
 else
 	include_once('element_normal.php');
+
 ?>

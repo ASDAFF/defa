@@ -117,11 +117,11 @@ $arPageParams = $arSection = $section = array();
 
 // get current section ID
 if($arResult["VARIABLES"]["SECTION_ID"] > 0){
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION","UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN", "UF_SERIES_GALLERY", "UF_NAME_RUS", "UF_PREVIEW"));
+	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA',"IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION","UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN", "UF_SERIES_GALLERY", "UF_NAME_RUS", "UF_PREVIEW"));
 }
 elseif(strlen(trim($arResult["VARIABLES"]["SECTION_CODE"])) > 0){
 
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION", "UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
+	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA', "IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION", "UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
 }
 
 $typeSKU = '';
@@ -455,14 +455,38 @@ $section["COLORS"] = $arColorNew;
             ['IBLOCK_ID','ID','PROPERTY_PICTURES']
         );
 		while($el=$res->fetch()){
-			$seriesGalleries[] = CFile::GetPath($el['PROPERTY_PICTURES_VALUE']);
+		    if($section['UF_DISCOUNT']){
+                $arWaterMark = array(
+                      array(
+                          'name' => 'watermark',
+                          'type' =>'text',
+                          'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+                          'text' => "Скидка на серию  ".$section['UF_DISCOUNT'],
+                          "position" => "topright",
+                          "color" => "ffffff",
+                          )
 
+                );
+                $arFileTmp = CFile::ResizeImageGet(
+                    $el['PROPERTY_PICTURES_VALUE'],
+                    array("width" => 854, "height" => 571),
+                    BX_RESIZE_IMAGE_EXACT,
+                    true,
+                    $arWaterMark
+                );
+
+                $seriesGalleries[] = ['SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE']),'MIN_SRC'=>$arFileTmp['src']];
+            }else{
+                $seriesGalleries[] = ['SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE']),'MIN_SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE'])];
+            }
 		}
-		
 		$section["SERIES_GALLERIES"] = $seriesGalleries;
+    //METKI
+    $arResult['METKI'] = GetMarks();
 
 
 ?>
+
     <div class="series-block series-item inner">
         <div class="series-top">
             <div class="row series-header">
@@ -538,11 +562,23 @@ $section["COLORS"] = $arColorNew;
             </div>
             <div class="row series-main current" data-tab="1">
                 <div class="col-md-8">
+                    <ul class="series-item-pros quick-metki">
+
+                        <? foreach($section['UF_METKA'] as $arMetka) { ?>
+                            <li class="series-item-pros-element">
+                                <div class="pros-icon">
+                                    <img src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
+                                </div>
+                                <span class="pros-text"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
+                            </li>
+                        <? } ?>
+                    </ul>
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
-                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"  href="<?=$image?>">
-                                    <img src="<?=$image?>" alt="">
+                            <?foreach($section['SERIES_GALLERIES'] as $image):
+                                ?>
+                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"  href="<?=$image['SRC']?>">
+                                    <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
                             <?endforeach;?>
                         </div>
@@ -550,7 +586,7 @@ $section["COLORS"] = $arColorNew;
                         <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
                             <?foreach($section['SERIES_GALLERIES'] as $image):?>
                                 <div class="series-item-preview-slide-item">
-                                    <img src="<?=$image?>" alt="">
+                                    <img src="<?=$image['SRC']?>" alt="">
                                 </div>
                             <?endforeach;?>
                         </div>
@@ -601,8 +637,8 @@ $section["COLORS"] = $arColorNew;
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
                             <?foreach($section['SERIES_GALLERIES'] as $image):?>
-                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image?>">
-                                    <img src="<?=$image?>" alt="">
+                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
+                                    <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
                             <?endforeach;?>
                         </div>
@@ -610,7 +646,7 @@ $section["COLORS"] = $arColorNew;
                         <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
                             <?foreach($section['SERIES_GALLERIES'] as $image):?>
                                 <div class="series-item-preview-slide-item">
-                                    <img src="<?=$image?>" alt="">
+                                    <img src="<?=$image['SRC']?>" alt="">
                                 </div>
                             <?endforeach;?>
                         </div>
@@ -813,8 +849,8 @@ $section["COLORS"] = $arColorNew;
                             <a href="#">Презентации</a>
                         </li>
                     </ul>
-                    <div class="inform-content active desc" data-tab="1">
-                        <div class="description-details-wrapper" >
+                    <div class="inform-content active" data-tab="1">
+                        <div class="description-details-wrapper">
                             <p class="description-details description-details_gradient"><?=$arSection["DESCRIPTION"]?></p>
                             <div class="gradient-more"></div>
                             <button class="show_more"></button>
@@ -890,45 +926,69 @@ $section["COLORS"] = $arColorNew;
             <div class="row">
                 <div class="col-lg-12 select">
                     <div class="sort-list-wrapper">
-                        <ul class="sort-list">
+                        <p class="sort-evt">Выберите тип:</p>
+                        <form action="" method="post" class="">
+                            <ul class="sort-list">
                                 <li class="sort-item">
-                                    <a href="#tables" class="anchor-toggle active">Столы</a>
+                                    <input type="checkbox" name="products-catogories" id="tables" hidden>
+                                    <label for="tables">Столы</label>
                                 </li>
                                 <li class="sort-item">
-                                    <a href="#tablesNegotiations" class="anchor-toggle">Столы для переговоров</a>
+                                    <input type="checkbox" name="products-catogories" id="chairs" hidden>
+                                    <label for="chairs">Стулья</label>
                                 </li>
                                 <li class="sort-item">
-                                    <a href="#thumbs" class="anchor-toggle">Тумбы</a>
-                                </li>
-                                <li class="sort-item">
-                                    <a href="#annex" class="anchor-toggle">Приставки</a>
-                                </li>
-                                <li class="sort-item">
-                                    <a href="#cupboard" class="anchor-toggle">Шкафы</a>
-                                </li>
-                                <li class="sort-item">
-                                    <a href="#screens" class="anchor-toggle">Экраны</a>
-                                </li>
-                                <li class="sort-item">
-                                    <a href="#chairs" class="anchor-toggle">Кресла и стулья</a>
+                                    <input type="checkbox" name="products-catogories" id="stands" checked hidden>
+                                    <label for="stands">Тумбы</label>
                                 </li>
                             </ul>
+                        </form>
+
+
                     </div>
                     <div class="view-list">
                         <a href="" rel="nofollow" class="view-item active web"><span>Сеткой</span></a>
                         <a href="" rel="nofollow" class="view-item list"><span>Списком</span></a>
                     </div>
                 </div>
-                <button class="roll-up-all" type="button">Свернуть все</button>
+
+
             </div>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:catalog.smart.filter",
+                "hitFilter",
+                Array(
+                    "CACHE_GROUPS" => "Y",
+                    "CACHE_TIME" => "36000000",
+                    "CACHE_TYPE" => "A",
+                    "CONVERT_CURRENCY" => "N",
+                    "DISPLAY_ELEMENT_COUNT" => "Y",
+                    "FILTER_NAME" => "arrFilter",
+                    "FILTER_VIEW_MODE" => "horizontal",
+                    "HIDE_NOT_AVAILABLE" => "N",
+                    "IBLOCK_ID" => "17",
+                    "IBLOCK_TYPE" => "aspro_next_catalog",
+                    "PAGER_PARAMS_NAME" => "arrPager",
+                    "POPUP_POSITION" => "left",
+                    "PREFILTER_NAME" => "smartPreFilter",
+                    "PRICE_CODE" => "",
+                    "SAVE_IN_SESSION" => "N",
+                    "SECTION_CODE" => "",
+                    "SECTION_DESCRIPTION" => "-",
+                    "SECTION_ID" => $_REQUEST["SECTION_ID"],
+                    "SECTION_TITLE" => "-",
+                    "SEF_MODE" => "N",
+                    "TEMPLATE_THEME" => "blue",
+                    "XML_EXPORT" => "N"
+                )
+            );?>
         </div>
 
         <div class="sort-result">
-            <div class="row main-row" id="tables">
+            <div class="row main-row">
                 <div class="col-lg-12">
-                    <div class="top_block roll">
+                    <div class="top_block">
                         <h3 class="title_block big filters-title">Столы</h3>
-                        <span class="roll-up">Свернуть</span>
                     </div>
                     <div class="row filter-products-wrapper">
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
@@ -1187,6 +1247,8 @@ $section["COLORS"] = $arColorNew;
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row filter-products-wrapper">
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
 
                             <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
@@ -1447,11 +1509,13 @@ $section["COLORS"] = $arColorNew;
                     <a href="" class="red-btn white">Показать еще</a>
                 </div>
             </div>
-            <div class="row main-row" id="tablesNegotiations">
+        </div>
+
+        <div class="sort-result categories">
+            <div class="row main-row">
                 <div class="col-lg-12">
-                    <div class="top_block roll">
-                        <h3 class="title_block big filters-title">Столы для переговоров</h3>
-                        <span class="roll-up">Свернуть</span>
+                    <div class="top_block">
+                        <h3 class="title_block big filters-title">Стулья</h3>
                     </div>
                     <div class="row filter-products-wrapper">
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
@@ -1710,6 +1774,8 @@ $section["COLORS"] = $arColorNew;
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row filter-products-wrapper">
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
 
                             <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
@@ -1970,11 +2036,13 @@ $section["COLORS"] = $arColorNew;
                     <a href="" class="red-btn white">Показать еще</a>
                 </div>
             </div>
-            <div class="row main-row" id="thumbs">
+        </div>
+
+        <div class="sort-result categories">
+            <div class="row main-row">
                 <div class="col-lg-12">
-                    <div class="top_block roll">
+                    <div class="top_block">
                         <h3 class="title_block big filters-title">Тумбы</h3>
-                        <span class="roll-up">Свернуть</span>
                     </div>
                     <div class="row filter-products-wrapper">
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
@@ -2233,2098 +2301,8 @@ $section["COLORS"] = $arColorNew;
                                 </div>
                             </div>
                         </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="red-btn white">Показать еще</a>
-            </div>
-            <div class="row main-row" id="annex">
-                <div class="col-lg-12">
-                    <div class="top_block roll">
-                        <h3 class="title_block big filters-title">Приставки</h3>
-                        <span class="roll-up">Свернуть</span>
                     </div>
                     <div class="row filter-products-wrapper">
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="red-btn white">Показать еще</a>
-            </div>
-            <div class="row main-row" id="cupboard">
-                <div class="col-lg-12">
-                    <div class="top_block roll">
-                        <h3 class="title_block big filters-title">Шкафы</h3>
-                        <span class="roll-up">Свернуть</span>
-                    </div>
-                    <div class="row filter-products-wrapper">
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="red-btn white">Показать еще</a>
-            </div>
-            <div class="row main-row" id="screens">
-                <div class="col-lg-12">
-                    <div class="top_block roll">
-                        <h3 class="title_block big filters-title">Экраны</h3>
-                        <span class="roll-up">Свернуть</span>
-                    </div>
-                    <div class="row filter-products-wrapper">
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="" class="red-btn white">Показать еще</a>
-            </div>
-            <div class="row main-row" id="chairs">
-                <div class="col-lg-12">
-                    <div class="top_block roll">
-                        <h3 class="title_block big filters-title">Кресла и стулья</h3>
-                        <span class="roll-up">Свернуть</span>
-                    </div>
-                    <div class="row filter-products-wrapper">
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
-
-                            <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
-
-                                <div class="inner_wrap">
-                                    <div class="image_wrapper_block shine">
-                                        <div class="stickers">
-                                            <div><div class="sticker_khit" title="Хит">Хит</div></div>
-                                            <div><div class="sticker_novinka" title="Новинка">Новинка</div></div>
-                                            <div><div class="sticker_aktsiya" title="Акция">Акция</div></div>
-                                        </div>
-                                        <div class="like_icons">
-                                            <div class="compare_item_button">
-                                                <span title="Сравнить" class="compare_item to" data-iblock="17" data-item="8901"><i></i></span>
-                                                <span title="В сравнении" class="compare_item in added" style="display: none;" data-iblock="17" data-item="8901"><i></i></span>
-                                            </div>
-                                        </div>
-                                        <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="thumb" tabindex="0">
-                                            <img class="noborder" src="/upload/iblock/c2a/c2acf49ebc6f92a15781cddbe7be21ef.jpg" alt="IQ black" title="IQ black">
-                                        </a>
-                                        <div class="fast_view_block" data-event="jqm" data-param-form_id="fast_view" data-param-iblock_id="17" data-param-id="8901" data-param-item_href="%2Fcatalog%2Foffice%2Fkabinet_rukovoditelya%2Fofisnye-kresla-cabinet%2F8901%2F" data-name="fast_view">Быстрый просмотр</div>
-                                    </div>
-                                    <div class="item_info" style="height: 128px;">
-                                        <div class="item-title" style="height: 40px;">
-                                            <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="dark_link" tabindex="0"><span>IQ black</span></a>
-                                        </div>
-                                        <div class="rating">
-                                            <!--'start_frame_cache_P0iQM1'-->
-                                            <div class="iblock-vote small">
-                                                <table class="table-no-border">
-                                                    <tbody><tr>
-                                                        <td><div class="star-active star-voted" title="1"></div></td>
-                                                        <td><div class="star-active star-voted" title="2"></div></td>
-                                                        <td><div class="star-active star-voted" title="3"></div></td>
-                                                        <td><div class="star-active star-voted" title="4"></div></td>
-                                                        <td><div class="star-active star-voted" title="5"></div></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div><!--'end_frame_cache_P0iQM1'-->								</div>
-                                        <div class="item-stock"><span class="icon stock"></span><span class="value">Много</span></div>							<div class="cost prices clearfix">
-                                            <div class="price">
-                                                от <span class="values_wrapper">9 029 руб.</span> 											</div>
-                                            <div class="price discount">
-                                                <span class="values_wrapper">12 540 руб.</span>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="footer_button">
-                                        <div class="counter_wrapp">
-                                            <div class="button_block">
-                                                <!--noindex-->
-                                                <a href="/catalog/office/kabinet_rukovoditelya/ofisnye-kresla-cabinet/8901/" class="btn btn-default basket read_more" tabindex="0">Подробнее</a>
-                                                <!--/noindex-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="catalog_item_wrapp col-m-20 col-lg-4 col-md-4 col-sm-6 item" data-col="3">
 
                             <div class="catalog_item item_wrap " id="bx_40480796_8901" style="height: 420px;">
@@ -4676,42 +2654,11 @@ $section["COLORS"] = $arColorNew;
 
 <?endif;?>
 
-
-
 <div class="js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
     <?@include_once('page_blocks/'.$arParams["SECTION_ELEMENTS_TYPE_VIEW"].'.php');?>
 </div>
 
-    <div class="panel-anchors">
-        <ul class="anchors-list">
-            <li>
-                <a href="#moreInformSeries" class="anchor-desc" id="showMeDesc">Описание</a>
-            </li>
-            <li>
-                <a href="#tables" class="anchor-toggle active">Столы</a>
-            </li>
-            <li>
-                <a href="#tablesNegotiations" class="anchor-toggle">Столы для переговоров</a>
-            </li>
-            <li>
-                <a href="#thumbs" class="anchor-toggle">Тумбы</a>
-            </li>
-            <li>
-                <a href="#annex" class="anchor-toggle">Приставки</a>
-            </li>
-            <li>
-                <a href="#cupboard" class="anchor-toggle">Шкафы</a>
-            </li>
-            <li>
-                <a href="#screens" class="anchor-toggle">Экраны</a>
-            </li>
-            <li>
-                <a href="#chairs" class="anchor-toggle">Кресла и стулья</a>
-            </li>
-        </ul>
-    </div>
-
-<?CNext::checkBreadcrumbsChain($arParams, $arSection);?>git 
+<?CNext::checkBreadcrumbsChain($arParams, $arSection);?>
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
 
 <?if(\Bitrix\Main\Loader::includeModule("sotbit.seometa")):?>
