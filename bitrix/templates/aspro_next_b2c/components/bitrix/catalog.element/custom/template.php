@@ -285,39 +285,41 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 <div class="item_main_info type_clothes <?=(!$showCustomOffer ? "noffer" : "");?> <?=($arParams["SHOW_UNABLE_SKU_PROPS"] != "N" ? "show_un_props" : "unshow_un_props");?>" id="<?=$arItemIDs["strMainID"];?>">
 
 
+    <div class="col-lg-8 col-md-7">
+        <div class="img_wrapper swipeignore">
+            <style>
+                .right_block ul li:before, .right_block ol li:before{
+                    display: none!important;
+                }
+            </style>
 
-	<div class="img_wrapper swipeignore">
-        <style>
-            .right_block ul li:before, .right_block ol li:before{
-                display: none!important;
-            }
-        </style>
 
-        <?if($arResult['MARKS']){?>
-        <ul class="series-item-pros quick-metki" style="text-align: left">
 
-            <? foreach($arResult['MARKS'] as $arMark) { ?>
-                <li class="series-item-pros-element" style="height: 38px;">
-                    <div class="pros-icon">
-                        <img width="40px" height="40px" src="<?=$arMark['SRC']?>" alt="" style="float: left">
-                        <span class="pros-text" style="    font-size: medium;float: left"><?=$arMark['NAME']?></span>
+            <?if($arResult['MARKS']){?>
+                <ul class="series-item-pros quick-metki" style="text-align: left">
+
+                    <? foreach($arResult['MARKS'] as $arMark) { ?>
+                        <li class="series-item-pros-element" style="height: 38px;">
+                            <div class="pros-icon">
+                                <img width="40px" height="40px" src="<?=$arMark['SRC']?>" alt="" style="float: left">
+                                <span class="pros-text" style="    font-size: medium;float: left"><?=$arMark['NAME']?></span>
+                            </div>
+                        </li>
+                    <? } ?>
+                </ul>
+            <?}?>
+            <?$countThumb = count($arResult["MORE_PHOTO"]);?>
+            <div class="item_slider has_<?=($countThumb > 1 ? 'more' : 'one');?>">
+                <!--АРТИКУЛ-->
+                <div class="item_block prod-number">
+                    <div class="article iblock" itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue" <?if($arResult['SHOW_OFFERS_PROPS']){?>id="<? echo $arItemIDs["ALL_ITEM_IDS"]['DISPLAY_PROP_ARTICLE_DIV'] ?>" style="display: none;"<?}?>>
+                        <span class="block_title" itemprop="name"><?=$arResult["DISPLAY_PROPERTIES"]["CML2_ARTICLE"]["NAME"];?>:</span>
+                        <span class="value" itemprop="value"><?=$arResult["DISPLAY_PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></span>
                     </div>
-                </li>
-            <? } ?>
-        </ul>
-			<?}?>
-		<?$countThumb = count($arResult["MORE_PHOTO"]);?>
-		<div class="item_slider has_<?=($countThumb > 1 ? 'more' : 'one');?>">
-		<!--АРТИКУЛ-->
-    <div class="item_block prod-number">
-        <div class="article iblock" itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue" <?if($arResult['SHOW_OFFERS_PROPS']){?>id="<? echo $arItemIDs["ALL_ITEM_IDS"]['DISPLAY_PROP_ARTICLE_DIV'] ?>" style="display: none;"<?}?>>
-             <span class="block_title" itemprop="name"><?=$arResult["DISPLAY_PROPERTIES"]["CML2_ARTICLE"]["NAME"];?>:</span>
-             <span class="value" itemprop="value"><?=$arResult["DISPLAY_PROPERTIES"]["CML2_ARTICLE"]["VALUE"]?></span>
-        </div>
-    </div>
+                </div>
 
 
-            <!--ЗВЕЗДОЧКИ РЕЙТИНГА НЕ УБИРАТЬ-->
+                <!--ЗВЕЗДОЧКИ РЕЙТИНГА НЕ УБИРАТЬ-->
 
                 <?$frame = $this->createFrame('dv_'.$arResult["ID"])->begin('');?>
                 <div class="rating">
