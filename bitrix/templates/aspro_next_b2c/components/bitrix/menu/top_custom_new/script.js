@@ -75,7 +75,7 @@ $(document).ready(function(){
         };
 
         BX.ajax({
-            timeout: 30,
+            timeout: 20,
             method: 'POST',
             dataType: 'html',
             url: '/local/tools/getSectionInfo.php',
@@ -102,7 +102,7 @@ $(document).ready(function(){
         return false;
 	});
 
-    $(document).on('mouseenter','.collections li',function(){
+    $(document).on('click','.collections li',function(){
     	var id = $(this).data('id');
         $('.collections li').removeClass('active');
         $(this).addClass('active');
@@ -125,7 +125,7 @@ $(document).ready(function(){
         };
 console.log(postData);
         BX.ajax({
-            timeout: 30,
+            timeout: 20,
             method: 'POST',
             dataType: 'html',
             url: '/local/tools/getElementInfo.php',
@@ -165,7 +165,7 @@ console.log(postData);
 
         console.log(postData);
         BX.ajax({
-            timeout: 30,
+            timeout: 20,
             method: 'POST',
             dataType: 'html',
             url: '/local/tools/getCollectionInfo.php',
@@ -204,7 +204,7 @@ console.log(postData);
 
         console.log(postData);
         BX.ajax({
-            timeout: 30,
+            timeout: 20,
             method: 'POST',
             dataType: 'html',
             url: '/local/tools/getKitInfo.php',
