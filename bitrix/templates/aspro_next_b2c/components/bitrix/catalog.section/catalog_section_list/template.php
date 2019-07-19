@@ -62,23 +62,25 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-12 select">
-		                <div class="sort-list-wrapper" id="section_block">
-		                    <p class="sort-evt">Выберите тип:</p>                    
-			                    <ul class="sort-list">
-			                    	<?foreach ($product_group_name as $key => $category) {
-										echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
-									} 
-									?>
-			                    </ul>
-		                </div>
-		                <div class="view-list">
-		                    <a href="" rel="nofollow" class="view-item active web"><span>Сеткой</span></a>
-		                    <a href="" rel="nofollow" class="view-item list"><span>Списком</span></a>
-		                </div>
-		            </div>
-		        </div>
+
+                <div id="target"></div>
+                <div class="col-lg-12 select">
+                    <div class="sort-list-wrapper" id="section_block">
+                        <p class="sort-evt">Выберите тип:</p>
+                            <ul class="sort-list">
+                                <?foreach ($product_group_name as $key => $category) {
+                                    echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
+                                }
+                                ?>
+                            </ul>
+                    </div>
+                    <div class="view-list">
+                        <a href="" rel="nofollow" class="view-item active web"><span>Сеткой</span></a>
+                        <a href="" rel="nofollow" class="view-item list"><span>Списком</span></a>
+                    </div>
+                </div>
+
+
 
 			<? foreach ($product_filters as $group => $names) {?>
 				<div class="group_block" id="block_id_<?=$group;?>">
@@ -89,7 +91,8 @@
 					<div class="hiddens_block" id="hiddens_block_<?=$group;?>" >
 						<div class="row width100">
                             <div class="ajax_news_<?=$group;?>">
-                                <?$APPLICATION->IncludeComponent(
+                                <?
+                                $APPLICATION->IncludeComponent(
                                     "bitrix:catalog.section",
                                     "catalog_section_list_element",
                                     array(
@@ -98,10 +101,10 @@
                                         "ADD_PROPERTIES_TO_BASKET" => "Y",
                                         "ADD_SECTIONS_CHAIN" => "N",
                                         "ADD_TO_BASKET_ACTION" => "ADD",
-                                        "AJAX_MODE" => "N",
-                                        "AJAX_OPTION_ADDITIONAL" => "",
-                                        "AJAX_OPTION_HISTORY" => "N",
-                                        "AJAX_OPTION_JUMP" => "N",
+                                        "AJAX_MODE" => "Y",
+                                        "AJAX_OPTION_ADDITIONAL" => "Y",
+                                        "AJAX_OPTION_HISTORY" => "Y",
+                                        "AJAX_OPTION_JUMP" => "Y",
                                         "AJAX_OPTION_STYLE" => "Y",
                                         "BACKGROUND_IMAGE" => "-",
                                         "BASKET_URL" => "/personal/basket.php",
@@ -129,7 +132,8 @@
                                         "IBLOCK_ID" => "17",
                                         "IBLOCK_TYPE" => "aspro_next_catalog",
                                         "INCLUDE_SUBSECTIONS" => "Y",
-                                        "LABEL_PROP" => "",
+                                        "LABEL_PROP" => array(
+                                        ),
                                         "LAZY_LOAD" => "N",
                                         "LINE_ELEMENT_COUNT" => "4",
                                         "LOAD_ON_SCROLL" => "N",
@@ -147,7 +151,7 @@
                                             0 => "",
                                             1 => "",
                                         ),
-                                        "OFFERS_LIMIT" => "5",
+                                        "OFFERS_LIMIT" => "4",
                                         "OFFERS_PROPERTY_CODE" => array(
                                             0 => "",
                                             1 => "",
@@ -161,11 +165,12 @@
                                         "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
                                         "PAGER_SHOW_ALL" => "N",
                                         "PAGER_SHOW_ALWAYS" => "N",
-                                        "PAGER_TEMPLATE" => ".default",
+                                        "PAGER_TEMPLATE" => "section_list_ajax",
                                         "PAGER_TITLE" => "Товары",
                                         "PAGE_ELEMENT_COUNT" => "4",
                                         "PARTIAL_PRODUCT_PROPERTIES" => "N",
                                         "PRICE_CODE" => array(
+                                            0 => "ИМ: Рек. розн. 0%",
                                         ),
                                         "PRICE_VAT_INCLUDE" => "Y",
                                         "PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
@@ -175,13 +180,14 @@
                                         ),
                                         "PRODUCT_PROPS_VARIABLE" => "prop",
                                         "PRODUCT_QUANTITY_VARIABLE" => "quantity",
-                                        "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
+                                        "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'3','BIG_DATA':false}]",
                                         "PRODUCT_SUBSCRIPTION" => "Y",
                                         "PROPERTY_CODE" => array(
                                             0 => "",
                                             1 => "",
                                         ),
-                                        "PROPERTY_CODE_MOBILE" => "",
+                                        "PROPERTY_CODE_MOBILE" => array(
+                                        ),
                                         "RCM_PROD_ID" => $_REQUEST["PRODUCT_ID"],
                                         "RCM_TYPE" => "personal",
                                         "SECTION_CODE" => "kabinet_rukovoditelya",
@@ -215,10 +221,13 @@
                                         "USE_MAIN_ELEMENT_SECTION" => "N",
                                         "USE_PRICE_COUNT" => "N",
                                         "USE_PRODUCT_QUANTITY" => "N",
-                                        "COMPONENT_TEMPLATE" => "catalog_custom_block"
+                                        "COMPONENT_TEMPLATE" => "catalog_section_list_element",
+                                        "AJAX" => $_REQUEST["AJAX"]
                                     ),
                                     false
-                                );?></div>
+                                );
+
+                                ?></div>
 
                             <div class="more_items">
                                 <span class="button btn btn-default" onmousedown="loadMoreNews_<?=$group;?>();">Загрузить еще</span>
@@ -237,9 +246,19 @@
                             </script>
 						</div>
 					</div>
+                </div>
+            <?}?>
 
-				</div>
-			<?}?>
+                <div class="sort-list-wrapper floating">
+                    <p class="sort-evt">Выберите тип:</p>
+                    <ul class="sort-list">
+                        <?foreach ($product_group_name as $key => $category) {
+                            echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+
 	<?if(($arParams["AJAX_REQUEST"]=="N") || !isset($arParams["AJAX_REQUEST"])){?>
 			</div>
 		</div>

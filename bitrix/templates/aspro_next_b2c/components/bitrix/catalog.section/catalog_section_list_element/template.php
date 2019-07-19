@@ -149,8 +149,8 @@
 					
 					?>
 					<div class="catalog_item main_item_wrapper item_wrap <?=(($_GET['q'])) ? 's' : ''?>" id="<?=$arItemIDs["strMainID"];?>">
-						<div>
-							<div class="image_wrapper_block">
+						<div class="inner_wrap">
+							<div class="image_wrapper_block shine">
 								<div class="stickers">
 									<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
 									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>

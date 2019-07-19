@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
 
     $(document).on('click', '.load_more', function(){
 
@@ -27,4 +27,4 @@ $(document).ready(function(){
 
     });
 
-});
+});*/
