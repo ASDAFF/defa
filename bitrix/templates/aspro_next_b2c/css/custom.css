@@ -7131,6 +7131,7 @@ body.compensate-for-scrollbar {
     border: 1px solid rgb(31,34,41);
     transition: 0.3s;
     padding: 5px 10px;
+    position: relative;
 }
 
 .catalog_detail .tabs-block .tabs-content .item a:hover {
@@ -7141,6 +7142,20 @@ body.compensate-for-scrollbar {
 .catalog_detail .tabs-block .tabs-content .item a:nth-last-of-type(1) {
     border-left: none;
 }
+.catalog_detail .tabs-block .tabs-content .item a:nth-of-type(1) {
+    border-right: none;
+}
+
+.catalog_detail .tabs-block .tabs-content .item a:nth-of-type(1):after {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: rgb(31,34,41);
+    content: '';
+    top: 0;
+    right: 0;
+}
+
 
 .catalog_detail .tabs-block .tabs-content .item.active {
     display: block;
@@ -13641,7 +13656,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 div#ajax-sectionContainer {
-    padding-bottom: 75px;
+    padding-bottom: 55px;
 }
 .sectionContainer .items_ajax .image_wrapper_block {
     height: 190px;
@@ -13909,6 +13924,10 @@ div#ajax-sectionContainer {
     width: 100%;
     text-align: center;
     background:#fff;
+}
+
+.sectionContainer .bottom_nav {
+    padding: 0;
 }
 
 .sectionContainer .bottom-section a {
