@@ -257,7 +257,6 @@
 
 
                 <div class="col-sm-2">
-                    
                     <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                         <div class="what_do-item-icon">
 
