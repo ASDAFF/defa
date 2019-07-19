@@ -5596,7 +5596,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 .flag-wrapper {
     position: fixed;
-    top: 400px;
+    bottom: 380px;
     right: -45px;
     display: flex;
     flex-direction: column;
@@ -11233,8 +11233,13 @@ table.contacts-stores tr.item td:last-of-type {
         display: none;
     }
 
-    .flag.test-drive {
+    .flag.test-drive,
+    .flag.more-quantity {
         display: none!important;
+    }
+
+    .flag {
+        right: -15px;
     }
 
     .flag-wrapper {
