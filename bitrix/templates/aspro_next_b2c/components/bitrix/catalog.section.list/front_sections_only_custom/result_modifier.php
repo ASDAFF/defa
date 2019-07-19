@@ -12,6 +12,27 @@ else
 }
 if(!empty($arResult['SECTION']['UF_SERIES']))
 {
+    //METKI
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(15)->fetch();
+    $entity=Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass=$entity->getDataClass();
+    $res=$entityClass::getList([
+        'select'=>['*'],
+    ]);
+    $tizers=[];
+    while($el=$res->fetch())
+    {
+        $tizers[$el['ID']]=
+            [
+                'ID'=>$el['ID'],
+                'NAME'=>$el['UF_DESC'],
+                'SRC'=>CFile::GetPath($el['UF_PICTURE']),
+            ];
+    }
+    if(!empty($tizers))
+    {
+        $arResult['METKI'] = $tizers;
+    }
     //TIZERS
     $hl=Bitrix\Highloadblock\HighloadBlockTable::getById(TIZER_HL_ID)->fetch();
     $entity=Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
@@ -57,7 +78,9 @@ if(!empty($arResult['SECTION']['UF_SERIES']))
         $seriesGalleries=[];
         while($el=$res->fetch())
         {
-            $seriesGalleries[$el['ID']][]=CFile::GetPath($el['PROPERTY_PICTURES_VALUE']);
+
+
+            $seriesGalleries[$el['ID']][]=$el['PROPERTY_PICTURES_VALUE'];
         }
         if(!empty($seriesGalleries))
         {

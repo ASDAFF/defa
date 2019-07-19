@@ -487,9 +487,7 @@ else
 				</div>
 			</div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-
-                <?if(is_array($arItem["STOCK"]) && $arItem["STOCK"]):?>
-
+                <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
                     <div class="stock_wrapper">
                         <?foreach($arResult["STOCK"] as $key => $arStockItem):
                             if(!in_array($arItem['ID'],$arStockItem['PROPERTY_LINK_GOODS_VALUE'])) continue;
@@ -502,7 +500,6 @@ else
                         <?endforeach;?>
                     </div>
                 <?endif;?>
-
                 <?
                 /*x5 20190627 использую PROPERTIES для отладки, т.к. DISPLAY_PROPERTIES было пустое для модели, которая отображалась - после тестирования вернуть DISPLAY_PROPERTIES*/
                 if($arItem['DISPLAY_PROPERTIES']):?>
@@ -512,7 +509,7 @@ else
                             <?foreach($arItem['VISIBLE_PROPS'] as $key=>$prop):?>
                                 <div class="prop-item">
                                     <div class="name"><?=$prop['NAME']?></div>
-                                    <div class="value"><?=$prop['DISPLAY_VALUE']?></div>
+                                    <div class="value"><?=$prop['VALUE']?></div>
                                 </div>
                             <?endforeach;?>
 
