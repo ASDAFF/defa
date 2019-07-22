@@ -44,7 +44,6 @@
 		}
 		if($arParams["LINE_ELEMENT_COUNT"] > 5)
 			$col = 5;?>
-    <div class="">
 		<?foreach($arResult["ITEMS"] as $arItem){?>
 			<div id="<?=$this->GetEditAreaId($arItem['ID']);?>"  class="col-<?=$col;?> col-md-<?=ceil(12/$col);?> col-sm-<?=ceil(12/round($col / 2))?> col-xs-6">
 				<div class="catalog_item_wrapp item">
@@ -381,7 +380,6 @@
 			</div>
 
 		<?}?>
-    </div>
 	<?if(($arParams["AJAX_REQUEST"]=="N") || !isset($arParams["AJAX_REQUEST"])){?>
 			</div>
 		</div>
