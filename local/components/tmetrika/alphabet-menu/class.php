@@ -99,6 +99,18 @@ class AlphabetMenu extends CBitrixComponent
 
 
     /**
+     * Проверяет, что раздел является серией (не должно быть подразделов)
+     * @param $id
+     */
+    protected function isSeria($id)
+    {
+        return CIBlockSection::GetList([], [
+                "ACTIVE" => "Y",
+                "SECTION_ID" => $id
+            ])->SelectedRowsCount() === 0;
+    }
+
+    /**
      * Получение данных для буквы
      * @param $letter
      * @return array|bool
@@ -132,8 +144,11 @@ class AlphabetMenu extends CBitrixComponent
             ]);
 
 
+            // добавляем только те серии, которые на последнем уровне вложенности
             while ($seria = $query->GetNext()) {
-                $series[] = $seria;
+                if ($this->isSeria($seria["ID"])) {
+                    $series[] = $seria;
+                }
             }
         }
 
