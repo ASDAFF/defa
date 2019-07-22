@@ -6917,6 +6917,9 @@ body.compensate-for-scrollbar {
 
 
 
+
+
+
 /*кнопка "нужно большое количество"*/
 .catalog_detail .middle_info .left-info .prices_block .more-quantity{
     border-bottom: 1px dotted rgb(44,105,189);
@@ -6991,8 +6994,11 @@ body.compensate-for-scrollbar {
 
 /*характеристики*/
 .middle_info.main_item_wrapper .top_props {
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
     margin-bottom: 40px;
+}
+.middle_info.main_item_wrapper .top_props.desktop-props {
+    padding-bottom: 0;
 }
 
 
@@ -7060,7 +7066,7 @@ body.compensate-for-scrollbar {
 
 /*ТАБЫ (ДОСТАВКА, СБОРКА, ВЫВОЗ УПАКОВКИ)*/
 .catalog_detail .tabs-block {
-    margin-bottom: 10px;
+    margin-bottom: 45px;
 }
 
 .catalog_detail .tabs-block .tabs-item {
@@ -7642,7 +7648,7 @@ body.compensate-for-scrollbar {
     height: 180px;
     right: 0;
     bottom: 0;
-
+    z-index: 0;
 
 }
 
@@ -7651,11 +7657,15 @@ body.compensate-for-scrollbar {
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .sale-banner a span {
     font-size: 14px;
     color: #84878c;
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -9619,15 +9629,17 @@ table.contacts-stores tr.item td:last-of-type {
         vertical-align: middle;
     }
 
+
+
+    /*Гарантируем лучшие условия*/
+    .catalog_detail .middle_info .left-info .prices_block .cost-block .cheaper_form {
+        flex-basis: 100%;
+    }
+
+
     /*кнопки*/
-    .catalog_detail .middle_info .left-info .counter_block.big_basket {
-        width: 105px;
-    }
-    .catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
-        width: 45px;
-    }
     .catalog_detail .wrapp_one_click .btn.btn-default {
-        width: 251px;
+        width: 150px;
     }
 
 
@@ -9784,14 +9796,18 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     /*кнопки*/
-    .catalog_detail .middle_info .left-info .counter_block.big_basket {
-        width: 82px;
+    .catalog_detail .offer_buy_block .counter_wrapp {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 16px;
     }
-    .catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
-        width: 27px;
+
+    .catalog_detail .offer_buy_block .wrapp_one_click {
+        display: block;
     }
+
     .catalog_detail .wrapp_one_click .btn.btn-default {
-        width: 230px;
+        width: 255px;
     }
 
 
@@ -9833,7 +9849,7 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*КАРТОЧКА ТОВАРА*/
     .catalog_detail .middle_info .left-info {
-        padding: 21px;
+        padding: 0 21px;
     }
 
     /*Тизеры в заголовке страницы*/
@@ -10303,6 +10319,28 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
 
+    /*Гарантируем лучшие условия*/
+    .catalog_detail .middle_info .left-info .prices_block .cost-block .cheaper_form {
+        flex-basis: 25%;
+    }
+
+
+    /*кнопки*/
+    .catalog_detail .offer_buy_block .counter_wrapp {
+        display: inline-block;
+        margin-right: 12px;
+        margin-bottom: 0;
+    }
+
+    .catalog_detail .offer_buy_block .wrapp_one_click {
+        display: inline-block;
+    }
+
+    .catalog_detail .wrapp_one_click .btn.btn-default {
+        width: 255px;
+    }
+
+
     /*БЛОК С МОДИФИКАЦИЯМИ И КМ*/
     .catalog_detail .modification {
         margin: 0;
@@ -10532,17 +10570,21 @@ table.contacts-stores tr.item td:last-of-type {
     .catalog_detail .middle_info .right-info {
        /* padding: 0;*/
     }
-    /*КНОПКИ*/
-    .catalog_detail .middle_info .left-info .counter_block {
-        width: auto!important;
+    /*кнопки*/
+    .catalog_detail .offer_buy_block .counter_wrapp {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 16px;
     }
 
-    .catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
-        width: 65px;
+    .catalog_detail .offer_buy_block .wrapp_one_click {
+        display: block;
     }
+
     .catalog_detail .wrapp_one_click .btn.btn-default {
-        width: 268px;
+        width: 255px;
     }
+
 
 
     /*СХЕМА*/
@@ -10648,6 +10690,14 @@ table.contacts-stores tr.item td:last-of-type {
     .catalog_detail .info_item .middle_info>.row {
         margin: 0 0px!important;
     }
+
+    /*Баннер СКИДКИ ДЛЯ ОПТОВЫХ ПОКУПАТЕЛЕЙ*/
+    .sale-banner {
+        margin-top: 40px;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
 
 }
 
@@ -10925,6 +10975,18 @@ table.contacts-stores tr.item td:last-of-type {
         padding: 0px 15px!important;
     }
 
+
+    .catalog_detail .middle_info .left-info .prices_block .offers_price_wrapper .offers_price_old .values_wrapper {
+        font-size: 16px;
+    }
+
+
+    /*Гарантируем лучшие условия*/
+    .catalog_detail .middle_info .left-info .prices_block .cost-block .cheaper_form {
+        flex-basis: 100%;
+    }
+
+
     /*СХЕМА*/
     .catalog_detail .middle_info .right-info .product_scheme img{
         max-height: 100%;
@@ -11192,6 +11254,13 @@ table.contacts-stores tr.item td:last-of-type {
     .catalog_detail .commercial-offer.wide-commercial {
         border: none;
         padding: 23px;
+    }
+
+
+    /*Баннер СКИДКИ ДЛЯ ОПТОВЫХ ПОКУПАТЕЛЕЙ*/
+    .sale-banner a:after {
+        display: none;
+
     }
 
 }
