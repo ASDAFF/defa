@@ -61,8 +61,9 @@ if($_REQUEST['id']) {
                                 <div class="model-elements-list model<?=$model?><?if(!$key):?> active<?$key=true;endif;?>">
                                     <h3>Модификации</h3>
                                     <ul class="mlist" >
-                                        <?foreach($elements as $element):?>
-                                            <li class="model-elements" data-id="<?=$element['ID']?>" data-sectionid="<?=$section['ID']?>"><?=$element['NAME']?></li>
+                                        <?$nn=0;foreach($elements as $element):?>
+                                            <?$nn++;?>
+                                            <li class="model-elements <?=($nn==1)?"active":""?>" data-id="<?=$element['ID']?>" data-sectionid="<?=$section['ID']?>"><?=$element['NAME']?></li>
                                         <?endforeach;?>
                                     </ul>
                                 </div>
@@ -74,6 +75,8 @@ if($_REQUEST['id']) {
                         <div class="row">
                             <div class="ajax-element col-xs-9">
 
+<?$elementId = array_shift(array_shift($models))["ID"]; $elpropid = "undefined";
+require($_SERVER["DOCUMENT_ROOT"]."/local/tools/getElementInfo.php");?>
                             </div>
                             <div class="col-xs-3">
                                 <ul class="x5slider" data-interval="3000">
@@ -148,7 +151,7 @@ if($_REQUEST['id']) {
                                 <div class="model-elements-list model<?=$model?><?if(!$key):?> active<?$key=true;endif;?>">
                                     <h3>Состав</h3>
                                     <ul class="mlist" >
-                                            <li class="js-desc-series" data-id="<?=$elements['ID']?>">Описание серии</li>
+                                            <li class="js-desc-series active" data-id="<?=$elements['ID']?>">Описание серии</li>
                                             <li class="js-kit-series" data-id="<?=$elements['ID']?>">Комплекты</li>
                                         <?foreach($elements['ELEMENTS'] as $prop=>$element):?>
                                         <?if($prop!=""):?>
@@ -163,7 +166,7 @@ if($_REQUEST['id']) {
                     </div>
                     <div class="col-md-8">
                         <div class="ajax-element">
-
+                            <?$menuSeriesId = array_shift($series)["ID"]; require($_SERVER["DOCUMENT_ROOT"]."/local/tools/getCollectionInfo.php");?>
                         </div>
                     </div>
                 </div>

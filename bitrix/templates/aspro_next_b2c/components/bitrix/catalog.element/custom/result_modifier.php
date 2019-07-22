@@ -130,6 +130,34 @@ $arSKUPropKeys = array();
 $boolSKU = false;
 $strBaseCurrency = '';
 $boolConvert = isset($arResult['CONVERT_CURRENCY']['CURRENCY_ID']);
+if($arResult['IBLOCK_SECTION_ID']){
+    $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"],'ID'=>$arResult['IBLOCK_SECTION_ID']);
+    $rsSections = CIBlockSection::GetList(array('SORT' => 'ASC'), $arFilter,false,array('ID','UF_METKA','UF_DISCOUNT'));
+    while ($arSection = $rsSections->GetNext())
+    {
+        $arElementSection=$arSection;
+    }
+    if($arElementSection['UF_METKA']){
+        foreach ($arElementSection['UF_METKA'] as $mark){
+            if(!in_array($mark,$arResult['PROPERTIES']['HIT']['VALUE']))$arResult['PROPERTIES']['HIT']['VALUE'][] = $mark;
+        }
+    }
+    if($arElementSection['UF_DISCOUNT']){
+        $arResult['DISCOUNT'] = $arElementSection['UF_DISCOUNT'];
+    }
+}
+//$arResult['MARKS'] = GetMarks();
+
+if($arResult['PROPERTIES']['HIT']['VALUE']){
+    $armarks = GetMarks();
+    foreach ($arResult['PROPERTIES']['HIT']['VALUE'] as $mark){
+        $arResult['MARKS'][$mark] = $armarks[$mark];
+    }
+
+}
+
+
+
 
 if(is_array($arResult['PROPERTIES']['CML2_ARTICLE']['VALUE']))
 {
@@ -448,10 +476,25 @@ if ($arResult['CATALOG'] && isset($arResult['OFFERS']) && !empty($arResult['OFFE
 
 		if($arOffer['MORE_PHOTO']){
 			foreach($arOffer['MORE_PHOTO'] as $i => $arImage){
+                if($arResult['DISCOUNT']){
+                    $arWaterMark = array(
+                        array(
+                            'name' => 'watermark',
+                            'type' =>'text',
+                            'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+                            'text' => "Скидка на серию  ".$arResult['DISCOUNT'],
+                            "position" => "topright",
+                            "color" => "000000",
+                        )
+
+                    );
+                }else{
+                    $arWaterMark = [];
+                }
 				if($arImage["ID"]){
 					$arOffer['MORE_PHOTO'][$i]["BIG"]['src'] = CFile::GetPath($arImage["ID"]);
-					$arOffer['MORE_PHOTO'][$i]["SMALL"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 700, "height" => 550), BX_RESIZE_IMAGE_PROPORTIONAL, true, array());
-					$arOffer['MORE_PHOTO'][$i]["THUMB"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 52, "height" => 70), BX_RESIZE_IMAGE_PROPORTIONAL, true, array());
+					$arOffer['MORE_PHOTO'][$i]["SMALL"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 800, "height" => 630), BX_RESIZE_IMAGE_PROPORTIONAL, true, $arWaterMark);
+					$arOffer['MORE_PHOTO'][$i]["THUMB"] = CFile::ResizeImageGet($arImage["ID"], array("width" => 52, "height" => 70), BX_RESIZE_IMAGE_PROPORTIONAL, true, $arWaterMark);
 				}
 			}
 		}
@@ -1215,4 +1258,8 @@ if(is_array($arParams["SECTION_TIZER"]) && $arParams["SECTION_TIZER"]){
 		$obCache->EndDataCache($arTizersData);
 	}
 	$arResult["TIZERS_ITEMS"]=$arTizersData;
-}?>
+}
+
+
+
+

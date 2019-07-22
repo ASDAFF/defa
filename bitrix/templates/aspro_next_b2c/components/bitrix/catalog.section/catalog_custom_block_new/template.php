@@ -509,7 +509,7 @@ else
                             <?foreach($arItem['VISIBLE_PROPS'] as $key=>$prop):?>
                                 <div class="prop-item">
                                     <div class="name"><?=$prop['NAME']?></div>
-                                    <div class="value"><?=$prop['DISPLAY_VALUE']?></div>
+                                    <div class="value"><?=$prop['VALUE']?></div>
                                 </div>
                             <?endforeach;?>
 

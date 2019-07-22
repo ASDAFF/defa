@@ -287,19 +287,27 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 
     <div class="col-lg-8 col-md-7">
         <div class="img_wrapper swipeignore">
+            <style>
+                .right_block ul li:before, .right_block ol li:before{
+                    display: none!important;
+                }
+            </style>
 
 
 
+            <?if($arResult['MARKS']){?>
+                <ul class="series-item-pros quick-metki" style="text-align: left">
 
-            <div class="stickers">
-                <?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-                <?foreach(CNextB2c::GetItemStickers($arResult["PROPERTIES"][$prop]) as $arSticker):?>
-                    <div><div class="<?=$arSticker['CLASS']?>" title="<?=$arSticker['VALUE']?>"><?=$arSticker['VALUE']?></div></div>
-                <?endforeach;?>
-                <?if($arParams["SALE_STIKER"] && $arResult["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
-                    <div><div class="sticker_sale_text"><?=$arResult["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-                <?}?>
-            </div>
+                    <? foreach($arResult['MARKS'] as $arMark) { ?>
+                        <li class="series-item-pros-element" style="height: 38px;">
+                            <div class="pros-icon">
+                                <img width="40px" height="40px" src="<?=$arMark['SRC']?>" alt="" style="float: left">
+                                <span class="pros-text" style="    font-size: medium;float: left"><?=$arMark['NAME']?></span>
+                            </div>
+                        </li>
+                    <? } ?>
+                </ul>
+            <?}?>
             <?$countThumb = count($arResult["MORE_PHOTO"]);?>
             <div class="item_slider has_<?=($countThumb > 1 ? 'more' : 'one');?>">
                 <!--АРТИКУЛ-->
@@ -622,7 +630,18 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                 <?endif;?>
                             </div>
 
-
+                            <!--АКЦИЯ-->
+                            <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
+                                <div class="stock_wrapper">
+                                    <?foreach($arResult["STOCK"] as $key => $arStockItem):?>
+                                        <div class="stock_board <?=($arStockItem["PREVIEW_TEXT"] ? '' : 'nt');?>">
+                                            <div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>"><?=$arStockItem["NAME"];?></a></div>
+                                            <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>
+                                        </div>
+                                    <?endforeach;?>
+                                </div>
+                            <?endif;?>
+                            <!---->
 
                             <!--КОЛИЧЕСТВО-->
                             <div class="quantity_block_wrapper">
@@ -771,17 +790,12 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                 <?elseif($arResult["OFFERS"] && $arParams['TYPE_SKU'] == 'TYPE_1'):?>
                                     <div class="offer_buy_block buys_wrapp" style="display:none;">
                                         <div class="counter_wrapp"></div>
-
-
-                                        <span class="animate-load more-quantity" data-event="jqm" data-param-form_id="MORE_QUANTITY" data-name="MORE_QUANTITY" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Нужно большое количество?</span>
-
-
-
                                     </div>
                                 <?elseif($arResult["OFFERS"] && $arParams['TYPE_SKU'] != 'TYPE_1'):?>
                                     <span class="btn btn-default btn-lg slide_offer transition_bg type_block"><i></i><span><?=\Bitrix\Main\Config\Option::get('aspro.next', "EXPRESSION_READ_MORE_OFFERS_DEFAULT", GetMessage("MORE_TEXT_BOTTOM"));?></span></span>
                                 <?endif;?>
                                 <?endif;?>
+                            <span class="animate-load more-quantity" data-event="jqm" data-param-form_id="MORE_QUANTITY" data-name="MORE_QUANTITY" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Нужно большое количество?</span>
                         </div>
 
 
@@ -812,16 +826,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 
 
 						<div class="col-md-12 right-info">
-                        <?if(is_array($arResult["STOCK"]) && $arResult["STOCK"]):?>
-                            <div class="stock_wrapper">
-                                <?foreach($arResult["STOCK"] as $key => $arStockItem):?>
-                                    <div class="stock_board <?=($arStockItem["PREVIEW_TEXT"] ? '' : 'nt');?>">
-                                        <div class="title"><a class="dark_link" href="<?=$arStockItem["DETAIL_PAGE_URL"]?>"><?=$arStockItem["NAME"];?></a></div>
-                                        <div class="txt"><?=$arStockItem["PREVIEW_TEXT"]?></div>
-                                    </div>
-                                <?endforeach;?>
-                            </div>
-			               <?endif;?>
+
                         <?if($arResult['VISIBLE_PROPS']):?>
 						<?$iCountProps = count($arResult['VISIBLE_PROPS']);?>
 							<?$bShowMoreLink = ($iCountProps > $arParams['VISIBLE_PROP_COUNT']);?>
@@ -1121,7 +1126,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                 </div>
                 <?}?>
 
-                
+
                 <div class="sale-banner">
                     <a href="" class="animated-load" data-event="jqm" data-param-form_id="COMMERCIAL_OFFER" data-name="question">
                         <p>Предоставляем скидки для<br>больших партий товара</p>
@@ -3613,7 +3618,7 @@ $showProps = false;
     <!--УСЛУГИ-->
     <?if($arResult["SERVICES"]):?>
     <div class="services-block">
-        
+
             <?global $arrSaleFilter; $arrSaleFilter = array("ID" => $arResult["PROPERTIES"]["SERVICES"]["VALUE"]);?>
             <?$APPLICATION->IncludeComponent(
                 "bitrix:news.list",
@@ -3674,7 +3679,7 @@ $showProps = false;
                 ),
                 $component, array("HIDE_ICONS" => "Y")
             );?>
-        
+
     </div>
     <?endif;?>
 

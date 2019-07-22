@@ -257,7 +257,6 @@
 
 
                 <div class="col-sm-2">
-                    
                     <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                         <div class="what_do-item-icon">
 
@@ -338,13 +337,13 @@
 <!-- new! -->
 <div class="maxwidth-theme">
         <div class="podborki-block">
-            <div class="tabs tabs-product-categories">
-                <ul class="categories_list">
-                    <li class="cur"><span>Кресла и стулья</span></li>
-                    <li><span>Офисная мебель</span></li>
-                    <li><span>Офисная мебель</span></li>
-                </ul>
-            </div>
+<!--            <div class="tabs tabs-product-categories">-->
+<!--                <ul class="categories_list">-->
+<!--                    <li class="cur"><span>Кресла и стулья</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                </ul>-->
+<!--            </div>-->
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
                 array(
                     "COMPONENT_TEMPLATE" => ".default",
@@ -529,7 +528,7 @@
                     "CATALOG" => "/catalog/",
                     "COMPOSITE_FRAME_MODE" => "A",
                     "COMPOSITE_FRAME_TYPE" => "AUTO",
-                    "TITLE_BLOCK" => "Популярные серии"
+                    "TITLE_BLOCK" => "Многим нравится"
                 ),
                 false
             );?>
@@ -802,7 +801,7 @@
                         "rss" => "rss/",
                         "rss_section" => "#SECTION_ID#/rss/",
                     ),
-                    "TITLE_BLOCK" => "Пресс-центр",
+                    "TITLE_BLOCK" => "Наши новости",
                     "ALL_URL" => "company/news/",
                 ),
                 false
