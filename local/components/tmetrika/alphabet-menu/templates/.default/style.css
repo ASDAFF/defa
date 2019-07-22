@@ -11,7 +11,7 @@
 }
 
 .alphabet-hide {
-    overflow: auto;
+    overflow-y: auto;
 }
 
 

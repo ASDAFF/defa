@@ -63,6 +63,12 @@ class AlphabetMenu extends CBitrixComponent
         $this->includeComponentTemplate();
     }
 
+
+    /**
+     * ID подходящих разделов для буквы
+     * @param $letter
+     * @return array
+     */
     protected function getIdsForLetter($letter)
     {
         $baseFilter = [
