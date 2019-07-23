@@ -7643,7 +7643,6 @@ body.compensate-for-scrollbar {
     background: url("../images/man.png");
     background-position: center center;
     background-repeat: no-repeat;
-    position: absolute;
     width: 171px;
     height: 180px;
     right: 0;
