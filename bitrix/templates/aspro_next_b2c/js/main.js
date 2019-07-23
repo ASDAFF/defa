@@ -3150,8 +3150,9 @@ if(!funcDefined('setPriceItem')){
 
 		if(main_block.find('.buy_block').length)
 		{
-			if(!main_block.find('.buy_block .total_summ').length && !is_sku)
-				$(total_block).appendTo(main_block.find('.buy_block'))
+			if(!main_block.find('.prices_block .offer_buy_block .total_summ').length && !is_sku)
+				$(total_block).insertBefore(main_block.find('.prices_block .offer_buy_block .counter_wrapp'))
+
 		}
 		else if(main_block.find('.counter_wrapp').length)
 		{
