@@ -1,7 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$this->setFrameMode(true);?>
 <div class="series-filters">
-	
+
 <?if( count( $arResult["ITEMS"] ) >= 1 ){?>
 
 	<?if(($arParams["AJAX_REQUEST"]=="N") || !isset($arParams["AJAX_REQUEST"])){?>
@@ -60,17 +60,16 @@
 						</div>
 					</div>
 				</div>
-
                 <div id="target"></div>
                 <div class="col-lg-12 select">
                     <div class="sort-list-wrapper" id="section_block">
                         <p class="sort-evt">Выберите тип:</p>
-                            <ul class="sort-list">
-                                <?foreach ($product_group_name as $key => $category) {
-                                    echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
-                                }
-                                ?>
-                            </ul>
+                        <ul class="sort-list">
+                            <?foreach ($product_group_name as $key => $category) {
+                                echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
+                            }
+                            ?>
+                        </ul>
                     </div>
                 </div>
                 <? foreach ($product_filters as $group => $names) {?>
@@ -250,7 +249,6 @@
 		    </div>
         </div>
 	<?}?>
-
 <?}else{?>
 	<script>
 			$('.sort_header').animate({'opacity':'1'}, 500);
