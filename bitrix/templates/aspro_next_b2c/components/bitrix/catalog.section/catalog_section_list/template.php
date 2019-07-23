@@ -104,7 +104,7 @@
                                             "CACHE_TYPE" => "A",
                                             "COMPATIBLE_MODE" => "Y",
                                             "CONVERT_CURRENCY" => "N",
-                                            "CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":\$group}}]}",
+                                            "CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":$group}}]}",
                                             "DETAIL_URL" => "",
                                             "DISABLE_INIT_JS_IN_COMPONENT" => "N",
                                             "DISPLAY_BOTTOM_PAGER" => "Y",
@@ -185,7 +185,7 @@
                                                 0 => "",
                                                 1 => "",
                                             ),
-                                            "SEF_MODE" => "Y",
+                                            "SEF_MODE" => "N",
                                             "SET_BROWSER_TITLE" => "Y",
                                             "SET_LAST_MODIFIED" => "N",
                                             "SET_META_DESCRIPTION" => "Y",
@@ -211,7 +211,7 @@
                                             "COMPONENT_TEMPLATE" => "catalog_section_list_element",
                                             "AJAX" => $_REQUEST["AJAX"],
                                             "SEF_RULE" => "",
-                                            "SECTION_CODE_PATH" => "#SECTION_CODE_PATH#"
+                                            "SECTION_CODE_PATH" => ""
                                         ),
                                         false
                                     );?>
