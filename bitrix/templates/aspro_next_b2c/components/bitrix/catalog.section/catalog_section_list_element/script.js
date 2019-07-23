@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	SelectOfferProp = function(){
-		// return false;
 		var _this = $(this),
 			obParams = {},
 			obSelect = {},

@@ -105,7 +105,7 @@
                                             "CACHE_TYPE" => "A",
                                             "COMPATIBLE_MODE" => "Y",
                                             "CONVERT_CURRENCY" => "N",
-                                            "CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":$group}}]}",
+                                            "CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"AND\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":\$group}}]}",
                                             "DETAIL_URL" => "",
                                             "DISABLE_INIT_JS_IN_COMPONENT" => "N",
                                             "DISPLAY_BOTTOM_PAGER" => "Y",
@@ -122,8 +122,7 @@
                                             "IBLOCK_ID" => "17",
                                             "IBLOCK_TYPE" => "aspro_next_catalog",
                                             "INCLUDE_SUBSECTIONS" => "Y",
-                                            "LABEL_PROP" => array(
-                                            ),
+                                            "LABEL_PROP" => "",
                                             "LAZY_LOAD" => "N",
                                             "LINE_ELEMENT_COUNT" => "4",
                                             "LOAD_ON_SCROLL" => "N",
@@ -176,8 +175,7 @@
                                                 0 => "",
                                                 1 => "",
                                             ),
-                                            "PROPERTY_CODE_MOBILE" => array(
-                                            ),
+                                            "PROPERTY_CODE_MOBILE" => "",
                                             "RCM_PROD_ID" => $_REQUEST["PRODUCT_ID"],
                                             "RCM_TYPE" => "personal",
                                             "SECTION_CODE" => "kabinet_rukovoditelya",
@@ -188,7 +186,7 @@
                                                 0 => "",
                                                 1 => "",
                                             ),
-                                            "SEF_MODE" => "N",
+                                            "SEF_MODE" => "Y",
                                             "SET_BROWSER_TITLE" => "Y",
                                             "SET_LAST_MODIFIED" => "N",
                                             "SET_META_DESCRIPTION" => "Y",
@@ -212,7 +210,9 @@
                                             "USE_PRICE_COUNT" => "N",
                                             "USE_PRODUCT_QUANTITY" => "N",
                                             "COMPONENT_TEMPLATE" => "catalog_section_list_element",
-                                            "AJAX" => $_REQUEST["AJAX"]
+                                            "AJAX" => $_REQUEST["AJAX"],
+                                            "SEF_RULE" => "",
+                                            "SECTION_CODE_PATH" => "#SECTION_CODE_PATH#"
                                         ),
                                         false
                                     );?>
