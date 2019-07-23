@@ -875,8 +875,6 @@ $section["COLORS"] = $arColorNew;
                 <?endforeach;?>
             </ul>
         </div>
-
-
     </div>
     <?$APPLICATION->IncludeComponent(
         "bitrix:catalog.section",
