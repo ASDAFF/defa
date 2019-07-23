@@ -10,6 +10,7 @@
 			<h5><?=$arParams['TITLE'];?></h5>
 		<?endif;?>
 		<div class="top_wrapper row margin0 <?=($arParams["SHOW_UNABLE_SKU_PROPS"] != "N" ? "show_un_props" : "unshow_un_props");?>">
+            <div class="catalog_block111 items11 block_list">
 	<?}?>
 		<?
 		$currencyList = '';
@@ -246,7 +247,8 @@
                     </div>
 
 	<?if(($arParams["AJAX_REQUEST"]=="N") || !isset($arParams["AJAX_REQUEST"])){?>
-		</div>
+		    </div>
+        </div>
 	<?}?>
 
 <?}else{?>
