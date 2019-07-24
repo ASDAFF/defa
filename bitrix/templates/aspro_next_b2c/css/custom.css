@@ -15546,9 +15546,44 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     content: url('/images/icons/more_hundred.svg');
 }
 
-.advantage-card-shadow p
+.advantage-card-shadow p,
 .government.advantages.how-buy {
     margin-bottom: 60px;
+}
+
+@media (max-width: 1440px) {
+    .advantage-card-shadow {
+        max-width: 330px;
+    }
+
+    .advantage-card-shadow h3 {
+        min-height: 178px;
+    }
+
+    .main-advantages .why-buy-item {
+        margin-bottom: 40px;
+    }
+
+    .main-advantages .why-buy-item span {
+        font-size: 14px!important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .main-advantages .why-buy-item span {
+        font-size: 13px!important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .advantage-card-shadow-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .advantage-card-shadow-wrapper h2 {
+        width: 100%;
+    }
 }
 
 
@@ -16058,10 +16093,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .row.price-quality {
         margin: 0;
         margin-bottom: 40px;
-    }
-
-    .advantage-card-shadow {
-        margin: 0 auto;
     }
 
     .services .services-step::after {
