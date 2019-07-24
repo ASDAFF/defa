@@ -11711,6 +11711,8 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .about-company.advantages {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 20px;
 }
 
@@ -11872,10 +11874,6 @@ table.contacts-stores tr.item td:last-of-type {
     content: url("/images/icons/feedback.svg");
 }
 
-.principles-list .principle:last-child {
-    margin-right: 0;
-}
-
 .principles-list .principle-text {
     max-width: 250px;
 }
@@ -11899,6 +11897,10 @@ table.contacts-stores tr.item td:last-of-type {
     margin-right: 160px;
     margin-bottom: 55px;
     padding: 0;
+}
+
+.about-company .steps-list .step.no-margin {
+    margin-bottom: 0;
 }
 
 .steps-list .step::before {
@@ -11947,6 +11949,15 @@ table.contacts-stores tr.item td:last-of-type {
     color: #d33234;
 }
 
+.steps-list .manager-btn {
+    align-self: center;
+    padding-left: 0;
+}
+
+.steps-list .manager-btn::before {
+    display: none;
+}
+
 .about-company.design-projects .row,
 .about-company.advantages-cards .row {
     margin: 0 15px;
@@ -11955,8 +11966,6 @@ table.contacts-stores tr.item td:last-of-type {
 .design-project-text {
     padding: 0;
 }
-
-
 
 
 
@@ -12040,6 +12049,11 @@ table.contacts-stores tr.item td:last-of-type {
     border-color: #d33234;
 }
 
+.advantage-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .advantage-card {
     position: relative;
     padding: 0;
@@ -12065,12 +12079,12 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .advantage-card::after {
-    top: 42px;
+    top: 50%;
     transform: rotate(45deg);
 }
 
 .advantage-card::before {
-    top: 45px;
+    top: 53%;
     transform: rotate(-45deg);
 }
 
@@ -12093,6 +12107,17 @@ table.contacts-stores tr.item td:last-of-type {
 .advantage-card-text:focus {
     color: #ffffff;
     background-color: #1f2229;
+}
+
+.advantage-card.efficient {
+    display: flex;
+    width: 300px;
+}
+
+.advantage-card.efficient .advantage-card-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 
@@ -12187,6 +12212,305 @@ table.contacts-stores tr.item td:last-of-type {
     display: block;
     font-size: 12px;
     color: #b8b8ba;
+}
+
+/*о компании адаптив*/
+
+@media (max-width: 1440px) {
+    .alphabet-menu-wrapper {
+        display: none;
+    }
+
+    .awards .columns.principles {
+        display: flex;
+    }
+
+    .awards .columns.principles .progress-card {
+        align-self: flex-start;
+    }
+
+    .awards .columns.principles .principles-list .principle {
+        margin-right: 0;
+    }
+
+    .advantage-card.simple:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .advantage-card.efficient:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .advantage-card-wrapper {
+        justify-content: center
+    }
+
+    .left_block .fixed-left-block {
+        max-width: 258px;
+    }
+
+    .steps-list {
+        justify-content: space-between;
+    }
+
+    .steps-list .step {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1280px) {
+    .left_block .fixed-left-block {
+        max-width: 234px;
+    }
+
+    .about-company.advantages .advantage-item {
+        margin-right: 140px;
+    }
+
+    .about-company.advantages .advantage-item:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.principles .principles-list {
+        flex-wrap: wrap;
+    }
+
+    .about-company .reward-card {
+        align-self: flex-start;
+    }
+
+    .about-company.principles .principles-list {
+        justify-content: flex-start;
+    }
+
+    .about-company.principles .principles-list .principle {
+        margin-right: 200px;
+    }
+
+    .about-company.principles .principles-list .principle:nth-child(2n) {
+        margin-right: 200px;
+    }
+
+    .steps-list {
+        justify-content: flex-start;
+    }
+
+    .steps-list .step {
+        margin-right: 200px;
+    }
+
+    .steps-list .step:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .steps-list .step-title {
+        max-width: 300px;
+    }
+
+    .steps-list .step-text {
+        max-width: 300px;
+    }
+
+    .about-company.design-projects.completed_projects {
+        max-width: 800px;
+    }
+
+    .brands_block .brand-item img {
+        max-width: 100%;
+    }
+
+    .awards .columns.principles {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .awards .columns.principles .col-lg-8 {
+        width: 100%;
+    }
+
+    .awards .columns.principles .principles-list.develop {
+        justify-content: space-between;
+    }
+
+    .about-company.awards {
+        max-width: 800px;
+    }
+
+    .about-company.awards +  .partners-company {
+        max-width: 800px;
+        margin: 0;
+    }
+
+    .advantage-card-wrapper {
+        justify-content: flex-start;
+    }
+
+    .advantage-card.efficient {
+        width: 318px;
+        margin-right: 27px;
+    }
+
+    .advantage-card.efficient:nth-child(3n) {
+        margin-right: 27px!important;
+    }
+
+    .advantage-card.efficient:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.catalog .catalog-item {
+        max-width: 250px;
+    }
+
+    .progress-card {
+        padding-right: 50px;
+        width: 100%;
+    }
+
+    .progress-card ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .progress-card .progress-card-item {
+        width: 330px;
+        margin-right: 10px;
+    }
+
+    .progress-card .progress-card-item:first-child {
+        width: 100%;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .left_block .fixed-left-block {
+        max-width: 210px;
+    }
+
+    .about-company.advantages .advantage-item {
+        margin-right: 30px;
+    }
+
+    .about-company .reward-card {
+        margin-left: 20px;
+    }
+
+    .products-tabs {
+         display: none;
+     }
+
+    .tabs-title {
+        display: none;
+    }
+
+    .inner-map {
+        display: none;
+    }
+
+    .about-company.principles .principles-list .principle {
+        margin-right: 93px;
+    }
+
+    .about-company.principles .principles-list .principle:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.design-projects.completed_projects {
+        max-width: 660px;
+    }
+
+    .steps-list .step {
+        margin-right: 70px;
+    }
+
+    .steps-list .step:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .advantage-card {
+        width: 300px;
+    }
+
+    .advantage-card.efficient {
+        width: 300px;
+    }
+
+    .about-company.catalog .catalog-item {
+        max-width: 220px;
+    }
+
+    .about-company.awards {
+        max-width: 635px;
+    }
+
+    .about-company.awards + .partners-company {
+        max-width: 635px;
+        overflow: hidden;
+    }
+
+    .progress-card .progress-card-item {
+        width: 250px;
+    }
+
+    .services .services-steps {
+        padding-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .services .services-step {
+        padding-top: 90px;
+
+    }
+
+    .services .services-step::before {
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .services .services-step::after {
+        content: none;
+    }
+
+    .about-company.principles {
+        margin: 0;
+    }
+
+    .steps-list .step-title {
+        text-align: left;
+    }
+
+    .about-company.catalog {
+        justify-content: flex-start;
+    }
+
+    .principles-list .principle::before {
+        left: 0;
+        transform: none;
+    }
+
+    .principles-list .principle-text {
+        width: 300px;
+    }
+
+    .about-company.advantages-wrap {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .principles-list .principle,
+    .principles-list .principle:last-child {
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+
 }
 
 /*Персональный менеджер адаптив*/
@@ -15756,93 +16080,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
     .about-company.catalog {
         justify-content: flex-start;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .products-tabs {
-        display: none;
-    }
-
-    .tabs-title {
-        display: none;
-    }
-
-    .inner-map {
-        display: none;
-    }
-
-    .advantage-card {
-        margin: 10px auto!important;
-    }
-
-    .services .services-steps {
-        padding-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .services .services-step {
-        padding-top: 90px;
-
-    }
-
-    .services .services-step::before {
-        top: 5px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .services .services-step::after {
-        content: none;
-    }
-
-    .about-company .reward-card {
-        margin-left: 20px;
-    }
-
-    .about-company.principles {
-        margin: 0;
-    }
-
-    .steps-list .step {
-        margin-right: 0;
-    }
-
-    .steps-list .step-title {
-        text-align: left;
-    }
-
-    .principles-list {
-        flex-wrap: wrap;
-    }
-
-    .about-company.catalog {
-        justify-content: flex-start;
-    }
-
-    .principles-list .principle::before {
-        left: 0;
-        transform: none;
-    }
-
-    .principles-list .principle-text {
-        width: 300px;
-    }
-
-    .about-company.advantages-wrap {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .principles-list .principle,
-    .principles-list .principle:last-child {
-        margin-right: 50px;
-    }
-
-    .about-company .card {
-        margin: 0 auto;
     }
 }
 
