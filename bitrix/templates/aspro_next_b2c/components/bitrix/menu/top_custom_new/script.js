@@ -87,10 +87,17 @@ $(document).ready(function(){
 
                 wrap.find('.sectionContainer .wrap').html(result);
 
+
+
+                $('.collections.mlist li .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.collections.mlist').toggleClass('opacity');
+                });
                 /*$('.js-series.mlist li').first().addClass('active');
                 $('.mlist .model-elements').first().addClass('active');*/
                 //x5 20190627 инициализируем слайдер для баннеров
                 window.X5Slider();
+
             },
             onfailure : function()
             {
@@ -102,7 +109,7 @@ $(document).ready(function(){
         return false;
 	});
 
-    $(document).on('click','.collections li',function(){
+    $(document).on('mouseenter','.collections li',function(){
     	var id = $(this).data('id');
         $('.collections li').removeClass('active');
         $(this).addClass('active');
@@ -148,6 +155,8 @@ $(document).ready(function(){
         return false;
 
     });
+
+
 
     $(document).on('mouseenter','.collections.js-series.mlist li',function(){
          var id = $(this).data('id');

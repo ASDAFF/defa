@@ -49,7 +49,7 @@ if($_REQUEST['id']) {
                             <?foreach($models as $model=>$elements):?>
 
                                 <?if($model!=""):?>
-                                    <li data-id="<?=$model?>" class="<?if(!$key):?> active<?$key=true;endif;?>"><?=$model?></li>
+                                    <li data-id="<?=$model?>" class="<?if(!$key):?> active<?$key=true;endif;?>"><?=$model?><i class="fix-icon">х</i></li>
                                 <?endif;?>
                             <?endforeach;?>
                         </ul>
@@ -138,7 +138,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/local/tools/getElementInfo.php");?>
                         <ul class="collections js-series mlist">
                             <?foreach($series as $model=>$lements):?>
                                 <?if($model!=""):?>
-                                    <li data-id="<?=$model?>" class="<?if(!$key):?> active<?$key=true;endif;?>"><?=$lements['NAME']?></li>
+                                    <li data-id="<?=$model?>" class="<?if(!$key):?> active<?$key=true;endif;?>"><?=$lements['NAME']?><i class="fix-icon">х</i></li>
                                 <?endif;?>
                             <?endforeach;?>
                         </ul>
