@@ -14051,6 +14051,10 @@ div#ajax-sectionContainer {
 }
 
 
+/*текстуры*/
+.sectionContainer .block .catalog_block .catalog_item_wrapp .catalog_item .footer_button .list_values_wrapper li{
+    padding: 4px 5px;
+}
 
 
 /*АКЦИИ В МЕНЮ*/
@@ -14231,7 +14235,27 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     right: 15px;
     width: 10px;
     height: 10px;
+    opacity: 0;
+    transition: 0.3s;
 }
+
+.sectionContainer .mlist li:hover .fix-icon {
+    opacity: 1;
+}
+
+.sectionContainer .mlist li.active .fix-icon {
+    opacity: 1;
+}
+
+.sectionContainer .mlist li .fix-icon svg {
+    transition: 0.3s;
+}
+
+.sectionContainer .mlist li .fix-icon.active svg{
+    transform: rotate(-45deg);
+    transition: 0.3s;
+}
+
 .sectionContainer .mlist li .fix-icon:hover svg path{
     fill: #d33234;
 }
