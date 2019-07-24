@@ -1025,7 +1025,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                 <?if($arTmpModif["CHILDREN"]){?>
                 <div class="row">
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <div class="modification">
                             <div class="wraps hidden_print addon_type">
 
