@@ -2658,6 +2658,35 @@ $section["COLORS"] = $arColorNew;
     <?@include_once('page_blocks/'.$arParams["SECTION_ELEMENTS_TYPE_VIEW"].'.php');?>
 </div>
 
+    <div class="panel-anchors">
+        <ul class="anchors-list">
+            <li>
+                <a href="#moreInformSeries" class="anchor-desc" id="showMeDesc">Описание</a>
+            </li>
+            <li>
+                <a href="#tables" class="anchor-toggle active">Столы</a>
+            </li>
+            <li>
+                <a href="#tablesNegotiations" class="anchor-toggle">Столы для переговоров</a>
+            </li>
+            <li>
+                <a href="#thumbs" class="anchor-toggle">Тумбы</a>
+            </li>
+            <li>
+                <a href="#annex" class="anchor-toggle">Приставки</a>
+            </li>
+            <li>
+                <a href="#cupboard" class="anchor-toggle">Шкафы</a>
+            </li>
+            <li>
+                <a href="#screens" class="anchor-toggle">Экраны</a>
+            </li>
+            <li>
+                <a href="#chairs" class="anchor-toggle">Кресла и стулья</a>
+            </li>
+        </ul>
+    </div>
+
 <?CNext::checkBreadcrumbsChain($arParams, $arSection);?>
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
 

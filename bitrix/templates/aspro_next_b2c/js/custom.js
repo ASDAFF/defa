@@ -476,13 +476,13 @@ $(document).ready(function() {
 
             });
 
-            $('.series-main.sets-block .slider-for-sets').each(function(key, item) {
+            $('.series-main.sets-block .slider-for').each(function(key, item) {
 
                 var sliderIdNameSets = 'sliderSets' + key;
                 var sliderNavIdNameSets = 'sliderSetsNav' + key;
 
                 this.id = sliderIdNameSets;
-                $('.series-main.sets-block .slider-nav-sets')[key].id = sliderNavIdNameSets;
+                $('.series-main.sets-block .slider-nav')[key].id = sliderNavIdNameSets;
 
                 var sliderIdSets = '#' + sliderIdNameSets;
                 var sliderNavIdSets = '#' + sliderNavIdNameSets;
