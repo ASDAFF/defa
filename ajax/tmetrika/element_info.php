@@ -77,7 +77,7 @@ $Offer = $Product->Offers[0];
                 <? /** @var Offer $locOffer */
                 foreach ($Product->Offers as $locOffer):?>
                 <div class="color-item">
-                    <img src="<?=$locOffer->getColor()->getFile()?>" alt="">
+                    <img src="<?=$locOffer->getColor()->getFile(['width' => 33,'height' => 33])?>" alt="">
                 </div>
                 <?endforeach?>
             </div>
