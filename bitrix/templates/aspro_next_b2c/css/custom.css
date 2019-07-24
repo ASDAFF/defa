@@ -12795,7 +12795,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .row.text {
-    margin-bottom: 65px;
+
 }
 
 .why-we {
@@ -12827,6 +12827,7 @@ table.contacts-stores tr.item td:last-of-type {
 
 .why-we .why-we-list li {
     position: relative;
+    min-width: 290px;
 }
 
 .why-we .why-we-list li::before {
@@ -12942,6 +12943,89 @@ table.contacts-stores tr.item td:last-of-type {
     transform: translateX(-50%);
 }
 
+.always-available-wrap .advantages {
+    margin-top: 0;
+    justify-content: space-between;
+}
+
+.always-available-wrap .advantage-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.always-available-wrap .advantages-text.big {
+    width: 395px;
+    max-width: 395px;
+}
+
+.why-we small {
+    display: block;
+    text-align: center;
+}
+
+@media (max-width: 1440px) {
+    .why-we {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .why-we .why-we-list li:not(:last-child)::after {
+        right: -37px;
+        width: 70px;
+    }
+
+    .why-we .why-we-list li {
+        min-width: 270px;
+    }
+
+    .defo_advantages {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .why-we .why-we-list li {
+        min-width: 330px;
+    }
+
+    .why-we-wrapper h3 {
+        margin: 0 auto;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .always-available-wrap .advantages-text.big {
+        width: 320px;
+    }
+
+    .always-available-wrap .advantages-text {
+        margin-bottom: 54px;
+    }
+
+    .always-available-wrap .advantages-text.big {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 414px) {
+    .why-we-title {
+        font-size: 20px;
+    }
+
+    .why-we-subtitle {
+        font-size: 13px;
+    }
+
+    .why-we small {
+        font-size: 10px;
+    }
+
+    .defo_advantages {
+        margin-right: 0!important;
+        font-size: 16px;
+    }
+}
 
 
 
