@@ -7,7 +7,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Defo\\": "lib/Defo/"
+            "Defo\\": "lib/Defo/",
+            "Tmetrika\\": "classes/Tmetrika"
         }
     }
 }

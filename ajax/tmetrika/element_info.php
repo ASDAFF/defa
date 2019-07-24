@@ -1,6 +1,6 @@
 <?php
-
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+use Tmetrika\Product;
 
 $element = CIBlockElement::GetByID($_REQUEST["id"])->GetNextElement();
 $fields = $element->GetFields();
@@ -11,12 +11,14 @@ $detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
 $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
 
 
-$offers = CCatalogSKU::getOffersList($fields["ID"]);
+$offers = CCatalogSKU::getOffersList($fields["ID"],null,null,['NAME','CATALOG_PRICE','DETAIL_TEXT']);
+
+$product = new Product(array_keys($offers[$fields['ID']])[0]);
+
 
 foreach ($offers[$fields["ID"]] as $key => $offer){
     $offerData = CIBlockElement::GetByID($key)->GetNextElement();
 }
-
 
 ?>
 
@@ -61,9 +63,14 @@ foreach ($offers[$fields["ID"]] as $key => $offer){
             </span>
         </div>
         <div class="price-wrap">
-            <span class="price">11 990 &#8381;</span>
-            <span class="old-price">18 690</span>
-            <span class="sale">-30%</span>
+            <?if($product->saleValue()):?>
+            <span class="price"><?=$product->discountValue()?> &#8381;</span>
+            <span class="old-price"><?=$product->getMinPrice(true)?></span>
+
+            <span class="sale">-<?=$product->saleValue()?>%</span>
+            <?else:?>
+                <span class="price"><?=$product->getMinPrice(true)?>&#8381;</span>
+            <?endif?>
         </div>
         <a href="" class="blue-link">Гарантируем лучшие условия</a>
 
