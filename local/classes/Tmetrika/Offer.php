@@ -22,20 +22,23 @@ class Offer {
     {
 
 
-        $value = data_get( $this->props, 'SKIDKA.VALUE', false);
+        $value = data_get($this->props, 'SKIDKA.VALUE', false);
 
         return $value ? str_replace("%", "", $value) : $value;
     }
 
     /**
+     * @param null $colorCode
+     *
      * @return ColorReference|null
      */
-    public function getColor()
+    public function getColor($colorCode = null)
     {
-        $xmlID =  data_get($this->props,'COLOR_REF.VALUE');
+        $colorCode = !$colorCode ? 'COLOR_REF' : $colorCode;
+        $xmlID = data_get($this->props, $colorCode . '.VALUE');
 
-        if($xmlID)
-            return ColorReference::where('UF_XML_ID',$xmlID)->first();
+        if ($xmlID)
+            return ColorReference::where('UF_XML_ID', $xmlID)->first();
 
         return null;
     }

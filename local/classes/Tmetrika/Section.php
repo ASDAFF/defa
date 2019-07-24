@@ -37,4 +37,32 @@ class Section {
 
         return $tizers;
     }
+
+    public function getSeriaUniqueColors()
+    {
+        $colors = [];
+        $t = \CIblockElement::GetList([], ['IBLOCK_ID' => 17, 'SECTION_ID' => $this->id, 'ACTIVE' => 'Y']);
+        while ($el = $t->GetNext()) {
+            $product = new Product($el['ID']);
+
+            $colors = array_merge($colors, $product->getColors());
+        }
+
+        return array_unique($colors);
+    }
+
+    public function getSeriaUniqueDopColors()
+    {
+        $colors = [];
+        $t = \CIblockElement::GetList([], ['IBLOCK_ID' => 17, 'SECTION_ID' => $this->id, 'ACTIVE' => 'Y']);
+        while ($el = $t->GetNext()) {
+            $product = new Product($el['ID']);
+
+            $colors = array_merge($colors, $product->getCustomColors('TEXTURE_KARKASA'));
+            $colors = array_merge($colors, $product->getCustomColors('TEKSTURA_DVEREJ'));
+        }
+
+        return array_unique($colors);
+    }
+
 }

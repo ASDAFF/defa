@@ -88,4 +88,24 @@ class Product {
 
     }
 
+    /**
+     * @param $colorCode
+     *
+     * @return array
+     */
+    public function getCustomColors($colorCode)
+    {
+        $colors = [];
+        /** @var Offer $offer */
+        foreach ($this->Offers as $offer) {
+            $color = $offer->getColor($colorCode);
+
+            if ($color)
+                $colors[] = $color->getFile();
+        }
+
+        return $colors;
+    }
+
+
 }

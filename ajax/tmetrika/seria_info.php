@@ -70,7 +70,7 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
             <? foreach ($Section->Advantages() as $advantage) { ?>
                 <li class="series-item-pros-element">
                     <div class="pros-icon">
-                        <img src="<?= $advantage->getFile(['width' => 50,'height' => 50]) ?>" alt="">
+                        <img src="<?= $advantage->getFile(['width' => 50, 'height' => 50]) ?>" alt="">
                     </div>
                     <span class="pros-text">
                         <?= $advantage["UF_NAME"] ?>
@@ -81,21 +81,24 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
         <div class="colors-wrap">
             <div class="series-item-color-solutions">
                 <h3>Цветовые решения</h3>
-                <div class="series-item-color-content">
-                    <div class="series-item-color-wrapper">
-                        <div class="series-item-color-pic" data-title=""
-                             style="background: url()">
-                            <a href="#"
-                               class="series-item-color-link series-item-color-link-main"
-                               data-color-xml-id="">
-                                <img src="https://via.placeholder.com/90x60" alt="">
-                            </a>
+                <? foreach ($Section->getSeriaUniqueColors() as $color): ?>
+                    <div class="series-item-color-content">
+                        <div class="series-item-color-wrapper">
+                            <div class="series-item-color-pic" data-title=""
+                                 style="background: url()">
+                                <a href="#"
+                                   class="series-item-color-link series-item-color-link-main"
+                                   data-color-xml-id="">
+                                    <img width="90" height="60" src="<?= $color ?>" alt="">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <? endforeach ?>
             </div>
             <div class="series-item-color-solutions">
                 <h3>Дополнительные цвета</h3>
+                <? foreach ($Section->getSeriaUniqueDopColors() as $color): ?>
                 <div class="series-item-color-content">
                     <div class="series-item-color-wrapper">
                         <div class="series-item-color-pic" data-title=""
@@ -108,6 +111,7 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
                         </div>
                     </div>
                 </div>
+                <? endforeach ?>
             </div>
         </div>
         <div class="series-item-buttons">
