@@ -1,30 +1,27 @@
 <?php
 
 use Illuminate\Support\Str;
+use Tmetrika\Section;
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
-$seria = CIBlockSection::GetList([], [
-    "ID" => $_REQUEST["id"],
-    "IBLOCK_ID" => 17 // todo вынести в константу
-], false, [
-    "UF_*",
-])->GetNext();
+
+$Section = new Section($_REQUEST["id"]);
 
 $photos = [];
 
-$gallery = CIBlockElement::GetByID($seria["UF_SERIES_GALLERY"])->GetNextElement();
+$gallery = CIBlockElement::GetByID($Section->Section["UF_SERIES_GALLERY"])->GetNextElement();
 
 if ($gallery) {
     $photos = $gallery->GetProperties()["PICTURES"]["VALUE"];
 }
 
-$description = Str::words(strip_tags($seria["~DESCRIPTION"]), 20);
+$description = Str::words(strip_tags($Section->Section["~DESCRIPTION"]), 20);
 
 $photos = array_slice($photos, 0, 4);
 
 //todo в класс
-$query = CIBlockElement::GetByID($seria["UF_PROS_SERIES"]);
+$query = CIBlockElement::GetByID($Section->Section["UF_PROS_SERIES"]);
 
 $advantages = [];
 
@@ -37,24 +34,24 @@ if ($advantages) {
     }
 }
 
-$parent = CIBlockSection::GetByID($seria["IBLOCK_SECTION_ID"])->GetNext();
+$parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNext();
 
 ?>
 
 <div class="alphabet-demo-series alphabet-demo-item active">
 
-    <div hidden><?= $seria["ID"] ?></div>
+    <div hidden><?= $Section->Section["ID"] ?></div>
 
     <div class="column img">
         <h3 class="series-name">
-            <?= $seria["NAME"] ?>
+            <?= $Section->Section["NAME"] ?>
         </h3>
         <h4 class="series-subname">
             <?= $parent["NAME"] ?>
         </h4>
         <div class="series-slider-wrapper">
             <div class="main-img main-slide">
-                <img src="<?= CFile::GetPath($seria["PICTURE"]) ?>" class="series-item__main-photo">
+                <img src="<?= CFile::GetPath($Section->Section["PICTURE"]) ?>" class="series-item__main-photo">
             </div>
             <div class="toggle-img">
                 <? foreach ($photos as $photo) { ?>
@@ -70,13 +67,13 @@ $parent = CIBlockSection::GetByID($seria["IBLOCK_SECTION_ID"])->GetNext();
             <?= $description ?>
         </p>
         <ul class="series-item-pros">
-            <? foreach ($advantages as $advantage) { ?>
+            <? foreach ($Section->Advantages() as $advantage) { ?>
                 <li class="series-item-pros-element">
                     <div class="pros-icon">
-                        <img src="<?= $advantage["ICON"] ?>" alt="">
+                        <img src="<?= $advantage->getFile(['width' => 50,'height' => 50]) ?>" alt="">
                     </div>
                     <span class="pros-text">
-                        <?= $advantage["NAME"] ?>
+                        <?= $advantage["UF_NAME"] ?>
                     </span>
                 </li>
             <? } ?>
@@ -115,7 +112,7 @@ $parent = CIBlockSection::GetByID($seria["IBLOCK_SECTION_ID"])->GetNext();
         </div>
         <div class="series-item-buttons">
             <a class="btn" href="#">Заказать тест-драйв</a>
-            <a class="btn" href="<?= $seria["SECTION_PAGE_URL"] ?>">
+            <a class="btn" href="<?= $Section->Section["SECTION_PAGE_URL"] ?>">
                 Подробнее о серии
             </a>
         </div>
