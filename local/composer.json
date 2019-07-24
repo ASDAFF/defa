@@ -3,12 +3,15 @@
     "type": "project",
     "require": {
         "symfony/var-dumper": "^4.3",
-        "illuminate/support": "^5.8"
+        "illuminate/support": "^5.6",
+        "illuminate/database": "5.6.*",
+        "arrilot/bitrix-models": "0.7.*"
     },
     "autoload": {
         "psr-4": {
             "Defo\\": "lib/Defo/",
-            "Tmetrika\\": "classes/Tmetrika"
+            "Tmetrika\\": "classes/Tmetrika",
+            "ORM\\": "classes/ORM"
         }
     }
 }

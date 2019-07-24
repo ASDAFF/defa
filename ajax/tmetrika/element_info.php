@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+use Tmetrika\Offer;
 use Tmetrika\Product;
 
 $element = CIBlockElement::GetByID($_REQUEST["id"])->GetNextElement();
@@ -13,13 +14,9 @@ $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VID
 
 $offers = CCatalogSKU::getOffersList($fields["ID"],null,null,['NAME','CATALOG_PRICE','DETAIL_TEXT']);
 
-$product = new Product(array_keys($offers[$fields['ID']])[0]);
+$Product = new Product($fields['ID']);
 
-
-foreach ($offers[$fields["ID"]] as $key => $offer){
-    $offerData = CIBlockElement::GetByID($key)->GetNextElement();
-}
-
+$Offer = $Product->Offers[0];
 ?>
 
 <div class="alphabet-demo-product alphabet-demo-item active">
@@ -63,13 +60,13 @@ foreach ($offers[$fields["ID"]] as $key => $offer){
             </span>
         </div>
         <div class="price-wrap">
-            <?if($product->saleValue()):?>
-            <span class="price"><?=$product->discountValue()?> &#8381;</span>
-            <span class="old-price"><?=$product->getMinPrice(true)?></span>
+            <?if($Offer->saleValue()):?>
+            <span class="price"><?=$Product->discountValue()?> &#8381;</span>
+            <span class="old-price"><?=$Product->getMinPrice(true)?></span>
 
-            <span class="sale">-<?=$product->saleValue()?>%</span>
+            <span class="sale">-<?=$Offer->saleValue()?>%</span>
             <?else:?>
-                <span class="price"><?=$product->getMinPrice(true)?>&#8381;</span>
+                <span class="price"><?=$Product->getMinPrice(true)?>&#8381;</span>
             <?endif?>
         </div>
         <a href="" class="blue-link">Гарантируем лучшие условия</a>
@@ -77,22 +74,12 @@ foreach ($offers[$fields["ID"]] as $key => $offer){
         <div class="color-wrap">
             <span>Цвета и отделки:</span>
             <div class="colors-wrapper">
+                <? /** @var Offer $locOffer */
+                foreach ($Product->Offers as $locOffer):?>
                 <div class="color-item">
-                    <img src="https://via.placeholder.com/33x33" alt="">
+                    <img src="<?=$locOffer->getColor()->getFile()?>" alt="">
                 </div>
-                <div class="color-item">
-                    <img src="https://via.placeholder.com/33x33" alt="">
-                </div>
-                <div class="color-item">
-                    <img src="https://via.placeholder.com/33x33" alt="">
-                </div>
-
-                <div class="color-item">
-                    <img src="https://via.placeholder.com/33x33" alt="">
-                </div>
-                <div class="color-item">
-                    <img src="https://via.placeholder.com/33x33" alt="">
-                </div>
+                <?endforeach?>
             </div>
             <a href="" class="blue-link">Нужен в другом цвете?</a>
         </div>

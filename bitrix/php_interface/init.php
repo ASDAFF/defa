@@ -1,5 +1,9 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'].'/local/vendor/autoload.php');
+
+Arrilot\BitrixModels\ServiceProvider::register();
+Arrilot\BitrixModels\ServiceProvider::registerEloquent();
+
 define("BX_AGENTS_LOG_FUNCTION","updateBalance");
 define("LOG_FILENAME", "/var/www/bitrix/data/www/defo.ru/log/balance2.log");
 
@@ -13,7 +17,7 @@ if(file_exists(__DIR__.'/functions.php')) {
 	require_once __DIR__.'/functions.php';
 }
 //x5 20190628
-\XFive\Events\EventManager::initEvents();
+//\XFive\Events\EventManager::initEvents();
 
 \Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'onSaleAdminOrderInfoBlockShow', 'onSaleAdminOrderInfoBlockShow');// Split delivery in order_view for managers
 AddEventHandler("sale", "OnOrderNewSendEmail", "OnOrderNewSendMailHandler");
@@ -1244,7 +1248,7 @@ fwrite($fp, $arFields['CODE']." -- ".$arFields['NAME']."\n");
 }
 
 
-
+use Arrilot\BitrixModels\ServiceProvider;
 use Bitrix\Main\Context,
     Bitrix\Currency\CurrencyManager,
 	Bitrix\Sale,
