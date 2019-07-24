@@ -22,16 +22,13 @@ $APPLICATION->SetTitle("О компании");
                 <p class="advantages-number"><span class="big">44</span> тысячи</p>
                 <p class="advantages-text">наименований мебели обеспечивают широкий выбор</p>
             </div>
-        </div>
-
-        <div class="row about-company advantages">
             <div class="col-lg-4 advantage-item">
                 <p class="advantages-number"><span class="big">55</span> тысяч складских метров</p>
                 <p class="advantages-text">позволяет поставлять мебель в кратчайшие сроки</p>
                 <a href="/services/dostavka/" class="arrow-link">Подробнее о доставке <span></span></a>
             </div>
             <div class="col-lg-4 advantage-item">
-                <p class="advantages-number"><span class="big">>107</span> салонов</p>
+                <p class="advantages-number"><span class="big">75</span> салонов</p>
                 <p class="advantages-text">мы открыли по всей России, чтобы купить мебель было еще проще</p>
                 <a href="/contacts/" class="arrow-link">Карта салонов <span></span></a>
             </div>
@@ -91,9 +88,12 @@ $APPLICATION->SetTitle("О компании");
                     <h4 class="step-title">Доставка и сборка</h4>
                     <p class="step-text">Бережная доставка собственным автотранспортом и профессиональная сборка</p>
                 </li>
-                <li class="step">
+                <li class="step no-margin">
                     <h4 class="step-title">Постгарантийное обслуживание</h4>
                     <p class="step-text">Гарантийное и сервисное обслуживание после завершения проекта</p>
+                </li>
+                <li class="manager-btn">
+                    <span class="animate-load red-btn needHelpCompany">Вызвать менеджера</span>
                 </li>
             </ol>
         </div>
@@ -244,108 +244,139 @@ $APPLICATION->SetTitle("О компании");
     </div>
 
     <div class="row about-company advantages-cards">
-        <div class="row">
+        <div class="row advantage-card-wrapper simple">
             <div class="col-lg-4 advantage-card card">
                 <a href="/company/advantage/always_available/" class="advantage-card-text">Поставка мебели из наличия в кратчайшие сроки</a>
             </div>
-            <div class="col-lg-4 advantage-card card">
+            <div class="col-lg-4 advantage-card card simple">
                 <a href="/services/dizayn-proekt/" class="advantage-card-text">Бесплатный дизайн-проект<br> помещения в 3D</a>
             </div>
-            <div class="col-lg-4 advantage-card card">
+            <div class="col-lg-4 advantage-card card simple">
                 <a href="/services/" class="advantage-card-text">Полный комплекс сервисных услуг: доставка, сборка и т.д.</a>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 advantage-card card">
+            <div class="col-lg-4 advantage-card card simple">
                 <a href="/services/vyezd-spetsialista/" class="advantage-card-text">Возможность производства мебели по индивидуальному проекту</a>
             </div>
-            <div class="col-lg-4 advantage-card card">
+            <div class="col-lg-4 advantage-card card simple">
                 <a href="/company/advantage/10_years_warranty/" class="advantage-card-text">Расширенная гарантия до 10 лет на мебель и до 5 лет на кресла</a>
             </div>
-            <div class="col-lg-4 advantage-card card">
+            <div class="col-lg-4 advantage-card card simple">
                 <a href="/company/b2g/" class="advantage-card-text">Полное сопровождение контрактов по 223-ФЗ и 44-ФЗ</a>
             </div>
         </div>
     </div>
 
     <div class="top_block">
-        <h3 class="title_block big tabs-title">Прайс-листы и презентации</h3>
+        <h3 class="title_block big">Все для эффективной рабочей среды</h3>
     </div>
 
-    <div class="row products-tabs">
-        <div class="col-lg-12 products-tabs-card card">
-            <div class="row products-tabs-content">
-                <div class="col-lg-2 tabs-list-wrap">
-                    <ul class="tabs-list">
-                        <li class="tabs-item"><a href="">Мебель для офиса</a></li>
-                        <li class="tabs-item active"><a href="">Кресла и стулья</a></li>
-                        <li class="tabs-item"><a href="">Мебель для приемных</a></li>
-                        <li class="tabs-item"><a href="">Переговорки</a></li>
-                        <li class="tabs-item"><a href="">Мягкая мебель</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-5 products-tabs-wrap">
-                    <ul class="products-list">
-                        <li class="products-item"><a href="">Тревизо</a></li>
-                        <li class="products-item"><a href="">Ларус</a></li>
-                        <li class="products-item active"><a href="">Пингеко</a></li>
-                        <li class="products-item"><a href="">Гемсоун</a></li>
-                        <li class="products-item"><a href="">Спич</a></li>
-                        <li class="products-item"><a href="">Венеция</a></li>
-                        <li class="products-item"><a href="">Прего</a></li>
-                        <li class="products-item"><a href="">Плаза</a></li>
-                        <li class="products-item"><a href="">Таурус</a></li>
-                        <li class="products-item"><a href="">Смартекст</a></li>
-                        <li class="products-item"><a href="">Вегас</a></li>
-                        <li class="products-item"><a href="">Мастер</a></li>
-                        <li class="products-item"><a href="">Нортон</a></li>
-                        <li class="products-item"><a href="">Ричмонд</a></li>
-                        <li class="products-item"><a href="">Лофт</a></li>
-                    </ul>
-                    <ul class="products-list">
-                        <li class="products-item"><a href="">Тревизо</a></li>
-                        <li class="products-item"><a href="">Ларус</a></li>
-                        <li class="products-item"><a href="">Пингеко</a></li>
-                        <li class="products-item"><a href="">Гемсоун</a></li>
-                        <li class="products-item"><a href="">Спич</a></li>
-                        <li class="products-item"><a href="">Венеция</a></li>
-                        <li class="products-item"><a href="">Прего</a></li>
-                        <li class="products-item"><a href="">Плаза</a></li>
-                        <li class="products-item"><a href="">Таурус</a></li>
-                        <li class="products-item"><a href="">Смартекст</a></li>
-                        <li class="products-item"><a href="">Вегас</a></li>
-                        <li class="products-item"><a href="">Мастер</a></li>
-                        <li class="products-item"><a href="">Нортон</a></li>
-                        <li class="products-item"><a href="">Ричмонд</a></li>
-                        <li class="products-item"><a href="">Лофт</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-5 product-demo">
-                    <img class="product-demo-img" src="/images/iq.jpg" alt="" width="441" height="630">
-                    <ul class="product-demo-documents">
-                        <li>
-                            <a class="document pdf" href="">Описание товара согласно ФЗ-223 <span class="doc-size">12,41 МБ</span></a>
-                        </li>
-                        <li>
-                            <a class="document pdf" href="">Описание товара согласно ФЗ-44 <span class="doc-size">37,29 МБ</span></a>
-                        </li>
-                        <li>
-                            <a class="document pdf" href="">Презентация <span class="doc-size">43,95 МБ</span></a>
-                        </li>
-                        <li>
-                            <a class="document pdf" href="">Прайс-лист <span class="doc-size">37,29 МБ</span></a>
-                        </li>
-                        <li class="link-wrap">
-                            <a href="" class="arrow-link">Скачать одним архивом<span></span></a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="row about-company advantages-cards">
+        <div class="row advantage-card-wrapper efficient">
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="/catalog/office/kabinet_rukovoditelya/" class="advantage-card-text">Кабинеты для руководителей</a>
             </div>
-            <div class="row">
-                <div class="col-lg-7 link-block"><a href="/catalog" class="arrow-link">Перейти в каталог<span></span></a></div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="/catalog/office/mebel_dlya_personala/" class="advantage-card-text">Мебель для персонала</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="" class="advantage-card-text">Офисные кресла и стулья</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="/catalog/office/mebel_dlya_peregovornykh/" class="advantage-card-text">Мебель для переговорных</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="/catalog/office/mebel_dlya_priemnykh/" class="advantage-card-text">Мебель для приемных</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="/catalog/office/mebel_dlya_komnaty_otdykha/" class="advantage-card-text">Мебель для комнат отдыха</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="" class="advantage-card-text">Оснащение общественных объектов</a>
+            </div>
+            <div class="col-lg-4 advantage-card card efficient">
+                <a href="" class="advantage-card-text">Решение для HoReCa</a>
             </div>
         </div>
     </div>
+
+<!--    <div class="top_block">-->
+<!--        <h3 class="title_block big tabs-title">Прайс-листы и презентации</h3>-->
+<!--    </div>-->
+
+<!--    <div class="row products-tabs">-->
+<!--        <div class="col-lg-12 products-tabs-card card">-->
+<!--            <div class="row products-tabs-content">-->
+<!--                <div class="col-lg-2 tabs-list-wrap">-->
+<!--                    <ul class="tabs-list">-->
+<!--                        <li class="tabs-item"><a href="">Мебель для офиса</a></li>-->
+<!--                        <li class="tabs-item active"><a href="">Кресла и стулья</a></li>-->
+<!--                        <li class="tabs-item"><a href="">Мебель для приемных</a></li>-->
+<!--                        <li class="tabs-item"><a href="">Переговорки</a></li>-->
+<!--                        <li class="tabs-item"><a href="">Мягкая мебель</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="col-lg-5 products-tabs-wrap">-->
+<!--                    <ul class="products-list">-->
+<!--                        <li class="products-item"><a href="">Тревизо</a></li>-->
+<!--                        <li class="products-item"><a href="">Ларус</a></li>-->
+<!--                        <li class="products-item active"><a href="">Пингеко</a></li>-->
+<!--                        <li class="products-item"><a href="">Гемсоун</a></li>-->
+<!--                        <li class="products-item"><a href="">Спич</a></li>-->
+<!--                        <li class="products-item"><a href="">Венеция</a></li>-->
+<!--                        <li class="products-item"><a href="">Прего</a></li>-->
+<!--                        <li class="products-item"><a href="">Плаза</a></li>-->
+<!--                        <li class="products-item"><a href="">Таурус</a></li>-->
+<!--                        <li class="products-item"><a href="">Смартекст</a></li>-->
+<!--                        <li class="products-item"><a href="">Вегас</a></li>-->
+<!--                        <li class="products-item"><a href="">Мастер</a></li>-->
+<!--                        <li class="products-item"><a href="">Нортон</a></li>-->
+<!--                        <li class="products-item"><a href="">Ричмонд</a></li>-->
+<!--                        <li class="products-item"><a href="">Лофт</a></li>-->
+<!--                    </ul>-->
+<!--                    <ul class="products-list">-->
+<!--                        <li class="products-item"><a href="">Тревизо</a></li>-->
+<!--                        <li class="products-item"><a href="">Ларус</a></li>-->
+<!--                        <li class="products-item"><a href="">Пингеко</a></li>-->
+<!--                        <li class="products-item"><a href="">Гемсоун</a></li>-->
+<!--                        <li class="products-item"><a href="">Спич</a></li>-->
+<!--                        <li class="products-item"><a href="">Венеция</a></li>-->
+<!--                        <li class="products-item"><a href="">Прего</a></li>-->
+<!--                        <li class="products-item"><a href="">Плаза</a></li>-->
+<!--                        <li class="products-item"><a href="">Таурус</a></li>-->
+<!--                        <li class="products-item"><a href="">Смартекст</a></li>-->
+<!--                        <li class="products-item"><a href="">Вегас</a></li>-->
+<!--                        <li class="products-item"><a href="">Мастер</a></li>-->
+<!--                        <li class="products-item"><a href="">Нортон</a></li>-->
+<!--                        <li class="products-item"><a href="">Ричмонд</a></li>-->
+<!--                        <li class="products-item"><a href="">Лофт</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="col-lg-5 product-demo">-->
+<!--                    <img class="product-demo-img" src="/images/iq.jpg" alt="" width="441" height="630">-->
+<!--                    <ul class="product-demo-documents">-->
+<!--                        <li>-->
+<!--                            <a class="document pdf" href="">Описание товара согласно ФЗ-223 <span class="doc-size">12,41 МБ</span></a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="document pdf" href="">Описание товара согласно ФЗ-44 <span class="doc-size">37,29 МБ</span></a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="document pdf" href="">Презентация <span class="doc-size">43,95 МБ</span></a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="document pdf" href="">Прайс-лист <span class="doc-size">37,29 МБ</span></a>-->
+<!--                        </li>-->
+<!--                        <li class="link-wrap">-->
+<!--                            <a href="" class="arrow-link">Скачать одним архивом<span></span></a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-lg-7 link-block"><a href="/catalog" class="arrow-link">Перейти в каталог<span></span></a></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="top_block">
         <h3 class="title_block big">Каталоги</h3>
@@ -373,13 +404,13 @@ $APPLICATION->SetTitle("О компании");
                 <span class="year">2018</span>
             </a>
         </div>
-        <div class="col-lg-3 catalog-item">
-            <a href="/documents/catalog-4.pdf" download>
-                <img src="/images/catalog-4.jpg" alt="" class="catalog-img" width="232" height="232">
-                <h3 class="catalog-name">Портфолио дизайн-проектов</h3>
-                <span class="year">2018</span>
-            </a>
-        </div>
+<!--        <div class="col-lg-3 catalog-item">-->
+<!--            <a href="/documents/catalog-4.pdf" download>-->
+<!--                <img src="/images/catalog-4.jpg" alt="" class="catalog-img" width="232" height="232">-->
+<!--                <h3 class="catalog-name">Портфолио дизайн-проектов</h3>-->
+<!--                <span class="year">2018</span>-->
+<!--            </a>-->
+<!--        </div>-->
     </div>
 
     <div class="top_block">
@@ -394,13 +425,16 @@ $APPLICATION->SetTitle("О компании");
                         <p class="principle-text">3 мебельные фабрики в России и Белоруссии по производству корпусной мебели</p>
                     </li>
                     <li class="principle">
+                        <p class="principle-text">Отслеживаем и внедряем последние  тренды в дизайне офисной мебели</p>
+                    </li>
+                    <li class="principle">
                         <p class="principle-text">Контрактные производства кресел в России и Китае</p>
                     </li>
                     <li class="principle">
-                        <p class="principle-text">Эксклюзивный представитель итальянских фабрик</p>
+                        <p class="principle-text">Разрабатываем уникальные коллекции как решения бизнес-задач</p>
                     </li>
                     <li class="principle">
-                        <p class="principle-text">Отслеживаем и внедряем последние  тренды в дизайне офисной мебели</p>
+                        <p class="principle-text">Эксклюзивный представитель итальянских фабрик</p>
                     </li>
                     <li class="principle">
                         <p class="principle-text">Изготавливаем мебель по индивидуальному дизайну</p>
@@ -430,7 +464,7 @@ $APPLICATION->SetTitle("О компании");
                     </li>
                     <li class="progress-card-item">
                         <h3 class="progress-card-subtitle">Соответсвуем требованиям</h3>
-                        <p class="progress-card-text">По сертификату соответствия</p>
+                        <p class="progress-card-text">Системы менеджмента качества ISO:9001</p>
                     </li>
                 </ul>
             </div>
