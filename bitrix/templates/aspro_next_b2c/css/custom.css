@@ -14229,13 +14229,15 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 .sectionContainer .mlist li .fix-icon {
     position: absolute;
     right: 15px;
+    width: 10px;
+    height: 10px;
 }
-.sectionContainer .mlist li .fix-icon:hover {
-    color: greenyellow;
+.sectionContainer .mlist li .fix-icon:hover svg path{
+    fill: #d33234;
 }
 
-.sectionContainer .mlist li .fix-icon.active {
-    color: greenyellow;
+.sectionContainer .mlist li .fix-icon.active svg path{
+    fill: #d33234;
 }
 
 
