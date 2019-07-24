@@ -15607,7 +15607,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .specialist-form.card {
         margin: 0 auto;
         max-width: 400px;
-        background-image: url("/images/moving-form.jpg");
+        background-image: url("/images/specialist-form.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
