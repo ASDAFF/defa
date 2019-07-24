@@ -1824,7 +1824,6 @@ if ($arFields["EMAIL_RAW"])
 
 AddEventHandler('form', 'onBeforeResultAdd', 'onBeforeResultAddHandle');
 function onBeforeResultAddHandle($WEB_FORM_ID, &$arFields, &$arrVALUES){
-    global $APPLICATION;
     global $arRegion;
 
     foreach ($arrVALUES as $key=>$item){

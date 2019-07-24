@@ -31,9 +31,8 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 	<input type="hidden" name="total_discount_price" value="<?=$arResult['allSum_FORMATED']?>" />
 	<input type="hidden" name="total_count" value="<?=$normalCount;?>" />
 	<input type="hidden" name="delay_count" value="<?=$delayCount;?>" />
-
 	<div class="opener">
-		<div title="<?=$arCounters['READY']['TITLE']?>" data-type="AnDelCanBuy" class="basket_count small clicked<?=(!$arCounters['READY']['COUNT'] ? ' empty' : '')?>">
+		<div title="<?=$arCounters['READY']['TITLE']?>" data-type="AnDelCanBuy" data-action="basket" class="basket_count tqChangeAction small clicked<?=(!$arCounters['READY']['COUNT'] ? ' empty' : '')?>">
 			<a href="<?=$arCounters['READY']['HREF']?>"></a>
 			<div class="wraps_icon_block basket">
 				<div class="count<?=(!$arCounters['READY']['COUNT'] ? ' empty_items' : '')?>">
@@ -45,7 +44,7 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 				</div>
 			</div>
 		</div>
-		<div title="<?=$arCounters['DELAY']['TITLE']?>" data-type="DelDelCanBuy" class="wish_count small clicked<?=(!$arCounters['DELAY']['COUNT'] ? ' empty' : '')?>">
+		<div title="<?=$arCounters['DELAY']['TITLE']?>" data-type="DelDelCanBuy" data-action="favorite" class="wish_count tqChangeAction small clicked<?=(!$arCounters['DELAY']['COUNT'] ? ' empty' : '')?>">
 			<a href="<?=$arCounters['DELAY']['HREF']?>"></a>
 			<div class="wraps_icon_block delay">
 				<div class="count<?=(!$arCounters['DELAY']['COUNT'] ? ' empty_items' : '')?>">
@@ -93,7 +92,13 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 			<ul class="tabs">
 				<?if (strlen($arResult["ERROR_MESSAGE"]) <= 0){?>
 					<?foreach($arMenu as $key => $arElement){?>
-						<li<?=($arElement["SELECTED"] ? ' class="cur"' : '');?> item-section="<?=$arElement["ID"]?>" data-type="<?=$arElement["ID"]?>">
+						<li<?=($arElement["SELECTED"] ? ' class="cur"' : '');?> item-section="<?=$arElement["ID"]?>" data-type="<?=$arElement["ID"]?>"
+                            <? if ($arElement['ID'] == 'AnDelCanBuy') {
+                                echo 'data-action="basket"';
+                            } elseif($arElement['ID'] == 'DelDelCanBuy') {
+                                echo 'data-action="favorite"';
+                            } ?>
+						>
 							<div class="wrap_li">
 								<span><?=$arElement["TITLE"]?></span>
 								<span class="quantity">&nbsp;(<span class="count"><?=$arElement["COUNT"]?></span>)</span>
@@ -103,6 +108,11 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 				<?}?>
 			</ul>
 			<span class="wrap_remove_button">
+				<?
+                global $USER;
+                if($USER->IsAdmin()){?>
+									<span class="tqGeneratePDF tqBasketLink" data-action="basket" data-id="<?=$arResult['ID']?>">Скачать КП</span>
+                <?}?>
 				<?if($normalCount){?>
 					<span class="btn btn-default white white-bg grey remove_all_basket AnDelCanBuy cur" data-type="basket"><?=GetMessage('CLEAR_BASKET')?></span>
 				<?}?>
@@ -130,6 +140,7 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 
 		<script>
 			$(document).ready(function(){
+
 				$("#basket_line .basket_fly").on('submit', function(e) {
 					e.preventDefault();
 				});
@@ -151,6 +162,8 @@ $arCounters = CNextB2c::updateBasketCounters(array('READY' => array('COUNT' => $
 					$("#basket_line .basket_fly .tabs > li:eq("+$(this).index()+")").addClass("cur");
 					$("#basket_line .basket_fly .tabs_content > li:eq("+$(this).index()+")").addClass("cur");
 					$("#basket_line .basket_fly .basket_sort .remove_all_basket."+$(this).data('type')).addClass("cur");
+					var action = $(this).attr('data-action');
+					$('.tqBasketLink').attr('data-action',action);
 				});
 
 				$("#basket_line .basket_fly .back_button, #basket_line .basket_fly .close").on("click", function(){

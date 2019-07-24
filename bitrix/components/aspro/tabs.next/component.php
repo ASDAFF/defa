@@ -66,6 +66,7 @@ if(!in_array('NAME', $arParams['OFFERS_FIELD_CODE']))
 
 if($bCatalogIndex)
 {
+    if($arParams['TABS_CODE']!='HIT'){
 	$arShowProp = CNextCache::CIBlockPropertyEnum_GetList(Array("sort" => "asc", "id" => "desc", "CACHE" => array("TAG" => CNextCache::GetPropertyCacheTag($arParams["TABS_CODE"]))), Array("ACTIVE" => "Y", "IBLOCK_ID" => $arParams["IBLOCK_ID"], "CODE" => $arParams["TABS_CODE"]));
 
 	if($arShowProp)
@@ -113,6 +114,7 @@ if($bCatalogIndex)
 		
 		foreach($arShowProp as $key => $prop)
 		{
+
 			$arItems = array();
 			$arFilterProp = array("PROPERTY_".$arParams["TABS_CODE"]."_VALUE" => array($prop));
 
@@ -132,6 +134,7 @@ if($bCatalogIndex)
 	{
 		return;
 	}
+    }
 	$arParams["PROP_CODE"] = $arParams["TABS_CODE"];
 	$arResult["TABS"] = $arTabs;
 

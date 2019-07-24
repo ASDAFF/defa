@@ -7327,7 +7327,9 @@
 
         <?
         $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/_common.css',true);
+        $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/css/2quick.css',true);
         $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/_common.js',true);
+        $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/2quick.js',true);
         ?>
 	</body>
 </html>

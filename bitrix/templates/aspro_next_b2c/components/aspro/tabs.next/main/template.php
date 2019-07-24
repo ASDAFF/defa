@@ -4,12 +4,19 @@
 /** @var array $arResult */
 /** @global CDatabase $DB */
 
-$this->setFrameMode(true);
+//$this->setFrameMode(true);
 	$class_block="s_".$this->randString();
 	$arTab=array();
 	$col=4;
+
 	if($arParams["LINE_ELEMENT_COUNT"]>=3 && $arParams["LINE_ELEMENT_COUNT"]<4)
 		$col=3;
+?>
+
+
+<?
+
+
 if($arParams["TABS_CODE"] == "HIT"){?>
     <div class="tab_slider_wrapp specials <?=$class_block;?> best_block clearfix" itemscope itemtype="http://schema.org/WebPage">
         <?$arParams['SET_TITLE'] = 'N';$arParamsTmp = urlencode(serialize($arParams));?>
@@ -39,6 +46,11 @@ if($arParams["TABS_CODE"] == "HIT"){?>
 
 }else{
 
+
+
+    ?>
+
+    <?
 
 	if($arResult["SHOW_SLIDER_PROP"] && !empty($arResult["TABS"])){?>
 

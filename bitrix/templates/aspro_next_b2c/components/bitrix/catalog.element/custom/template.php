@@ -628,6 +628,15 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                         <span class="animate-load" data-event="jqm" data-param-form_id="CHEAPER" data-name="cheaper" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=($arParams["CHEAPER_FORM_NAME"] ? $arParams["CHEAPER_FORM_NAME"] : GetMessage("CHEAPER"));?></span>
                                     </div>
                                 <?endif;?>
+	                            <?
+	                            global $USER;
+	                            if($USER->IsAdmin()){
+	                            	$cpAction = (in_array($arResult['ID'],$_SESSION['QUICK_OFFER_LIST']))?'removeFromCp':'add2cp';
+                                    $cpText = (in_array($arResult['ID'],$_SESSION['QUICK_OFFER_LIST']))?'Удалить из КП':'Добавить в КП';
+		                            ?>
+		                            <div class="cheaper_form"><span class="tqGeneratePDF" data-action="product" data-id="<?=$arResult['ID']?>">Скачать КП</span></div>
+		                            <div class="cheaper_form"><span class="tqGeneratePDF" data-action="<?=$cpAction?>" data-id="<?=$arResult['ID']?>"><?=$cpText?></span></div>
+	                            <?}?>
                             </div>
 
                             <!--АКЦИЯ-->

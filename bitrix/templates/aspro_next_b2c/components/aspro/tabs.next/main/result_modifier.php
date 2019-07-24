@@ -33,57 +33,59 @@ if ($arParams["TABS_CODE"] == "PODBORKI" && $APPLICATION->GetCurPage() == "/"){
 
 if($arParams["TABS_CODE"] == "HIT"){
     $arResult['TABS'] = GetMarks(['*'],['UF_SHOW_MAIN'=>1]);
-        if($arResult['TABS']) {
-            $idsesct = [];
-            $idsitems = [];
-            foreach ($arResult['TABS'] as $key => $TAB) {
-                if (!in_array($key, $idsesct)) $idsesct[] = $key;
-                if (!in_array($TAB['UF_XML_ID'], $idsitems)) $idsitems[] = $TAB['UF_XML_ID'];
 
-            }
-            if ($idsesct) {
-                $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"], 'UF_METKA' => $idsesct);
-                $rsSections = CIBlockSection::GetList(array('SORT' => 'ASC'), $arFilter,false,array('ID','UF_METKA'));
-                while ($arSection = $rsSections->Fetch()) {
-                    $arSectionsids[] = $arSection['ID'];
-                    $arSections[$arSection['ID']] = $arSection;
-
-
-                }
-            }
-            if($idsitems || $arSectionsids){
-                $arSelect = Array("ID", "IBLOCK_ID", "PROPERTY_HIT","IBLOCK_SECTION_ID");
-                $arFilter = Array(
-                    'IBLOCK_ID' => $arParams["IBLOCK_ID"],
-                    "ACTIVE_DATE" => "Y",
-                    "ACTIVE" => "Y",
-                    array('LOGIC' => 'OR', '=PROPERTY_HIT' => $idsitems, '=IBLOCK_SECTION_ID' => $arSectionsids)
-
-                );
-                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                while ($ob = $res->Fetch()) {
-                    $arItemsId[] = $ob;
-                }
-            }
-
+    if($arResult['TABS']) {
+        $idsesct = [];
+        $idsitems = [];
+        foreach ($arResult['TABS'] as $key => $TAB) {
+            if (!in_array($key, $idsesct)) $idsesct[] = $key;
+            if (!in_array($TAB['UF_XML_ID'], $idsitems)) $idsitems[] = $TAB['UF_XML_ID'];
 
         }
-        foreach ($arItemsId as $arItem){
+        if ($idsesct) {
+            $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"], 'UF_METKA' => $idsesct);
+            $rsSections = CIBlockSection::GetList(array('SORT' => 'ASC'), $arFilter,false,array('ID','UF_METKA'));
+            while ($arSection = $rsSections->Fetch()) {
+                $arSectionsids[] = $arSection['ID'];
+                $arSections[$arSection['ID']] = $arSection;
 
-            if($arItem['PROPERTY_HIT_VALUE']){
-                $arResult['TABS'][$arItem['PROPERTY_HIT_VALUE']]['FILTER']['ID'][] = $arItem['ID'];
+
+            }
+        }
+        if($idsitems || $arSectionsids){
+            $arSelect = Array("ID", "IBLOCK_ID", "PROPERTY_HIT","IBLOCK_SECTION_ID");
+            $arFilter = Array(
+                'IBLOCK_ID' => $arParams["IBLOCK_ID"],
+                "ACTIVE_DATE" => "Y",
+                "ACTIVE" => "Y",
+                array('LOGIC' => 'OR', '=PROPERTY_HIT' => $idsitems, '=IBLOCK_SECTION_ID' => $arSectionsids)
+
+            );
+            $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+            while ($ob = $res->Fetch()) {
+                $arItemsId[] = $ob;
+            }
+        }
+
+
+    }
+
+    foreach ($arItemsId as $arItem){
+
+        if($arItem['PROPERTY_HIT_VALUE']){
+            $arResult['TABS'][$arItem['PROPERTY_HIT_VALUE']]['FILTER']['ID'][] = $arItem['ID'];
+        }else{
+            if(is_array($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'])){
+                foreach ($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'] as $mark){
+                    $arResult['TABS'][$mark]['FILTER']['ID'][] = $arItem['ID'];
+                }
             }else{
-                if(is_array($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'])){
-                    foreach ($arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA'] as $mark){
-                        $arResult['TABS'][$mark]['FILTER']['ID'][] = $arItem['ID'];
-                    }
-                }else{
 
-                    $arResult['TABS'][$arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA']]['FILTER']['ID'][] = $arItem['ID'];
-                }
-
+                $arResult['TABS'][$arSections[$arItem['IBLOCK_SECTION_ID']]['UF_METKA']]['FILTER']['ID'][] = $arItem['ID'];
             }
 
         }
+
+    }
 }
 
