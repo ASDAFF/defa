@@ -38,8 +38,9 @@ $APPLICATION->SetTitle("Всегда в наличии");
         </div>
     </div>
 
+<?if($arRegion["ID"] == 8 || $arRegion["ID"] == 258){?>
 <div class="row grey_bg why-we">
-    <h2 class="why-we-title">Доставка 24 часа (МСК и СПБ)</h2>
+    <h2 class="why-we-title">Доставка 24 часа</h2>
     <h2 class="why-we-subtitle">При наличии товара на складе мы можем предложить экспресс-доставку в течение 24 часов <sup>*</sup>.</h2>
     <ol class="why-we-list">
         <li>
@@ -82,7 +83,7 @@ $APPLICATION->SetTitle("Всегда в наличии");
     <small><sup>*</sup>Ваш заказ не должен превышать 1,5 тонны. Услуга “Доставка 24 часа” осуществляется только в пределах КАД.</small>
     <p class="defo_advantages">Стоимость «Доставки 24 часа» рассчитывается, как основная стоимость доставки + 1 500 руб.</p>
 </div>
-
+<?}?>
 <div class="row text">
     <div class="col-md-12">
         <h2>В наличии в салонах</h2>
