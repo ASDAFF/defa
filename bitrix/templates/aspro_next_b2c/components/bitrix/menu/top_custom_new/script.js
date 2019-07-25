@@ -215,8 +215,9 @@ $(document).ready(function(){
     $(document).on('mouseenter','.js-series li,.js-desc-series',function(){
         var id = $(this).data('id');
         var sectionid = $(this).data('sectionid');
-        $('.js-series li').removeClass('active');
-        $('.model-elements-list li').removeClass('active');
+        /*$('.js-series li').removeClass('active');*/
+        $('.model-elements-list li.js-kit-series').removeClass('active');
+        $('.model-elements-list li.model-elements').removeClass('active');
 
         $(this).addClass('active');
         BX.showWait();
@@ -254,7 +255,7 @@ $(document).ready(function(){
     $(document).on('mouseenter','.js-kit-series',function(){
         var id = $(this).data('id');
         var sectionid = $(this).data('sectionid');
-        $('.js-series li').removeClass('active');
+        /*$('.js-series li').removeClass('active');*/
         $('.model-elements-list li').removeClass('active');
 
         $(this).addClass('active');
