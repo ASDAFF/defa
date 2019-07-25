@@ -12604,7 +12604,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .text-show-block {
-    height: 120px;
+    height: 57px;
     overflow: hidden;
 }
 
@@ -12778,6 +12778,18 @@ table.contacts-stores tr.item td:last-of-type {
     background-color: grey;
 }
 
+@media (max-width: 1440px) {
+    .row.download {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .download .document-download:not(:last-child) {
+        margin-bottom: 30px;
+    }
+}
+
 /*всегда в наличии*/
 
 .top-banner {
@@ -12792,10 +12804,6 @@ table.contacts-stores tr.item td:last-of-type {
 .row.text h2 {
     margin: 0;
     margin-bottom: 30px;
-}
-
-.row.text {
-    margin-bottom: 65px;
 }
 
 .why-we {
@@ -12827,6 +12835,7 @@ table.contacts-stores tr.item td:last-of-type {
 
 .why-we .why-we-list li {
     position: relative;
+    min-width: 290px;
 }
 
 .why-we .why-we-list li::before {
@@ -12942,6 +12951,89 @@ table.contacts-stores tr.item td:last-of-type {
     transform: translateX(-50%);
 }
 
+.always-available-wrap .advantages {
+    margin-top: 0;
+    justify-content: space-between;
+}
+
+.always-available-wrap .advantage-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.always-available-wrap .advantages-text.big {
+    width: 395px;
+    max-width: 395px;
+}
+
+.why-we small {
+    display: block;
+    text-align: center;
+}
+
+@media (max-width: 1440px) {
+    .why-we {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .why-we .why-we-list li:not(:last-child)::after {
+        right: -37px;
+        width: 70px;
+    }
+
+    .why-we .why-we-list li {
+        min-width: 270px;
+    }
+
+    .defo_advantages {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .why-we .why-we-list li {
+        min-width: 330px;
+    }
+
+    .why-we-wrapper h3 {
+        margin: 0 auto;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .always-available-wrap .advantages-text.big {
+        width: 320px;
+    }
+
+    .always-available-wrap .advantages-text {
+        margin-bottom: 54px;
+    }
+
+    .always-available-wrap .advantages-text.big {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 414px) {
+    .why-we-title {
+        font-size: 20px;
+    }
+
+    .why-we-subtitle {
+        font-size: 13px;
+    }
+
+    .why-we small {
+        font-size: 10px;
+    }
+
+    .defo_advantages {
+        margin-right: 0!important;
+        font-size: 16px;
+    }
+}
 
 
 
@@ -15570,9 +15662,45 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     content: url('/images/icons/more_hundred.svg');
 }
 
-.advantage-card-shadow p
+.advantage-card-shadow p,
 .government.advantages.how-buy {
     margin-bottom: 60px;
+}
+
+@media (max-width: 1440px) {
+    .advantage-card-shadow {
+        max-width: 330px;
+    }
+
+    .advantage-card-shadow h3 {
+        min-height: 178px;
+    }
+
+    .main-advantages .why-buy-item {
+        margin-bottom: 40px;
+    }
+
+    .main-advantages .why-buy-item span {
+        font-size: 14px!important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .main-advantages .why-buy-item span {
+        font-size: 13px!important;
+    }
+
+    .advantage-card-shadow-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .advantage-card-shadow-wrapper h2 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
 }
 
 
@@ -16074,18 +16202,9 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
         justify-content: center;
     }
 
-    .row.download {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
     .row.price-quality {
         margin: 0;
         margin-bottom: 40px;
-    }
-
-    .advantage-card-shadow {
-        margin: 0 auto;
     }
 
     .services .services-step::after {
