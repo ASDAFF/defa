@@ -57,7 +57,6 @@
     </div>
 </div>
 
-
 <?/*if($arResult["TIZERS_ITEMS"]){*/?><!--
         <div class="tizers-catalog-elem">
 		<div class="tizers_block_detail tizers_block">
@@ -660,7 +659,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                     <div class="p_block">
                                 <?}?>
 
-                                        <span class="animate-load" data-event="jqm" data-param-form_id="FAST_PRODUCT" data-name="FAST_PRODUCT" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=$arQuantityData["HTML"];?>Нужно быстрее?</span>
+                                        <span class="animate-load" data-event="jqm" data-param-form_id="FAST_PRODUCT" data-name="FAST_PRODUCT" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=$arQuantityData["HTML"];?><span class="text">  </span></span>
                                 <?if($useStores){?>
                                     </div>
                                 <?}?>
