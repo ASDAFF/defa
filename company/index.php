@@ -93,7 +93,7 @@ $APPLICATION->SetTitle("О компании");
                     <p class="step-text">Гарантийное и сервисное обслуживание после завершения проекта</p>
                 </li>
                 <li class="manager-btn">
-                    <span class="animate-load red-btn needHelpCompany">Вызвать менеджера</span>
+                    <a class="animate-load red-btn needHelpCompany">Вызвать менеджера</a>
                 </li>
             </ol>
         </div>
