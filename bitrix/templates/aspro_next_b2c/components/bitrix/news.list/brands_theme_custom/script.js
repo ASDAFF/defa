@@ -1,6 +1,8 @@
 $(document).ready(function () {
    $(".brands-mobile-block").slick({
        slidesToShow: 7,
+       arrows: false,
+       dots:false,
        autoplay: true,
        autoplaySpeed: 4000,
        responsive: [

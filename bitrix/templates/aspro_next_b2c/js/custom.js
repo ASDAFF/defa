@@ -299,26 +299,34 @@ $(document).ready(function () {
         infinite: true,
         slidesToScroll: 1,
         slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '40px',
         mobileFirst: true,
         responsive: [
             {
                 breakpoint: 576,
                 settings: {
-                    slidesToShow: 2
+                    slidesToShow: 2,
+                    centerMode: false
+
                 }
 
             },
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 3
+                    slidesToShow: 3,
+                    centerMode: false
+
                 }
 
             },
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 4
+                    slidesToShow: 4,
+                    centerMode: false
+
                 }
 
             },
