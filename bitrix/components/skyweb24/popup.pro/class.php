@@ -320,6 +320,15 @@ class Skyweb24PopupPro extends \CBitrixComponent{
 				if($this->arResult['TIMER']=='Y'){
 				$format = 'd.m.Y H:i:s';
 				$unixtime=DateTime::createFromFormat($format, $popupSetting['timer']['date']);
+
+				// daily timer
+				if ( $popupSetting['timer']['daily'] == 'Y' && !empty($popupSetting['timer']['daily_time']) ) 
+				{
+					$newTimerDate = date('d.m.Y') . ' ' . $popupSetting['timer']['daily_time'] . ':00';
+					$unixtime=DateTime::createFromFormat($format, $newTimerDate);
+				}
+				// daily timer
+
 				$nowtime=time();
 				$nowtime=date_create();
 				$unixtime=$nowtime->diff($unixtime);

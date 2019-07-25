@@ -44,6 +44,11 @@ $arNotify = unserialize($notifyOption);
 											<?if($arItem["PROPERTIES"]["HIT"]["VALUE"]):?>
 												<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
 												<?foreach(CNext::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
+                                                <?
+
+                                                        var_dump($arSticker);
+                                                    ?>
+
 													<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
 												<?endforeach;?>
 											<?endif;?>

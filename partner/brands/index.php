@@ -37,12 +37,11 @@ $APPLICATION->SetTitle("Наши партнеры");
 		"DETAIL_PAGER_TEMPLATE" => "",
 		"DETAIL_PAGER_TITLE" => "Страница",
 		"DETAIL_PROPERTY_CODE" => array(
-			0 => "",
-			1 => "SITE",
-			2 => "PHONE",
-			3 => "DOCUMENTS",
-			4 => "PHOTOS",
-			5 => "",
+			0 => "SITE",
+			1 => "PHONE",
+			2 => "DOCUMENTS",
+			3 => "PHOTOS",
+			4 => "",
 		),
 		"DETAIL_SET_CANONICAL_URL" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
@@ -186,7 +185,7 @@ $APPLICATION->SetTitle("Наши партнеры");
 		"HIDE_NOT_AVAILABLE" => "N",
 		"FILE_404" => "",
 		"SEF_URL_TEMPLATES" => array(
-			"news" => "",
+			"news" => "/partner/brands/",
 			"section" => "",
 			"detail" => "#ELEMENT_CODE#/",
 		)
