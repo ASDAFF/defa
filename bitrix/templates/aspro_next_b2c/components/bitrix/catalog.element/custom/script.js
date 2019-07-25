@@ -2958,7 +2958,7 @@ window.JCCatalogElement.prototype.ChangeInfo = function()
 				BX.adjust(this.obSkuArticleProps, {style: {display: 'none'}, html: ''});
 			}
 		}
-        console.log(this.offers[index].DISPLAY_PROPERTIES_CODE);console.log('proverka-new');
+
         //arrangement-block
         if (this.offers[index].DISPLAY_PROPERTIES_CODE.ARTICLE.IS_3DVIEW == "Y"){
             var enartikul = encodeURIComponent(this.offers[index].DISPLAY_PROPERTIES_CODE.ARTICLE.VALUE);
@@ -3100,9 +3100,8 @@ window.JCCatalogElement.prototype.setActualDataBlock = function(th, obj)
 
 /*set slider offers*/
 window.JCCatalogElement.prototype.SetSliderPict = function(obj, slider, config)
-{console.log(obj);
-console.log(slider);
-console.log(config);
+{
+    $('.quantity_block_wrapper .p_block span.animate-load').attr('data-autoload-product_article', obj.DISPLAY_PROPERTIES_CODE.ARTICLE.VALUE);
 	var container=$('.wrapp_thumbs'),
 	slideHtml='',
 		countPhoto=obj.SLIDER_COUNT;
@@ -3465,11 +3464,19 @@ window.JCCatalogElement.prototype.setStoreBlock = function(id)
 
 /*set store quantity*/
 window.JCCatalogElement.prototype.setQuantityStore = function(quantity, text)
-{
+{console.log('text' + text);
 	if(parseFloat(quantity)>0){
 		$(this.storeQuanity).find('.icon').removeClass('order').addClass('stock');
+		$('.quantity_block_wrapper .p_block span.animate-load').attr('data-param-form_id', 'FAST_PRODUCT');
+        $('.quantity_block_wrapper .p_block span.animate-load').attr('data-name', 'FAST_PRODUCT');
+
+        $('.quantity_block_wrapper .p_block span.text').text('Уточнить наличие');
 	}else{
 		$(this.storeQuanity).find('.icon').removeClass('stock').addClass('order');
+        $('.quantity_block_wrapper .p_block span.animate-load').attr('data-param-form_id', 'FAST_PRODUCT__MISSING');
+        $('.quantity_block_wrapper .p_block span.animate-load').attr('data-name', 'FAST_PRODUCT__MISSING');
+
+        $('.quantity_block_wrapper .p_block span.text').text('Ускорить поступление товара');
 	}
 	$(this.storeQuanity).find('.icon + span').html(text);
 	if(!$(".stores_tab").length){
