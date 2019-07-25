@@ -300,7 +300,7 @@ $(document).ready(function () {
         slidesToScroll: 1,
         slidesToShow: 1,
         centerMode: true,
-        centerPadding: '15px',
+        centerPadding: '40px',
         mobileFirst: true,
         responsive: [
             {
