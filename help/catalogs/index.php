@@ -126,7 +126,7 @@ $APPLICATION->SetTitle("Информационные материалы");
         </div>
         <div class="col-lg-3 catalog-item">
             <a href="/documents/catalog-4.pdf" download>
-                <img src="/images/catalog-4.jpg" alt="" class="catalog-img" width="232" height="232">
+                <img src="/images/catalog-4.jpg" alt="" class="catalog-img" width="232" height="170">
                 <h3 class="catalog-name">Портфолио дизайн-проектов</h3>
                 <span class="year">2018</span>
             </a>
