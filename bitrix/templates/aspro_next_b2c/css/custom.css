@@ -12604,7 +12604,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .text-show-block {
-    height: 120px;
+    height: 57px;
     overflow: hidden;
 }
 
@@ -12778,6 +12778,18 @@ table.contacts-stores tr.item td:last-of-type {
     background-color: grey;
 }
 
+@media (max-width: 1440px) {
+    .row.download {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .download .document-download:not(:last-child) {
+        margin-bottom: 30px;
+    }
+}
+
 /*всегда в наличии*/
 
 .top-banner {
@@ -12792,10 +12804,6 @@ table.contacts-stores tr.item td:last-of-type {
 .row.text h2 {
     margin: 0;
     margin-bottom: 30px;
-}
-
-.row.text {
-
 }
 
 .why-we {
@@ -15681,9 +15689,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .main-advantages .why-buy-item span {
         font-size: 13px!important;
     }
-}
 
-@media (max-width: 1024px) {
     .advantage-card-shadow-wrapper {
         display: flex;
         flex-wrap: wrap;
@@ -15692,6 +15698,9 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .advantage-card-shadow-wrapper h2 {
         width: 100%;
     }
+}
+
+@media (max-width: 1024px) {
 }
 
 
@@ -16191,11 +16200,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .guaranty-advantages-list {
         flex-wrap: wrap;
         justify-content: center;
-    }
-
-    .row.download {
-        display: flex;
-        flex-wrap: wrap;
     }
 
     .row.price-quality {
