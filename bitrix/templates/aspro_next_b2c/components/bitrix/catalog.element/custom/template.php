@@ -635,7 +635,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                     $cpText = (in_array($arResult['ID'],$_SESSION['QUICK_OFFER_LIST']))?'Удалить из КП':'Добавить в КП';
 		                            ?>
 		                            <div class="cheaper_form"><span class="tqGeneratePDF" data-action="product" data-id="<?=$arResult['ID']?>">Скачать КП</span></div>
-		                            <div class="cheaper_form"><span class="tqGeneratePDF" data-action="<?=$cpAction?>" data-id="<?=$arResult['ID']?>"><?=$cpText?></span></div>
+		                            <?/*<div class="cheaper_form"><span class="tqGeneratePDF" data-action="<?=$cpAction?>" data-id="<?=$arResult['ID']?>"><?=$cpText?></span></div>*/?>
 	                            <?}?>
                             </div>
 
@@ -3050,11 +3050,14 @@ $showProps = false;
     );*/?>
     <!-- new! -->
     <!--<div class="maxwidth-theme">-->
+    <?if(!empty($arResult['PROPERTIES']['PODBORKI']['PROPERTY_VALUE_ID'])){
+    $GLOBALS['arrFilterPodborki']['VALUE'] = $arResult['PROPERTIES']['PODBORKI']['VALUE'];
+    ?>
         <div class="podborki-block">
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
                 array(
                     "COMPONENT_TEMPLATE" => ".default",
-                    "PATH" => SITE_DIR."include/mainpage/comp_catalog_podborki.php",
+                    "PATH" => SITE_DIR."include/mainpage/comp_catalog_podborki_card.php",
                     "AREA_FILE_SHOW" => "file",
                     "AREA_FILE_SUFFIX" => "",
                     "AREA_FILE_RECURSIVE" => "Y",
@@ -3063,6 +3066,8 @@ $showProps = false;
                 false
             );?>
         </div>
+
+    <?}?>
     <!--</div>-->
     <!-- end new! -->
 
