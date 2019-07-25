@@ -2544,11 +2544,11 @@ body .tabs_slider .catalog_item .inner_wrap {
 .brands-mobile-block {
     height: 0;
     overflow: hidden;
-    margin: 0 -40px;
+    margin: 0 -15px;
 }
 
 .brands-mobile-block .slick-list {
-    margin: 0 -15px;
+    margin: 0;
 }
 
 .brands-mobile-block .brand-item img{
@@ -9749,8 +9749,23 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     /*НОВОСТИ*/
+    .news-block .slick-list {
+        padding-top: 15px!important;
+        padding-bottom: 15px!important;
+        padding-left: 5px!important;
+        padding-right: 5px!important;
+    }
+
+    .news-block .slick-slide {
+        padding: 0 10px;
+    }
+
+
     .news-block .news-item {
         width: 50%;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
     }
 
     .news-block .news-item.first-news-item {
@@ -10224,12 +10239,17 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .front_page .tizers_block {
-        margin: 0 -40px;
+        margin: 0 -15px;
         padding: 0!important;
     }
 
+    .front_page .tizers_block .slick-list{
+        padding-top: 10px!important;
+        padding-bottom: 10px!important;
+    }
+
     .front_page .tizers_block .slick-slide {
-        padding: 10px 0;
+        padding: 0 10px;
     }
 
 
@@ -10241,7 +10261,7 @@ table.contacts-stores tr.item td:last-of-type {
         box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
         -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
         -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
-        margin: 0 10px;
+        margin: 0;
         padding: 0 20px;
         display: flex;
         justify-content: center;
@@ -10760,7 +10780,7 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .best-block .tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .best-block .slick-track {
@@ -10788,7 +10808,7 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .hit-block .tab_slider_wrapp div.tabs_content, .podborki-block .tab_slider_wrapp div.tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .hit-block .tab_slider_wrapp div.tabs_content .catalog_block .slick-track,
@@ -10831,7 +10851,7 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*стилизация СЛАЙДЕРА САМОЕ ИНТЕРЕСНОЕ*/
     .recommend-block .tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .recommend-block .slick-track {
@@ -10855,16 +10875,26 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     /*СТИЛИЗАЦИЯ СЛАЙДЕРОВ ПОПУЛЯРНЫЕ КАТЕГОРИИ*/
+    .catalog-sections-block {
+        margin: 0 -15px;
+    }
+
+    .catalog-sections-block .top_wrapper.items_wrapper {
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+
     .catalog-sections-block .popular-cat-item .name {
         font-size: 16px;
+        padding: 0!important;
     }
 
     .catalog-sections-block .sections_wrapper .list {
-        margin: 40px -40px 0;
+        margin: 40px 0 0;
     }
 
     .catalog-sections-block .sections_wrapper .list .popular-cat-item {
-        padding: 0 15px;
+        padding: 0;
     }
 
     .catalog-sections-block .sections_wrapper .slick-list {
@@ -10873,8 +10903,8 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .catalog-sections-block .sections_wrapper .catalog_block {
-        margin-left: -15px!important;
-        margin-right: -15px!important;
+        margin-left: 0!important;
+        margin-right: 0!important;
     }
 
     .catalog-sections-block .sections_wrapper .catalog_block .catalog_item_wrapp {
@@ -10942,9 +10972,15 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*НОВОСТИ*/
 
+    .news-block .slick-list {
+        padding-left: 40px!important;
+        padding-right: 40px!important;
+    }
+
+
     .news-block .table-type-block.item-views.items-list3 .row, .table-type-block.item-views.table-elements .row {
-        margin-left: -40px;
-        margin-right: -40px;
+        margin-left: -15px;
+        margin-right: -15px;
     }
 
     /*заголовок*/
@@ -11226,16 +11262,10 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*тизеры*/
     .wrapper_inner .tizers_block .item {
-        margin: 0 10px;
+        margin: 0;
     }
 
-    .front_page .tizers_block .item .img {
-        display: table-cell;
-    }
 
-    .front_page .tizers_block .item .title {
-        display: table-cell;
-    }
 }
 
 @media (max-width: 450px) {
