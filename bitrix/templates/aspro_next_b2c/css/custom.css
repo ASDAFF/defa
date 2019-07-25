@@ -4032,46 +4032,6 @@ body .tabs_slider .catalog_item .inner_wrap {
     padding: 0;
 }
 
-.series-sort .sort-list-wrapper {
-    display: flex;
-    align-items: center;
-    width: 405px;
-}
-
-.sort-list-wrapper .sort-evt {
-    margin: 0;
-    margin-right: 35px;
-    font-size: 14px;
-    color: rgba(23, 28, 37, 0.4);
-}
-
-.sort-list-wrapper .sort-list {
-    margin: 0;
-    width: 260px;
-    display: flex;
-    align-items: center;
-}
-
-.sort-list-wrapper .sort-item {
-    margin: 0;
-    padding: 0;
-}
-
-.sort-list-wrapper .sort-item:before {
-    display: none;
-}
-.sort-list-wrapper .sort-item {
-    position: relative;
-    display: block;
-    margin: 0;
-    /* margin-right: 20px; */
-    padding: 5px 15px;
-    border-radius: 30px;
-    cursor: pointer;
-}
-.sort-list-wrapper .sort-item:hover {
-    background-color: rgba(23, 28, 37, 0.15);
-}
 .sort-list-wrapper .sort-item label {
     position: relative;
     display: block;

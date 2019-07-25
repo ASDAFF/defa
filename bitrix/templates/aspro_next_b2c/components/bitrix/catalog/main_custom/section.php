@@ -104,8 +104,6 @@
 
 //var_dump('it section');
 
-
-
 use Bitrix\Main\Loader,
 	Bitrix\Main\ModuleManager;
 
@@ -369,12 +367,15 @@ while ($arPros = $dbPros->GetNext()) {
 
 }
 
-$res=CIBlockElement::GetList(array(), array("SECTION_ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"], "ACTIVE" => "Y"), false, false, array("ID", "IBLOCK_ID"));
+$res=CIBlockElement::GetList(array(), array("SECTION_ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"], "ACTIVE" => "Y"), false, false, array("ID", "IBLOCK_ID", "NAME", "PROPERTY_TYPE_PRODUCT"));
 
-while($ob = $res->GetNextElement()){
-	$arFields = $ob->GetFields();
-	$arElements[] = $arFields["ID"];
-}
+    while($ob = $res->GetNextElement()){
+        $arFields = $ob->GetFields();
+        $arElements[] = $arFields["ID"];
+        $arGroupEl[$arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID']] = ["ID" => $arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID'],
+        "NAME" => $arFields['PROPERTY_TYPE_PRODUCT_VALUE']];
+        $arElementsGroup[$arFields["PROPERTY_TYPE_PRODUCT_ENUM_ID"]][$arFields["ID"]] = $arFields["ID"];
+    }
 
 $arInfo = CCatalogSKU::GetInfoByProductIBlock($arParams["IBLOCK_ID"]);
 $arSelectColor = array("ID", "IBLOCK_ID", "PROPERTY_COLOR_REF");
@@ -443,7 +444,6 @@ foreach($arColorItem["COLOR_".$prop] as $item){
 		}
 		
 $section["COLORS"] = $arColorNew;
-
 
 //UF_SERIES_GALLERY
 	$res=CIBlockElement::GetList
@@ -876,142 +876,198 @@ $section["COLORS"] = $arColorNew;
             </ul>
         </div>
     </div>
-    <?$APPLICATION->IncludeComponent(
-        "bitrix:catalog.section",
-        "catalog_section_list",
-        array(
-            "ACTION_VARIABLE" => "action",
-            "ADD_PICT_PROP" => "-",
-            "ADD_PROPERTIES_TO_BASKET" => "Y",
-            "ADD_SECTIONS_CHAIN" => "N",
-            "ADD_TO_BASKET_ACTION" => "ADD",
-            "AJAX_MODE" => "Y",
-            "AJAX_OPTION_ADDITIONAL" => "",
-            "AJAX_OPTION_HISTORY" => "N",
-            "AJAX_OPTION_JUMP" => "N",
-            "AJAX_OPTION_STYLE" => "Y",
-            "BACKGROUND_IMAGE" => "-",
-            "BASKET_URL" => "/personal/basket.php",
-            "BROWSER_TITLE" => "-",
-            "CACHE_FILTER" => "N",
-            "CACHE_GROUPS" => "Y",
-            "CACHE_TIME" => "36000000",
-            "CACHE_TYPE" => "A",
-            "COMPATIBLE_MODE" => "Y",
-            "CONVERT_CURRENCY" => "N",
-            "CUSTOM_FILTER" => "{\"CLASS_ID\":\"CondGroup\",\"DATA\":{\"All\":\"OR\",\"True\":\"True\"},\"CHILDREN\":[{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":375}},{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":374}},{\"CLASS_ID\":\"CondIBProp:17:647\",\"DATA\":{\"logic\":\"Equal\",\"value\":376}}]}",
-            "DETAIL_URL" => "/#SECTION_CODE_PATH#/#ID#",
-            "DISABLE_INIT_JS_IN_COMPONENT" => "N",
-            "DISPLAY_BOTTOM_PAGER" => "Y",
-            "DISPLAY_COMPARE" => "Y",
-            "DISPLAY_TOP_PAGER" => "N",
-            "ELEMENT_SORT_FIELD" => "id",
-            "ELEMENT_SORT_FIELD2" => "id",
-            "ELEMENT_SORT_ORDER" => "asc",
-            "ELEMENT_SORT_ORDER2" => "desc",
-            "ENLARGE_PRODUCT" => "STRICT",
-            "FILTER_NAME" => "arrFilter",
-            "HIDE_NOT_AVAILABLE" => "N",
-            "HIDE_NOT_AVAILABLE_OFFERS" => "N",
-            "IBLOCK_ID" => "17",
-            "IBLOCK_TYPE" => "aspro_next_catalog",
-            "INCLUDE_SUBSECTIONS" => "Y",
-            "LABEL_PROP" => "",
-            "LAZY_LOAD" => "N",
-            "LINE_ELEMENT_COUNT" => "4",
-            "LOAD_ON_SCROLL" => "N",
-            "MESSAGE_404" => "",
-            "MESS_BTN_ADD_TO_BASKET" => "В корзину",
-            "MESS_BTN_BUY" => "Купить",
-            "MESS_BTN_DETAIL" => "Подробнее",
-            "MESS_BTN_SUBSCRIBE" => "Подписаться",
-            "MESS_NOT_AVAILABLE" => "Нет в наличии",
-            "META_DESCRIPTION" => "-",
-            "META_KEYWORDS" => "-",
-            "OFFERS_CART_PROPERTIES" => array(
-            ),
-            "OFFERS_FIELD_CODE" => array(
-                0 => "",
-                1 => "",
-            ),
-            "OFFERS_LIMIT" => "5",
-            "OFFERS_PROPERTY_CODE" => array(
-                0 => "",
-                1 => "",
-            ),
-            "OFFERS_SORT_FIELD" => "sort",
-            "OFFERS_SORT_FIELD2" => "id",
-            "OFFERS_SORT_ORDER" => "asc",
-            "OFFERS_SORT_ORDER2" => "desc",
-            "PAGER_BASE_LINK_ENABLE" => "N",
-            "PAGER_DESC_NUMBERING" => "N",
-            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-            "PAGER_SHOW_ALL" => "N",
-            "PAGER_SHOW_ALWAYS" => "N",
-            "PAGER_TEMPLATE" => "section_list_ajax",
-            "PAGER_TITLE" => "Товары",
-            "PAGE_ELEMENT_COUNT" => "10",
-            "PARTIAL_PRODUCT_PROPERTIES" => "N",
-            "PRICE_CODE" => array(
-                0 => "ИМ: Рек. розн. 0%",
-            ),
-            "PRICE_VAT_INCLUDE" => "Y",
-            "PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
-            "PRODUCT_DISPLAY_MODE" => "N",
-            "PRODUCT_ID_VARIABLE" => "id",
-            "PRODUCT_PROPERTIES" => array(
-            ),
-            "PRODUCT_PROPS_VARIABLE" => "prop",
-            "PRODUCT_QUANTITY_VARIABLE" => "quantity",
-            "PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
-            "PRODUCT_SUBSCRIPTION" => "Y",
-            "PROPERTY_CODE" => array(
-                0 => "",
-                1 => "",
-            ),
-            "PROPERTY_CODE_MOBILE" => "",
-            "RCM_PROD_ID" => $_REQUEST["PRODUCT_ID"],
-            "RCM_TYPE" => "personal",
-            "SECTION_CODE" => "kabinet_rukovoditelya",
-            "SECTION_ID" => "",
-            "SECTION_ID_VARIABLE" => "SECTION_ID",
-            "SECTION_URL" => "",
-            "SECTION_USER_FIELDS" => array(
-                0 => "",
-                1 => "",
-            ),
-            "SEF_MODE" => "N",
-            "SET_BROWSER_TITLE" => "Y",
-            "SET_LAST_MODIFIED" => "N",
-            "SET_META_DESCRIPTION" => "Y",
-            "SET_META_KEYWORDS" => "Y",
-            "SET_STATUS_404" => "N",
-            "SET_TITLE" => "Y",
-            "SHOW_404" => "N",
-            "SHOW_ALL_WO_SECTION" => "N",
-            "SHOW_CLOSE_POPUP" => "N",
-            "SHOW_DISCOUNT_PERCENT" => "N",
-            "SHOW_FROM_SECTION" => "N",
-            "SHOW_MAX_QUANTITY" => "N",
-            "SHOW_OLD_PRICE" => "N",
-            "SHOW_PRICE_COUNT" => "1",
-            "SHOW_SLIDER" => "Y",
-            "SLIDER_INTERVAL" => "3000",
-            "SLIDER_PROGRESS" => "N",
-            "TEMPLATE_THEME" => "blue",
-            "USE_ENHANCED_ECOMMERCE" => "N",
-            "USE_MAIN_ELEMENT_SECTION" => "N",
-            "USE_PRICE_COUNT" => "N",
-            "USE_PRODUCT_QUANTITY" => "N",
-            "COMPONENT_TEMPLATE" => "catalog_section_list",
-            "SHOW_RATING" => "Y",
-            "COMPARE_PATH" => "",
-            "TITLE_BLOCK" => "",
-            "SHOW_MEASURE" => "Y"
-        ),
-        false
-    );?>
+<div class="series-filters">
+    <div class="series-sort">
+    <div class="row">
+        <div class="col-lg-12 filters-main-title">
+            <div class="top_block">
+                <h3 class="title_block big">Товары серии</h3>
+            </div>
+        </div>
+    </div>
+    <div id="target"></div>
+    <div class="col-lg-12 select">
+        <div class="sort-list-wrapper" id="section_block">
+            <p class="sort-evt">Выберите тип:</p>
+            <ul class="sort-list">
+                <?foreach ($arGroupEl as $key => $category) {
+                    echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+    <?foreach ($arElementsGroup as $group => $names){?>
+        <div class="group_block" id="block_id_<?=$group;?>">
+            <div class="top_block">
+                <h3 class="title_block big filters-title"><?=$arGroupEl[$group]['NAME'];?></h3>
+                <a id="toggleLink_<?=$group;?>" href="javascript:void(0);" onclick="viewdiv('hiddens_block_<?=$group;?>');" data-text-show="Скрыть" data-text-hide="Показать">Скрыть</a>
+            </div>
+            <div class="hiddens_block" id="hiddens_block_<?=$group;?>" >
+                <div class="row width100">
+                    <div class="ajax_news_<?=$group;?>">
+                        <div class="row">
+                                <?$count=0;
+                                foreach($names as $elementBlock){
+                                    $count++;?>
+                                    <div class="col-lg-3 col-md-3 col-sm-6">
+                                        <?$APPLICATION->IncludeComponent(
+                                    "bitrix:catalog.element",
+                                    "series_item",
+                                    array(
+                                        "ACTION_VARIABLE" => "action",
+                                        "ADD_DETAIL_TO_SLIDER" => "N",
+                                        "ADD_ELEMENT_CHAIN" => "N",
+                                        "ADD_PROPERTIES_TO_BASKET" => "N",
+                                        "ADD_SECTIONS_CHAIN" => "N",
+                                        "ADD_TO_BASKET_ACTION" => array(
+                                            0 => "BUY",
+                                        ),
+                                        "BACKGROUND_IMAGE" => "-",
+                                        "BASKET_URL" => "/personal/basket.php",
+                                        "BRAND_USE" => "N",
+                                        "BROWSER_TITLE" => "-",
+                                        "CACHE_GROUPS" => "Y",
+                                        "CACHE_TIME" => "36000000",
+                                        "CACHE_TYPE" => "A",
+                                        "CHECK_SECTION_ID_VARIABLE" => "N",
+                                        "COMPATIBLE_MODE" => "Y",
+                                        "CONVERT_CURRENCY" => "N",
+                                        "DETAIL_PICTURE_MODE" => array(
+                                            0 => "POPUP",
+                                            1 => "MAGNIFIER",
+                                        ),
+                                        "DETAIL_URL" => "",
+                                        "DISABLE_INIT_JS_IN_COMPONENT" => "N",
+                                        "DISPLAY_COMPARE" => "N",
+                                        "DISPLAY_NAME" => "Y",
+                                        "DISPLAY_PREVIEW_TEXT_MODE" => "E",
+                                        "ELEMENT_CODE" => "",
+                                        "ELEMENT_ID" => $elementBlock,
+                                        "GIFTS_DETAIL_BLOCK_TITLE" => "Выберите один из подарков",
+                                        "GIFTS_DETAIL_HIDE_BLOCK_TITLE" => "N",
+                                        "GIFTS_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+                                        "GIFTS_DETAIL_TEXT_LABEL_GIFT" => "Подарок",
+                                        "GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE" => "Выберите один из товаров, чтобы получить подарок",
+                                        "GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE" => "N",
+                                        "GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+                                        "GIFTS_MESS_BTN_BUY" => "Выбрать",
+                                        "GIFTS_SHOW_DISCOUNT_PERCENT" => "N",
+                                        "GIFTS_SHOW_IMAGE" => "N",
+                                        "GIFTS_SHOW_NAME" => "N",
+                                        "GIFTS_SHOW_OLD_PRICE" => "N",
+                                        "HIDE_NOT_AVAILABLE_OFFERS" => "N",
+                                        "IBLOCK_ID" => "17",
+                                        "IBLOCK_TYPE" => "aspro_next_catalog",
+                                        "IMAGE_RESOLUTION" => "16by9",
+                                        "LINK_ELEMENTS_URL" => "link.php?PARENT_ELEMENT_ID=#ELEMENT_ID#",
+                                        "LINK_IBLOCK_ID" => "",
+                                        "LINK_IBLOCK_TYPE" => "",
+                                        "LINK_PROPERTY_SID" => "",
+                                        "MESSAGE_404" => "",
+                                        "MESS_BTN_ADD_TO_BASKET" => "В корзину",
+                                        "MESS_BTN_BUY" => "Купить",
+                                        "MESS_BTN_SUBSCRIBE" => "Подписаться",
+                                        "MESS_COMMENTS_TAB" => "Комментарии",
+                                        "MESS_DESCRIPTION_TAB" => "Описание",
+                                        "MESS_NOT_AVAILABLE" => "Нет в наличии",
+                                        "MESS_PRICE_RANGES_TITLE" => "Цены",
+                                        "MESS_PROPERTIES_TAB" => "Характеристики",
+                                        "META_DESCRIPTION" => "-",
+                                        "META_KEYWORDS" => "-",
+                                        "OFFERS_CART_PROPERTIES" => array(
+                                        ),
+                                        "OFFERS_FIELD_CODE" => array(
+                                            0 => "",
+                                            1 => "",
+                                        ),
+                                        "OFFERS_LIMIT" => "0",
+                                        "OFFERS_PROPERTY_CODE" => array(
+                                            0 => "",
+                                            1 => "",
+                                        ),
+                                        "OFFERS_SORT_FIELD" => "sort",
+                                        "OFFERS_SORT_FIELD2" => "id",
+                                        "OFFERS_SORT_ORDER" => "asc",
+                                        "OFFERS_SORT_ORDER2" => "desc",
+                                        "PARTIAL_PRODUCT_PROPERTIES" => "N",
+                                        "PRICE_CODE" => array("BASE", "ИМ: Рек. розн. 0%", "ИМ: Рек. розн. 12% (10%)", "ИМ: Рек. розн. 2% (3%)", "ИМ: Рек. розн. 3%", "ИМ: Рек. розн. 7% (4%)", "ИМ: Рек. розн. 7% (5%)", "ИМ: Рек. розн. 8% (6%)", "ИМ: Рек. розн. 8% (4%)", "ИМ: Рек. розн. 8%", "ИМ: Рек. розн. 8% (5%)", "ИМ: Рек. розн. 8% (7%)", "ИМ: Рек. розн. 12% (8%)", "ИМ: Рек. розн. 12% (11%)", "ИМ: Рек. розн. 12%", "ИМ: Рек.розн. 12% (9%)", "ИМ: Рек.розн 20%", "ИМ: Рек. розн. 25%", "ИМ: Рек. розн. 25% (14,5%)"),
+                                        "PRICE_VAT_INCLUDE" => "Y",
+                                        "PRICE_VAT_SHOW_VALUE" => "N",
+                                        "PRODUCT_ID_VARIABLE" => "id",
+                                        "PRODUCT_INFO_BLOCK_ORDER" => "sku,props",
+                                        "PRODUCT_PAY_BLOCK_ORDER" => "rating,price,priceRanges,quantityLimit,quantity,buttons",
+                                        "PRODUCT_PROPERTIES" => array(
+                                        ),
+                                        "PRODUCT_PROPS_VARIABLE" => "prop",
+                                        "PRODUCT_QUANTITY_VARIABLE" => "quantity",
+                                        "PRODUCT_SUBSCRIPTION" => "Y",
+                                        "PROPERTY_CODE" => array(
+                                            0 => "",
+                                            1 => "",
+                                        ),
+                                        "SECTION_CODE" => "",
+                                        "SECTION_ID" => "",
+                                        "SECTION_ID_VARIABLE" => "SECTION_ID",
+                                        "SECTION_URL" => "",
+                                        "SEF_MODE" => "N",
+                                        "SET_BROWSER_TITLE" => "N",
+                                        "SET_CANONICAL_URL" => "N",
+                                        "SET_LAST_MODIFIED" => "N",
+                                        "SET_META_DESCRIPTION" => "N",
+                                        "SET_META_KEYWORDS" => "N",
+                                        "SET_STATUS_404" => "N",
+                                        "SET_TITLE" => "N",
+                                        "SET_VIEWED_IN_COMPONENT" => "N",
+                                        "SHOW_404" => "N",
+                                        "SHOW_CLOSE_POPUP" => "N",
+                                        "SHOW_DEACTIVATED" => "N",
+                                        "SHOW_DISCOUNT_PERCENT" => "N",
+                                        "SHOW_MAX_QUANTITY" => "N",
+                                        "SHOW_OLD_PRICE" => "N",
+                                        "SHOW_PRICE_COUNT" => "1",
+                                        "SHOW_SLIDER" => "N",
+                                        "STRICT_SECTION_CHECK" => "N",
+                                        "TEMPLATE_THEME" => "blue",
+                                        "USE_COMMENTS" => "N",
+                                        "USE_ELEMENT_COUNTER" => "N",
+                                        "USE_ENHANCED_ECOMMERCE" => "N",
+                                        "USE_GIFTS_DETAIL" => "N",
+                                        "USE_GIFTS_MAIN_PR_SECTION_LIST" => "N",
+                                        "USE_MAIN_ELEMENT_SECTION" => "N",
+                                        "USE_PRICE_COUNT" => "N",
+                                        "USE_PRODUCT_QUANTITY" => "N",
+                                        "USE_RATIO_IN_RANGES" => "N",
+                                        "USE_VOTE_RATING" => "N",
+                                        "COMPONENT_TEMPLATE" => "series_item"
+                                    ),
+                                    false
+                                );?>
+                                    </div>
+                                   <?if($count == $arParams["LINE_ELEMENT_COUNT"]):?>
+                                        <div class='clearfix'></div>
+                                        <?$count = 0;
+                                       $count_line=$count_line+1;?>
+                                    <? endif; ?>
+                                <?}?>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    <?}?>
+        <div class="sort-list-wrapper floating" id="section_block_bottom">
+            <p class="sort-evt">Выберите тип:</p>
+            <ul class="sort-list">
+                <?foreach ($arGroupEl as $key => $category) {
+                    echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+</div>
     <div class="row">
         <div class="top_block">
             <h3 class="title_block big">Похожие серии</h3>

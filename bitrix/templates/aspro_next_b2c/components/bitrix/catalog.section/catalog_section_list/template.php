@@ -46,7 +46,6 @@
 		if($arParams["LINE_ELEMENT_COUNT"] > 5)
 			$col = 5;
 			$product_filters = [];
-			
 			foreach ($arResult["ITEMS"] as $arItems)
 				{
 				    $product_filters[$arItems['PROPERTIES']['TYPE_PRODUCT']['VALUE_ENUM_ID']][] = $arItems;
@@ -73,6 +72,7 @@
                     </div>
                 </div>
                 <? foreach ($product_filters as $group => $names) {?>
+
                     <div class="group_block" id="block_id_<?=$group;?>">
                         <div class="top_block">
                             <h3 class="title_block big filters-title"><?=$product_group_name[$group]['NAME'];?></h3>
@@ -211,7 +211,7 @@
                                             "COMPONENT_TEMPLATE" => "catalog_section_list_element",
                                             "AJAX" => $_REQUEST["AJAX"],
                                             "SEF_RULE" => "",
-                                            "SECTION_CODE_PATH" => ""
+                                            "SECTION_CODE_PATH" => " [SECTION_CODE_PATH]"
                                         ),
                                         false
                                     );?>
