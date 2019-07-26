@@ -2184,8 +2184,15 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 /*СТИЛИЗАЦИЯ СЛАЙДЕРОВ ПОПУЛЯРНЫЕ КАТЕГОРИИ*/
 .catalog-sections-block .popular-cat-item .name {
-    margin: 0;
+    margin: 0 -15px;
 }
+
+.catalog-sections-block .sections_wrapper .top_wrapper {
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+
 
 .catalog-sections-block .slick-track {
     /*padding: 15px 0!important;*/
@@ -2664,7 +2671,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 .popular-cat-item .name {
     font-size: 20px;
-    margin: 0 0 20px;
+    margin: 0 -15px 20px;
 }
 
 .popular-list #bx_incl_area_22_1_1 {
@@ -10894,7 +10901,7 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .catalog-sections-block .sections_wrapper .list .popular-cat-item {
-        padding: 0;
+        padding: 0 15px;
     }
 
     .catalog-sections-block .sections_wrapper .slick-list {
@@ -14833,6 +14840,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
         top: 20px;
         width: 100%;
         background: #fff;
+        padding: 0 20px;
     }
     .front_page .map-info-wrap {
         position: relative;
