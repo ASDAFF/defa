@@ -14833,6 +14833,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
         top: 20px;
         width: 100%;
         background: #fff;
+        padding: 0 20px;
     }
     .front_page .map-info-wrap {
         position: relative;
