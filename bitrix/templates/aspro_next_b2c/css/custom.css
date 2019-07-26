@@ -5796,6 +5796,12 @@ body .tabs_slider .catalog_item .inner_wrap {
     .catalog_detail .catalog-item-left {
         width: 258px;
         float: left;
+        position: sticky;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        top: 100px;
     }
 
     .catalog_detail .catalog-item-right {
@@ -5803,6 +5809,10 @@ body .tabs_slider .catalog_item .inner_wrap {
         float: right;
     }
 }
+
+
+
+
 
 
 @media (max-width: 1300px) {
@@ -9829,6 +9839,15 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
 
+    /*характеристики*/
+    .char_block .props_list {
+        column-count: 3;
+        margin: 0 -20px;
+    }
+    .char_block .props_list li {
+        margin: 0 20px 15px;
+    }
+
     /*форма*/
     .catalog_detail .wraps.form-container .form_block {
         padding: 36px 49px;
@@ -10408,6 +10427,17 @@ table.contacts-stores tr.item td:last-of-type {
     .catalog_detail .mobile-features .features-slide img{
         width: 100%;
     }
+
+
+    /*характеристики*/
+    .char_block .props_list {
+        column-count: 2;
+        margin: 0 -20px;
+    }
+    .char_block .props_list li {
+        margin: 0 20px 15px;
+    }
+
 
     /*Услуги*/
     .catalog_detail .services-block .row{
