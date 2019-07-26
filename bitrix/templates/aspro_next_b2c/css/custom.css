@@ -6556,6 +6556,11 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 }
 
+#price-modal .fancybox-button.fancybox-close-small {
+    display: none;
+
+}
+
 
 /*показ скроллбара при открытой модалке*/
 body.compensate-for-scrollbar {
