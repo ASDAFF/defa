@@ -38,3 +38,61 @@
 .sort-list-wrapper .sort-item:hover {
     background-color: rgba(23, 28, 37, 0.15);
 }
+.more_items{
+    width: 100%;
+    text-align: center;
+}
+.group_block{
+    padding-top: 55px;
+    margin-top: -55px;
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
+}
+.floating {
+    background-color: rgba(255,255,255, 0.5);
+    bottom: 10px;
+    display: none;
+}
+.fixed{
+    display: block;
+    position: sticky;
+    top: -20px;
+}
+.show_all{
+    cursor: pointer;
+}
+.open_section {
+    display: inline-block;
+    cursor: pointer;
+}
+.hidden_section {
+    display: none;
+}
+.more_items .more_button {
+     display: block;
+     width: 215px;
+     margin: 0 auto;
+     color: #1f2229;
+     border: 1px solid #1f2229;
+     background-color: #ffffff;
+    cursor: pointer;
+ }
+.more_button {
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+    background-color: #d33234;
+    padding: 10px 40px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+
+}
+.more_button:hover {
+    color: #ffffff;
+    border: 1px solid #1f2229;
+    background-color: #1f2229;
+}
+.show{
+    transition: 1s;
+}

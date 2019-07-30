@@ -882,6 +882,7 @@ $section["COLORS"] = $arColorNew;
         <div class="col-lg-12 filters-main-title">
             <div class="top_block">
                 <h3 class="title_block big">Товары серии</h3>
+                <div id="show_all" class="show_all">Скрыть все</div>
             </div>
         </div>
     </div>
@@ -901,15 +902,21 @@ $section["COLORS"] = $arColorNew;
         <div class="group_block" id="block_id_<?=$group;?>">
             <div class="top_block">
                 <h3 class="title_block big filters-title"><?=$arGroupEl[$group]['NAME'];?></h3>
-                <a id="toggleLink_<?=$group;?>" href="javascript:void(0);" onclick="viewdiv('hiddens_block_<?=$group;?>');" data-text-show="Скрыть" data-text-hide="Показать">Скрыть</a>
             </div>
-            <div class="hiddens_block" id="hiddens_block_<?=$group;?>" >
-                <div class="row width100">
-                    <div class="ajax_news_<?=$group;?>">
+            <div class="row width100">
+                <div class="element_container">
+                    <span class="open_section">Скрыть секцию</span>
+                    <div class="hidden_section" style="display: block;">
                         <div class="row">
                                 <?$count=0;
+                                $line=0;
+                                $elements=0;
                                 foreach($names as $elementBlock){
                                     $count++;?>
+                                    <?if($count == 1):?>
+                                    <?$line++;?>
+                                    <div class="line_<?=$group;?>_<?=$line;?> <? if($line > 2) echo"hide"; else echo"show";?> ">
+                                    <? endif; ?>
                                     <div class="col-lg-3 col-md-3 col-sm-6">
                                         <?$APPLICATION->IncludeComponent(
                                     "bitrix:catalog.element",
@@ -1042,21 +1049,69 @@ $section["COLORS"] = $arColorNew;
                                         "COMPONENT_TEMPLATE" => "series_item"
                                     ),
                                     false
-                                );?>
+                                );
+                                        $elements++;?>
                                     </div>
                                    <?if($count == $arParams["LINE_ELEMENT_COUNT"]):?>
                                         <div class='clearfix'></div>
-                                        <?$count = 0;
-                                       $count_line=$count_line+1;?>
+                                        </div>
+                                        <? if ($line == 2):?>
+                                        <div class="more_items">
+                                            <p class="show_more_<?=$group;?>_<?=$line;?>">
+                                                <span class="more_button">Показать еще</span>
+                                            </p>
+                                        </div>
+                                            <script>
+                                                $(".show_more_<?=$group;?>_<?=$line;?>").click(function () {
+                                                    $(".line_<?=$group;?>_<?=$line+1;?>").toggleClass("show");
+                                                    $(".show_more_<?=$group;?>_<?=$line;?>").toggleClass("hide");
+                                                    $(".show_more_<?=$group;?>_<?=$line+1;?>").toggleClass("show");
+
+                                                });
+                                            </script>
+                                        <? endif; ?>
+                                        <? if ($line > 2 ):?>
+                                        <div class="more_items">
+                                            <p class="show_more_<?=$group;?>_<?=$line;?> hide">
+                                                <span class="more_button">Показать еще</span>
+                                            </p>
+                                        </div>
+                                        <script>
+                                            $(".show_more_<?=$group;?>_<?=$line;?>").click(function () {
+                                                $(".line_<?=$group;?>_<?=$line+1;?>").toggleClass("show");
+                                                $(".show_more_<?=$group;?>_<?=$line;?>").toggleClass("show");
+                                            });
+                                        </script>
+                                        <? endif; ?>
+                                        <?$count = 0;?>
                                     <? endif; ?>
                                 <?}?>
                         </div>
+                        <?$elements=0;?>
                     </div>
-
                 </div>
             </div>
         </div>
+    </div>
+
+
     <?}?>
+
+        <script>
+            $('.element_container').on('click', '.open_section',
+                function(){
+                    var hBlock = $(this).siblings('.hidden_section');
+                    $(this).text(hBlock.is(':visible') ? 'Показать секцию' : 'Скрыть секцию');
+                    hBlock.toggle('slow');
+                });
+        </script>
+        <script>$(function() {
+                $('#show_all').on('click', function(e) {
+                    $('.hidden_section').slideToggle(function() {
+                        $(e.target).text($(this).is(':visible') ? 'Скрыть все' : 'Показать все');
+                    });
+                });
+            });</script>
         <div class="sort-list-wrapper floating" id="section_block_bottom">
             <p class="sort-evt">Выберите тип:</p>
             <ul class="sort-list">
@@ -1156,40 +1211,6 @@ $section["COLORS"] = $arColorNew;
 
 <?endif;?>
 
-
-
-<div class="js_wrapper_items" data-params='<?=str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false))?>'>
-    <?@include_once('page_blocks/'.$arParams["SECTION_ELEMENTS_TYPE_VIEW"].'.php');?>
-</div>
-
-    <div class="panel-anchors">
-        <ul class="anchors-list">
-            <li>
-                <a href="#moreInformSeries" class="anchor-desc" id="showMeDesc">Описание</a>
-            </li>
-            <li>
-                <a href="#tables" class="anchor-toggle active">Столы</a>
-            </li>
-            <li>
-                <a href="#tablesNegotiations" class="anchor-toggle">Столы для переговоров</a>
-            </li>
-            <li>
-                <a href="#thumbs" class="anchor-toggle">Тумбы</a>
-            </li>
-            <li>
-                <a href="#annex" class="anchor-toggle">Приставки</a>
-            </li>
-            <li>
-                <a href="#cupboard" class="anchor-toggle">Шкафы</a>
-            </li>
-            <li>
-                <a href="#screens" class="anchor-toggle">Экраны</a>
-            </li>
-            <li>
-                <a href="#chairs" class="anchor-toggle">Кресла и стулья</a>
-            </li>
-        </ul>
-    </div>
 
 <?CNext::checkBreadcrumbsChain($arParams, $arSection);?>
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
