@@ -3852,6 +3852,16 @@ $showProps = false;
                     </span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 banner">
+                <div class="banner-wrap">
+                    <div class="text">
+                        <h4>Собственное производство</h4>
+                        <p>3 производственных площадки с итальянским и немецким оборудованием</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
