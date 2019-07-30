@@ -3051,6 +3051,7 @@ $showProps = false;
     <!--<div class="maxwidth-theme">-->
     <?if(!empty($arResult['PROPERTIES']['PODBORKI']['PROPERTY_VALUE_ID'])){
     $GLOBALS['arrFilterPodborki']['VALUE'] = $arResult['PROPERTIES']['PODBORKI']['VALUE'];
+    $GLOBALS['arrFilterPodborki']['SECTION_ID'] = $arResult['IBLOCK_SECTION_ID'];
     ?>
         <div class="podborki-block">
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",

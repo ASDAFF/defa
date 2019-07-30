@@ -2173,12 +2173,21 @@ function OnOrderAdd2Quick($intOrderID, $arFields){
     $pdf->AddPage();
 
 
-    $basket = Sale\Order::load($intOrderID)->getBasket();
+    $order = Sale\Order::load($intOrderID);
+    $order->doFinalAction(true);
+    $basket = $order->getBasket();
+    $fuser = new Sale\Discount\Context\Fuser($basket->getFUserId(true));
+    $discounts = Sale\Discount::buildFromBasket($basket, $fuser);
+    $discounts->calculate();
+    $result = $discounts->getApplyResult(true);
+    $prices = $result['PRICES']['BASKET']; // цены товаров с учетом скидки
     $basketItems = $basket->getOrderableItems();
     $allVatSum = $basketItems->getVatSum();
-    $allSum = $basketItems->getBasePrice();
-    $allDiscountSum = $basketItems->getPrice();
+    $allSum = 0;//$basketItems->getBasePrice();
+    $allDiscountSum = 0;//$basketItems->getPrice();
+    $vatRate = 0;
     $vatRate = $basketItems->getVatRate();
+
 
     $arProductsIDs = [];
     foreach ($basketItems as $basketItem) {
@@ -2213,6 +2222,12 @@ function OnOrderAdd2Quick($intOrderID, $arFields){
         }
         $arBasketItemInfo = $arProducts[$intProdID];
 
+        $basePrice = $prices[$basketItem->getId()]['BASE_PRICE'];
+        $discountPrice = $prices[$basketItem->getId()]['PRICE'];
+
+        $allSum += floatval($basePrice);
+        $allDiscountSum += floatval($discountPrice);
+
         $arItems[] = [
             'PREVIEW_PICTURE' => ['SRC' => CFile::GetPath($arBasketItemInfo['PREVIEW_PICTURE'])],
             'NAME' => $basketItem->getField('NAME'),
@@ -2223,12 +2238,29 @@ function OnOrderAdd2Quick($intOrderID, $arFields){
                 'DATE' => ['VALUE' => date("d.m.Y", strtotime(date('d.m.Y') . " +2 day"))],
             ],
             'QUANTITY' => $basketItem->getQuantity(),
-            'PRICE' => $basketItem->getBasePrice(),
-            'DISCOUNT_PRICE' => floatval($basketItem->getBasePrice()) - floatval($basketItem->getDiscountPrice()),
-            'DISCOUNT_PERCENT' => floor($basketItem->getDiscountPrice() / $basketItem->getBasePrice()) * 100
+            'PRICE' => $basePrice,
+            'DISCOUNT_PRICE' => $discountPrice,
+            'DISCOUNT_PERCENT' => 100 - floor((floatval($discountPrice)/ floatval($basePrice))*100)
         ];
     }
-
+    $strLocationRequisites = '';
+    $intCurrentLocation = (int)CNextRegionalityB2c::getCurrentRegion()['LOCATION'];
+    if (!empty($intCurrentLocation) && $intCurrentLocation > 0) {
+        $select = Array('ID', 'IBLOCK_ID','PROPERTY_REGION_TAG_REKVIZITY','PROPERTY_REGION_TAG_MANAGER');
+        $filter = Array('IBLOCK_ID' => 2, 'PROPERTY_LOCATION_LINK' => $intCurrentLocation);
+        $res = CIBlockElement::GetList(Array(), $filter, false, Array("nPageSize" => 1), $select);
+        $arLocation = $res->GetNext();
+        $strLocationRequisites = $arLocation['~PROPERTY_REGION_TAG_REKVIZITY_VALUE']['TEXT'];
+        $strManagerInfo = $arLocation['~PROPERTY_REGION_TAG_MANAGER_VALUE']['TEXT'];
+    }
+    /*if(!empty($arLocation)){
+        $select = Array('ID', 'IBLOCK_ID','PROPERTY_EMAIL','NAME');
+        $filter = Array('IBLOCK_ID' => 63, 'PROPERTY_REGION' => $arLocation['ID']);
+        $res = CIBlockElement::GetList(Array(), $filter, false, Array("nPageSize" => 1), $select);
+        $arManager = $res->GetNext();
+        $arManagerName = $arManager['NAME'];
+        $arManagerEmail = $arManager['PROPERTY_EMAIL_VALUE'];
+    }*/
     $date = date('d.m.Y');
     $intNumber = rand(1,99999999);
 
@@ -2394,8 +2426,7 @@ $productsHTML
 
 <div class="tqRequisites">
 <p>Ваш персональный специалист</p>
-<h1>Трапезникова Татьяна Алексеевна</h1>
-<p>(812) 448-8970 (2263)<br/><a href="mailto:tat@defo.ru">tat@defo.ru</a></p>
+<p>$strManagerInfo</p>
 <br/>
 <br/>
 <br/><br/>
@@ -2403,20 +2434,7 @@ $productsHTML
 <br/><br/>
 <br/>
 
-<h2>ООО "ДЭФО-Санкт-Петербург"</h2>
-<p>Юридический адрес:</p>
-<p>199004, город Санкт-Петербург, линия Кадетская В.О, д. 27/5, лит. А, пом. 1Н</p><br/>
-<p>Реквизиты:</p>
-<p>ИНН / КПП: 7801512839 / 780101001</p>
-<p>ОКТМО 40308000000</p>
-<p>р/с 40702810606000028010</p>
-<p>СТ-ПЕТЕРБУРГСКИЙ Ф-Л ПАО "ПРОМСВЯЗЬБАНК" в Санкт-Петербург</p>
-<p>БИК 044030920</p>
-<p>корр.сч. 30101810000000000920</p><br/>
-<br/>
-<br/>
-<br/>
-<br/>
+$strLocationRequisites
 
 </div>
 <div class="tqFooter">

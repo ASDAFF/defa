@@ -3375,6 +3375,8 @@ window.JCCatalogElement.prototype.setBuyBlock = function(th, obj)
 		cheaper_form.data('autoload-product_id', obj.ID);
 	}
 
+	$('.tqGeneratePDF').attr('data-id',obj.ID);
+
 	if((obj.CONFIG.OPTIONS.USE_PRODUCT_QUANTITY_DETAIL && obj.CONFIG.ACTION == "ADD") && obj.CAN_BUY){
 		var max=(obj.CONFIG.MAX_QUANTITY_BUY>0 ? "data-max='"+obj.CONFIG.MAX_QUANTITY_BUY+"'" : ""),
 			counterHtml='<span class="minus">-</span>'+

@@ -40,10 +40,27 @@ if($arResult['SECTIONS'])
                                 <div class="col-lg-12 select">
                                     <div class="sort-list-wrapper">
                                         <?
-                                        $rsEnum = CUserFieldEnum::GetList(array(), array("USER_FIELD_NAME"=>"UF_PODBORKA"));
-                                        while ($arEnum = $rsEnum->GetNext()){
-                                            $UF_PODBORKA[] = $arEnum;
-                                        }
+                                        
+                                            $arTQurrentSectionID = $arParams['SECTION_ID'];
+                                            $arPodborki = $arParams['UF_PODBORKA'];
+                                            if(empty($arPodborki))  $arPodborki = [];
+                                            $filter = array(
+                                                'IBLOCK_ID' => $arParams['IBLOCK_ID'],
+                                                'SECTION_ID ' => $arTQurrentSectionID
+                                            );
+                                            $sect = CIBlockSection::GetList(array('sort' => 'asc'), $filter, false,
+                                                array('UF_PODBORKA'));
+                                            while ($section = $sect->GetNext()) {
+                                            	if(!empty($section['UF_PODBORKA']) && is_array($section['UF_PODBORKA'])){
+                                                    $arPodborki = array_merge($arPodborki,$section['UF_PODBORKA']);
+	                                            }
+                                            }
+                                            $rsEnum = CUserFieldEnum::GetList(array(),
+                                                array("USER_FIELD_NAME" => "UF_PODBORKA", 'ID' => $arPodborki));
+                                            while ($arEnum = $rsEnum->GetNext()) {
+                                                $UF_PODBORKA[] = $arEnum;
+                                            }
+
                                         ?>
                                         <ul class="sort-list">
                                             <li class="sort-item"><a href="<?=$APPLICATION->GetCurPage()?>" class="sort-link <?if(empty($_GET['filter'])) { ?>active all<? } ?>">Все серии</a></li>
@@ -158,7 +175,7 @@ if($arResult['SECTIONS'])
                                 </div>
                                 <div class="row series-main current series-desc-block"  data-tab="1">
                                         <div class="img col-lg-4 col-sm-12">
-                                      
+
                                             <ul class="series-item-pros quick-metki">
 
                                                 <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
@@ -218,7 +235,7 @@ if($arResult['SECTIONS'])
                                                 <?
                                                 if(!empty($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']]))
                                                 {
-                                                    
+
                                                     ?>
                                                     <div class="series-item__thumbs slick-nav preview-slide slider-nav">
                                                         <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)

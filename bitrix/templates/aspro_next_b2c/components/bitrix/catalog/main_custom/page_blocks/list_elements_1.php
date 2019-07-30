@@ -151,6 +151,7 @@
 			),
 			$component
 		);?>
+
 	</div>
 <?endif;?>
 <?global $arTheme;?>
