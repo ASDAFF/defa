@@ -1,9 +1,13 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
 
 <?
+if (!$_COOKIE['current_region'])
+	$ufCityBnts = 8;
+else
+	$ufCityBnts = 8;
 $rsGroups = CIBlockSection::GetList (
     Array("SORT"=>"ASC"),
-	Array("IBLOCK_ID"=>"56", "ACTIVE" => "Y", "UF_CITY_BNTS" => $_COOKIE['current_region']),
+	Array("IBLOCK_ID"=>"56", "ACTIVE" => "Y", "UF_CITY_BNTS" => $ufCityBnts),
  	false,
  	Array("IBLOCK_ID", "ID", "NAME", "UF_*")
 );

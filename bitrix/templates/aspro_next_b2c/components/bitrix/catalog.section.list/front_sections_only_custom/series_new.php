@@ -25,6 +25,7 @@ if($arResult['SECTIONS'])
 
         }
     </style>
+	
     <div class="sections_wrapper series">
         <?if($arParams["TITLE_BLOCK"] || $arParams["TITLE_BLOCK_ALL"]):?>
             <div class="top_block">
@@ -40,13 +41,15 @@ if($arResult['SECTIONS'])
                                 <div class="col-lg-12 select">
                                     <div class="sort-list-wrapper">
                                         <?
-                                        
+
                                             $arTQurrentSectionID = $arParams['SECTION_ID'];
+
                                             $arPodborki = $arParams['UF_PODBORKA'];
                                             if(empty($arPodborki))  $arPodborki = [];
                                             $filter = array(
                                                 'IBLOCK_ID' => $arParams['IBLOCK_ID'],
-                                                'SECTION_ID ' => $arTQurrentSectionID
+                                                'SECTION_ID' => $arTQurrentSectionID,
+                                                'ACTIVE_DATE'=>'Y', 'ACTIVE'=>'Y'
                                             );
                                             $sect = CIBlockSection::GetList(array('sort' => 'asc'), $filter, false,
                                                 array('UF_PODBORKA'));
@@ -55,6 +58,7 @@ if($arResult['SECTIONS'])
                                                     $arPodborki = array_merge($arPodborki,$section['UF_PODBORKA']);
 	                                            }
                                             }
+                                            $arPodborki  = array_unique($arPodborki);
                                             $rsEnum = CUserFieldEnum::GetList(array(),
                                                 array("USER_FIELD_NAME" => "UF_PODBORKA", 'ID' => $arPodborki));
                                             while ($arEnum = $rsEnum->GetNext()) {

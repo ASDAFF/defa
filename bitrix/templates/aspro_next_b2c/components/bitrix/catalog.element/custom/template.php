@@ -3050,7 +3050,19 @@ $showProps = false;
     <!-- new! -->
     <!--<div class="maxwidth-theme">-->
     <?if(!empty($arResult['PROPERTIES']['PODBORKI']['PROPERTY_VALUE_ID'])){
-    $GLOBALS['arrFilterPodborki']['VALUE'] = $arResult['PROPERTIES']['PODBORKI']['VALUE'];
+    	$arPodborki = $arResult['PROPERTIES']['PODBORKI']['VALUE'];
+    	$select = Array('ID', 'IBLOCK_ID', 'NAME', 'PROPERTY_PODBORKI');
+    	$filter = Array('IBLOCK_ID'=>$arParams['IBLOCK_ID'],'SECTION_ID'=>$arResult['IBLOCK_SECTION_ID'],'ACTIVE_DATE'=>'Y', 'ACTIVE'=>'Y'/*, 'INCLUDE_SUBSECTIONS' => 'Y'*/);
+    	$res = CIBlockElement::GetList(Array(), $filter, false, false, $select);
+    	while($ob = $res->GetNextElement()){
+    	 $fields = $ob->GetFields();
+    	 $fields ['PROPERTIES'] = $ob->GetProperties();
+    	    if(!empty($fields['PROPERTIES']['PODBORKI']['VALUE']))
+            $arPodborki = array_merge($arPodborki,$fields['PROPERTIES']['PODBORKI']['VALUE']);
+    	}
+        $arPodborki = array_unique($arPodborki);
+
+    $GLOBALS['arrFilterPodborki']['VALUE'] = $arPodborki;
     $GLOBALS['arrFilterPodborki']['SECTION_ID'] = $arResult['IBLOCK_SECTION_ID'];
     ?>
         <div class="podborki-block">
