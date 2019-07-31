@@ -372,9 +372,22 @@ $res=CIBlockElement::GetList(array(), array("SECTION_ID" => $arResult["VARIABLES
     while($ob = $res->GetNextElement()){
         $arFields = $ob->GetFields();
         $arElements[] = $arFields["ID"];
-        $arGroupEl[$arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID']] = ["ID" => $arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID'],
-        "NAME" => $arFields['PROPERTY_TYPE_PRODUCT_VALUE']];
-        $arElementsGroup[$arFields["PROPERTY_TYPE_PRODUCT_ENUM_ID"]][$arFields["ID"]] = $arFields["ID"];
+        if ($arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID'] == ''){
+            $arGroupEl[0] = ["ID" => 0,
+                "NAME" => 'Прочие'];
+        }
+        else{
+            $arGroupEl[$arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID']] = ["ID" => $arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID'],
+                "NAME" => $arFields['PROPERTY_TYPE_PRODUCT_VALUE']];
+        }
+        krsort($arGroupEl);
+        if ($arFields['PROPERTY_TYPE_PRODUCT_ENUM_ID'] == '') {
+            $arElementsGroup[0][$arFields["ID"]] = $arFields["ID"];
+        }
+        else{
+            $arElementsGroup[$arFields["PROPERTY_TYPE_PRODUCT_ENUM_ID"]][$arFields["ID"]] = $arFields["ID"];
+        }
+        krsort($arElementsGroup);
     }
 
 $arInfo = CCatalogSKU::GetInfoByProductIBlock($arParams["IBLOCK_ID"]);
@@ -891,6 +904,7 @@ $section["COLORS"] = $arColorNew;
             <div class="sort-list-wrapper" id="section_block">
                 <p class="sort-evt">Выберите тип:</p>
                 <ul class="sort-list">
+
                     <?foreach ($arGroupEl as $key => $category) {
                         echo "<li class='sort-item'><a href='#block_id_$key'>".$category['NAME']."</a></li>";
                     }
@@ -1211,7 +1225,7 @@ $section["COLORS"] = $arColorNew;
         <?@include_once('page_blocks/'.$arParams["SECTION_ELEMENTS_TYPE_VIEW"].'.php');?>
     </div>
 
-        
+
 <?CNext::checkBreadcrumbsChain($arParams, $arSection);?>
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
 
