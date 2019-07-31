@@ -616,6 +616,7 @@ ul li:before {
 .bottom-menu-block .menu-row .mega-menu {
     position: relative;
     height: 60px;
+    z-index: 9;
 }
 
 
