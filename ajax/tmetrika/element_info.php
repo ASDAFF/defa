@@ -3,18 +3,9 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_be
 use Tmetrika\Offer;
 use Tmetrika\Product;
 
-$element = CIBlockElement::GetByID($_REQUEST["id"])->GetNextElement();
-$fields = $element->GetFields();
-$properties = $element->GetProperties();
-
-$detailPicture = CFile::GetPath($fields["DETAIL_PICTURE"]);
-
 $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
 
-
-$offers = CCatalogSKU::getOffersList($fields["ID"],null,null,['NAME','CATALOG_PRICE','DETAIL_TEXT']);
-
-$Product = new Product($fields['ID']);
+$Product = new Product($_REQUEST["id"]);
 
 $Offer = $Product->Offers[0];
 ?>
@@ -25,7 +16,7 @@ $Offer = $Product->Offers[0];
 
     <div class="column img">
         <div class="product-img-wrap">
-            <img src="<?= $detailPicture ?>" alt="" title="" class="product-photo">
+            <img src="<?= $Product->detailPicture() ?>" alt="" title="" class="product-photo">
         </div>
         <h3 class="product-name">
             <?= $fields["NAME"] ?>
@@ -87,7 +78,7 @@ $Offer = $Product->Offers[0];
     <div class="column info">
 
         <!-- акции -->
-        <? foreach (data_get($properties, "LINK_SALE.VALUE") as $saleId) {
+        <? foreach ($Product->Actions() as $saleId) {
             $sale = CIBlockElement::GetByID($saleId)->GetNextElement();
 
             $saleProps = $sale->GetProperties();
@@ -103,7 +94,7 @@ $Offer = $Product->Offers[0];
             </div>
         <? } ?>
         <ul class="characters">
-            <? foreach ($properties as $item) {
+            <? foreach ($Product->product['PROPS'] as $item) {
                 $showProperty = $item["USER_TYPE"] === null &&
                     data_get($item, "VALUE") &&
                     $item["PROPERTY_TYPE"] !== "F" &&
@@ -151,9 +142,9 @@ $Offer = $Product->Offers[0];
                       data-autoload-product_id="8901">Нужно быстрее?</span>
             </div>
         </div>
-        <? if (data_get($properties, "PRODUCT_SCHEME.VALUE")) { ?>
+        <? if ($Product->Schema()) { ?>
             <div class="product_scheme">
-                <img src="<?= CFile::GetPath(data_get($properties, "PRODUCT_SCHEME.VALUE")) ?>"
+                <img src="<?= $Product->Schema() ?>"
                      alt="product scheme defo.ru" class="product_scheme__img">
             </div>
         <? } ?>

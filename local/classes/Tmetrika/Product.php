@@ -4,7 +4,8 @@
 namespace Tmetrika;
 
 
-class Product {
+class Product
+{
 
     public $product;
     /**
@@ -20,6 +21,15 @@ class Product {
         $this->loadOffers();
     }
 
+    public function __get($name)
+    {
+        if (isset($this->{$name}))
+            return $this->{$name};
+
+        if (function_exists($name))
+            return $this->{$name}();
+    }
+
     private function init()
     {
         $nextElement = \CIBlockElement::GetByID($this->id)->GetNextElement();
@@ -27,6 +37,7 @@ class Product {
         $this->product = $nextElement->GetFields();
         $this->product['PROPS'] = $nextElement->GetProperties();
     }
+
 
     /**
      * @param bool $format
@@ -51,6 +62,14 @@ class Product {
         foreach ($offers[$this->id] as $key => $offer) {
             $this->Offers[] = new Offer($offer['ID']);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function detailPicture()
+    {
+        return \CFile::ResizeImageGet($this->product["DETAIL_PICTURE"], ['width' => 200, 'height' => 200])['src'];
     }
 
     /**
@@ -105,6 +124,20 @@ class Product {
         }
 
         return $colors;
+    }
+
+    public function Actions()
+    {
+        return data_get($this->product, "PROPS.LINK_SALE.VALUE");
+    }
+
+    /**
+     * @return |null
+     */
+    public function Schema()
+    {
+        $schema = data_get($this->product, "PROP.PRODUCT_SCHEME.VALUE");
+        return $schema ? \CFile::GetPath($schema) : null;
     }
 
 
