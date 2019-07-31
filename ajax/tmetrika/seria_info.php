@@ -44,7 +44,7 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
 
     <div class="column img">
         <h3 class="series-name">
-            <?= $Section->Section["NAME"] ?>
+            <a href="<?= $Section->Section["SECTION_PAGE_URL"] ?>"><?= $Section->Section["NAME"] ?></a>
         </h3>
         <h4 class="series-subname">
             <?= $parent["NAME"] ?>
