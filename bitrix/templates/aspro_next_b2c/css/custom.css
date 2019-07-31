@@ -16657,4 +16657,28 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     border-bottom: 4px solid #d33234;
 }
 
-/*ереключатели якорей верхние*/
+/**/
+
+.sale-mark {
+    position: absolute;
+    /*left: 12px;*/
+    /*bottom: 16px;*/
+    left: 35px;
+    bottom: 180px;
+    width: 256px;
+    color: #1f2229;
+    font-size: 15px;
+    line-height: 25px;
+    font-weight: 400;
+    z-index: +1;
+    text-transform: uppercase;
+    border: 1px solid #c7cbce;
+    border-radius: 50px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #e6e6e6;
+}
+
+.sale-mark::before {
+    content: 'Скидка на серию ';
+}

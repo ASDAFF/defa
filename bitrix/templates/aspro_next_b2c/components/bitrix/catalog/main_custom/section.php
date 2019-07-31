@@ -573,6 +573,7 @@ $section["COLORS"] = $arColorNew;
                             </li>
                         <? } ?>
                     </ul>
+                    <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
                             <?foreach($section['SERIES_GALLERIES'] as $image):
