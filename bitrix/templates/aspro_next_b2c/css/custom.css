@@ -1296,7 +1296,7 @@ body .mega_fixed_menu .mega-menu .table-menu-wrapper .wrap > .dropdown-menu li:f
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 2999!important;
+    z-index: 2998!important;
 }
 
 .inline-search-block.fixed.big {
