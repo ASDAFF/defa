@@ -456,23 +456,23 @@ $section["COLORS"] = $arColorNew;
         );
 		while($el=$res->fetch()){
 		    if($section['UF_DISCOUNT']){
-                $arWaterMark = array(
-                      array(
-                          'name' => 'watermark',
-                          'type' =>'text',
-                          'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
-                          'text' => "Скидка на серию  ".$section['UF_DISCOUNT'],
-                          "position" => "topright",
-                          "color" => "ffffff",
-                          )
-
-                );
+//                $arWaterMark = array(
+//                      array(
+//                          'name' => 'watermark',
+//                          'type' =>'text',
+//                          'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+//                          'text' => "Скидка на серию  ".$section['UF_DISCOUNT'],
+//                          "position" => "topright",
+//                          "color" => "ffffff",
+//                          )
+//
+//                );
                 $arFileTmp = CFile::ResizeImageGet(
                     $el['PROPERTY_PICTURES_VALUE'],
                     array("width" => 854, "height" => 571),
                     BX_RESIZE_IMAGE_EXACT,
-                    true,
-                    $arWaterMark
+                    true
+//                    $arWaterMark
                 );
 
                 $seriesGalleries[] = ['SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE']),'MIN_SRC'=>$arFileTmp['src']];
@@ -573,7 +573,9 @@ $section["COLORS"] = $arColorNew;
                             </li>
                         <? } ?>
                     </ul>
-                    <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
+                    <?if($section['UF_DISCOUNT']){?>
+                        <span class="sale-mark"><?=($section['UF_DISCOUNT'])?></span>
+                    <?}?>
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
                             <?foreach($section['SERIES_GALLERIES'] as $image):
