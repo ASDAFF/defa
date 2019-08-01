@@ -14,19 +14,24 @@
 
 
 .quick-metki{
+    display: flex;
     position: absolute;
     z-index: 9999999;
     padding: 10px;
     width: 100%!important;
 }
 .quick-metki li{
-    width: 100%!important;
+    width: auto!important;
     margin-bottom: 10px!important;
 }
 .quick-metki .series-item-pros-element span{
     display: none!important;
-    width: auto!important;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 340px!important;
     padding: 10px!important;
+    padding-left: 0!important;
 }
 .quick-metki li:hover span{
     background-color: white!important;
@@ -48,6 +53,11 @@
 .maxwidth-theme {
     padding-left: 15px!important;
     padding-right: 15px!important;
+}
+.quick-metki .pros-icon{
+    position: relative;
+    width: 40px;
+    height: 40px;
 }
 
 
@@ -16665,17 +16675,17 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     left: 35px;
     bottom: 180px;
     width: 256px;
-    color: #1f2229;
+    color: #d33234;
     font-size: 15px;
     line-height: 25px;
-    font-weight: 400;
+    font-weight: 500;
     z-index: +1;
     text-transform: uppercase;
     border: 1px solid #c7cbce;
     border-radius: 50px;
     text-align: center;
     vertical-align: middle;
-    background-color: #e6e6e6;
+    background-color: #ffffff;
 }
 
 .series .sale-mark {
