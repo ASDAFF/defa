@@ -59,11 +59,14 @@ if($arResult['SECTIONS'])
 	                                            }
                                             }
                                             $arPodborki  = array_unique($arPodborki);
-                                            $rsEnum = CUserFieldEnum::GetList(array(),
-                                                array("USER_FIELD_NAME" => "UF_PODBORKA", 'ID' => $arPodborki));
-                                            while ($arEnum = $rsEnum->GetNext()) {
-                                                $UF_PODBORKA[] = $arEnum;
+                                            if(!empty($arPodborki)){
+                                                $rsEnum = CUserFieldEnum::GetList(array(),
+                                                    array("USER_FIELD_NAME" => "UF_PODBORKA", 'ID' => $arPodborki));
+                                                while ($arEnum = $rsEnum->GetNext()) {
+                                                    $UF_PODBORKA[] = $arEnum;
+                                                }
                                             }
+
 
                                         ?>
                                         <ul class="sort-list">
