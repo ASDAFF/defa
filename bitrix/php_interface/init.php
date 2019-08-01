@@ -1992,7 +1992,7 @@ function GetMarks($select = ['*'], $filter = [])
     ]);
     $tizers = [];
     while ($el = $res->fetch()) {
-        $tizers[$el['ID']] =
+        $tizers[$el['UF_XML_ID']] =
             [
                 'ID' => $el['ID'],
                 'NAME' => $el['UF_DESC'],
