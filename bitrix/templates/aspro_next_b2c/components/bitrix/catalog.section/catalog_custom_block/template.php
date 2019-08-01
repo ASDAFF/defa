@@ -16,7 +16,6 @@ else
 <?
 $arResult['METKI'] = GetMarks();
 $arResult['METKIPOK'] = GetMetkipok(['*']);
-dump($arResult['METKI']);dump($arResult['METKIPOK']);
 ?>
 
 
@@ -250,25 +249,47 @@ dump($arResult['METKI']);dump($arResult['METKIPOK']);
 								<div class="item-title">
 									<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="dark_link"><span><?=$elementName;?></span></a>
 								</div>
-								<?if($arParams["SHOW_RATING"] == "Y"):?>
-									<div class="rating">
-										<?$APPLICATION->IncludeComponent(
-										   "bitrix:iblock.vote",
-										   "element_rating_front",
-										   Array(
-											  "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-											  "IBLOCK_ID" => $arItem["IBLOCK_ID"],
-											  "ELEMENT_ID" =>$arItem["ID"],
-											  "MAX_VOTE" => 5,
-											  "VOTE_NAMES" => array(),
-											  "CACHE_TYPE" => $arParams["CACHE_TYPE"],
-											  "CACHE_TIME" => $arParams["CACHE_TIME"],
-											  "DISPLAY_AS_RATING" => 'vote_avg'
-										   ),
-										   $component, array("HIDE_ICONS" =>"Y")
-										);?>
-									</div>
-								<?endif;?>
+                                <div class="rating-recommend-wrapper">
+                                    <?if($arParams["SHOW_RATING"] == "Y"):?>
+                                        <div class="rating">
+                                            <?$APPLICATION->IncludeComponent(
+                                                "bitrix:iblock.vote",
+                                                "element_rating_front",
+                                                Array(
+                                                    "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
+                                                    "IBLOCK_ID" => $arItem["IBLOCK_ID"],
+                                                    "ELEMENT_ID" =>$arItem["ID"],
+                                                    "MAX_VOTE" => 5,
+                                                    "VOTE_NAMES" => array(),
+                                                    "CACHE_TYPE" => $arParams["CACHE_TYPE"],
+                                                    "CACHE_TIME" => $arParams["CACHE_TIME"],
+                                                    "DISPLAY_AS_RATING" => 'vote_avg'
+                                                ),
+                                                $component, array("HIDE_ICONS" =>"Y")
+                                            );?>
+                                        </div>
+                                    <?endif;?>
+                                    <?if($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]):?>
+                                    <p class="recommend">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 21.03 21">
+                                            <defs>
+                                                <style>
+                                                    .uscls-1 {
+                                                        fill: #666666;
+                                                        fill-rule: evenodd;
+                                                </style>
+                                            </defs>
+                                            <path data-name="Rounded Rectangle 107" class="uscls-1" d="M1425.5,111a6.5,6.5,0,1,1-6.5,6.5A6.5,6.5,0,0,1,1425.5,111Zm0,2a4.5,4.5,0,1,1-4.5,4.5A4.5,4.5,0,0,1,1425.5,113Zm8.35,19c-1.09-2.325-4.24-4-6.85-4h-3c-2.61,0-5.79,1.675-6.88,4h-2.16c1.11-3.448,5.31-6,9.04-6h3c3.73,0,7.9,2.552,9.01,6h-2.16Z" transform="translate(-1414.97 -111)"></path>
+                                        </svg>
+                                        <?=($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]);?> рекомендует
+                                    </p>
+                                    <?endif;?>
+                                </div>
+                                <?if($metkipok):?>
+                                    <p class="buyers-like">
+                                        Покупателям нравится <span class="green"><?=($metkipok);?></span>
+                                    </p>
+                                <?endif;?>
 								<div class="sa_block">
 									<?=$arQuantityData["HTML"];?>
 									<div class="article_block" <?if(isset($arItem['ARTICLE']) && $arItem['ARTICLE']['VALUE']):?>data-name="<?=$arItem['ARTICLE']['NAME'];?>" data-value="<?=$arItem['ARTICLE']['VALUE'];?>"<?endif;?>>
