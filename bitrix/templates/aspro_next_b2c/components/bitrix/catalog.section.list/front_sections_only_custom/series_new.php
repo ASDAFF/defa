@@ -1046,29 +1046,32 @@ if($arResult['SECTIONS'])
                                                     </li>
                                                 <? } ?>
                                             </ul>
-                                            <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                                             <div class="series-slider-wrapper">
+                                                <?if($arSection['UF_DISCOUNT']){?>
+                                                    <span class="sale-mark"><?=($arSection['UF_DISCOUNT'])?></span>
+                                                <?}?>
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                     {
                                                         if($arSection['UF_DISCOUNT']){
-                                                            $arWaterMark = array(
-                                                                array(
-                                                                    'name' => 'watermark',
-                                                                    'type' =>'text',
-                                                                    'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
-                                                                    'text' => "Скидка на серию  ".$arSection['UF_DISCOUNT'],
-                                                                    "position" => "topright",
-                                                                    "color" => "ffffff",
-                                                                )
 
-                                                            );
+//                                                            $arWaterMark = array(
+//                                                                array(
+//                                                                    'name' => 'watermark',
+//                                                                    'type' =>'text',
+//                                                                    'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+//                                                                    'text' => "Скидка на серию  ".$arSection['UF_DISCOUNT'],
+//                                                                    "position" => "topright",
+//                                                                    "color" => "ffffff",
+//                                                                )
+//
+//                                                            );
                                                             $arFileTmp = CFile::ResizeImageGet(
                                                                 $image,
                                                                 array("width" => 417, "height" => 300),
                                                                 BX_RESIZE_IMAGE_EXACT,
-                                                                true,
-                                                                $arWaterMark
+                                                                true
+//                                                                $arWaterMark
                                                             );
 
                                                         }else{

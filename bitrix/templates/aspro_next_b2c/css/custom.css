@@ -16625,7 +16625,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     display: flex;
     justify-content: space-between;
     width: 1200px;
-    margin: 0;
     padding: 0;
     margin: 0 auto;
 
