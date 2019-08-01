@@ -16657,7 +16657,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     border-bottom: 4px solid #d33234;
 }
 
-/**/
+/*сообщение о скидке на странице серии и на списке серий*/
 
 .sale-mark {
     position: absolute;
@@ -16688,4 +16688,45 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
 .sale-mark::before {
     content: 'Скидка на серию ';
+}
+
+/*метки для товара*/
+
+.rating-recommend-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recommend {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 15px;
+    font-size: 12px;
+    /*color: #29a22d;*/
+    color: #666666;
+}
+
+.recommend svg {
+    margin-right: 10px;
+}
+
+.buyers-like {
+    width: 240px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #000000;
+}
+
+.buyers-like .green {
+    font-size: 12px;
+    color: #29a22d;
+}
+
+.best_block.tab_slider_wrapp .item .catalog_item:hover .item_info,
+.block .catalog_block .catalog_item_wrapp .catalog_item:hover .item_info {
+    height: auto!important;
 }
