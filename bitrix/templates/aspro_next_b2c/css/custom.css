@@ -16679,6 +16679,13 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     background-color: #e6e6e6;
 }
 
+.series .sale-mark {
+    left: 10px;
+    bottom: 105px;
+    width: 200px;
+    font-size: 13px;
+}
+
 .sale-mark::before {
     content: 'Скидка на серию ';
 }

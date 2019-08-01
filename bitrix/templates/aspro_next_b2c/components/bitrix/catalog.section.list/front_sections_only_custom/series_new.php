@@ -175,7 +175,7 @@ if($arResult['SECTIONS'])
                                 <div class="series-tabs">
                                     <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>
                                     <a href="#" class="series-content-toggle" data-tab="2">Комплекты</a>
-                                    <a href="#" class="series-content-toggle" data-tab="3">Проекты</a>
+                                    <a href="#" class="series-content-toggle" data-tab="3">Пректы</a>
                                 </div>
                                 <div class="row series-main current series-desc-block"  data-tab="1">
                                         <div class="img col-lg-4 col-sm-12">
@@ -194,6 +194,7 @@ if($arResult['SECTIONS'])
 
                                             <div class="series-slider-wrapper">
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
+                                                    <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                     {
 
@@ -1042,6 +1043,7 @@ if($arResult['SECTIONS'])
                                                     </li>
                                                 <? } ?>
                                             </ul>
+                                            <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                                             <div class="series-slider-wrapper">
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
