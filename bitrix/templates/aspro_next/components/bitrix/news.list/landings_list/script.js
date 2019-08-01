@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('.landings_list .more>span').on('click', function(){
+	$('.landings_list .more').on('click', function(){
 		var $this = $(this),
 			dataOpened = $this.data('opened'),
 			dataText = $this.data('text'),

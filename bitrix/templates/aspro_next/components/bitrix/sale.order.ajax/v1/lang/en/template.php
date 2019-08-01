@@ -133,4 +133,8 @@ $MESS["SOA_MAX_SIZE"] = "Max. file size exceeded";
 $MESS["PAY_SYSTEM_PAYABLE_ERROR_DEFAULT"] = "You'll be able to pay for the order after we verify that the items you have ordered are in stock. Once your order is fulfilled, you'll receive an email with payment instructions. You'll be able to complete the purchase inside your customer account.";
 $MESS["PRICE_FREE_DEFAULT"] = "free";
 $MESS["ECONOMY_DEFAULT"] = "Save";
+$MESS["STOF_PHONE"] = "Phone number";
+$MESS["STOF_REG_SMS_REQUEST"] = "A confirmation code has been sent to your phone";
+$MESS["STOF_SEND"] = "Send";
+$MESS["STOF_SMS_CODE"] = "SMS confirmation code";
 ?>

@@ -398,7 +398,7 @@ if($RIGHT >= "R"){
 														foreach($arOptionsKeys as $_optionKey){
 															$_arParameters[$optionCode.'_array_'.$_optionKey.'_'.($itemKey != $cnt ? $itemKey : 'new')] = $arOption['OPTIONS'][$_optionKey];
 															if(!$itemKey){
-																?><th colspan="2"><?=$arOption['OPTIONS'][$_optionKey]['TITLE']?></th><?
+																?><th colspan="1"><?=$arOption['OPTIONS'][$_optionKey]['TITLE']?></th><?
 															}
 														}
 														?>

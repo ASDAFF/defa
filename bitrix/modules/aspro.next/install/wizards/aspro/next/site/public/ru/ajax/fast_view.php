@@ -43,6 +43,7 @@
 					BX('fast_view_item').innerHTML = ob.HTML;
 					BX.ajax.processScripts(ob.SCRIPT);
 					$('#fast_view_item').closest('.form').addClass('init');
+					$('.fast_view_frame h2').html($('#fast_view_item .title.hidden').html());
 
 					initCountdown();
 					setBasketStatusBtn();

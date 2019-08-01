@@ -65,5 +65,14 @@ $iVisibleItemsMenu = ($arTheme['MAX_VISIBLE_ITEMS_MENU']['VALUE'] ? $arTheme['MA
 				</div>
 			</div>
 		<?endforeach;?>
+		<?if(isset($arParams["COMPACT_VIEW_MOBILE"]) && $arParams["COMPACT_VIEW_MOBILE"]=="Y" && ($arParams["TITLE_BLOCK"] || $arParams["TITLE_BLOCK_ALL"])):?>
+			<div class="visible-xs col-xs-<?=(isset($arParams["COMPACT_VIEW_MOBILE"]) && $arParams["COMPACT_VIEW_MOBILE"]=="Y") ? "12" : "6"?>">
+				<div class="item" id="<?=$this->GetEditAreaId($arSection['ID']);?>">
+					<div class="name no-img">
+						<a href="<?=SITE_DIR.$arParams["ALL_URL"];?>" class="dark_link"><?=$arParams["TITLE_BLOCK_ALL"] ;?></a>
+					</div>
+				</div>
+			</div>
+		<?endif;?>
 	</div>
 </div>

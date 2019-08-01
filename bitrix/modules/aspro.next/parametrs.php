@@ -949,6 +949,12 @@ $moduleClass::$arParametrsList = array(
 					'URL' => '',
 				),
 			),
+			'CATALOG_SECTIONS_COMPACT_VIEW_MOBILE' => array(
+				'TITLE' => GetMessage('CATALOG_SECTIONS_COMPACT_VIEW_MOBILE'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
 		),
 	),
 	'HEADER' => array(
@@ -1117,6 +1123,13 @@ $moduleClass::$arParametrsList = array(
 						'DEFAULT' => '',
 						'THEME' => 'N',
 						'REQUIRED' => 'Y',
+					),
+					'PHONE_DESCRIPTION' => array(
+						'TITLE' => GetMessage('HEADER_PHONE_OPTION_DESCRIPTION_TITLE'),
+						'TYPE' => 'text',
+						'DEFAULT' => '',
+						'THEME' => 'N',
+						'REQUIRED' => 'N',
 					),
 				),
 			),
@@ -2498,7 +2511,19 @@ $moduleClass::$arParametrsList = array(
 						'HIDE' => 'Y',
 					),
 				),
-				'DEFAULT' => '1',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
+			'HEADER_MOBILE_MENU_COMPACT' => array(
+				'TITLE' => GetMessage('HEADER_MOBILE_MENU_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
+			'HEADER_MOBILE_MENU_CATALOG_EXPANDED' => array(
+				'TITLE' => GetMessage('HEADER_MOBILE_MENU_CATALOG_EXPANDED'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
 				'THEME' => 'Y',
 			),
 			'HEADER_MOBILE_MENU_OPEN' => array(
@@ -2520,6 +2545,29 @@ $moduleClass::$arParametrsList = array(
 					),
 				),
 				'DEFAULT' => '1',
+				'THEME' => 'Y',
+			),
+			'BIGBANNER_MOBILE' => array(
+				'TITLE' => GetMessage('BIGBANNER_MOBILE'),
+				'TYPE' => 'selectbox',
+				'LIST' => array(
+					'1' => GetMessage('BIGBANNER_MOBILE_1'),
+					'2' => GetMessage('BIGBANNER_MOBILE_2'),
+					'3' => GetMessage('BIGBANNER_MOBILE_3'),
+				),
+				'DEFAULT' => '1',
+				'THEME' => 'N',
+			),
+			'MOBILE_FILTER_COMPACT' => array(
+				'TITLE' => GetMessage('MOBILE_FILTER_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'THEME' => 'Y',
+			),
+			'MOBILE_CATALOG_LIST_ELEMENTS_COMPACT' => array(
+				'TITLE' => GetMessage('MOBILE_CATALOG_LIST_ELEMENTS_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
 				'THEME' => 'Y',
 			),
 		)

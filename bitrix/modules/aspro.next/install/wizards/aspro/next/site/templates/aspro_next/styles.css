@@ -71,7 +71,7 @@ table[data-bx-no-border="Y"] td { border: 0px; border-bottom: 1px dotted #c3c3c3
 .order-block  td .btns{text-align:center;}
 .order-block  .btn{margin:0;}
 .order-block .text{padding:0px 0px 0px 128px;min-height: 54px;line-height:24px;color:#222;text-align:left;position:relative;}
-.order-block .text:before{content:"";background:url(images/next.png) -405px -211px no-repeat;display:block;width:48px;height:58px;position:absolute;top:39px;top:-2px;left:50px;}
+.order-block .text:before{content:"";background:url(images/svg/next.svg) -405px -211px no-repeat;display:block;width:48px;height:58px;position:absolute;top:39px;top:-2px;left:50px;}
 .order-block .text h1, .order-block .text h2, .order-block .text h3, .order-block .text h4, .order-block .text h5, .order-block .text h6 {color:#333333;margin-bottom:5px;margin-top:0px;}
 .styled-block .row > div, .order-block .row > div{/*float:left;*/display: table-cell;vertical-align:middle;}
 .styled-block .row > div.col-md-3, .order-block .row > vib.col-md-3{text-align:center;}

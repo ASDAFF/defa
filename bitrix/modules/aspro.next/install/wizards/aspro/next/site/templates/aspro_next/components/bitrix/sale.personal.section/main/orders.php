@@ -31,6 +31,7 @@ $APPLICATION->AddChainItem(Loc::getMessage("SPS_CHAIN_ORDERS"), $arResult['PATH_
 				"DEFAULT_SORT" => $arParams["ORDER_DEFAULT_SORT"],
 				"RESTRICT_CHANGE_PAYSYSTEM" => $arParams["ORDER_RESTRICT_CHANGE_PAYSYSTEM"],
 				"REFRESH_PRICES" => $arParams["ORDER_REFRESH_PRICES"],
+				"DISALLOW_CANCEL" => $arParams["ORDER_DISALLOW_CANCEL"],
 			),
 			$component
 		);

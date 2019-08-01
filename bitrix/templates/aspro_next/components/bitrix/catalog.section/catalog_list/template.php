@@ -29,7 +29,7 @@
 			$arItemIDs=CNext::GetItemsIDs($arItem);
 
 			$totalCount = CNext::GetTotalCount($arItem, $arParams);
-			$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"]);
+			$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"], "N", $arItem["PRODUCT"]["TYPE"]);
 
 			$item_id = $arItem["ID"];
 			$strMeasure = '';
@@ -51,7 +51,7 @@
 				if($arParams['TYPE_SKU'] == 'TYPE_1' && $arItem['OFFERS_PROP'])
 				{
 					$totalCount = CNext::GetTotalCount($arItem["OFFERS"][$arItem["OFFERS_SELECTED"]], $arParams);
-					$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"]);
+					$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"], "N", $arItem["PRODUCT"]["TYPE"]);
 
 					$currentSKUIBlock = $arItem["OFFERS"][$arItem["OFFERS_SELECTED"]]["IBLOCK_ID"];
 					$currentSKUID = $arItem["OFFERS"][$arItem["OFFERS_SELECTED"]]["ID"];

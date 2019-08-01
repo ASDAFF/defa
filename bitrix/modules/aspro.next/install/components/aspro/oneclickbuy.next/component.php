@@ -1,16 +1,35 @@
-<?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+<?
+if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+
 if(intval($arParams['CACHE_TIME']) < 0){
 	$arParams['CACHE_TIME'] = 36000;
 }
+
 if(!strlen($arParams['DEFAULT_CURRENCY'])){
 	$arParams['DEFAULT_CURRENCY'] = COption::GetOptionString('sale', 'default_currency', 'RUB');
 }
+
 if(empty($arParams['PROPERTIES'])){
 	$arParams['PROPERTIES'] = array('FIO', 'PHONE');
 }
+
 if(empty($arParams['REQUIRED'])){
 	$arParams['REQUIRED'] = array('FIO', 'PHONE');
 }
+
+// get phone auth params
+list($bPhoneAuthSupported, $bPhoneAuthShow, $bPhoneAuthRequired, $bPhoneAuthUse) = Aspro\Next\PhoneAuth::getOptions();
+
+if($bPhoneAuthSupported && $bPhoneAuthShow){
+	echo CJSCore::Init('phone_auth', true);
+
+	if($bPhoneAuthRequired){
+		if(!in_array('PHONE', $arParams['REQUIRED'])){
+			$arParams['REQUIRED'][] = 'PHONE';
+		}
+	}
+}
+
 $arParams['ELEMENT_ID'] = intval($arParams['ELEMENT_ID']);
 
 $arResult = array(
@@ -28,7 +47,7 @@ if($arResult['USER_ID'] = $USER->GetID()){
 	$arUser = $dbUser->Fetch();
 	$arResult['USER_FIO'] = $USER->GetFullName();
 	$arResult['USER_EMAIL'] = $USER->GetEmail();
-	$arResult['USER_PHONE'] = $arUser['PERSONAL_PHONE'];
+	$arResult['USER_PHONE'] = (!empty($arUser['PERSONAL_PHONE']) ? $arUser['PERSONAL_PHONE'] : $arUser['PERSONAL_MOBILE']);
 }
 
 $arParams['INLINE_FORM'] = (isset($_GET['form_id']) && $_GET['form_id'] == 'ocb');
@@ -61,7 +80,7 @@ if($this->StartResultCache()){
     }
     $arResult["PROPS"] = $arProps;
     /**/
-    
+
 	$this->IncludeComponentTemplate();
 }
 ?>

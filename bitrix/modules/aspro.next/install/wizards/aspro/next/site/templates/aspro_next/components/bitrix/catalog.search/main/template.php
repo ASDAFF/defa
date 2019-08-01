@@ -522,11 +522,12 @@ if (is_array($arElements) && !empty($arElements))
 		<?$APPLICATION->RestartBuffer();?>
 	<?endif;?>
 	<?$APPLICATION->ShowViewContent('search_content');?>
-	<div class="catalog">
+	<div class="catalog vertical">
 		<?if($arLanding && strlen($arLanding['PROPERTY_H3_GOODS_VALUE'])):?>
 			<h3 class="title_block langing_title_block"><?=$arLanding['PROPERTY_H3_GOODS_VALUE']?></h3>
 		<?endif;?>
-		<?$arDisplays = array("block", "list", "table");
+		<?
+		$arDisplays = array("block", "list", "table");
 		if(array_key_exists("display", $_REQUEST) || (array_key_exists("display", $_SESSION)) || $arParams["DEFAULT_LIST_TEMPLATE"]){
 			if($_REQUEST["display"] && (in_array(trim($_REQUEST["display"]), $arDisplays))){
 				$display = trim($_REQUEST["display"]);
@@ -547,14 +548,8 @@ if (is_array($arElements) && !empty($arElements))
 		<?=$htmlSections;?>
 		<br/>
 		<div class="adaptive_filter">
-			<a class="filter_opener<?=($_REQUEST["set_filter"] == "y" ? " active" : "")?>"><i></i><span><?=GetMessage("CATALOG_SMART_FILTER_TITLE")?></span></a>
+			<a class="filter_opener<?=($_REQUEST["set_filter"] == "y" ? " active num" : "")?>"><i></i><span><?=GetMessage("CATALOG_SMART_FILTER_TITLE")?></span></a>
 		</div>
-		<script type="text/javascript">
-			$(".filter_opener").click(function(){
-				$(this).toggleClass("opened");
-				$(".visible_mobile_filter").slideToggle(333);
-			});
-		</script>
 		<div class="sort_header view_<?=$display?>">
 			<!--noindex-->
 				<div class="sort_filter">

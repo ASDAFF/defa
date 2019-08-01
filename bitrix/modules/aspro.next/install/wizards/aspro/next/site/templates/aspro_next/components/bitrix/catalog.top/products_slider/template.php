@@ -13,7 +13,7 @@ $arNotify = unserialize($notifyOption);
 	<div class="common_product wrapper_block" id="<?=$sliderID?>">
 		<ul class="slider_navigation top_big custom_flex border"></ul>
 		<div class="all_wrapp">
-			<div class="content_inner tab flexslider loading_state shadow border custom_flex top_right" data-plugin-options='{"animation": "slide", "animationSpeed": 600, "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "counts": [4,3,3,2,1]}'>
+			<div class="content_inner tab flexslider loading_state shadow border custom_flex top_right" data-plugin-options='{"animation": "slide", "animationSpeed": 600, "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "counts": [4,3,3,2,2]}'>
 				<ul class="tabs_slider items slides">
 					<?foreach($arResult["ITEMS"] as $key => $arItem):?>
 						<?

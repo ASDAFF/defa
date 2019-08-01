@@ -18,6 +18,7 @@ $MESS["BASKET_POSITION_BEFORE"] = "before";
 $MESS["BASKET_POSITION_AFTER"] = "after";
 $MESS["SHOW_BASKET_HEADERS"] = "Show shopping cart column header";
 $MESS["DELIVERY_FADE_EXTRA_SERVICES"] = "Show selected extra services in a hidden block";
+$MESS["SHOW_COUPONS"] = "Show coupon input field";
 $MESS["SHOW_COUPONS_BASKET"] = "Show coupon entry field in shopping cart block";
 $MESS["SHOW_COUPONS_DELIVERY"] = "Show coupon entry field in delivery block";
 $MESS["SHOW_COUPONS_PAY_SYSTEM"] = "Show coupon code input field in payment block";

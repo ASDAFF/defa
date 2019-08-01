@@ -19,7 +19,7 @@ if(!defined('FUNCTION_MODULE_ID'))
 if(!class_exists("CAsproSku"))
 {
 	class CAsproSku{
-		
+
 		public static function getMeasureRatio($arParams = array(), $minPrice = array()){
 			$measure_block = '';
 			if((is_array($arParams) && $arParams)&& (is_array($minPrice) && $minPrice))
@@ -45,11 +45,11 @@ if(!class_exists("CAsproSku"))
 				$minPrice = false;
 				if (isset($arItem['MIN_PRICE']) || isset($arItem['RATIO_PRICE']))
 					$minPrice = $arItem['MIN_PRICE'];
-				
+
 				$offer_id=0;
 				if($arParams["TYPE_SKU"]=="N")
 					$offer_id=$minPrice["MIN_ITEM_ID"];
-				
+
 				$min_price_id=$minPrice["MIN_PRICE_ID"];
 				if(!$min_price_id)
 					$min_price_id=$minPrice["PRICE_ID"];
@@ -81,9 +81,11 @@ if(!class_exists("CAsproSku"))
 						<?endif;?>
 					</div>
 					<?if($arParams["SHOW_OLD_PRICE"]=="Y"):?>
-						<div class="price discount">
-							<span class="values_wrapper" <?=(!$minPrice["DISCOUNT_DIFF"] ? 'style="display:none;"' : '')?>><?=$minPrice["PRINT_VALUE"];?></span>
-						</div>
+						<?if($minPrice["DISCOUNT_DIFF"]):?>
+							<div class="price discount">
+								<span class="values_wrapper"><?=$minPrice["PRINT_VALUE"];?></span>
+							</div>
+						<?endif;?>
 					<?endif;?>
 				<?}else{?>
 					<div class="price only_price" <?=$str_price_id;?>>
@@ -93,21 +95,23 @@ if(!class_exists("CAsproSku"))
 					</div>
 				<?}?>
 				<?if($arParams["SHOW_DISCOUNT_PERCENT"]=="Y"){?>
-					<div class="sale_block" <?=(!$minPrice["DISCOUNT_DIFF"] ? 'style="display:none;"' : '')?>>
-						<?if($minPrice["DISCOUNT_DIFF"]):?>
-							<div class="sale_wrapper">
-								<?if($bShort == 'Y'):?>
-									<span class="title"><?=GetMessage("CATALOG_ECONOMY");?></span>
-									<div class="text"><span class="values_wrapper"><?=$minPrice["PRINT_DISCOUNT_DIFF"];?></span></div>
-								<?else:?>
-									<?$percent=round(($minPrice["DISCOUNT_DIFF"]/$minPrice["VALUE"])*100, 2);?>
-									<div class="value">-<?=$percent;?>%</div>
-									<div class="text"><?=GetMessage("CATALOG_ECONOMY");?> <span><?=$minPrice["PRINT_DISCOUNT_DIFF"];?></span></div>
-								<?endif;?>
-								<div class="clearfix"></div>
-							</div>
-						<?endif;?>
-					</div>
+					<?if($minPrice["DISCOUNT_DIFF"]):?>
+						<div class="sale_block">
+							<?if($minPrice["DISCOUNT_DIFF"]):?>
+								<div class="sale_wrapper">
+									<?if($bShort == 'Y'):?>
+										<span class="title"><?=GetMessage("CATALOG_ECONOMY");?></span>
+										<div class="text"><span class="values_wrapper"><?=$minPrice["PRINT_DISCOUNT_DIFF"];?></span></div>
+									<?else:?>
+										<?$percent=round(($minPrice["DISCOUNT_DIFF"]/$minPrice["VALUE"])*100, 2);?>
+										<div class="value">-<?=$percent;?>%</div>
+										<div class="text"><?=GetMessage("CATALOG_ECONOMY");?> <span><?=$minPrice["PRINT_DISCOUNT_DIFF"];?></span></div>
+									<?endif;?>
+									<div class="clearfix"></div>
+								</div>
+							<?endif;?>
+						</div>
+					<?endif;?>
 				<?}?>
 
 				<?$html = ob_get_contents();

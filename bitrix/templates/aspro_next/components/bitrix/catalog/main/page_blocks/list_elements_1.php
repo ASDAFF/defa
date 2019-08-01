@@ -218,6 +218,11 @@ if($isAjaxFilter == "Y")
 		<?$html=ob_get_clean();?>
 		<?$APPLICATION->AddViewContent('left_menu', $html);?>
 	<?}?>
+	<?if(isset($arParams['LANDING_POSITION']) && $arParams['LANDING_POSITION'] === 'BEFORE_PRODUCTS'):?>
+	    <div class="<?=($arParams["LANDING_TYPE_VIEW"] ? $arParams["LANDING_TYPE_VIEW"] : "landing_1" );?>" >
+		    <?@include_once(($arParams["LANDING_TYPE_VIEW"] ? $arParams["LANDING_TYPE_VIEW"] : "landing_1" ).'.php');?>
+	    </div>			
+	<?endif;?>
 	<div class="right_block1 clearfix catalog <?=strtolower($arTheme["FILTER_VIEW"]["VALUE"]);?>" id="right_block_ajax">
 
 		<?if($arTheme["FILTER_VIEW"]["VALUE"]=="HORIZONTAL" || $arTheme["FILTER_VIEW"]["VALUE"]=="COMPACT"){?>
@@ -269,22 +274,24 @@ if($isAjaxFilter == "Y")
 			<?endif;?>
 <?if($itemsCnt):?>
 			<?if('Y' == $arParams['USE_FILTER']):?>
+				<?
+				    $matchesFilter = array();
+				    if(isset($arParams["SEF_URL_TEMPLATES"]['smart_filter']) && strripos($arParams["SEF_URL_TEMPLATES"]['smart_filter'], "#SMART_FILTER_PATH#")) {
+					$isSmartFilter = str_replace("#SMART_FILTER_PATH#", "(.*?)", $arParams["SEF_URL_TEMPLATES"]['smart_filter']);
+					$isSmartFilter = preg_replace('/^#[a-zA-Z_]+#/i', "", $isSmartFilter);
+					$isSmartFilter = str_replace("/", "\/", $isSmartFilter);
+					preg_match("/".$isSmartFilter."/i", $APPLICATION->GetCurPage(), $matchesFilter);
+				    }
+				?>
 				<div class="adaptive_filter">
-					<a class="filter_opener<?=($_REQUEST["set_filter"] == "y" ? " active" : "")?>"><i></i><span><?=GetMessage("CATALOG_SMART_FILTER_TITLE")?></span></a>
+					<a class="filter_opener<?=($_REQUEST["set_filter"] == "y" ? " active num" : "")?> <?=count($matchesFilter)>1 && $matchesFilter[1] != "clear" ? "num":""?>"><i></i><span><?=GetMessage("CATALOG_SMART_FILTER_TITLE")?></span></a>
 				</div>
-				<script type="text/javascript">
-				checkTopFilter();
-				$(".filter_opener").click(function(){
-					$(this).toggleClass("opened");
-					$(".bx_filter_vertical, .bx_filter").slideToggle(333);
-				});
-				</script>
 			<?endif;?>
 
 			<?if($isAjax=="N"){
 				$frame = new \Bitrix\Main\Page\FrameHelper("viewtype-block");
 				$frame->begin();?>
-			<?}?>
+			<?}?>	
 			<?include_once(__DIR__."/../sort.php");?>
 
 			<?if($isAjax=="Y"){
@@ -462,99 +469,11 @@ if($isAjaxFilter == "Y")
 					$APPLICATION->ShowViewContent('sotbit_seometa_bottom_desc');
 					?>
 				<?endif;?>
-				<?if($arParams['SHOW_LANDINGS'] !== 'N' && $arSeoItems):?>
-					<?
-					$arLandingFilter = array();
-					if($arSeoItem)
-					{
-						$arTmpRegionsLanding[] = $iLandingItemID;
-						$arLandingFilter = array(
-							array(
-								"LOGIC" => "OR",
-								array("PROPERTY_SECTION" => false),
-								array("PROPERTY_SECTION" => $arSeoItem["PROPERTY_SECTION_VALUE"] ? $arSeoItem["PROPERTY_SECTION_VALUE"] : $arSection["ID"]),
-							),
-							"!ID" => $arTmpRegionsLanding,
-						);
-					}
-					else
-					{
-						$arLandingFilter = array(
-							array(
-								"LOGIC" => "OR",
-								array("PROPERTY_SECTION" => false),
-								array("PROPERTY_SECTION" => $arSection["ID"]),
-							),
-							"!ID" => $arTmpRegionsLanding,
-						);
-					}
-					?>
-					<?$GLOBALS["arLandingSections"] = $arLandingFilter;?>
-					<?$APPLICATION->IncludeComponent(
-						"bitrix:news.list",
-						"landings_list",
-						array(
-							"IBLOCK_TYPE" => "aspro_next_catalog",
-							"IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_catalog_info"][0],
-							"NEWS_COUNT" => "999",
-							"SHOW_COUNT" => $arParams["LANDING_SECTION_COUNT"],
-							"COMPARE_FIELD" => "FILTER_URL",
-							"COMPARE_PROP" => "Y",
-							"SORT_BY1" => "SORT",
-							"SORT_ORDER1" => "ASC",
-							"SORT_BY2" => "ID",
-							"SORT_ORDER2" => "DESC",
-							"FILTER_NAME" => "arLandingSections",
-							"FIELD_CODE" => array(
-								0 => "",
-								1 => "",
-							),
-							"PROPERTY_CODE" => array(
-								0 => "LINK",
-								1 => "",
-							),
-							"CHECK_DATES" => "Y",
-							"DETAIL_URL" => "",
-							"AJAX_MODE" => "N",
-							"AJAX_OPTION_JUMP" => "N",
-							"AJAX_OPTION_STYLE" => "Y",
-							"AJAX_OPTION_HISTORY" => "N",
-							"CACHE_TYPE" =>$arParams["CACHE_TYPE"],
-							"CACHE_TIME" => $arParams["CACHE_TIME"],
-							"CACHE_FILTER" => "Y",
-							"CACHE_GROUPS" => "N",
-							"PREVIEW_TRUNCATE_LEN" => "",
-							"ACTIVE_DATE_FORMAT" => "j F Y",
-							"SET_TITLE" => "N",
-							"SET_STATUS_404" => "N",
-							"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
-							"ADD_SECTIONS_CHAIN" => "N",
-							"HIDE_LINK_WHEN_NO_DETAIL" => "N",
-							"PARENT_SECTION" => "",
-							"PARENT_SECTION_CODE" => "",
-							"INCLUDE_SUBSECTIONS" => "Y",
-							"PAGER_TEMPLATE" => "",
-							"DISPLAY_TOP_PAGER" => "N",
-							"DISPLAY_BOTTOM_PAGER" => "N",
-							"PAGER_TITLE" => "",
-							"PAGER_SHOW_ALWAYS" => "N",
-							"PAGER_DESC_NUMBERING" => "N",
-							"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-							"PAGER_SHOW_ALL" => "N",
-							"AJAX_OPTION_ADDITIONAL" => "",
-							"COMPONENT_TEMPLATE" => "next",
-							"SET_BROWSER_TITLE" => "N",
-							"SET_META_KEYWORDS" => "N",
-							"SET_META_DESCRIPTION" => "N",
-							"SET_LAST_MODIFIED" => "N",
-							"PAGER_BASE_LINK_ENABLE" => "N",
-							"TITLE_BLOCK" => $arParams["LANDING_TITLE"],
-							"SHOW_404" => "N",
-							"MESSAGE_404" => ""
-						),
-						false, array("HIDE_ICONS" => "Y")
-					);?>
-				<?endif;?>
+				<?if(!isset($arParams['LANDING_POSITION']) || $arParams['LANDING_POSITION'] === 'AFTER_PRODUCTS'):?>
+					<div class="<?=($arParams["LANDING_TYPE_VIEW"] ? $arParams["LANDING_TYPE_VIEW"] : "landing_1" );?>" >
+						<?@include_once(($arParams["LANDING_TYPE_VIEW"] ? $arParams["LANDING_TYPE_VIEW"] : "landing_1" ).'.php');?>
+					</div>			
+				<?endif;?>				
 <?if($itemsCnt):?>
 				<div class="clear"></div>
 				<?//</div> //.ajax_load?>

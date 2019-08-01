@@ -37,12 +37,30 @@ function OnBuildGlobalMenuHandlerNext(&$arGlobalMenu, &$arModuleMenu){
 						'items_id' => 'main',
 					),
 					array(
+						'text' => GetMessage('ASPRO_NEXT_MENU_PWA_TEXT'),
+						'title' => GetMessage('ASPRO_NEXT_MENU_PWA_TITLE'),
+						'sort' => 40,
+						'url' => '/bitrix/admin/'.$moduleID.'_pwa.php?mid=main',
+						'icon' => 'imi_pwa',
+						'page_icon' => 'pi_pwa',
+						'items_id' => 'pwa',
+					),
+					array(
+						'text' => GetMessage('ASPRO_NEXT_MENU_DEVELOP_TEXT'),
+						'title' => GetMessage('ASPRO_NEXT_MENU_DEVELOP_TITLE'),
+						'sort' => 40,
+						'url' => '/bitrix/admin/'.$moduleID.'_develop.php?mid=main',
+						'icon' => 'util_menu_icon',
+						'page_icon' => 'pi_develop',
+						'items_id' => 'develop',
+					),
+					array(
 						'text' => GetMessage('ASPRO_NEXT_MENU_CRM_TEXT'),
 						'title' => GetMessage('ASPRO_NEXT_MENU_CRM_TITLE'),
 						'sort' => 30,
 						'url' => '/bitrix/admin/'.$moduleID.'_crm_amo.php?mid=main',
 						'icon' => 'imi_marketing',
-						'page_icon' => 'pi_typography',
+						'page_icon' => 'pi_crm',
 						'items_id' => 'ncrm',
 						"items" => array(
 							array(
@@ -66,21 +84,12 @@ function OnBuildGlobalMenuHandlerNext(&$arGlobalMenu, &$arModuleMenu){
 						)
 					),
 					array(
-						'text' => GetMessage('ASPRO_NEXT_MENU_DEVELOP_TEXT'),
-						'title' => GetMessage('ASPRO_NEXT_MENU_DEVELOP_TITLE'),
-						'sort' => 40,
-						'url' => '/bitrix/admin/'.$moduleID.'_develop.php?mid=main',
-						'icon' => 'util_menu_icon',
-						'page_icon' => 'pi_typography',
-						'items_id' => 'develop',
-					),
-					array(
 						'text' => GetMessage('ASPRO_NEXT_MENU_GENERATE_FILES_TEXT'),
 						'title' => GetMessage('ASPRO_NEXT_MENU_GENERATE_FILES_TITLE'),
 						'sort' => 50,
 						'url' => '/bitrix/admin/'.$moduleID.'_generate_robots.php?mid=main',
 						'icon' => 'imi_marketing',
-						'page_icon' => 'pi_typography',
+						'page_icon' => 'pi_generate',
 						'items_id' => 'gfiles',
 						"items" => array(
 							array(
@@ -89,7 +98,7 @@ function OnBuildGlobalMenuHandlerNext(&$arGlobalMenu, &$arModuleMenu){
 								'sort' => 10,
 								'url' => '/bitrix/admin/'.$moduleID.'_generate_robots.php?mid=main',
 								'icon' => '',
-								'page_icon' => 'pi_typography',
+								'page_icon' => 'pi_generate_robots',
 								'items_id' => 'grobots',
 							),
 							array(
@@ -98,19 +107,10 @@ function OnBuildGlobalMenuHandlerNext(&$arGlobalMenu, &$arModuleMenu){
 								'sort' => 20,
 								'url' => '/bitrix/admin/'.$moduleID.'_generate_sitemap.php?mid=main',
 								'icon' => '',
-								'page_icon' => 'pi_typography',
+								'page_icon' => 'pi_generate_sitemap',
 								'items_id' => 'gsitemap',
 							),
 						)
-					),
-					array(
-						'text' => GetMessage('ASPRO_NEXT_MENU_YANDEX_MARKET_TEXT'),
-						'title' => GetMessage('ASPRO_NEXT_MENU_YANDEX_MARKET_TITLE'),
-						'sort' => 20,
-						'url' => '/bitrix/admin/'.$moduleID.'_options_ym.php?mid=main',
-						'icon' => 'statistic_icon_online',
-						'page_icon' => 'pi_typography',
-						'items_id' => 'ymindex_link',
 					),
 					array(
 						'text' => GetMessage('ASPRO_NEXT_MENU_SYNC_STORES_TEXT'),
@@ -118,11 +118,21 @@ function OnBuildGlobalMenuHandlerNext(&$arGlobalMenu, &$arModuleMenu){
 						'sort' => 60,
 						'url' => '/bitrix/admin/'.$moduleID.'_sync_stores.php?mid=main',
 						'icon' => 'imi_pages',
-						'page_icon' => 'pi_typography',
+						'page_icon' => 'pi_sync',
 						'items_id' => 'main',
+					),
+					array(
+						'text' => GetMessage('ASPRO_NEXT_MENU_YANDEX_MARKET_TEXT'),
+						'title' => GetMessage('ASPRO_NEXT_MENU_YANDEX_MARKET_TITLE'),
+						'sort' => 20,
+						'url' => '/bitrix/admin/'.$moduleID.'_options_ym.php?mid=main',
+						'icon' => 'statistic_icon_online',
+						'page_icon' => 'pi_yamarket',
+						'items_id' => 'ymindex_link',
 					),
 				),
 			);
+
 			if(!isset($arGlobalMenu['global_menu_aspro'])){
 				$arGlobalMenu['global_menu_aspro'] = array(
 					'menu_id' => 'global_menu_aspro',

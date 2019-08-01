@@ -97,7 +97,7 @@ if(!class_exists('CNextRegionality'))
 					$cache_time = 86400;
 					$cache_path = __CLASS__.'/'.__FUNCTION__;
 
-					$cache_id = 'aspro_next_regions'.$iRegionIBlockID;
+					$cache_id = 'aspro_next_regions'.$iRegionIBlockID.($GLOBALS['USER'] ? $GLOBALS['USER']->GetGroups() : '');
 					if(\Bitrix\Main\Config\Option::get('main', 'component_cache_on', 'Y') == 'Y' && $cache->InitCache($cache_time, $cache_id, $cache_path))
 					{
 						$res = $cache->GetVars();
@@ -132,6 +132,7 @@ if(!class_exists('CNextRegionality'))
 						while($ob = $dbRes->GetNextElement()){
 							$arFields = $ob->GetFields();
 							$arProps = $ob->GetProperties();
+
 							$arItem = array();
 							foreach($arFields as $code => $value){
 								if(in_array($code, $arSelect)){
@@ -141,6 +142,9 @@ if(!class_exists('CNextRegionality'))
 							foreach($arProps as $code => $arProperty){
 								if(in_array('PROPERTY_'.$code, $arSelect)){
 									$arItem['PROPERTY_'.$code.'_VALUE'] = $arProperty['~VALUE'];
+									if(isset($arProperty['WITH_DESCRIPTION']) && $arProperty['WITH_DESCRIPTION'] == "Y"){
+									    $arItem['PROPERTY_'.$code.'_DESCRIPTION'] = $arProperty['~DESCRIPTION'];
+									}
 								}
 							}
 							$arItems[$arItem['ID']] = $arItem;

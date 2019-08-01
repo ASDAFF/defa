@@ -15,9 +15,87 @@ if($arResult["ITEMS"]){?>
 				<?endforeach;
 				$isFilter=false;
 				$numVisiblePropValues = 5;
+				//ASPRO_FILTER_SORT
+				foreach($arResult["ITEMS"] as $key=>$arItem)
+				{
+				    if(isset($arItem["ASPRO_FILTER_SORT"])):
+					$class="";
+					if($arItem["DISPLAY_EXPANDED"]=="Y"){
+						$class="active";
+					}
+					$isFilter=true;
+					?>
+					<div class="bx_filter_parameters_box bx_sort_filter <?=$class;?>" data-expanded="<?=($arItem["DISPLAY_EXPANDED"] ? $arItem["DISPLAY_EXPANDED"] : "N");?>" data-prop_code=<?=strtolower($arItem["CODE"]);?> data-property_id="<?=$arItem["ID"]?>">
+						<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
+						<?if($arItem["CODE"]!="IN_STOCK"){?>
+							<div class="bx_filter_parameters_box_title icons_fa" >
+								<div>
+									<?=( $arItem["CODE"] == "MINIMUM_PRICE" ? Loc::getMessage("PRICE") : $arItem["NAME"] );?>
+									<div class="char_name">
+										<div class="props_list">
+											<?if($arParams["SHOW_HINTS"]){
+												if(!$arItem["FILTER_HINT"]){
+													$prop = CIBlockProperty::GetByID($arItem["ID"], $arParams["IBLOCK_ID"])->GetNext();
+													$arItem["FILTER_HINT"]=$prop["HINT"];
+												}?>
+												<?if( $arItem["FILTER_HINT"] && strpos( $arItem["FILTER_HINT"],'line')===false){?>
+													<div class="hint"><span class="icon"><i>?</i></span><div class="tooltip" style="display: none;"><?=$arItem["FILTER_HINT"]?></div></div>
+												<?}?>
+											<?}?>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?}?>
+						<?$style="";
+						if($arItem["CODE"]=="IN_STOCK"){
+							$style="style='display:block;'";
+						}elseif($arItem["DISPLAY_EXPANDED"]!= "Y"){
+							$style="style='display:none;'";
+						}?>
+						<div class="bx_filter_block <?=($arItem["PROPERTY_TYPE"]!="N" && ($arItem["DISPLAY_TYPE"] != "P" && $arItem["DISPLAY_TYPE"] != "R") ? "limited_block" : "");?>" <?=$style;?>>
+							<div class="bx_filter_parameters_box_container <?=($arItem["DISPLAY_TYPE"]=="G" ? "pict_block" : "");?>">
+							<?
+							$arCur = current($arItem["VALUES"]);
+							$checkedItemExist = false;?>
+							<div class="bx_filter_select_container">
+								<div class="bx_filter_select_block" onclick="smartFilter.showDropDownPopup(this, '<?=CUtil::JSEscape($key)?>')">
+									<div class="bx_filter_select_text" data-role="currentOption">
+										<?
+										foreach ($arItem["VALUES"] as $val => $ar)
+										{
+											if ($ar["CHECKED"] && $ar["CHECKED"]=="Y")
+											{
+												echo $ar["VALUE"];
+												$checkedItemExist = true;
+											}
+										}
+										?>
+									</div>
+									<div class="bx_filter_select_arrow"></div>
+									<div class="bx_filter_select_popup" data-role="dropdownContent" style="display: none;">
+										<ul>
+										<?
+										foreach ($arItem["VALUES"] as $val => $ar):?>
+											<?$ar["CONTROL_ID"] .= $arParams['AJAX_FILTER_FLAG'];?>
+											<li>
+												<?=$ar["CONTROL_HTML"]?>														
+											</li>
+										<?endforeach?>
+										</ul>
+									</div>
+								</div>
+							</div>
+							    </div>
+							<div class="clb"></div>
+						</div>
+					</div><?
+					unset($arResult["ITEMS"][$key]);
+				    endif;
+				}
 				//prices?>
 				<div class="bx_filter_parameters_box prices<?=(isset($arResult['PRICE_SET']) && $arResult['PRICE_SET'] == 'Y' ? ' set' : '');?>">
-					<span class="bx_filter_container_modef"></span>
+					<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
 					<div class="bx_filter_parameters_box_title icons_fa" >
 						<div><?=Loc::getMessage("PRICE");?></div>
 						<span class="delete_filter">
@@ -150,7 +228,7 @@ if($arResult["ITEMS"]){?>
 						}?>
 						<div class="bx_filter_button_box active clearfix">
 							<?/*<span class="btn btn-default"><?=Loc::getMessage("CT_BCSF_SET_FILTER")?></span>*/?>
-							<span class="bx_filter_container_modef"></span>
+							<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
 						</div>
 					</div>
 				</div>
@@ -182,7 +260,7 @@ if($arResult["ITEMS"]){?>
 					$isFilter=true;
 					?>
 					<div class="bx_filter_parameters_box prop_type_<?=$arItem["PROPERTY_TYPE"];?><?=(isset($arItem['PROPERTY_SET']) && $arItem['PROPERTY_SET'] == 'Y' ? ' set' : '');?>" data-prop_code=<?=strtolower($arItem["CODE"]);?> data-property_id="<?=$arItem["ID"]?>">
-						<span class="bx_filter_container_modef"></span>
+						<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
 						<?if($arItem["CODE"]!="IN_STOCK"){?>
 							<div class="bx_filter_parameters_box_title icons_fa" >
 								<div class="text">
@@ -729,7 +807,7 @@ if($arResult["ITEMS"]){?>
 							<?if($arItem['CODE'] != 'IN_STOCK'):?>
 								<div class="bx_filter_button_box active clearfix">
 									<?/*<span class="btn btn-default"><?=Loc::getMessage("CT_BCSF_SET_FILTER")?></span>*/?>
-									<span class="bx_filter_container_modef"></span>									
+									<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>									
 								</div>
 							<?endif;?>
 						</div>
@@ -742,7 +820,7 @@ if($arResult["ITEMS"]){?>
 						<div class="bx_filter_block">
 							<div class="bx_filter_parameters_box_container">
 								<div class="bx_filter_popup_result right" id="modef_mobile" <?if(!isset($arResult["ELEMENT_COUNT"])) echo 'style="display:none"';?>>
-									<?echo Loc::getMessage("CT_BCSF_FILTER_COUNT", array("#ELEMENT_COUNT#" => '<span id="modef_num_mobile">'.intval($arResult["ELEMENT_COUNT"]).'</span>'));?>
+									<?echo Loc::getMessage("CT_BCSF_FILTER_COUNT", array("#ELEMENT_COUNT#" => '<span  data-f="'.Loc::getMessage('CT_BCSF_SET_FILTER').'" data-fi="'.Loc::getMessage('CT_BCSF_SET_FILTER_TI').'" data-fr="'.Loc::getMessage('CT_BCSF_SET_FILTER_TR').'" data-frm="'.Loc::getMessage('CT_BCSF_SET_FILTER_TRM').'" id="modef_num_mobile">'.intval($arResult["ELEMENT_COUNT"]).'</span>'));?>
 									<a rel="nofollow" href="<?echo str_replace('/filter/clear/apply/', '/', $arResult["FILTER_URL"]);?>" class="btn btn-default white white-bg"><?echo Loc::getMessage("CT_BCSF_FILTER_SHOW")?></a>
 								</div>
 								<div class="bx_filter_popup_result right" id="modef" <?if(!isset($arResult["ELEMENT_COUNT"])) echo 'style="display:none"';?>>
