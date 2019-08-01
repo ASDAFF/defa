@@ -136,7 +136,7 @@ class Product
      */
     public function Schema()
     {
-        $schema = data_get($this->product, "PROP.PRODUCT_SCHEME.VALUE");
+        $schema = data_get($this->product, "PROPS.PRODUCT_SCHEME.VALUE");
         return $schema ? \CFile::GetPath($schema) : null;
     }
 

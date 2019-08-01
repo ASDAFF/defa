@@ -143,6 +143,7 @@ $Offer = $Product->Offers[0];
             </div>
         </div>
         <? if ($Product->Schema()) { ?>
+
             <div class="product_scheme">
                 <img src="<?= $Product->Schema() ?>"
                      alt="product scheme defo.ru" class="product_scheme__img">
