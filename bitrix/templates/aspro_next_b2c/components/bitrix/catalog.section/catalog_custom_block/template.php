@@ -1,6 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$this->setFrameMode(true);?>
-
+<?//dump($arResult)?>
 <?/* $isSeries = false;
 foreach ($arResult['SECTIONS'] as $arSection){
     if(!empty($arSection['UF_SERIES'])){
@@ -15,6 +15,8 @@ else
 */?>
 <?
 $arResult['METKI'] = GetMarks();
+$arResult['METKIPOK'] = GetMetkipok(['*']);
+dump($arResult['METKI']);dump($arResult['METKIPOK']);
 ?>
 
 
@@ -64,6 +66,12 @@ $arResult['METKI'] = GetMarks();
 		if($arParams["LINE_ELEMENT_COUNT"] > 5)
 			$col = 5;?>
 		<?foreach($arResult["ITEMS"] as $arItem){?>
+        <?if ($arItem["PROPERTIES"]["LABELSALE"]["VALUE"]) {$metkipok = array();
+            foreach($arItem["PROPERTIES"]["LABELSALE"]["VALUE"] as $metkipokItem){$metkipok[] = $arResult["METKIPOK"][$metkipokItem];}
+            $metkipok = implode(", ",$metkipok);
+            }else unset($metkipok);
+        //dump($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]);
+        ?>
 			<div class="item_block col-<?=$col;?> col-md-<?=ceil(12/$col);?> col-sm-<?=ceil(12/round($col / 2))?> col-xs-6">
 				<div class="catalog_item_wrapp item">
 					<div class="basket_props_block" id="bx_basket_div_<?=$arItem["ID"];?>" style="display: none;">
