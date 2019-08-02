@@ -16777,7 +16777,8 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
 /*метки для серий*/
 
-.series-item .quick-metki {
+.series-item .quick-metki,
+.ajax-element .quick-metki {
     margin: 15px;
     padding: 5px;
     width: 40px;
@@ -16786,18 +16787,21 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     box-sizing: border-box;
 }
 
-.series-item .quick-metki .series-item-pros-element {
+.series-item .quick-metki .series-item-pros-element,
+.ajax-element .quick-metki .series-item-pros-element {
     margin-bottom: 8px;
     margin-right: 0!important;
     width: 30px;
     height: auto;
 }
 
-.series-item .quick-metki .series-item-pros-element:last-child {
+.series-item .quick-metki .series-item-pros-element:last-child,
+.ajax-element .quick-metki .series-item-pros-element:last-child {
     margin-bottom: 0;
 }
 
-.series-item .quick-metki .pros-icon {
+.series-item .quick-metki .pros-icon,
+.ajax-element .quick-metki .pros-icon {
     display: block;
     width: auto;
     margin: 0;
@@ -16805,7 +16809,8 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     z-index: 2;
 }
 
-.series-item .quick-metki .pros-text {
+.series-item .quick-metki .pros-text,
+.ajax-element .quick-metki .pros-text {
     position: absolute!important;
     top: 0;
     left: 0;
