@@ -16802,13 +16802,17 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
 .series-item .quick-metki,
 .ajax-element .quick-metki {
-    left: 15px;
+    left: 0;
     margin: 15px;
     padding: 5px;
     width: 40px;
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
+}
+
+.ajax-element .quick-metki {
+    left: 15px;
 }
 
 .series-item .quick-metki .series-item-pros-element,

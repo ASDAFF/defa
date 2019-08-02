@@ -2,29 +2,29 @@
 if($arResult['SECTIONS'])
 {
     ?>
-    <style>
-        .quick-metki{
-            position: absolute;
-            z-index: 9999999;
-            padding: 10px;
-            width: 100%!important;
-        }
-        .quick-metki li{
-            width: 100%!important;
-            margin-bottom: 10px!important;
-        }
-        .quick-metki .series-item-pros-element span{
-            display: none!important;
-            width: auto!important;
-            padding: 10px!important;
-        }
-        .quick-metki li:hover span{
-            background-color: white!important;
-            color: black!important;
-            display: block!important;
-
-        }
-    </style>
+<!--    <style>-->
+<!--        .quick-metki{-->
+<!--            position: absolute;-->
+<!--            z-index: 9999999;-->
+<!--            padding: 10px;-->
+<!--            width: 100%!important;-->
+<!--        }-->
+<!--        .quick-metki li{-->
+<!--            width: 100%!important;-->
+<!--            margin-bottom: 10px!important;-->
+<!--        }-->
+<!--        .quick-metki .series-item-pros-element span{-->
+<!--            display: none!important;-->
+<!--            width: auto!important;-->
+<!--            padding: 10px!important;-->
+<!--        }-->
+<!--        .quick-metki li:hover span{-->
+<!--            background-color: white!important;-->
+<!--            color: black!important;-->
+<!--            display: block!important;-->
+<!---->
+<!--        }-->
+<!--    </style>-->
 	
     <div class="sections_wrapper series">
         <?if($arParams["TITLE_BLOCK"] || $arParams["TITLE_BLOCK_ALL"]):?>
