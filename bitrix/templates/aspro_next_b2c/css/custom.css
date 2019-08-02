@@ -17,6 +17,7 @@
     display: flex;
     justify-content: space-between;
     position: absolute;
+    left: 56px;
     z-index: 10;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -5045,6 +5046,9 @@ body .tabs_slider .catalog_item .inner_wrap {
 /*КАРТОЧКА ТОВАРА*/
 
 /*фон страницы*/
+.catalog_page #content .top_inner_block_wrapper {
+    /*padding-bottom: 0;*/
+}
 .catalog_page #content .top_inner_block_wrapper, .catalog_page #content {
     background: rgb(246,246,247);
 }
@@ -16765,9 +16769,20 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     color: #000000;
 }
 
+.item_main_info .buyers-like {
+    width: 100%;
+    margin: 0;
+    margin-left: 43px;
+    margin-bottom: 30px;
+}
+
 .buyers-like .green {
     font-size: 12px;
     color: #29a22d;
+}
+
+.item_main_info .buyers-like .green {
+    font-weight: 500;
 }
 
 .best_block.tab_slider_wrapp .item .catalog_item:hover .item_info,
@@ -16779,6 +16794,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
 .series-item .quick-metki,
 .ajax-element .quick-metki {
+    left: 15px;
     margin: 15px;
     padding: 5px;
     width: 40px;

@@ -117,7 +117,13 @@
 </div>-->
 
 
-
+<?$arResult['METKIPOK'] = GetMetkipok();
+if ($arResult["PROPERTIES"]["LABELSALE"]["VALUE"]) {$metkipok = array();
+    foreach($arResult["PROPERTIES"]["LABELSALE"]["VALUE"] as $metkipokItem){
+        $metkipok[] = $arResult["METKIPOK"][$metkipokItem];
+    }
+    $metkipok = implode(", ",$metkipok);
+}?>
 
 <div class="basket_props_block" id="bx_basket_div_<?=$arResult["ID"];?>" style="display: none;">
 	<?if (!empty($arResult['PRODUCT_PROPERTIES_FILL'])){
@@ -292,7 +298,11 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                 }
             </style>
 
-
+            <?if($metkipok):?>
+                <p class="buyers-like">
+                    Покупателям нравится <span class="green"><?=($metkipok);?></span>
+                </p>
+            <?endif;?>
 
             <?if($arResult['MARKS']){?>
                 <ul class="series-item-pros quick-metki" style="text-align: left">
