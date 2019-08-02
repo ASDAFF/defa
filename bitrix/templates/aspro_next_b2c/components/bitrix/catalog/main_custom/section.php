@@ -117,18 +117,17 @@ $arPageParams = $arSection = $section = array();
 
 // get current section ID
 if($arResult["VARIABLES"]["SECTION_ID"] > 0){
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA',"IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION","UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN", "UF_SERIES_GALLERY", "UF_NAME_RUS", "UF_PREVIEW"));
+	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA',"IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION","UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN", "UF_SERIES_GALLERY", "UF_NAME_RUS", "UF_PREVIEW", "UF_LABELSALE"));
 }
 elseif(strlen(trim($arResult["VARIABLES"]["SECTION_CODE"])) > 0){
 
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA', "IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION", "UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
+	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", 'UF_METKA', "IBLOCK_ID", "PICTURE", "NAME", "DESCRIPTION", "UF_SERIES", "UF_PROS_SERIES", "UF_SECTION_DESCR", "UF_OFFERS_TYPE","UF_DISCOUNT", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN", "UF_LABELSALE"));
 }
 
 $typeSKU = '';
 
 
 if($section){
-
 	$arSection["ID"] = $section["ID"];
 	$arSection["NAME"] = $section["NAME"];
 	$arSection["IBLOCK_SECTION_ID"] = $section["IBLOCK_SECTION_ID"];
@@ -482,9 +481,15 @@ $section["COLORS"] = $arColorNew;
 		}
 		$section["SERIES_GALLERIES"] = $seriesGalleries;
     //METKI
-    $arResult['METKI'] = GetMarks();
-
-
+    $arResult['METKI'] = GetMarks(); 
+    $arResult['METKIPOK'] = GetMetkipokSect(); 
+if ($section["UF_LABELSALE"]){
+	$metkipok = array();
+        foreach($section["UF_LABELSALE"] as $metkipokItem){
+		$metkipok[] = $arResult["METKIPOK"][$metkipokItem];
+	}	
+            $metkipok = implode(", ",$metkipok);
+}
 ?>
 
     <div class="series-block series-item inner">
