@@ -103,5 +103,10 @@ if($arParams["TABS_CODE"] == "HIT"){
             }
 
         }
+    if($USER->IsAdmin()){
+
+       // \Bitrix\Main\Diag\Debug::dump($arResult["TABS"] );
+    }
 }
+
 

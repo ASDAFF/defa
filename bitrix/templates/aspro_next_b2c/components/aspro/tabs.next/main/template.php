@@ -20,7 +20,7 @@ if($arParams["TABS_CODE"] == "HIT"){?>
             <?endif;?>
             <ul class="tabs tabs_hit ajax">
                 <?$i=1;
-                foreach($arResult["TABS"] as $code => $arTab):?>
+                foreach($arResult["TABS"] as $code => $arTab):if(!$arTab["FILTER"])continue;?>
                     <li data-code="<?=$code?>" class="<?=($i==1 ? "cur" : "")?>"  data-filter="<?=($arTab["FILTER"] ? urlencode(serialize($arTab["FILTER"])) : '');?>"><span><?=$arTab["TAB_NAME"];?></span></li>
                     <?$i++;?>
                 <?endforeach;?>

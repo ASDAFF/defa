@@ -38,6 +38,8 @@ $this->setFrameMode(true);
             </div>-->
 			<div class="tabs_content">
 				<?$j=1;?>
+                <?
+                \Bitrix\Main\Diag\Debug::dump($arResult["TABS"]);?>
 				<?foreach($arResult["TABS"] as $code => $arTab){?>
                     <div class="tabs_title"><span><?=$arTab["TITLE"];?></span></div>
 					<li class="tab <?=$code?>_wrapp <?=($j == 1 ? "cur opacity1" : "");?>" data-code="<?=$code?>" data-col="<?=$col;?>" data-filter="<?=($arTab["FILTER"] ? urlencode(serialize($arTab["FILTER"])) : '');?>">
