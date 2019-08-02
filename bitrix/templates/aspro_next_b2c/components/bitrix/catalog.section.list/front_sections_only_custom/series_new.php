@@ -593,7 +593,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -611,7 +611,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -629,7 +629,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -647,7 +647,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -671,7 +671,7 @@ if($arResult['SECTIONS'])
                                                         </div>
                                                         <div class="row series-buy">
                                                             <div class="col-md-4 counter-wrap">
-                                                                <div class="counter_block big_basket">
+                                                                <div class="counter_block">
                                                                     <span class="minus">-</span>
                                                                     <input type="text" class="text" name="quantity" value="1">
                                                                     <span class="plus">+</span>
@@ -1446,7 +1446,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1464,7 +1464,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1482,7 +1482,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1500,7 +1500,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1524,7 +1524,7 @@ if($arResult['SECTIONS'])
                                                         </div>
                                                         <div class="row series-buy">
                                                             <div class="col-md-4 counter-wrap">
-                                                                <div class="counter_block big_basket">
+                                                                <div class="counter_block">
                                                                     <span class="minus">-</span>
                                                                     <input type="text" class="text" name="quantity" value="1">
                                                                     <span class="plus">+</span>

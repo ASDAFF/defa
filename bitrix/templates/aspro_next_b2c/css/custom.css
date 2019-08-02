@@ -16,7 +16,7 @@
 .quick-metki{
     display: flex;
     position: absolute;
-    z-index: 9999999;
+    z-index: 10;
     padding: 10px;
     width: 100%!important;
 }
@@ -46,7 +46,7 @@
 }
 .quick-metki-list {
     position: absolute;
-    z-index: 9999999;
+    z-index: 10;
     padding: 10px;
     width: 100%!important;
 }
@@ -6782,6 +6782,17 @@ body.compensate-for-scrollbar {
 }
 
 /*кнопки*/
+.counter_block .minus,
+.counter_block .plus {
+    font-size: 0;
+    line-height: 40px;
+    height: 34px;
+    width: 24px;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+}
+
 .catalog_detail .offer_buy_block {
     margin-top: 40px;
     margin-bottom: 5px;
@@ -6833,24 +6844,40 @@ body.compensate-for-scrollbar {
 }
 
 .counter_block > span:before {
-    background: url("../images/arrows.png");
+    content: "";
+    opacity: .7;
+    display: inline-block;
+    width: 24px;
+    height: 34px;
+    background-image: url(/bitrix/templates/aspro_next/images/svg/ai.svg);
+    background-position: -80px -191px;
+    background-repeat: no-repeat;
+    vertical-align: middle;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
+.counter_block>span.plus:before {
+    background-position: -54px -191px;
+}
+
+.counter_block.big_basket {
+    position: relative;
+}
+
+.counter_block.big_basket input[type=text] {
     font-size: 13px;
     height: 48px;
     width: 56px;
     border-right: 1px solid #e6e6e6;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket>span {
+.counter_block.big_basket>span {
+    position: absolute;
     height: 24px;
     width: 44px;
     line-height: 48px;
-    position: absolute;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket span.minus {
+.counter_block.big_basket span.minus {
     bottom: 0;
     right: 0;
 }
@@ -6872,7 +6899,7 @@ body.compensate-for-scrollbar {
     top: 1px;
     left: 0;
     content: '';
-    background: #e6e6e6;
+    background-color: #e6e6e6;
 }
 
 
