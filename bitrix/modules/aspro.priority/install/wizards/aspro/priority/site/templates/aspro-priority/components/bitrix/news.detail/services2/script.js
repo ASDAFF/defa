@@ -24,9 +24,9 @@ $(document).ready(function(){
 		$('.projects.item-views .item .image').sliceHeight({lineheight: -3});
 		$('.projects.item-views .item').sliceHeight();
 	}
-	
+
 	$('.item-views.fixed.tarifs').removeClass('fixed');
-	
+
 	$('.detail .tabs li a[href=#projects], #projects .title-tab-heading').on('click', function(){
 		if(!reinitProjects){
 			var _this = $(this);
@@ -40,19 +40,19 @@ $(document).ready(function(){
 			}, 50);
 		}
 	});
-	
+
 	$('.detail .galerys-block .big-gallery-block .item').sliceHeight({'lineheight': -3});
-	
+
 	$('.switch_gallery').on('click', function(){
 		var $this = $(this),
 			animationTime = 200;
-		
+
 		if(!$this.hasClass('small')){
 			$this.addClass('small');
 			$this.closest('.galerys-block').find('.title.big-gallery').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.title.small-gallery').fadeIn(animationTime);
 			});
-			
+
 			$this.closest('.galerys-block').find('.big-gallery-block').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.small-gallery-block').fadeIn(animationTime);
 			});
@@ -62,21 +62,33 @@ $(document).ready(function(){
 			$this.closest('.galerys-block').find('.title.small-gallery').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.title.big-gallery').fadeIn(animationTime);
 			});
-			
+
 			$this.closest('.galerys-block').find('.small-gallery-block').fadeOut(animationTime, function(){
 				$this.closest('.galerys-block').find('.big-gallery-block').fadeIn(animationTime);
 			});
+
+			if(!$this.closest('.galerys-block').hasClass('initFlexslider')){
+				setTimeout(function(){
+					InitFlexSlider();
+				}, 300);
+
+				$this.closest('.galerys-block').addClass('initFlexslider');
+			}
 		}
+
+		setTimeout(function(){
+			$('.detail .galerys-block .small-gallery-block .item>.wrap').sliceHeight({'lineheight': -3});
+		}, animationTime);
 	});
-	
+
 	$('.detail .galerys-block .small-gallery-block .item').on('click', function(){
 		var $this = $(this),
 			index = $this.parent().index();
-			
+
 		$this.closest('.galerys-block').find('.switch_gallery').click();
-		
+
 		setTimeout(function(){
 			$this.closest('.galerys-block').find('.big-gallery-block.flexslider').flexslider(index);
 		}, 300);
-	});		
+	});
 });

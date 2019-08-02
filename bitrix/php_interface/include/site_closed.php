@@ -67,6 +67,16 @@
             color: #000;
         }
 
+        .error-main__error-text-anton {
+            width: 60%;
+            margin: 20px auto;
+            /*font-size: 22px;*/
+            font-size: 0.5em;
+            font-family: Arial, sans-serif;
+            color: #000;
+            text-align: left;
+        }
+
         @media screen and (max-width: 812px) {
             .wrapper {
                 justify-content: flex-start;
@@ -92,7 +102,12 @@
 
     <div class="error-main">
         <img src="/images/sad-bird.jpg" alt="Нам очень грустно, что Вы не увидите сайт еще какое-то время" class="sad-bird" width="292" height="228">
-        <p class="error-main__error-text">Наш сайт находится в разработке и будет готов в течение некоторого времени. Просим Вас заглянуть к нам позже :)</p>
+<!--        <p class="error-main__error-text">Наш сайт находится в разработке и будет готов в течение некоторого времени. Просим Вас заглянуть к нам позже :)</p>-->
+        <p class="error-main__error-text-anton">Антон!<br>
+            Запрещаю переносить сроки запуска сайта.<br></p>
+        <p class="error-main__error-text-anton">
+            С уважением,<br>
+            Генеральный директор Лобов Ю. Д.</p>
     </div>
 </div>
 

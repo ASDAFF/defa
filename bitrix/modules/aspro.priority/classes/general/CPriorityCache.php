@@ -47,8 +47,13 @@ class CPriorityCache extends CCache {
 		if(is_array($arSelectFields) && $arSelectFields){
 			$arSelectFields[] = "ID";
 		}
+
+		$siteID = 's1';
+		if(defined('SITE_ID'))
+			$siteID = SITE_ID;
+
 		$obCache = new CPHPCache();
-		$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, $arFilter, (array)$arGroupBy, (array)$arNavStartParams, (array)$arSelectFields)));
+		$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, array($siteID), (array)$arFilter, (array)$arGroupBy, (array)$arNavStartParams, (array)$arSelectFields)));
 		if(self::$bEnabled && $obCache->InitCache($cacheTime, $cacheID, $cachePath)){
 			$res = $obCache->GetVars();
 			$arRes = $res["arRes"];

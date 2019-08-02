@@ -1,4 +1,9 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+
+
+$arResult['METKI'] = GetMarks();
+
+?>
 <div class="basket_props_block" id="bx_basket_div_<?=$arResult["ID"];?>" style="display: none;">
 	<?if (!empty($arResult['PRODUCT_PROPERTIES_FILL'])){
 		foreach ($arResult['PRODUCT_PROPERTIES_FILL'] as $propID => $propInfo){?>
@@ -144,13 +149,43 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 	<div class="img_wrapper">
 		<div class="stickers">
 			<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
+
+
+
+            <ul class="series-item-pros quick-metki-list product_slider">
+
+                <?foreach(CNextB2c::GetItemStickers($arResult["PROPERTIES"][$prop]) as $arSticker):?>
+
+
+                    <?
+                    if(!empty($arResult['METKI'][$arSticker['VALUE']])) {
+                        $arMetka = $arResult['METKI'][$arSticker['VALUE']];
+                    } else {
+                        continue;
+                    }
+
+                    ?>
+
+                    <li class="series-item-pros-element catalog_item" title="<?=$arMetka['NAME']?>">
+                        <div class="pros-icon">
+                            <img src="<?=$arMetka['SRC']?>" alt="">
+                        </div>
+                    </li>
+
+
+                <?endforeach;?>
+            </ul>
+            <?/*
 			<?foreach(CNextB2c::GetItemStickers($arResult["PROPERTIES"][$prop]) as $arSticker):?>
 				<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
 			<?endforeach;?>
+
+
 			<?if($arParams["SALE_STIKER"] && $arResult["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
 				<div><div class="sticker_sale_text"><?=$arResult["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-			<?}?>
-		</div>
+			<?}?>    */?>
+
+        </div>
 		<div class="item_slider">
 			<?reset($arResult['MORE_PHOTO']);
 			$arFirstPhoto = current($arResult['MORE_PHOTO']);

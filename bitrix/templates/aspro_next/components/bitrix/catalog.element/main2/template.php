@@ -65,6 +65,7 @@ $templateData = array(
 		"STORES_FILTER_ORDER" => $arParams['STORES_FILTER_ORDER'],
 		"STORES_FILTER" => $arParams['STORES_FILTER'],
 		"STORES" => $arParams['STORES'] = array_diff($arParams['STORES'], array('')),
+		"SET_ITEMS" => $arResult["SET_ITEMS"],
 	)
 );
 unset($currencyList, $templateLibrary);
@@ -1135,6 +1136,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 												"FIELDS" => $arParams['FIELDS'],
 												"STORES" => $arParams['STORES'],
 												"CACHE_TYPE" => "A",
+												"SET_ITEMS" => $arResult["SET_ITEMS"],
 											),
 											$component
 										);?>
@@ -1416,6 +1418,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 							"USER_FIELDS" => $arParams['USER_FIELDS'],
 							"FIELDS" => $arParams['FIELDS'],
 							"STORES" => $arParams['STORES'],
+							"SET_ITEMS" => $arResult["SET_ITEMS"],
 						),
 						$component
 					);?>
@@ -1537,7 +1540,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 	<?endif;?>
 </div>
 <?
-if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
+if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && $arParams['USE_PREDICTION'] === 'Y' && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
 	$APPLICATION->IncludeComponent(
 		'bitrix:sale.prediction.product.detail',
 		'main',

@@ -8,7 +8,7 @@
 				<?foreach ($arResult["ERRORS"] as $key => $error)
 					if (intval($key) == 0 && $key !== 0)
 						$arResult["ERRORS"][$key] = str_replace("#FIELD_NAME#", "&quot;".GetMessage("REGISTER_FIELD_".$key)."&quot;", $error);
-				
+
 				ShowError(implode("<br />", $arResult["ERRORS"]));?>
 			</div>
 		<?}elseif($arResult["USE_EMAIL_CONFIRMATION"] === "Y"){?>
@@ -111,9 +111,9 @@
 								$arFields[$arTmpField[$name]]=$name;
 								if($key == 1){
 									$arFields["LOGIN"]="LOGIN";
-								}								
+								}
 							}
-						}else{							
+						}else{
 							$arFields=$arTmpField;
 						}
 						$arFields["PASSWORD"]="PASSWORD";
@@ -123,6 +123,12 @@
 						global $arTheme;
 						if($arTheme['CABINET']['DEPENDENT_PARAMS']["PERSONAL_ONEFIO"]["VALUE"] != "N")
 						{
+							$arResult["VALUES"]['NAME'] = trim(implode(' ', array(
+								$arResult["VALUES"]['LAST_NAME'],
+								$arResult["VALUES"]['NAME'],
+								$arResult["VALUES"]['SECOND_NAME'],
+							)));
+
 							unset($arFields["LAST_NAME"]);
 							unset($arFields["SECOND_NAME"]);
 						}
@@ -130,7 +136,7 @@
 
 						<?foreach ($arFields as $FIELD):?>
 								<?if(($FIELD != "LOGIN" && $arTheme["LOGIN_EQUAL_EMAIL"]["VALUE"] == "Y") || $arTheme["LOGIN_EQUAL_EMAIL"]["VALUE"] != "Y"):?>
-						
+
 								<div class="form-group animated-labels bg-color <?=($arResult["VALUES"][$FIELD] ? 'input-filed' : '');?>">
 									<div class="wrap_md">
 										<div class="iblock label_block">
@@ -216,7 +222,7 @@
 											<?else:?>
 												<?=GetMessage("REGISTER_FIELD_TEXT_".$FIELD);?>
 											<?endif;?>
-										</div>											
+										</div>
 											</div>
 										</div>
 									</div>

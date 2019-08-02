@@ -252,7 +252,7 @@
 		$arFileOfferPropList = array(
 			'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 		);
-		$arTreeOfferPropList = array(
+		$arTreeOfferPropList = $arShowPreviewPictuteTreeOfferPropList = array(
 			'-' => GetMessage('CP_BC_TPL_PROP_EMPTY')
 		);
 		$rsProps = CIBlockProperty::GetList(
@@ -277,6 +277,10 @@
 				|| ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp))
 			)
 				$arTreeOfferPropList[$arProp['CODE']] = $strPropName;
+
+			if ('S' == $arProp['PROPERTY_TYPE'] && 'directory' == $arProp['USER_TYPE'] && CIBlockPriceTools::checkPropDirectory($arProp) && strlen($arProp['USER_TYPE_SETTINGS']['TABLE_NAME'])){
+				$arShowPreviewPictuteTreeOfferPropList[$arProp['CODE']] = $strPropName;
+			}
 		}
 	}
 
@@ -551,19 +555,31 @@
 			'TYPE' => 'CHECKBOX',
 			'DEFAULT' => 'Y',
 		),
-		"LANDING_SEARCH_TITLE" => Array(
-			"NAME" => GetMessage("LANDING_SEARCH_TITLE"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "",
-			"PARENT" => "SEARCH_SETTINGS",
-		),
-		"LANDING_SEARCH_COUNT" => Array(
-			"NAME" => GetMessage("LANDING_SEARCH_COUNT"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "7",
-			"PARENT" => "SEARCH_SETTINGS",
+		"SHOW_LANDINGS_SEARCH" => array(
+			'PARENT' => 'SEARCH_SETTINGS',
+			'NAME' => GetMessage('SHOW_LANDINGS_SEARCH_TITLE'),
+			'TYPE' => 'CHECKBOX',
+			'DEFAULT' => 'Y',
+			'REFRESH' => 'Y',
 		),
 	);
+
+	if($arCurrentValues["SHOW_LANDINGS_SEARCH"] !== 'N'){
+		$arTemplateParametersParts[] = Array(
+			"LANDING_SEARCH_TITLE" => Array(
+				"NAME" => GetMessage("LANDING_SEARCH_TITLE"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "",
+				"PARENT" => "SEARCH_SETTINGS",
+			),
+			"LANDING_SEARCH_COUNT" => Array(
+				"NAME" => GetMessage("LANDING_SEARCH_COUNT"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "7",
+				"PARENT" => "SEARCH_SETTINGS",
+			),
+		);
+	}
 
 	$arTemplateParametersParts[]["SECTIONS_LIST_PREVIEW_PROPERTY"] = Array(
 		"NAME" => GetMessage("SHOW_SECTION_PREVIEW_PROPERTY"),
@@ -607,17 +623,12 @@
 			"DEFAULT" => "Y",
 			"PARENT" => "LIST_SETTINGS",
 		),
-		"LANDING_TITLE" => Array(
-			"NAME" => GetMessage("LANDING_TITLE"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "",
-			"PARENT" => "LIST_SETTINGS",
-		),
-		"LANDING_SECTION_COUNT" => Array(
-			"NAME" => GetMessage("LANDING_SECTION_COUNT"),
-			"TYPE" => "STRING",
-			"DEFAULT" => "7",
-			"PARENT" => "LIST_SETTINGS",
+		"SHOW_LANDINGS" => array(
+			'PARENT' => 'LIST_SETTINGS',
+			'NAME' => GetMessage('SHOW_LANDINGS_TITLE'),
+			'TYPE' => 'CHECKBOX',
+			'DEFAULT' => 'Y',
+			'REFRESH' => 'Y',
 		),
 		"SHOW_KIT_PARTS" => Array(
 			"NAME" => GetMessage("SHOW_KIT_PARTS"),
@@ -660,6 +671,34 @@
 			"PARENT" => "DETAIL_SETTINGS",
 		),
 	);
+
+	if($arCurrentValues["SHOW_LANDINGS"] !== 'N'){
+		$arTemplateParametersParts[] = Array(
+			"LANDING_POSITION" => Array(
+				"NAME" => GetMessage("LANDING_POSITION_TITLE"),
+				"TYPE" => "LIST",
+				"DEFAULT" => "AFTER_PRODUCTS",
+				"PARENT" => "LIST_SETTINGS",
+				"VALUES" => array(
+					'BEFORE_PRODUCTS' => GetMessage('LANDING_POSITION_BEFORE_PRODUCTS'),
+					'AFTER_PRODUCTS' => GetMessage('LANDING_POSITION_AFTER_PRODUCTS'),
+					//'AFTER_DETAIL_TEXT' => GetMessage('LANDING_POSITION_AFTER_DETAIL_TEXT'),
+				),
+			),
+			"LANDING_TITLE" => Array(
+				"NAME" => GetMessage("LANDING_TITLE"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "",
+				"PARENT" => "LIST_SETTINGS",
+			),
+			"LANDING_SECTION_COUNT" => Array(
+				"NAME" => GetMessage("LANDING_SECTION_COUNT"),
+				"TYPE" => "STRING",
+				"DEFAULT" => "7",
+				"PARENT" => "LIST_SETTINGS",
+			),
+		);
+	}
 
 	if($arCurrentValues['USE_ADDITIONAL_GALLERY'] === 'Y'){
 		$arTemplateParametersParts[] = Array(
@@ -793,6 +832,12 @@
 			"DEFAULT" => "3",
 			"PARENT" => "DETAIL_SETTINGS",
 		),
+		'USE_DETAIL_PREDICTION' => array(
+			'PARENT' => 'DETAIL_SETTINGS',
+			'NAME' => GetMessage('USE_DETAIL_PREDICTION_TITLE'),
+			'TYPE' => 'CHECKBOX',
+			'DEFAULT' => 'N',
+		),
 		"AJAX_FILTER_CATALOG" => Array(
 			"NAME" => GetMessage("AJAX_FILTER_CATALOG_TITLE"),
 			"TYPE" => "CHECKBOX",
@@ -893,6 +938,18 @@
 				'NAME' => GetMessage('OFFER_HIDE_NAME_PROPS_TITLE'),
 				'TYPE' => 'CHECKBOX',
 				'DEFAULT' => 'N',
+			)
+		);
+		$arTemplateParametersParts[]=array(
+			'OFFER_SHOW_PREVIEW_PICTURE_PROPS' => array(
+				'PARENT' => 'OFFERS_SETTINGS',
+				'NAME' => GetMessage('OFFER_SHOW_PREVIEW_PICTURE_PROPS_TITLE'),
+				'TYPE' => 'LIST',
+				'MULTIPLE' => 'Y',
+				'ADDITIONAL_VALUES' => 'N',
+				'REFRESH' => 'N',
+				'DEFAULT' => '-',
+				'VALUES' => $arShowPreviewPictuteTreeOfferPropList
 			)
 		);
 	}

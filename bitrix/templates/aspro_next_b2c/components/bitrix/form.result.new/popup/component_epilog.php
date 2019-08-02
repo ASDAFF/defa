@@ -20,6 +20,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.form.<?=$arResult["arForm"]["SID"]?> input[data-sid="PRODUCT_NAME"]').attr('value', $('h1').text());
+	$('.form.<?=$arResult["arForm"]["SID"]?> input[data-sid="REFERER"]').val('<?=$_SERVER['HTTP_REFERER']?>');
 });
 </script>
 <?Bitrix\Main\Page\Frame::getInstance()->finishDynamicWithID("form-block".$arParams["WEB_FORM_ID"], "");?>

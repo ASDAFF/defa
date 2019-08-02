@@ -15,6 +15,12 @@ class SearchQuery {
 	const META_HASH_HAS_MINUS_WORDS = 32;
 	const META_HASH_NOT_VALID = 'NOT VALID';
 	const META_DATA_NOT_VALID = 'NOT VALID';
+	const IBLOCK_TYPE = 'aspro_next_catalog';
+	const IBLOCK_CODE = 'aspro_next_search';
+	const IS_SEARCH_TITLE_NO_XML_ID = 'N';
+	const IS_SEARCH_TITLE_BY_NAME_XML_ID = 'NAME';
+	const IS_SEARCH_TITLE_BY_QUERY_XML_ID = 'QUERY';
+	const IS_SEARCH_TITLE_BY_QUERY_NOT_STRONG_XML_ID = 'QUERY_NOT_STRONG';
 
 	protected static $arStopWords;
 
@@ -80,7 +86,7 @@ class SearchQuery {
 		$this->arStems = self::stemming($this->query, $lang);
 	}
 
-	public function getLandings($arOrder = array('SORT' => 'ASC', 'ID' => 'ASC'), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array(), $bOne = false){
+	public function getLandings($arOrder = array('SORT' => 'ASC', 'ID' => 'ASC'), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array(), $bOne = false, $bStrongCheck = true){
 		$arPossibleLandings = $arPossibleLandingsQuery = $arLandingsIDs = $arLandings = array();
 
 		if($this->cntWords){
@@ -97,7 +103,7 @@ class SearchQuery {
 				else{
 					$SITE_ID = SITE_ID;
 				}
-				$IBLOCK_ID = Cache::$arIBlocks[$SITE_ID]['aspro_next_catalog']['aspro_next_search'][0];
+				$IBLOCK_ID = Cache::$arIBlocks[$SITE_ID][self::IBLOCK_TYPE][self::IBLOCK_CODE][0];
 			}
 			$arFilter['IBLOCK_ID'] = $IBLOCK_ID;
 
@@ -114,6 +120,9 @@ class SearchQuery {
 					}
 					$arFilter[] = $arQueryFilter;
 				}
+			}
+			else{
+				$arFilter['%PROPERTY_QUERY'] = $this->query;
 			}
 
 			$arPossibleLandingsQuery = Cache::CIBLockElement_GetList(
@@ -137,26 +146,47 @@ class SearchQuery {
 			);
 
 			if($arPossibleLandingsQuery){
-				$arPossibleLandings = Cache::CIBLockElement_GetList(
-					array(
-						'SORT' => 'ASC',
-						'ID' => 'ASC',
-						'CACHE' => array(
-							'MULTI' => 'Y',
-							'TAG' => Cache::GetIBlockCacheTag($IBLOCK_ID),
-						),
-					),
-					array('ID' => array_values($arPossibleLandingsQuery)),
-					false,
-					false,
-					array(
-						'ID',
-						'IBLOCK_ID',
-						'PROPERTY_META_HASH',
-						'PROPERTY_META_DATA',
-						'PROPERTY_QUERY',
-					)
-				);
+				$arOrder_ = array('SORT' => 'ASC', 'ID' => 'ASC');
+				$arFilter_ = array('ID' => array_values($arPossibleLandingsQuery));
+				$arSelectFields_ = array('ID', 'IBLOCK_ID');
+
+				$obCache = new \CPHPCache();
+				$cacheTime = 36000000;
+				$cacheTag = Cache::GetIBlockCacheTag($IBLOCK_ID);
+				$cachePath = '/CNextCache/iblock/CIBlockElement_GetList/'.$cacheTag.'/';
+				$cacheID = 'CIBlockElement_GetList_'.$cacheTag.md5(serialize(array_merge($arOrder_, array(SITE_ID), $arFilter_, array(), array(), $arSelectFields_)));
+				if($obCache->InitCache($cacheTime, $cacheID, $cachePath)){
+					$res = $obCache->GetVars();
+					$arPossibleLandings = $res['arRes'];
+				}
+				else{
+					$dbRes = \CIBlockElement::GetList($arOrder_, $arFilter_, false, false, $arSelectFields_);
+					while($obItem = $dbRes->GetNextElement()){
+						$arPossibleLanding = $obItem->GetFields();
+						$arMetaHash = $obItem->GetProperties(array('value_id' => 'asc'), array('CODE' => 'META_HASH'));
+						$arPossibleLanding['PROPERTY_META_HASH_VALUE'] = $arMetaHash ? $arMetaHash['META_HASH']['VALUE'] : array();
+						$arMetaData = $obItem->GetProperties(array('value_id' => 'asc'), array('CODE' => 'META_DATA'));
+						$arPossibleLanding['PROPERTY_META_DATA_VALUE'] = $arMetaData ? $arMetaData['META_DATA']['~VALUE'] : array();
+						$arQuery = $obItem->GetProperties(array('value_id' => 'asc'), array('CODE' => 'QUERY'));
+						$arPossibleLanding['PROPERTY_QUERY_VALUE'] = $arQuery ? $arQuery['QUERY']['VALUE'] : array();
+						$arPossibleLandings[] = $arPossibleLanding;
+					}
+
+					if($cacheTime > 0 && \Bitrix\Main\Config\Option::get('main', 'component_cache_on', 'Y') !== 'N'){
+						$obCache->StartDataCache($cacheTime, $cacheID, $cachePath);
+						if(strlen($cacheTag)){
+							$GLOBALS['CACHE_MANAGER']->StartTagCache($cachePath);
+							$GLOBALS['CACHE_MANAGER']->RegisterTag($cacheTag);
+							$GLOBALS['CACHE_MANAGER']->EndTagCache();
+						}
+
+						$obCache->EndDataCache(array('arRes' => $arPossibleLandings));
+					}
+				}
+			}
+
+			if($arPossibleLandings){
+				$arStrongCheckedIDs = array();
 
 				foreach($arPossibleLandings as &$arLanding){
 					if(isset($arLanding['PROPERTY_QUERY_VALUE']) && isset($arLanding['PROPERTY_META_HASH_VALUE']) && isset($arLanding['PROPERTY_META_DATA_VALUE'])){
@@ -166,19 +196,31 @@ class SearchQuery {
 						$bFinded = false;
 
 						foreach($arLanding['PROPERTY_QUERY_VALUE'] as $i => $query){
+							$query = htmlspecialchars_decode($query);
+
 							if(strlen($query) && isset($arPossibleLandingsQuery[$query]) && isset($arLanding['PROPERTY_META_HASH_VALUE'][$i]) && strlen($hash = $arLanding['PROPERTY_META_HASH_VALUE'][$i]) && isset($arLanding['PROPERTY_META_DATA_VALUE'][$i]) && strlen($arData = $arLanding['PROPERTY_META_DATA_VALUE'][$i])
 							){
+								$bStrongChecked = true;
+
 								// check min count
 								$cntAll = ($hash & (255 << 8)) >> 8;
 								if($cntAll > count($this->arWords)){
-									continue;
+									$bStrongChecked = false;
+									if($bStrongCheck){
+										continue;
+									}
 								}
 
 								// check fixed count
-								if($hash & self::META_HASH_HAS_FIXED_COUNT){
-									$cntFixedCount = $hash >> 16;
-									if($cntFixedCount != count($this->arWords)){
-										continue;
+								if($bStrongChecked){
+									if($hash & self::META_HASH_HAS_FIXED_COUNT){
+										$cntFixedCount = $hash >> 16;
+										if($cntFixedCount != count($this->arWords)){
+											$bStrongChecked = false;
+											if($bStrongCheck){
+												continue;
+											}
+										}
 									}
 								}
 
@@ -198,68 +240,136 @@ class SearchQuery {
 								if($bHasMinusWords = ($hash & self::META_HASH_HAS_MINUS_WORDS && ($minusWords['WORDS'] || $minusWords['STEM']))){
 									foreach($arMinusWords = array_filter(explode(';', $minusWords['WORDS'])) as $word){
 										if(in_array($word, $this->arWords)){
+											$bStrongChecked = false;
 											continue 2;
 										}
 									}
 
 									foreach($arMinusWords = array_filter(explode(';', $minusWords['STEM'])) as $word){
 										if(in_array($word, $this->arStems)){
+											$bStrongChecked = false;
 											continue 2;
 										}
 									}
 								}
 
 								// check stop words
-								if($hash & self::META_HASH_HAS_STOP_WORDS && $stopWords){
-									foreach($arStopWords = array_filter(explode(';', $stopWords)) as $word){
-										if(!in_array($word, $this->arWords)){
-											continue 2;
+								if($bStrongChecked){
+									if($hash & self::META_HASH_HAS_STOP_WORDS && $stopWords){
+										foreach($arStopWords = array_filter(explode(';', $stopWords)) as $word){
+											if(!in_array($word, $this->arWords)){
+												$bStrongChecked = false;
+												if($bStrongCheck){
+													continue 2;
+												}
+												else{
+													break;
+												}
+											}
 										}
 									}
 								}
 
 								// check complex
-								if($bHasComplex = ($hash & self::META_HASH_HAS_COMPLEX && $arComplex)){
-									foreach($arComplex as $complex){
-										if(!preg_match('/'.$complex.'/'.BX_UTF_PCRE_MODIFIER, $this->query)){
-											continue 2;
+								if($bStrongChecked){
+									if($bHasComplex = ($hash & self::META_HASH_HAS_COMPLEX && $arComplex)){
+										foreach($arComplex as $complex){
+											if(!preg_match('/'.$complex.'/'.BX_UTF_PCRE_MODIFIER, $this->query)){
+												$bStrongChecked = false;
+												if($bStrongCheck){
+													continue 2;
+												}
+												else{
+													break;
+												}
+											}
 										}
 									}
 								}
 
 								// check fixed forms
-								if($bHasFixedForms = ($hash & self::META_HASH_HAS_FIXED_FORMS && strlen($fixedForms))){
-									foreach($arFixedForms = array_filter(explode(';', $fixedForms)) as $fixedForm){
-										if(!in_array($fixedForm, $this->arWords)){
-											continue 2;
+								if($bStrongChecked){
+									if($bHasFixedForms = ($hash & self::META_HASH_HAS_FIXED_FORMS && strlen($fixedForms))){
+										foreach($arFixedForms = array_filter(explode(';', $fixedForms)) as $fixedForm){
+											if(!in_array($fixedForm, $this->arWords)){
+												$bStrongChecked = false;
+												if($bStrongCheck){
+													continue 2;
+												}
+												else{
+													break;
+												}
+											}
 										}
 									}
 								}
 
 								// check fixed order
-								if($bHasFixedOrder = ($hash & self::META_HASH_HAS_FIXED_ORDER && strlen($fixedOrder))){
-									foreach($arFixedOrder = array_filter(explode(';', $fixedOrder)) as $fixedOrder){
-										if(strlen($fixedOrder)){
-											if(!preg_match('/'.$fixedOrder.'/'.BX_UTF_PCRE_MODIFIER, $this->query)){
-												continue 2;
+								if($bStrongChecked){
+									if($bHasFixedOrder = ($hash & self::META_HASH_HAS_FIXED_ORDER && strlen($fixedOrder))){
+										foreach($arFixedOrder = array_filter(explode(';', $fixedOrder)) as $fixedOrder){
+											if(strlen($fixedOrder)){
+												if(!preg_match('/'.$fixedOrder.'/'.BX_UTF_PCRE_MODIFIER, $this->query)){
+													$bStrongChecked = false;
+													if($bStrongCheck){
+														continue 2;
+													}
+													else{
+														break;
+													}
+												}
 											}
 										}
 									}
 								}
 
 								// check all words
-								if(strlen($other)){
-									foreach($arOther = array_filter(explode(';', $other)) as $other){
-										if(strlen($other)){
-											if(!in_array($other, $this->arStems)){
-												continue 2;
+								if($bStrongChecked){
+									if(strlen($other)){
+										foreach($arOther = array_filter(explode(';', $other)) as $other){
+											if(strlen($other)){
+												if(!in_array($other, $this->arStems) && !in_array($other, $this->arWords)){
+													$bStrongChecked = false;
+													if($bStrongCheck){
+														continue 2;
+													}
+													else{
+														break;
+													}
+												}
 											}
 										}
 									}
 								}
 
-								$bFinded = true;
-								break;
+								if($bStrongChecked){
+									$arStrongCheckedIDs[] = $arLanding['ID'];
+									$bFinded = true;
+									break;
+								}
+								elseif(!$bStrongCheck){
+									$cntFindedStems = $cntNotFindedStems = 0;
+									$sAll = implode(' ', array($arComplex, $fixedForms, $fixedOrder, $other));
+									$sMinus = implode(' ', array($minusWords['STEM'], $minusWords['WORDS']));
+									foreach($this->arStems as $stem){
+										if(preg_match('/(^|[^a-zA-Z'.TREG_CYR.'0-9]+)'.$stem.'/'.BX_UTF_PCRE_MODIFIER, $sAll)){
+											++$cntFindedStems;
+										}
+										else{
+											if(preg_match('/(^|[^a-zA-Z'.TREG_CYR.'0-9]+)'.$stem.'/'.BX_UTF_PCRE_MODIFIER, $sMinus)){
+												continue 2;
+											}
+											else{
+												++$cntNotFindedStems;
+											}
+										}
+									}
+
+									if(($cntFindedStems >= 1) && (($cntNotFindedStems <= 1) || ($cntFindedStems >= $cntNotFindedStems))){
+										$bFinded = true;
+										break;
+									}
+								}
 							}
 							else{
 								continue;
@@ -272,14 +382,13 @@ class SearchQuery {
 								break;
 							}
 						}
-
 					}
 				}
 				unset($arPossibleLandings, $arLanding);
 			}
 
 			if($arLandingsIDs){
-				$arFilter = array('ID' => $arLandingsIDs);
+				$arFilter = array('ID' => $arLandingsIDs, 'IBLOCK_ID' => $IBLOCK_ID);
 
 				if(!$arOrder || !is_array($arOrder)){
 					$arOrder = array('SORT' => 'ASC', 'ID' => 'ASC');
@@ -303,10 +412,88 @@ class SearchQuery {
 				if($bOne){
 					$arLandings = reset($arLandings);
 				}
+
+				if(!$bStrongCheck){
+					foreach($arLandings as &$arLanding){
+						$arLanding['STRONG_CHECKED'] = in_array($arLanding['ID'], $arStrongCheckedIDs);
+					}
+				}
+				unset($arLanding);
 			}
 		}
 
 		return $arLandings;
+	}
+
+	public static function getTitleLandings($query, $altQuery, $arFilter, $cnt){
+		$arTitleLandings = array();
+
+		if(($cnt = intval($cnt)) > 0){
+			$arLandings = $arLandingIDs = array();
+			$arFilter = is_array($arFilter) ? $arFilter : array($arFilter);
+
+			$arSelect = array(
+				'ID',
+				'IBLOCK_ID',
+				'NAME',
+				'DETAIL_PAGE_URL',
+				'PROPERTY_URL_CONDITION',
+				'PROPERTY_REDIRECT_URL',
+				'PROPERTY_QUERY',
+				'PROPERTY_IS_SEARCH_TITLE',
+			);
+
+			$oSearchQuery = new self($query);
+			$arLandings = $oSearchQuery->getLandings(array(), $arFilter, false, false, $arSelect, false, false);
+
+			// alt query
+			if(!$arLandings && strlen($altQuery)){
+				$oSearchQuery->setQuery($altQuery);
+				$arLandings = $oSearchQuery->getLandings(array(), $arFilter, false, false, $arSelect, false, false);
+			}
+
+			if($arLandings){
+				$arEnums = array();
+				$dbRes = \CIBlockPropertyEnum::GetList(array('DEF' => 'DESC', 'SORT' => 'ASC'), array('CODE' => 'IS_SEARCH_TITLE'));
+				while($arValue = $dbRes->Fetch()){
+					if(!isset($arEnums[$arValue['EXTERNAL_ID']])){
+						$arEnums[$arValue['EXTERNAL_ID']] = array();
+					}
+
+					$arEnums[$arValue['EXTERNAL_ID']][] = $arValue['ID'];
+				}
+
+				foreach($arLandings as $arLanding){
+					if(
+						in_array($arLanding['PROPERTY_IS_SEARCH_TITLE_ENUM_ID'], $arEnums[self::IS_SEARCH_TITLE_BY_QUERY_NOT_STRONG_XML_ID]) ||
+						($arLanding['STRONG_CHECKED'] && in_array($arLanding['PROPERTY_IS_SEARCH_TITLE_ENUM_ID'], $arEnums[self::IS_SEARCH_TITLE_BY_QUERY_XML_ID]))
+					){
+						$catalogDir = preg_replace('/[\?].*/', '', $arLanding['DETAIL_PAGE_URL']);
+						$url = self::getLandingUrl(
+							$catalogDir,
+							$arLanding['PROPERTY_URL_CONDITION_VALUE'],
+							$arLanding['PROPERTY_REDIRECT_URL_VALUE'],
+							$arLanding['PROPERTY_QUERY_VALUE']
+						);
+
+						$arTitleLandings[] = array(
+							'NAME' => $arLanding['NAME'],
+							'URL' => $url,
+							'MODULE_ID' => 'iblock',
+							'PARAM1' => self::IBLOCK_TYPE,
+							'PARAM2' => $arLanding['IBLOCK_ID'],
+							'ITEM_ID' => $arLanding['ID'],
+						);
+
+						if(count($arTitleLandings) >= $cnt){
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		return $arTitleLandings;
 	}
 
 	public static function getLandingUrl($catalogDir, $urlCondition, $redirectUrl, $arQuery){
@@ -322,7 +509,7 @@ class SearchQuery {
 			$catalogDir = '/'.trim(trim($catalogDir), '/').'/';
 			$arQuery = (array)$arQuery;
 			if(strlen($query = $arQuery ? trim(htmlspecialchars_decode($arQuery[0])) : '')){
-				if(strlen($query = \Aspro\Next\SearchQuery::getSentenceExampleQuery($query))){
+				if(strlen($query = self::getSentenceExampleQuery($query))){
 					$url = $catalogDir.'?q='.urlencode($query).'&spell=1';
 				}
 			}
@@ -447,6 +634,7 @@ class SearchQuery {
 
 				$bHasFixedCount = false;
 				$cntFixedCount = $cntMinusWords = $cntStopWords = $cntComplex = $cntFixedOrder = $cntOther = $cntAll = 0;
+				$arStopWords = $arOrder = $arComplex = array();
 
 				if(strpos($sentence, '-') !== false){
 					if(preg_match_all('/([\s|(\["]+|^)([-]([a-zA-Z'.TREG_CYR.'0-9-]+))|([\s|(\["]+|^)([-][!]([a-zA-Z'.TREG_CYR.'0-9-]+))/'.BX_UTF_PCRE_MODIFIER, $sentence, $arMatches)){
@@ -491,8 +679,6 @@ class SearchQuery {
 
 				if(strpos($sentence, '+') !== false){
 					if(preg_match_all('/([\s|(\["]+|^)([+]([a-zA-Z'.TREG_CYR.'0-9-]+))/'.BX_UTF_PCRE_MODIFIER, $sentence, $arMatches)){
-						$arStopWords = array();
-
 						foreach($arMatches[3] as $i => $match){
 							if(self::isStopWord($match)){
 								$arStopWords[] = $match;
@@ -515,8 +701,6 @@ class SearchQuery {
 
 				if(strpos($sentence, '|') !== false && strpos($sentence, '(') !== false && strpos($sentence, ')') !== false){
 					if(preg_match_all('/[(]([^|]+)[|]([^|]+)[)]/'.BX_UTF_PCRE_MODIFIER, $sentence, $arMatches)){
-						$arComplex = array();
-
 						foreach($arMatches[0] as $i => $match){
 							$complex1 = $arMatches[1][$i];
 							$bStem1 = false;
@@ -546,7 +730,7 @@ class SearchQuery {
 								$complex2 = str_replace(array('!', '+'), '', $complex2);
 							}
 
-							$arComplex[] = '('.$complex1.($bStem1 ? '[a-zA-Z'.TREG_CYR.'0-9-]*' : '[\s]|$').')|('.$complex2.($bStem2 ? '[a-zA-Z'.TREG_CYR.'0-9-]*' : '[\s]|$').')';
+							$arComplex[] = '('.$complex1.($bStem1 ? '[a-zA-Z'.TREG_CYR.'0-9-]*' : '([\s]|$)').')|('.$complex2.($bStem2 ? '[a-zA-Z'.TREG_CYR.'0-9-]*' : '([\s]|$)').')';
 						}
 
 						if($arComplex){
@@ -560,8 +744,6 @@ class SearchQuery {
 
 				if(strpos($sentence, '[') !== false && strpos($sentence, ']') !== false){
 					if(preg_match_all('/[\[]([^\]]*)[\]]/'.BX_UTF_PCRE_MODIFIER, $sentence, $arMatches)){
-						$arOrder = array();
-
 						foreach($arMatches[0] as $i => $match){
 							$arOrder[$i] = array();
 
@@ -579,7 +761,7 @@ class SearchQuery {
 												}
 											}
 											else{
-												$complex1 = str_replace(array('!', '+'), '', $complex1).'[\s]|$';
+												$complex1 = str_replace(array('!', '+'), '', $complex1).'([\s]|$)';
 											}
 
 											if(in_array($complex2, $arStopWords)){
@@ -592,7 +774,7 @@ class SearchQuery {
 												}
 											}
 											else{
-												$complex2 = str_replace(array('!', '+'), '', $complex2).'[\s]|$';
+												$complex2 = str_replace(array('!', '+'), '', $complex2).'([\s]|$)';
 											}
 
 											$word = '('.implode('|', array($complex1, $complex2)).')';
@@ -682,11 +864,13 @@ class SearchQuery {
 				}
 
 				$cntAll -= $cntComplex;
-				$cntAll += $cntStopWords;
 
 				if($bHasFixedCount){
 					$cntFixedCount -= $cntComplex;
 					$hash = $hash | ($cntFixedCount << 16);
+				}
+				else{
+					$cntAll += $cntStopWords;
 				}
 
 				$hash = $hash | ($cntAll << 8);
@@ -779,6 +963,26 @@ class SearchQuery {
 		}
 
 		return array();
+	}
+
+	public static function isLandingSearchIblock($IBLOCK_ID){
+		return $IBLOCK_ID && isset(Cache::$arIBlocksInfo[$IBLOCK_ID]) && strpos(Cache::$arIBlocksInfo[$IBLOCK_ID]['CODE'], self::IBLOCK_CODE) !== false;
+	}
+
+	public static function getLandingSearchIblocksIDs($siteId = false, $indexElement = false){
+		$arIBlockIDs = array();
+
+		foreach(Cache::$arIBlocksInfo as $IBLOCK_ID => $arIBlock){
+			if(strpos($arIBlock['CODE'], self::IBLOCK_CODE) !== false){
+				if(!$siteId || in_array($siteId, $arIBlock['LID'])){
+					if(!$indexElement || ($indexElement === $arIBlock['INDEX_ELEMENT'])){
+						$arIBlockIDs[] = $IBLOCK_ID;
+					}
+				}
+			}
+		}
+
+		return $arIBlockIDs;
 	}
 }
 ?>

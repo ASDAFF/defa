@@ -1444,3 +1444,13 @@ section.toggle.active > label {
 .detail.staff .properties .bottom-props.social_props a:hover svg path {
   fill: #f17036;
 }
+.datetimepicker table tr td.active.active,
+.datetimepicker table tr td.active:hover.active {
+  background: #f17036;
+}
+.uploader .resetfile:hover {
+  background-color: #f38453;
+}
+.uploader:hover .resetfile:before {
+  background-color: #f38453;
+}

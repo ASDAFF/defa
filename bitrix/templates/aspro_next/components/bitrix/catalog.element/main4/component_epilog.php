@@ -1,7 +1,7 @@
 <?
 	if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 	__IncludeLang($_SERVER["DOCUMENT_ROOT"].$templateFolder."/lang/".LANGUAGE_ID."/template.php");
-	
+
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 ?>
@@ -141,7 +141,11 @@ use Bitrix\Main\ModuleManager;
 						<ul class="tabs_slider accos_slides slides">
 							<?
 							if($templateData['ASSOCIATED'])
-								$GLOBALS['arrFilterAssoc'] = array("ID" => $templateData['ASSOCIATED']);?>
+								$GLOBALS['arrFilterAssoc'] = array("ID" => $templateData['ASSOCIATED']);
+
+							$GLOBALS['arrFilterAssoc']['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+							CNext::makeElementFilterInRegion($GLOBALS['arrFilterAssoc']);
+							?>
 							<?$APPLICATION->IncludeComponent(
 								"bitrix:catalog.top",
 								"main",
@@ -243,59 +247,66 @@ use Bitrix\Main\ModuleManager;
 	<?}
 }?>
 <script type="text/javascript">
-	var viewedCounter = {
-		path: '/bitrix/components/bitrix/catalog.element/ajax.php',
-		params: {
-			AJAX: 'Y',
-			SITE_ID: "<?= SITE_ID ?>",
-			PRODUCT_ID: "<?= $arResult['ID'] ?>",
-			PARENT_ID: "<?= $arResult['ID'] ?>"
-		}
-	};
-	BX.ready(
-		BX.defer(function(){
-			$('body').addClass('detail_page');
-			BX.ajax.post(
-				viewedCounter.path,
-				viewedCounter.params
-			);
-			if( $('.stores_tab').length ){
-				var objUrl = parseUrlQuery(),
-				add_url = '';
-				if('clear_cache' in objUrl)
-				{
-					if(objUrl.clear_cache == 'Y')
-						add_url = '?clear_cache=Y';
-				}
-				$.ajax({
-					type:"POST",
-					url:arNextOptions['SITE_DIR']+"ajax/productStoreAmount.php"+add_url,
-					data:<?=CUtil::PhpToJSObject($templateData["STORES"], false, true, true)?>,
-					success: function(data){
-						var arSearch=parseUrlQuery();
-						$('.tabs_section .stores_tab').html(data);
-						if("oid" in arSearch)
+var viewedCounter = {
+	path: '/bitrix/components/bitrix/catalog.element/ajax.php',
+	params: {
+		AJAX: 'Y',
+		SITE_ID: "<?= SITE_ID ?>",
+		PRODUCT_ID: "<?= $arResult['ID'] ?>",
+		PARENT_ID: "<?= $arResult['ID'] ?>"
+	}
+};
+BX.ready(
+	BX.defer(function(){
+		$('body').addClass('detail_page');
+		BX.ajax.post(
+			viewedCounter.path,
+			viewedCounter.params
+		);
+	})
+);
+</script>
+<?$des = new \Bitrix\Main\Page\FrameStatic('des');$des->startDynamicArea();?>
+<script>
+BX.ready(
+	BX.defer(function(){
+		if( $('.stores_tab').length ){
+			var objUrl = parseUrlQuery(),
+			add_url = '';
+			if('clear_cache' in objUrl)
+			{
+				if(objUrl.clear_cache == 'Y')
+					add_url = '?clear_cache=Y';
+			}
+			$.ajax({
+				type:"POST",
+				url:arNextOptions['SITE_DIR']+"ajax/productStoreAmount.php"+add_url,
+				data:<?=CUtil::PhpToJSObject($templateData["STORES"], false, true, true)?>,
+				success: function(data){
+					var arSearch=parseUrlQuery();
+					$('.tabs_section .stores_tab').html(data);
+					if("oid" in arSearch)
+					{
+						$('.stores_tab .sku_stores_'+arSearch.oid).show();
+					}
+					else
+					{
+						var obSKU = window['<?=$templateData['STR_ID']?>'];
+						if(typeof obSKU == "object")
 						{
-							$('.stores_tab .sku_stores_'+arSearch.oid).show();
+							obSKU.setStoreBlock(obSKU.offers[obSKU.offerNum].ID)
 						}
 						else
-						{
-							var obSKU = window['<?=$templateData['STR_ID']?>'];
-							if(typeof obSKU == "object")
-							{
-								obSKU.setStoreBlock(obSKU.offers[obSKU.offerNum].ID)
-							}
-							else
-								$('.stores_tab > div:first').show();
-						}
-
+							$('.stores_tab > div:first').show();
 					}
-				});
-			}
-		})
-		
-	);
+
+				}
+			});
+		}
+	})
+);
 </script>
+<?$des->finishDynamicArea();?>
 <?if(isset($_GET["RID"])){?>
 	<?if($_GET["RID"]){?>
 		<script>

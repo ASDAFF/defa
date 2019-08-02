@@ -10,7 +10,6 @@
 					</div>
 				</div>
 			</div>
-
             <?$APPLICATION->IncludeComponent(
                 "bitrix:catalog.section",
                 "catalog_block_front_custom",

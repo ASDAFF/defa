@@ -99,18 +99,19 @@ $bOrderViewBasket = $templateData["ORDER"];
 					<?//show tab block?>
 					<?if($value == "tab"):?>
 						<?
-						$i = 0;
-						$bShowDetailTextTab = (strlen($templateData['DETAIL_TEXT']) ? ++$i : '');
-						$bShowTarifTab = (!empty($templateData['LINK_TARIFS']) ? ++$i : '');
-						$bShowPropsTab = (!empty($templateData['CHARACTERISTICS']) ? ++$i : '');
-						$bShowDocsTab = (!empty($templateData['DOCUMENTS']) ? ++$i : '');
-						$bShowVideoTab = (!empty($templateData['VIDEO']) || !empty($templateData['VIDEO_IFRAME']) ? ++$i : '');
-						$bShowFaqTab = (!empty($templateData['LINK_FAQ']) ? ++$i : '');
-						$bShowProjecTab = (!empty($templateData['LINK_PROJECTS']) ? ++$i : '');
-						
+						$cntTabs = 0;
+						$bShowDetailTextTab = (strlen($templateData['DETAIL_TEXT']) ? ++$cntTabs : '');
+						$bShowTarifTab = (!empty($templateData['LINK_TARIFS']) ? ++$cntTabs : '');
+						$bShowPropsTab = (!empty($templateData['CHARACTERISTICS']) ? ++$cntTabs : '');
+						$bShowDocsTab = (!empty($templateData['DOCUMENTS']) ? ++$cntTabs : '');
+						$bShowVideoTab = (!empty($templateData['VIDEO']) || !empty($templateData['VIDEO_IFRAME']) ? ++$cntTabs : '');
+						$bShowFaqTab = (!empty($templateData['LINK_FAQ']) ? ++$cntTabs : '');
+						$bShowProjecTab = (!empty($templateData['LINK_PROJECTS']) ? ++$cntTabs : '');
+						$bNoTabs = $cntTabs <= 1;
+
 						if($bShowTarifTab || $bShowDetailTextTab || $bShowPropsTab || $bShowDocsTab || $bShowVideoTab || $bShowFaqTab || $bShowProjecTab):?>
 							<div class="tabs">
-								<?if($i > 1):?>
+								<?if(!$bNoTabs):?>
 									<ul class="nav nav-tabs font_upper_md">
 										<?$iTab = 0;?>
 										<?foreach($arTabOrder as $value):?>
@@ -159,12 +160,15 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?endforeach;?>
 									</ul>
 								<?endif;?>
-								<div class="tab-content<?=($i <= 1 ? ' not_tabs' : '')?>">
+								<div class="tab-content<?=($bNoTabs ? ' not_tabs' : '')?>">
 									<?$iTab = 0;?>
 									<?foreach($arTabOrder as $value):?>
 										<?//show desc block?>
 										<?if($value == "desc"):?>
 											<?if($bShowDetailTextTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_DESC"] ? $arParams["T_DESC"] : Loc::getMessage("T_DESC"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane <?=(!($iTab++) ? 'active' : '')?>" id="desc">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_DESC"] ? $arParams["T_DESC"] : Loc::getMessage("T_DESC"));?><span class="arrow_open"></span></div>
 													<div class="content" itemprop="description">
@@ -177,6 +181,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?//show projects block?>
 										<?if($value == "projects"):?>
 											<?if($bShowProjecTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_PROJECTS"] ? $arParams["T_PROJECTS"] : Loc::getMessage("T_PROJECTS"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane <?=(!($iTab++) ? 'active' : '')?>" id="projects">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_PROJECTS"] ? $arParams["T_PROJECTS"] : Loc::getMessage("T_PROJECTS"));?><span class="arrow_open"></span></div>
 													<?$GLOBALS['arrProjectFilter'] = array('ID' => $templateData['LINK_PROJECTS']);?>
@@ -242,9 +249,12 @@ $bOrderViewBasket = $templateData["ORDER"];
 												</div>
 											<?endif;?>
 										<?endif;?>
-										<?//show tarifs block?>										
+										<?//show tarifs block?>
 										<?if($value == "tarifs"):?>
 											<?if($bShowTarifTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_TARIF"] ? $arParams["T_TARIF"] : Loc::getMessage("T_TARIF"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane <?=(!($iTab++) ? 'active' : '')?>" id="tarifs">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_TARIF"] ? $arParams["T_TARIF"] : Loc::getMessage("T_TARIF"));?><span class="arrow_open"></span></div>
 													<?$GLOBALS['arrTarifsFilter'] = array('ID' => $templateData['LINK_TARIFS']);?>
@@ -255,6 +265,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?//show char block?>
 										<?if($value == "char"):?>
 											<?if($bShowPropsTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_CHARACTERISTICS"] ? $arParams["T_CHARACTERISTICS"] : Loc::getMessage("T_CHARACTERISTICS"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane chars <?=(!($iTab++) ? 'active' : '')?>" id="props">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_CHARACTERISTICS"] ? $arParams["T_CHARACTERISTICS"] : Loc::getMessage("T_CHARACTERISTICS"));?><span class="arrow_open"></span></div>
 													<div class="char-wrapp clearfix">
@@ -266,8 +279,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 																			<?=$arProp['NAME']?>
 																			<?if($arProp['HINT']):?>
 																				<span class="hint">
-																					<span class="icons" data-toggle="tooltip" data-placement="top" title="<?=$arProp['HINT']?>"></span>
-																				</span>																			
+																					<span class="icon"><?=CPriority::showIconSvg(SITE_TEMPLATE_PATH.'/images/include_svg/qmark_info.svg');?></span>
+																					<div class="tooltip check_pos"><span><?=$arProp['HINT'];?></span></div>
+																				</span>
 																			<?endif;?>
 																		</span>
 																	</td>
@@ -296,6 +310,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?//show docs block?>
 										<?if($value == "docs"):?>
 											<?if($bShowDocsTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_DOCS"] ? $arParams["T_DOCS"] : Loc::getMessage("T_DOCS"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane docs-block <?=(!($iTab++) ? 'active' : '')?>" id="docs">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_DOCS"] ? $arParams["T_DOCS"] : Loc::getMessage("T_DOCS"));?><span class="arrow_open"></span></div>
 													<div class="docs_wrap">
@@ -324,6 +341,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?//show faq block?>
 										<?if($value == "faq"):?>
 											<?if($bShowFaqTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_FAQ"] ? $arParams["T_FAQ"] : Loc::getMessage("T_FAQ"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane <?=(!($iTab++) ? 'active' : '')?>" id="faq">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_FAQ"] ? $arParams["T_FAQ"] : Loc::getMessage("T_FAQ"));?><span class="arrow_open"></span></div>
 													<?$GLOBALS['arrFaqFilter'] = array('ID' => $templateData['LINK_FAQ']);?>
@@ -392,6 +412,9 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?//show video block?>
 										<?if($value == "video"):?>
 											<?if($bShowVideoTab):?>
+												<?if($bNoTabs):?>
+													<div class="wraps"><h4><?=($arParams["T_VIDEO"] ? $arParams["T_VIDEO"] : Loc::getMessage("T_VIDEO"));?></h4></div>
+												<?endif;?>
 												<div class="tab-pane <?=(!($iTab++) ? 'active' : '')?>" id="video">
 													<div class="title-tab-heading border shadow visible-xs"><?=($arParams["T_VIDEO"] ? $arParams["T_VIDEO"] : Loc::getMessage("T_VIDEO"));?><span class="arrow_open"></span></div>
 													<div class="video">
@@ -449,11 +472,14 @@ $bOrderViewBasket = $templateData["ORDER"];
 					<?//show gallery block?>
 					<?if($value == "gallery"):?>
 						<?if(count($templateData['GALLERY_BIG'])):?>
+							<?
+							$bShowSmallGallery = $templateData['GALLERY_TYPE'] === 'small';
+							?>
 							<div class="wraps galerys-block">
-								<span class="switch_gallery"></span>
-								<div class="title small-gallery font_xs"><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
-								<div class="title big-gallery font_xs"><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
-								<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth" id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
+								<span class="switch_gallery<?=($bShowSmallGallery ? ' small' : '');?>"></span>
+								<div class="title small-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>><?=count($templateData['GALLERY_BIG']).'&nbsp;'.Loc::getMessage('T_GALLERY_TITLE')?></div>
+								<div class="title big-gallery font_xs"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?>><span class="slide-number">1</span> / <?=count($templateData['GALLERY_BIG'])?></div>
+								<div class="big-gallery-block thmb1 flexslider unstyled row bigs wsmooth"<?=($bShowSmallGallery ? ' style="display:none;"' : '');?> id="slider" data-plugin-options='{"animation": "slide", "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "sync": ".gallery-wrapper .small-gallery", "counts": [1, 1, 1], "smoothHeight": true}'>
 									<ul class="slides items">
 										<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
 											<li class="col-md-12 item">
@@ -467,7 +493,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 										<?endforeach;?>
 									</ul>
 								</div>
-								<div class="small-gallery-block">
+								<div class="small-gallery-block"<?=($bShowSmallGallery ? ' style="display:block;"' : '');?>>
 									<div class="front bigs">
 										<div class="items row">
 											<?foreach($templateData['GALLERY_BIG'] as $i => $arPhoto):?>
@@ -666,7 +692,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 								</div>
 							</div>
 						<?endif;?>
-					<?endif;?>					
+					<?endif;?>
 					<?//show goods block?>
 					<?if($value == "goods"):?>
 						<?if($templateData['LINK_GOODS']):?>
@@ -1177,7 +1203,7 @@ $bOrderViewBasket = $templateData["ORDER"];
 								false, array("HIDE_ICONS" => "Y")
 							);?>
 						<?endif;?>
-					<?endif;?>					
+					<?endif;?>
 				</div>
 			<?endforeach;?>
 		</div>

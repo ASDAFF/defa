@@ -4,7 +4,11 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Defo\\": "lib/Defo/"
+            "Defo\\": "lib/Defo/",
+            "XFive\\": "lib/XFive/"
         }
+    },
+    "require-dev": {
+        "kint-php/kint": "^3.2"
     }
 }

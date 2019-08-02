@@ -20,7 +20,7 @@ Option::set("search", "use_social_rating", "Y");
 if (Option::get("socialservices", "auth_services") == ""){
 	$bRu = (LANGUAGE_ID == 'ru');
 	$arServices = array(
-		"VKontakte" => "Y",  
+		"VKontakte" => "Y",
 		"MyMailRu" => "Y",
 		"Twitter" => "Y",
 		"Facebook" => "Y",
@@ -94,6 +94,8 @@ while($arItem = $rsGroups->Fetch()){
 	}
 }
 
+Option::set("aspro.next", "MOBILE_FILTER_COMPACT", 'Y', WIZARD_SITE_ID);
+Option::set("aspro.next", "MOBILE_CATALOG_LIST_ELEMENTS_COMPACT", 'Y', WIZARD_SITE_ID);
 Option::set("aspro.next", "SHOW_QUANTITY_FOR_GROUPS", $DefaultGroupID, WIZARD_SITE_ID);
 Option::set("aspro.next", "SHOW_QUANTITY_COUNT_FOR_GROUPS", $DefaultGroupID, WIZARD_SITE_ID);
 Option::set("aspro.next", "EXPRESSION_FOR_EXISTS", ($isUTF8 ? iconv('CP1251', 'UTF-8', 'Есть в наличии') : 'Есть в наличии'), WIZARD_SITE_ID);
@@ -120,13 +122,13 @@ if(class_exists("CHTMLPagesCache")){
 		if($arHTMLCacheOptions = CHTMLPagesCache::GetOptions()){
 			if($arHTMLCacheOptions["COMPOSITE"] !== "Y"){
 				$arDomains = array();
-				
+
 				$arSites = array();
 				$dbRes = CSite::GetList($by="sort", $order="desc", array("ACTIVE" => "Y"));
 				while($item = $dbRes->Fetch()){
 					$arSites[$item["LID"]] = $item;
 				}
-				
+
 				if($arSites){
 					foreach($arSites as $arSite){
 						if(strlen($serverName = trim($arSite["SERVER_NAME"], " \t\n\r"))){
@@ -141,11 +143,11 @@ if(class_exists("CHTMLPagesCache")){
 						}
 					}
 				}
-				
+
 				if(!$arDomains){
 					$arDomains[$_SERVER["SERVER_NAME"]] = $_SERVER["SERVER_NAME"];
 				}
-				
+
 				if(!$arHTMLCacheOptions["GROUPS"]){
 					$arHTMLCacheOptions["GROUPS"] = array();
 				}
@@ -157,7 +159,7 @@ if(class_exists("CHTMLPagesCache")){
 						}
 					}
 				}
-				
+
 				$arHTMLCacheOptions["COMPOSITE"] = "Y";
 				$arHTMLCacheOptions["DOMAINS"] = array_merge((array)$arHTMLCacheOptions["DOMAINS"], (array)$arDomains);
 				CHTMLPagesCache::SetEnabled(true);

@@ -46,3 +46,29 @@ ul.level-3-wrap.dropdown-menu {}
 .level-2-wrap.dropdown-menu >ul>li>a {
 	display: inline-block;
 }
+
+/*x5 20190626 begin*/
+.ajax-element div.props {
+	overflow: hidden;
+	height: auto;
+	max-height: 125px;
+	position: absolute;
+	background-color: #ffffff;
+	width: 100%;
+	z-index:100;
+}
+
+.ajax-element .characteristiky_title {
+	font-size:14px;
+}
+
+.ajax-element div.props.scrolled {
+	overflow-y: auto;
+}
+
+/*чтобы при переключении цвета перекрыть расчетную высоту блока*/
+.ajax-element .catalog_item_wrapp.item {
+	height:auto !important;
+}
+
+/*x5 end*/

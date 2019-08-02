@@ -135,4 +135,8 @@ $MESS["SOA_MAX_SIZE"] = "Max. DateigrцЯe ьberschritten";
 $MESS["PAY_SYSTEM_PAYABLE_ERROR_DEFAULT"] = "Sie werden die Bestellung bezahlen kцnnen, nachdem wir feststellen, dass die von Ihnen bestellte Produkte am Lager sind. Wird Ihre Bestellung erfьllt, erhalten Sie eine E-Mail mit Zahlungsanweisungen. Sie werden dann die Bestellung innerhalb Ihres Accounts abschlieЯen kцnnen.";
 $MESS["PRICE_FREE_DEFAULT"] = "kostenlos";
 $MESS["ECONOMY_DEFAULT"] = "Sie sparen";
+$MESS["STOF_PHONE"] = "Telefonnummer";
+$MESS["STOF_REG_SMS_REQUEST"] = "Der Bestдtigungscode wurde an Ihr Telefon gesendet";
+$MESS["STOF_SEND"] = "Senden";
+$MESS["STOF_SMS_CODE"] = "SMS-Bestдtigungscode";
 ?>

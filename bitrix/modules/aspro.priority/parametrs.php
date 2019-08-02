@@ -103,7 +103,7 @@ $moduleClass::$arParametrsList = array(
 				'TYPE' => 'file',
 				'DEFAULT' => serialize(array()),
 				'THEME' => 'N',
-			),			
+			),
 			'FAVICON_IMAGE' => array(
 				'TITLE' => GetMessage('FAVICON_IMAGE'),
 				'TYPE' => 'file',
@@ -240,10 +240,10 @@ $moduleClass::$arParametrsList = array(
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
 						'POSITION_BLOCK' => 'block',
 					),
-				),				
+				),
 				'DEFAULT' => 'N',
 				'THEME' => 'Y',
-			),						
+			),
 			'DECORATIVE_INDENTATION' => array(
 				'TITLE' => GetMessage('DECORATIVE_INDENTATION_TITLE'),
 				'TYPE' => 'selectbox',
@@ -261,10 +261,10 @@ $moduleClass::$arParametrsList = array(
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
 						'POSITION_BLOCK' => 'block',
 					),
-				),								
+				),
 				'DEFAULT' => 'Y',
 				'THEME' => 'Y',
-			),	
+			),
 			'H1_STYLE' => array(
 				'TITLE' => GetMessage('H1FONT'),
 				'TYPE' => 'selectbox',
@@ -275,14 +275,14 @@ $moduleClass::$arParametrsList = array(
 						'GROUP' => GetMessage('H1FONT_STYLE'),
 						'IMG' => '/bitrix/images/'.$solution.'/themes/h1_bold.jpg',
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',						
+						'POSITION_BLOCK' => 'block',
 						'VALUE' => 'Bold',
 					),
 					'2' => array(
 						'TITLE' => GetMessage('H1FONT_STYLE_NORMAL'),
 						'IMG' => '/bitrix/images/'.$solution.'/themes/h1_normal.jpg',
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',						
+						'POSITION_BLOCK' => 'block',
 						'GROUP' => GetMessage('H1FONT_STYLE'),
 						'VALUE' => 'Normal',
 					)
@@ -320,25 +320,25 @@ $moduleClass::$arParametrsList = array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/title_1.jpg',
 						'TITLE' => GetMessage('PAGE_TITLE_1'),
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'2' => array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/title_2.jpg',
 						'TITLE' => GetMessage('PAGE_TITLE_2'),
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'3' => array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/title_3.jpg',
 						'TITLE' => GetMessage('PAGE_TITLE_3'),
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'4' => array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/title_4.jpg',
 						'TITLE' => GetMessage('PAGE_TITLE_4'),
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'custom' => array(
 						'TITLE' => 'Custom',
@@ -347,7 +347,7 @@ $moduleClass::$arParametrsList = array(
 				),
 				'DEFAULT' => '1',
 				'THEME' => 'Y',
-			),			
+			),
 			'TYPE_SEARCH' => array(
 				'TITLE' => GetMessage('TYPE_SEARCH'),
 				'TYPE' => 'selectbox',
@@ -357,13 +357,13 @@ $moduleClass::$arParametrsList = array(
 						'TITLE' => GetMessage('SEARCH_1'),
 						'IMG' => '/bitrix/images/'.$solution.'/themes/search_1.jpg',
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'fixed' => array(
 						'TITLE' => GetMessage('SEARCH_2'),
 						'IMG' => '/bitrix/images/'.$solution.'/themes/search_2.jpg',
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',					
+						'POSITION_BLOCK' => 'block',
 					),
 					'custom' => array(
 						'TITLE' => 'Custom',
@@ -517,7 +517,7 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'N',
 			),
 		),
-	),	
+	),
 	'FORMS' => array(
 		'TITLE' => GetMessage('FORMS_OPTIONS'),
 		'OPTIONS' => array(
@@ -613,6 +613,12 @@ $moduleClass::$arParametrsList = array(
 			),
 			'SOCIAL_MAIL' => array(
 				'TITLE' => GetMessage('SOCIAL_MAILRU'),
+				'TYPE' => 'text',
+				'DEFAULT' => '',
+				'THEME' => 'N',
+			),
+			'SOCIAL_YANDEX_DZEN' => array(
+				'TITLE' => GetMessage('SOCIAL_YANDEX_DZEN'),
 				'TYPE' => 'text',
 				'DEFAULT' => '',
 				'THEME' => 'N',
@@ -823,7 +829,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.services_scroll'
-								),							
+								),
 							),
 						),
 						'PORTFOLIO_INDEX' => array(
@@ -860,7 +866,7 @@ $moduleClass::$arParametrsList = array(
 									'SCROLL_BLOCK' => '.projects'
 								),
 							),
-						),						
+						),
 						'PRODUCTS_INDEX' => array(
 							'TITLE' => GetMessage('PRODUCTS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1027,9 +1033,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.tarifs_scroll'
-								),							
+								),
 							),
-						),						
+						),
 						'REVIEWS_INDEX' => array(
 							'TITLE' => GetMessage('REVIEWS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1061,10 +1067,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.reviews_scroll'					
+									'SCROLL_BLOCK' => '.reviews_scroll'
 								),
-							),							
-						),		
+							),
+						),
 						'COMPANY_INDEX' => array(
 							'TITLE' => GetMessage('COMPANY_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1109,9 +1115,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.company_scroll'
-								),							
+								),
 							),
-						),	
+						),
 						'TEASERS_INDEX' => array(
 							'TITLE' => GetMessage('TEASERS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1144,7 +1150,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.teasers_scroll'
-								),							
+								),
 							),
 						),
 						'TEAM_INDEX' => array(
@@ -1254,8 +1260,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.partners_scroll'					
-								),							
+									'SCROLL_BLOCK' => '.partners_scroll'
+								),
 							),
 						),
 						'CONTACTS_INDEX' => array(
@@ -1289,8 +1295,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.contacts_scroll'					
-								),								
+									'SCROLL_BLOCK' => '.contacts_scroll'
+								),
 							),
 						),
 						'INSTAGRAMM_INDEX' => array(
@@ -1330,10 +1336,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.instagram_scroll'					
-								),							
-							),							
-						),						
+									'SCROLL_BLOCK' => '.instagram_scroll'
+								),
+							),
+						),
 						'CONSULT_INDEX' => array(
 							'TITLE' => GetMessage('CONSULT_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1439,7 +1445,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.services_scroll'
-								),							
+								),
 							),
 						),
 						'PORTFOLIO_INDEX' => array(
@@ -1476,7 +1482,7 @@ $moduleClass::$arParametrsList = array(
 									'SCROLL_BLOCK' => '.projects'
 								),
 							),
-						),						
+						),
 						'PRODUCTS_INDEX' => array(
 							'TITLE' => GetMessage('PRODUCTS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1634,9 +1640,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.tarifs_scroll'
-								),							
+								),
 							),
-						),						
+						),
 						'REVIEWS_INDEX' => array(
 							'TITLE' => GetMessage('REVIEWS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1668,10 +1674,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.reviews_scroll'					
+									'SCROLL_BLOCK' => '.reviews_scroll'
 								),
-							),							
-						),		
+							),
+						),
 						'COMPANY_INDEX' => array(
 							'TITLE' => GetMessage('COMPANY_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1716,9 +1722,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.company_scroll'
-								),							
+								),
 							),
-						),	
+						),
 						'TEASERS_INDEX' => array(
 							'TITLE' => GetMessage('TEASERS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1751,7 +1757,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.teasers_scroll'
-								),							
+								),
 							),
 						),
 						'CATALOG_INDEX' => array(
@@ -1835,10 +1841,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.partners_scroll'					
-								),							
+									'SCROLL_BLOCK' => '.partners_scroll'
+								),
 							),
-						),						
+						),
 						'NEWS_INDEX' => array(
 							'TITLE' => GetMessage('NEWS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1874,7 +1880,7 @@ $moduleClass::$arParametrsList = array(
 								),
 							),
 						),
-						
+
 						'CONTACTS_INDEX' => array(
 							'TITLE' => GetMessage('CONTACTS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -1906,8 +1912,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.contacts_scroll'					
-								),								
+									'SCROLL_BLOCK' => '.contacts_scroll'
+								),
 							),
 						),
 						'CONSULT_INDEX' => array(
@@ -1956,10 +1962,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.instagram_scroll'					
-								),							
-							),							
-						),						
+									'SCROLL_BLOCK' => '.instagram_scroll'
+								),
+							),
+						),
 					),
 					'index3' => array(
 						'BIG_BANNER_INDEX' => array(
@@ -2014,9 +2020,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.teasers_scroll'
-								),							
+								),
 							),
-						),						
+						),
 						'TOP_SERVICES_INDEX' => array(
 							'TITLE' => GetMessage('TOP_SERVICES_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2091,7 +2097,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.services_scroll'
-								),							
+								),
 							),
 						),
 						'PORTFOLIO_INDEX' => array(
@@ -2128,7 +2134,7 @@ $moduleClass::$arParametrsList = array(
 									'SCROLL_BLOCK' => '.projects'
 								),
 							),
-						),						
+						),
 						'PRODUCTS_INDEX' => array(
 							'TITLE' => GetMessage('PRODUCTS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2295,9 +2301,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.tarifs_scroll'
-								),							
+								),
 							),
-						),						
+						),
 						'COMPANY_INDEX' => array(
 							'TITLE' => GetMessage('COMPANY_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2342,7 +2348,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.company_scroll'
-								),							
+								),
 							),
 						),
 						'REVIEWS_INDEX' => array(
@@ -2376,10 +2382,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.reviews_scroll'					
+									'SCROLL_BLOCK' => '.reviews_scroll'
 								),
-							),							
-						),						
+							),
+						),
 						'TEAM_INDEX' => array(
 							'TITLE' => GetMessage('TEAM_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2456,7 +2462,7 @@ $moduleClass::$arParametrsList = array(
 								),
 							),
 						),
-					
+
 						'PARTNERS_INDEX' => array(
 							'TITLE' => GetMessage('PARTNERS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2488,8 +2494,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.partners_scroll'					
-								),							
+									'SCROLL_BLOCK' => '.partners_scroll'
+								),
 							),
 						),
 						'CONTACTS_INDEX' => array(
@@ -2523,8 +2529,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.contacts_scroll'					
-								),								
+									'SCROLL_BLOCK' => '.contacts_scroll'
+								),
 							),
 						),
 						'INSTAGRAMM_INDEX' => array(
@@ -2564,10 +2570,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.instagram_scroll'					
-								),							
-							),							
-						),						
+									'SCROLL_BLOCK' => '.instagram_scroll'
+								),
+							),
+						),
 						'CONSULT_INDEX' => array(
 							'TITLE' => GetMessage('CONSULT_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2673,7 +2679,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.services_scroll'
-								),							
+								),
 							),
 						),
 						'PORTFOLIO_INDEX' => array(
@@ -2710,7 +2716,7 @@ $moduleClass::$arParametrsList = array(
 									'SCROLL_BLOCK' => '.projects'
 								),
 							),
-						),						
+						),
 						'PRODUCTS_INDEX' => array(
 							'TITLE' => GetMessage('PRODUCTS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2858,7 +2864,7 @@ $moduleClass::$arParametrsList = array(
 										'IMG' => '/bitrix/images/'.$solution.'/themes/tarifs_7.jpg',
 										'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
 										'POSITION_BLOCK' => 'block',
-									),	
+									),
 									'8' => array(
 										'TITLE' => GetMessage('TARIFS_8'),
 										'IMG' => '/bitrix/images/'.$solution.'/themes/tarifs_8.jpg',
@@ -2877,9 +2883,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.tarifs_scroll'
-								),							
+								),
 							),
-						),						
+						),
 						'REVIEWS_INDEX' => array(
 							'TITLE' => GetMessage('REVIEWS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2911,10 +2917,10 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.reviews_scroll'					
+									'SCROLL_BLOCK' => '.reviews_scroll'
 								),
-							),							
-						),		
+							),
+						),
 						'COMPANY_INDEX' => array(
 							'TITLE' => GetMessage('COMPANY_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2959,9 +2965,9 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.company_scroll'
-								),							
+								),
 							),
-						),	
+						),
 						'TEASERS_INDEX' => array(
 							'TITLE' => GetMessage('TEASERS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -2994,7 +3000,7 @@ $moduleClass::$arParametrsList = array(
 								'PREVIEW' => array(
 									'URL' => '',
 									'SCROLL_BLOCK' => '.teasers_scroll'
-								),							
+								),
 							),
 						),
 						'TEAM_INDEX' => array(
@@ -3072,7 +3078,7 @@ $moduleClass::$arParametrsList = array(
 									'SCROLL_BLOCK' => '.news_scroll'
 								),
 							),
-						),					
+						),
 						'PARTNERS_INDEX' => array(
 							'TITLE' => GetMessage('PARTNERS_INDEX'),
 							'TYPE' => 'checkbox',
@@ -3104,8 +3110,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.partners_scroll'					
-								),							
+									'SCROLL_BLOCK' => '.partners_scroll'
+								),
 							),
 						),
 						'CONTACTS_INDEX' => array(
@@ -3139,8 +3145,8 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.contacts_scroll'					
-								),								
+									'SCROLL_BLOCK' => '.contacts_scroll'
+								),
 							),
 						),
 						'CONSULT_INDEX' => array(
@@ -3189,13 +3195,13 @@ $moduleClass::$arParametrsList = array(
 								'THEME' => 'Y',
 								'PREVIEW' => array(
 									'URL' => '',
-									'SCROLL_BLOCK' => '.instagram_scroll'					
-								),							
-							),							
-						),						
+									'SCROLL_BLOCK' => '.instagram_scroll'
+								),
+							),
+						),
 					),
 				),
-			),					
+			),
 		),
 	),
 	'HEADER' => array(
@@ -3214,7 +3220,14 @@ $moduleClass::$arParametrsList = array(
 				),
 				'DEFAULT' => '1',
 				'THEME' => 'N',
-			),			
+			),
+			'CALLBACK_BUTTON' => array(
+				'TITLE' => GetMessage('CALLBACK_BUTTON'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'ONE_ROW' => 'Y',
+				'THEME' => 'Y',
+			),
 			'TOP_MENU_FIXED' => array(
 				'TITLE' => GetMessage('TOP_MENU_FIXED'),
 				'TYPE' => 'checkbox',
@@ -3297,7 +3310,7 @@ $moduleClass::$arParametrsList = array(
 						'TITLE' => '2',
 						'POSITION_BLOCK' => 'block',
 						'POSITION_TITLE' => 'left',
-					),					
+					),
 					'3' => array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/header3.jpg',
 						'TITLE' => '3',
@@ -3417,7 +3430,7 @@ $moduleClass::$arParametrsList = array(
 				),
 				'DEFAULT' => '1',
 				'THEME' => 'N',
-			),			
+			),
 			'SHOW_CATALOG_SECTIONS_IMAGE' => array(
 				'TITLE' => GetMessage('SHOW_CATALOG_SECTIONS_IMAGE_TITLE'),
 				'TYPE' => 'checkbox',
@@ -3437,7 +3450,7 @@ $moduleClass::$arParametrsList = array(
 								'IMG' => '/bitrix/images/'.$solution.'/themes/section_image_1.jpg',
 								'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
 								'POSITION_BLOCK' => 'block',
-							
+
 							),
 							'image' => array(
 								'TITLE' => GetMessage('IMAGE_TYPE_2'),
@@ -3453,7 +3466,7 @@ $moduleClass::$arParametrsList = array(
 						'TITLE' => GetMessage('CATALOG_ICONS_POSITION'),
 						'TYPE' => 'selectbox',
 						'IS_ROW' => 'Y',
-						'CONDITIONAL_VALUE' => 'Y',						
+						'CONDITIONAL_VALUE' => 'Y',
 						'LIST' => array(
 							'left' => array(
 								'TITLE' => GetMessage('IMAGE_LEFT'),
@@ -3470,7 +3483,7 @@ $moduleClass::$arParametrsList = array(
 						),
 						'DEFAULT' => 'left',
 						'THEME' => 'Y',
-					),					
+					),
 				),
 			),
 			'MAX_VISIBLE_ITEMS_MENU' => array(
@@ -3617,13 +3630,6 @@ $moduleClass::$arParametrsList = array(
 						'THEME' => 'Y',
 						'CONDITIONAL_VALUE' => 'Y',
 					),
-					'REGIONALITY_FILTER_ITEM' => array(
-						'TITLE' => GetMessage('REGIONALITY_FILTER_ITEM_TITLE'),
-						'TYPE' => 'checkbox',
-						'DEFAULT' => 'Y',
-						'THEME' => 'N',
-						'CONDITIONAL_VALUE' => 'Y',
-					),
 					'REGIONALITY_FILTER_ITEM_NOTE' => array(
 						'NOTE' => GetMessage('REGIONALITY_FILTER_ITEM_NOTE_TEXT'),
 						'TYPE' => 'note',
@@ -3631,9 +3637,28 @@ $moduleClass::$arParametrsList = array(
 						'THEME' => 'N',
 						'CONDITIONAL_VALUE' => 'Y',
 					),
+					'REGIONALITY_FILTER_ITEM' => array(
+						'TITLE' => GetMessage('REGIONALITY_FILTER_ITEM_TITLE'),
+						'TYPE' => 'checkbox',
+						'DEFAULT' => 'Y',
+						'THEME' => 'N',
+						'CONDITIONAL_VALUE' => 'Y',
+					),
 				),
 				'DEFAULT' => 'N',
 				'THEME' => 'Y',
+			),
+			'SHOW_SECTIONS_REGION_HINT' => array(
+				'TITLE' => GetMessage('SHOW_SECTIONS_REGION_HINT'),
+				'TYPE' => 'note',
+				'THEME' => 'N',
+			),
+			'SHOW_SECTIONS_REGION' => array(
+				'TITLE' => GetMessage('SHOW_SECTIONS_REGION_TITLE'),
+				'TYPE' => 'checkbox',
+				'IS_ROW' => 'Y',
+				'DEFAULT' => 'N',
+				'THEME' => 'N',
 			),
 		)
 	),
@@ -3693,7 +3718,7 @@ $moduleClass::$arParametrsList = array(
 						'THEME' => 'N',
 					),
 				)
-			),			
+			),
 			'SHOW_SMARTFILTER' => array(
 				'TITLE' => GetMessage('SHOW_FILTER_TITLE'),
 				'TYPE' => 'checkbox',
@@ -3729,30 +3754,6 @@ $moduleClass::$arParametrsList = array(
 						),
 					),
 				)
-			),
-			'ELEMENTS_TABLE_TYPE_VIEW' => array(
-				'TITLE' => GetMessage('ELEMENTS_TABLE_TYPE_VIEW_TITLE'),
-				'TYPE' => 'selectbox',
-				'IS_ROW' => 'Y',
-				'LIST' => array(
-					'catalog_table' => array(
-						'TITLE' => GetMessage('VIEW_TYPE_ITEM_NORMAL'),
-						'IMG' => '/bitrix/images/'.$solution.'/themes/catalog_table_1.jpg',
-						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',
-					),
-					'catalog_table_2' => array(
-						'TITLE' => GetMessage("VIEW_TYPE_ITEM_PROP"),
-						'IMG' => '/bitrix/images/'.$solution.'/themes/catalog_table_2.gif',
-						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
-						'POSITION_BLOCK' => 'block',
-					),
-				),
-				'DEFAULT' => 'catalog_table',
-				'THEME' => 'Y',
-				'PREVIEW' => array(
-					'URL' => $arFirstSectionCatalog['SECTION_PAGE_URL'].'?display=table',
-				),
 			),
 			'SECTIONS_TYPE_VIEW' => array(
 				'TITLE' => GetMessage('SECTIONS_TYPE_VIEW_TITLE'),
@@ -3800,8 +3801,32 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'Y',
 				'PREVIEW' => array(
 					'URL' => 'product/'
-				),	
-			),			
+				),
+			),
+			'ELEMENTS_TABLE_TYPE_VIEW' => array(
+				'TITLE' => GetMessage('ELEMENTS_TABLE_TYPE_VIEW_TITLE'),
+				'TYPE' => 'selectbox',
+				'IS_ROW' => 'Y',
+				'LIST' => array(
+					'catalog_table' => array(
+						'TITLE' => GetMessage('VIEW_TYPE_ITEM_NORMAL'),
+						'IMG' => '/bitrix/images/'.$solution.'/themes/catalog_table_1.jpg',
+						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
+						'POSITION_BLOCK' => 'block',
+					),
+					'catalog_table_2' => array(
+						'TITLE' => GetMessage("VIEW_TYPE_ITEM_PROP"),
+						'IMG' => '/bitrix/images/'.$solution.'/themes/catalog_table_2.gif',
+						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
+						'POSITION_BLOCK' => 'block',
+					),
+				),
+				'DEFAULT' => 'catalog_table',
+				'THEME' => 'Y',
+				'PREVIEW' => array(
+					'URL' => $arFirstSectionCatalog['SECTION_PAGE_URL'].'?display=table',
+				),
+			),
 			'ELEMENTS_LIST_TYPE_VIEW' => array(
 				'TITLE' => GetMessage('ELEMENTS_LIST_TYPE_VIEW_TITLE'),
 				'TYPE' => 'selectbox',
@@ -3846,7 +3871,7 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'Y',
 				'PREVIEW' => array(
 					'URL' => $arFirstElementCatalog['DETAIL_PAGE_URL'],
-				),				
+				),
 			),
 		),
 	),
@@ -3903,10 +3928,10 @@ $moduleClass::$arParametrsList = array(
 					),
 				),
 				'DEFAULT' => 'sections_6',
-				'THEME' => 'Y',	
+				'THEME' => 'Y',
 				'PREVIEW' => array(
 					'URL' => 'services/'
-				),				
+				),
 			),
 			'SERVICES_SECTION_ELEMENTS_TYPE_VIEW' => array(
 				'TITLE' => GetMessage('ELEMENTS_TYPE_VIEW_TITLE'),
@@ -3939,10 +3964,10 @@ $moduleClass::$arParametrsList = array(
 					),
 				),
 				'DEFAULT' => 'list_elements_3',
-				'THEME' => 'Y',	
+				'THEME' => 'Y',
 				'PREVIEW' => array(
 					'URL' => $arFirstSectionServicesLastChild['SECTION_PAGE_URL'],
-				),								
+				),
 			),
 			'SERVICES_PAGE_DETAIL' => array(
 				'TITLE' => GetMessage('SERVICES_DETAIL_PAGE_TITLE'),
@@ -3966,10 +3991,10 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'Y',
 				'PREVIEW' => array(
 					'URL' => $arFirstElementServices['DETAIL_PAGE_URL'],
-				),								
+				),
 			),
 		),
-	),	
+	),
 	'SECTION' => array(
 		'TITLE' => GetMessage('SECTION_OPTIONS'),
 		'THEME' => 'Y',
@@ -4109,8 +4134,8 @@ $moduleClass::$arParametrsList = array(
 						'IMG' => '/bitrix/images/'.$solution.'/themes/projects_page_4.jpg',
 						'ROW_CLASS' => 'col-md-4 col-sm-4 col-xs-12',
 						'POSITION_BLOCK' => 'block',
-					),					
-					
+					),
+
 					'list_elements_1' => array(
 						'TITLE' => GetMessage('PAGE_PROJECTS_3'),
 						'IMG' => '/bitrix/images/'.$solution.'/themes/projects_page_3.jpg',
@@ -4383,6 +4408,13 @@ $moduleClass::$arParametrsList = array(
 		'TITLE' => GetMessage('FOOTER_OPTIONS'),
 		'THEME' => 'Y',
 		'OPTIONS' => array(
+			'CALLBACK_BUTTON_FOOTER' => array(
+				'TITLE' => GetMessage('CALLBACK_BUTTON_FOOTER'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'ONE_ROW' => 'Y',
+				'THEME' => 'Y',
+			),
 			'FOOTER_TYPE' => array(
 				'TITLE' => GetMessage('FOOTER_TYPE'),
 				'TYPE' => 'selectbox',
@@ -4573,7 +4605,7 @@ $moduleClass::$arParametrsList = array(
 				),
 				'DEFAULT' => '1',
 				'THEME' => 'Y',
-			),			
+			),
 			'HEADER_MOBILE_MENU' => array(
 				'TITLE' => GetMessage('HEADER_MOBILE_MENU'),
 				'TYPE' => 'selectbox',
@@ -4826,7 +4858,7 @@ $moduleClass::$arParametrsList = array(
 			),
 		)
 	),
-	
+
 	'COUNTERS_GOALS' => array(
 		'TITLE' => GetMessage('COUNTERS_GOALS_OPTIONS'),
 		'THEME' => 'N',

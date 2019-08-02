@@ -296,7 +296,7 @@ JCSmartFilter.prototype.setUrlSortDisplay = function (url)
 JCSmartFilter.prototype.filterCatalog = function (url, set_disabled)
 {
 	if( window.History.enabled || window.history.pushState != null ){
-		window.History.pushState( null, document.title, url );
+		window.History.pushState( null, document.title, decodeURIComponent(url) );
 	}else{
 		location.href = url;
 	}
@@ -1030,7 +1030,7 @@ BX.Iblock.SmartFilter = (function()
 				return false;
 			};
 		}
-		
+
 		$('.bx_filter .bx_filter_parameters_box_container input').prop('disabled', false);
 
 		if (!this.isTouch)
@@ -1130,7 +1130,7 @@ BX.Iblock.SmartFilter = (function()
 				return false;
 			};
 		}
-		
+
 		$('.bx_filter .bx_filter_parameters_box_container input').prop('disabled', false);
 
 		if (!this.isTouch)

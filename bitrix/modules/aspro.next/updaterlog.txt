@@ -128,3 +128,49 @@
 13.05.2019 15:07:40 Update /ajax/js_item_detail.php
 13.05.2019 15:07:40 Update /ajax/actualBasket.php
 13.05.2019 15:07:40 IBLOCK_ID: 23. Add IS_SEARCH_TITLE property=755
+
+02.07.2019 15:25:20 START UPDATE 1.4.3 -> 1.4.4
+
+02.07.2019 15:25:21 Update /ajax/city_chooser.php
+02.07.2019 15:25:21 Update /ajax/js_item_detail.php
+02.07.2019 15:25:21 Update /include/news.detail.products_block.php
+02.07.2019 15:25:21 Update /include/news.detail.products_slider.php
+02.07.2019 15:25:21 Update /footer/comp_viewed.php
+02.07.2019 15:25:21 Update /.top_catalog_wide.menu_ext.php
+02.07.2019 15:25:21 Update /catalog/.left.menu_ext.php
+02.07.2019 15:25:21 Update /catalog/index.php
+
+02.07.2019 15:25:22 START UPDATE 1.4.4 -> 1.4.5
+
+02.07.2019 15:25:23 Update /ajax/city_chooser.php
+02.07.2019 15:25:23 Update /ajax/js_item_detail.php
+02.07.2019 15:25:23 Update /include/news.detail.products_block.php
+02.07.2019 15:25:23 Update /include/news.detail.products_slider.php
+02.07.2019 15:25:23 IBLOCK_TYPE: 17. Add POPUP_VIDEO property=843
+
+02.07.2019 15:25:24 START UPDATE 1.4.5 -> 1.4.6
+
+02.07.2019 15:25:25 Update /ajax/js_item_detail.php
+02.07.2019 15:25:25 Update /landings/index.php
+02.07.2019 15:25:25 Update /info/brands/index.php
+
+01.08.2019 16:34:15 START UPDATE 1.4.6 -> 1.4.7
+
+01.08.2019 16:34:17 Update /ajax/goals.php
+01.08.2019 16:34:17 Update /include/left_block/menu.left_menu.php
+
+01.08.2019 16:34:19 START UPDATE 1.4.7 -> 1.5.0
+
+01.08.2019 16:34:22 IBLOCK_TYPE: 3. Add TABLET_IMAGE property=869
+01.08.2019 16:34:22 Update /.top_content_multilevel.menu.php
+01.08.2019 16:34:22 Update /include/mainpage/comp_catalog_ajax.php
+01.08.2019 16:34:22 Update /ajax/js_item_detail.php
+01.08.2019 16:34:22 Update /ajax/fast_view.php
+01.08.2019 16:34:22 Update /ajax/productStoreAmount.php
+01.08.2019 16:34:22 Update /bitrix/templates/aspro_next/header.php
+01.08.2019 16:34:22 Update /bitrix/templates/aspro_next/header.php
+01.08.2019 16:34:22 Update /bitrix/templates/aspro_next/page_blocks/header_mobile_1.php
+01.08.2019 16:34:22 Update /bitrix/templates/aspro_next/page_blocks/header_mobile_2.php
+
+01.08.2019 16:34:24 START UPDATE 1.5.0 -> 1.5.1
+

@@ -144,7 +144,21 @@ class CBitrixCatalogSmartFilter extends CBitrixComponent
 	{
 		$items = array();
 
-		foreach(CIBlockSectionPropertyLink::GetArray($IBLOCK_ID, $this->SECTION_IDS) as $PID => $arLink)
+		$arLinks = array();
+		foreach($this->SECTION_IDS as $SECTION_ID){
+			if($arLinks_ = CIBlockSectionPropertyLink::GetArray($IBLOCK_ID, $SECTION_ID)){
+				foreach($arLinks_ as $PID => $arLink){
+					if(isset($arLinks[$PID])){
+						$arLinks[$PID] = $arLinks[$PID]["SMART_FILTER"] === 'Y' ? $arLinks[$PID] : $arLink;
+					}
+					else{
+						$arLinks[$PID] = $arLink;
+					}
+				}
+			}
+		}
+
+		foreach($arLinks as $PID => $arLink)
 		{
 			if($arLink["SMART_FILTER"] !== "Y")
 				continue;

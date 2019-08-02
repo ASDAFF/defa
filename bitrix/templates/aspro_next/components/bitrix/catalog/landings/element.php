@@ -9,24 +9,35 @@ Loader::includeModule("highloadblock");
 
 global $arTheme, $arRegion;
 $arElement = array();
-$arSelect = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FILTER_URL", "PROPERTY_SECTION", "ElementValues");
-$arFilterElement = array("IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0], "ACTIVE"=>"Y");
-if($GLOBALS[$arParams['FILTER_NAME']])
-{
-	$arFilterElement = array_merge($arFilterElement, $GLOBALS[$arParams['FILTER_NAME']]);
+$arSelect = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FILTER_URL", "PROPERTY_SECTION", "ElementValues", "PROPERTY_I_ELEMENT_PAGE_TITLE", "PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT", "PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE", "PROPERTY_I_SKU_PAGE_TITLE", "PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT", "PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE");
+if($arResult["VARIABLES"]["ELEMENT_ID"] > 0){
+	$arElementFilter = array("IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0], "ID" => $arResult["VARIABLES"]["ELEMENT_ID"]);
 }
-if($arParams["SHOW_DEACTIVATED"] == "Y")
-	unset($arFilterElement["ACTIVE"]);
+elseif(strlen(trim($arResult["VARIABLES"]["ELEMENT_CODE"])) > 0){
+	$arElementFilter = array("IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0], "=CODE" => $arResult["VARIABLES"]["ELEMENT_CODE"]);
+}
 
-if($arResult["VARIABLES"]["ELEMENT_ID"] > 0)
-{
-	$arElement = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag(CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0]))), array_merge($arFilterElement, array("ID" => $arResult["VARIABLES"]["ELEMENT_ID"])), false, false, $arSelect);
+if($arParams['SHOW_DEACTIVATED'] !== 'Y'){
+	$arElementFilter['ACTIVE'] = 'Y';
 }
-elseif(strlen(trim($arResult["VARIABLES"]["ELEMENT_CODE"])) > 0)
-{
-	$arElement = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag(CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0]))), array_merge($arFilterElement, array("=CODE" => $arResult["VARIABLES"]["ELEMENT_CODE"])), false, false, $arSelect);
 
+if($GLOBALS[$arParams['FILTER_NAME']]){
+	$arElementFilter = array_merge($arElementFilter, $GLOBALS[$arParams['FILTER_NAME']]);
 }
+
+$arElement = CNextCache::CIBLockElement_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag(CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_landing"][0]))), $arElementFilter, false, false, $arSelect);
+
+if($arElement){
+	$arIBInheritTemplates = array(
+		"ELEMENT_PAGE_TITLE" => $arElement["PROPERTY_I_ELEMENT_PAGE_TITLE_VALUE"],
+		"ELEMENT_PREVIEW_PICTURE_FILE_ALT" => $arElement["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+		"ELEMENT_PREVIEW_PICTURE_FILE_TITLE" => $arElement["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+		"SKU_PAGE_TITLE" => $arElement["PROPERTY_I_SKU_PAGE_TITLE_VALUE"],
+		"SKU_PREVIEW_PICTURE_FILE_ALT" => $arElement["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+		"SKU_PREVIEW_PICTURE_FILE_TITLE" => $arElement["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+	);
+}
+
 if($arParams['STORES'])
 {
 	foreach($arParams['STORES'] as $key => $store)

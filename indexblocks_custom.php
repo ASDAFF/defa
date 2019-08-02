@@ -213,7 +213,7 @@
                     </a>
                 </div>
                 <div class="col-sm-2">
-                    <a href="" class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
+                    <a href="<?=SITE_DIR ?>services/konsultatsiya-eksperta/" class="what_do-item">
                         <div class="what_do-item-icon">
                             <svg height="35" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 25.716 26.266" style="enable-background:new 0 0 25.716 26.266;" xml:space="preserve">
@@ -257,7 +257,7 @@
 
 
                 <div class="col-sm-2">
-                    <a href="<?=SITE_DIR ?>services/test-drayv/" class="what_do-item">
+                    <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                         <div class="what_do-item-icon">
 
                             <svg height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40.34 47.5">
@@ -337,13 +337,13 @@
 <!-- new! -->
 <div class="maxwidth-theme">
         <div class="podborki-block">
-            <div class="tabs tabs-product-categories">
-                <ul class="categories_list">
-                    <li class="cur"><span>Кресла и стулья</span></li>
-                    <li><span>Офисная мебель</span></li>
-                    <li><span>Офисная мебель</span></li>
-                </ul>
-            </div>
+<!--            <div class="tabs tabs-product-categories">-->
+<!--                <ul class="categories_list">-->
+<!--                    <li class="cur"><span>Кресла и стулья</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                    <li><span>Офисная мебель</span></li>-->
+<!--                </ul>-->
+<!--            </div>-->
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
                 array(
                     "COMPONENT_TEMPLATE" => ".default",
@@ -528,7 +528,7 @@
                     "CATALOG" => "/catalog/",
                     "COMPOSITE_FRAME_MODE" => "A",
                     "COMPOSITE_FRAME_TYPE" => "AUTO",
-                    "TITLE_BLOCK" => "Популярные серии"
+                    "TITLE_BLOCK" => "Многим нравится"
                 ),
                 false
             );?>
@@ -801,11 +801,12 @@
                         "rss" => "rss/",
                         "rss_section" => "#SECTION_ID#/rss/",
                     ),
-                    "TITLE_BLOCK" => "Пресс-центр",
+                    "TITLE_BLOCK" => "Наши новости",
                     "ALL_URL" => "company/news/",
                 ),
                 false
             );?>
+
         </div>
     </div>
 
@@ -978,5 +979,4 @@
     </div>
     </div>
 
-</div>
 </div>

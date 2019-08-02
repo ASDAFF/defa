@@ -40,7 +40,7 @@
 				<span class="font_upper animate-load" data-event="jqm" data-param-id="<?=CPriority::getFormID("aspro_priority_question");?>" data-autoload-need_product="<?=CPriority::formatJsName($arResult['NAME'])?>" data-name="question"><?=(strlen($arParams['S_ASK_QUESTION']) ? $arParams['S_ASK_QUESTION'] : GetMessage('S_ASK_QUESTION'))?></span>
 			</div>
 		</div>
-		
+
 	<?$sFormQuestion = ob_get_contents();
 	ob_end_clean();?>
 <?endif;?>
@@ -66,8 +66,8 @@
 				$bHasYear = (isset($_GET['year']) && (int)$_GET['year']);
 				$year = ($bHasYear ? (int)$_GET['year'] : 0);
 				$yearGet = (isset($_GET['year']) && strlen($_GET['year']) ? true : false)
-				?>	
-				
+				?>
+
 				<div class="head-block top clearfix">
 					<div class="hidden-xs">
 						<div class="item-link font_upper_md<?=(!$yearGet ? ' active' : '')?>">
@@ -114,10 +114,8 @@
 					<?
 					if($bHasYear)
 					{
-						$GLOBALS[$arParams["FILTER_NAME"]] = array(
-							">DATE_ACTIVE_FROM" => ConvertDateTime("31.12.".($year-1), FORMAT_DATETIME),
-							"<=DATE_ACTIVE_FROM" => ConvertDateTime("31.12.".$year, FORMAT_DATETIME),
-						);
+						$GLOBALS[$arParams["FILTER_NAME"]][">DATE_ACTIVE_FROM"] = ConvertDateTime("31.12.".($year-1), FORMAT_DATETIME);
+						$GLOBALS[$arParams["FILTER_NAME"]]["<=DATE_ACTIVE_FROM"] = ConvertDateTime("31.12.".$year, FORMAT_DATETIME);
 					}?>
 				<?}
 			}
@@ -183,5 +181,5 @@
 		<div class="ask_a_question_wrapper">
 			<?=$sFormQuestion;?>
 		</div>
-	</div>		
+	</div>
 </div>

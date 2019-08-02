@@ -35,6 +35,7 @@ bitrix/modules/*
 !bitrix/modules/aspro.next.stock/
 !bitrix/modules/aspro.priority/
 !bitrix/modules/aspro.priority.b2g/
+!bitrix/modules/defo.log1c/
 bitrix/otp/
 bitrix/panel/
 bitrix/php_interface/dbconn.php
@@ -77,7 +78,15 @@ catalog_files/
 stuff/
 log/
 upload/
-
+upload.tar.gz
 
 bitrix/design333222.log
 bitrix/www/bitrix/test333222.log
+
+
+bitrix/modules/aspro.next/install/wizards/aspro/next/site/services/form/sms.php
+bitrix/modules/aspro.next/lang/ru/lib/property/
+bitrix/modules/aspro.next/lib/phoneauth.php
+bitrix/modules/aspro.next/lib/property/
+bitrix/modules/aspro.priority/install/wizards/aspro/priority/site/public/ru/images/company/manufacturer/
+/*.php.back*.*

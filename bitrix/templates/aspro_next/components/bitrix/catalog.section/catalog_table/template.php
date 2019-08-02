@@ -22,7 +22,7 @@
 				$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT"));
 				$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BCS_ELEMENT_DELETE_CONFIRM')));
 				$totalCount = CNext::GetTotalCount($arItem, $arParams);
-				$arQuantityData = CNext::GetQuantityArray($totalCount);
+				$arQuantityData = CNext::GetQuantityArray($totalCount, array(), "N", $arItem["PRODUCT"]["TYPE"]);
 
 				$strMeasure = '';
 				if(!$arItem["OFFERS"] || $arParams['TYPE_SKU'] === 'TYPE_2'){

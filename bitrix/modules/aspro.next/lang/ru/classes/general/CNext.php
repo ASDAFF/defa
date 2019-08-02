@@ -91,5 +91,16 @@ $MESS["M_SECTIONS_TYPE_VIEW"] = "Шаблон страницы блока спи
 $MESS["M_SECTION_TYPE_VIEW"] = "Шаблон страницы блока списка подразделов";
 $MESS["M_SECTION_ELEMENTS_TYPE_VIEW"] = "Шаблон страницы блока списка элементов";
 $MESS["M_ELEMENT_TYPE_VIEW"] = "Шаблон страницы блока детальной страницы";
+$MESS["M_LANDING_TYPE_VIEW"] = "Шаблон страницы блока  \"Популярные категории\"";
 $MESS["M_FROM_MODULE_PARAMS"] = "Из настроек центра управления";
+
+$MESS["PHONE_AUTH_EVENT_NAME_ru"] = "Авторизация на сайте по СМС";
+$MESS["PHONE_AUTH_EVENT_DESCRIPTION_ru"] = "#USER_PHONE# - номер телефона\n#CODE# - код авторизации";
+$MESS["PHONE_AUTH_EVENT_NAME_en"] = "Authorize using SMS";
+$MESS["PHONE_AUTH_EVENT_DESCRIPTION_en"] = "#USER_PHONE# - phone number\n#CODE# - auth code";
+$MESS["PHONE_AUTH_TEMPLATE_MESSAGE"] = "Код авторизации #CODE#";
+$MESS["PHONE_AUTH_CODE_SENT_ERROR_PHONE_NOT_FINDED"] = "Профиль пользователя не найден";
+$MESS["PHONE_AUTH_CODE_SENT_ERROR_NEED_MAIN_UPDATE"] = "Необходимо обновление главного модуля (main) до версии не менее 18.5.0";
+$MESS["PHONE_AUTH_CODE_VERIFY_ERROR"] = "Неверный код авторизации из СМС";
+$MESS["PHONE_AUTH_ERROR_BAD_CAPTCHA"] = "Неверно введены символы с картинки";
 ?>

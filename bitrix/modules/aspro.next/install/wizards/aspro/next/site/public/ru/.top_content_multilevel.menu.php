@@ -1,10 +1,17 @@
 <?
 $aMenuLinks = Array(
 	Array(
+		"Главная", 
+		"#SITE_DIR#", 
+		Array(), 
+		Array("ONLY_MOBILE"=>"Y"), 
+		"" 
+	),
+	Array(
 		"Каталог", 
 		"#SITE_DIR#catalog/", 
 		Array(), 
-		Array("NOT_VISIBLE"=>"Y", "CLASS"=>"catalog wide_menu"), 
+		Array("NOT_VISIBLE"=>"Y", "CLASS"=>"catalog"), 
 		"" 
 	),
 	Array(
@@ -22,20 +29,6 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Блог", 
-		"#SITE_DIR#blog/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Проекты", 
-		"#SITE_DIR#projects/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
 		"Как купить", 
 		"#SITE_DIR#help/", 
 		Array(), 
@@ -43,7 +36,21 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Компания", 
+		"Производители", 
+		"#SITE_DIR#info/brands/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Магазины", 
+		"#SITE_DIR#contacts/stores/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"О компании", 
 		"#SITE_DIR#company/", 
 		Array(), 
 		Array(), 

@@ -1,5 +1,10 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<?$this->setFrameMode(true);?>
+<?$this->setFrameMode(true);
+
+
+$arResult['METKI'] = GetMarks();
+
+?>
 <?if( count( $arResult["ITEMS"] ) >= 1 ){?>
 	<div class="top_wrapper items_wrapper">
 		<div class="fast_view_params" data-params="<?=urlencode(serialize($arTransferParams));?>"></div>
@@ -60,9 +65,30 @@
 						<div class="image_wrapper_block shine">
 							<div class="stickers">
 								<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
-										<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
-									<?endforeach;?>
+
+                                <ul class="series-item-pros quick-metki-list">
+
+                                    <?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
+
+
+                                        <?
+                                        if(!empty($arResult['METKI'][$arSticker['VALUE']])) {
+                                            $arMetka = $arResult['METKI'][$arSticker['VALUE']];
+                                        } else {
+                                            continue;
+                                        }
+
+                                        ?>
+
+                                        <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
+                                            <div class="pros-icon">
+                                                <img src="<?=$arMetka['SRC']?>" alt="">
+                                            </div>
+                                        </li>
+
+
+                                    <?endforeach;?>
+                                </ul>
 								<?if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
 									<div><div class="sticker_sale_text"><?=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
 								<?}?>

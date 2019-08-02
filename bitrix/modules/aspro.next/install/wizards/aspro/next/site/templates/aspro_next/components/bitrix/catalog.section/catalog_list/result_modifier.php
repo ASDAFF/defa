@@ -127,7 +127,6 @@ if (!empty($arResult['ITEMS'])){
 			CIBlockPriceTools::getTreePropertyValues($arSKUPropList, $arNeedValues);
 			$arSKUPropIDs = array_keys($arSKUPropList);
 
-
 			if (empty($arSKUPropIDs))
 				$arParams['TYPE_SKU'] = 'N';
 			else
@@ -147,7 +146,7 @@ if (!empty($arResult['ITEMS'])){
 				$arResult['ITEMS'][$key]['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'] = $arItem['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'];
 			}
 		}
-		
+
 		$arItem['CHECK_QUANTITY'] = false;
 		if (!isset($arItem['CATALOG_MEASURE_RATIO']))
 			$arItem['CATALOG_MEASURE_RATIO'] = 1;
@@ -287,6 +286,7 @@ if (!empty($arResult['ITEMS'])){
 
 					$offerPictures = CIBlockPriceTools::getDoublePicturesForItem($arOffer, $arParams['OFFER_ADD_PICT_PROP']);
 					$arOffer['OWNER_PICT'] = empty($offerPictures['PICT']);
+					$arOffer['PREVIEW_PICTURE_FIELD'] = $arOffer['PREVIEW_PICTURE'];
 					$arOffer['PREVIEW_PICTURE'] = false;
 					$arOffer['PREVIEW_PICTURE_SECOND'] = false;
 					$arOffer['SECOND_PICT'] = true;
@@ -346,7 +346,8 @@ if (!empty($arResult['ITEMS'])){
 					}
 					if($arPropSKU[$strOneCode])
 					{
-						Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_NUMERIC, SORT_ASC))); // sort sku prop values
+						// sort sku prop values
+						Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_STRING, SORT_ASC)));
 						$arItem['OFFERS_PROPS_JS'][$strOneCode] = array(
 							"ID" => $arSKUPropList[$strOneCode]["ID"],
 							"CODE" => $arSKUPropList[$strOneCode]["CODE"],
@@ -581,6 +582,13 @@ if (!empty($arResult['ITEMS'])){
 				$arItem['MIN_PRICE']["MIN_PRICE_ID"]=$minItemPriceID;
 				$arItem['MIN_PRICE']["MIN_ITEM_ID"]=$minItemID;
 			}
+
+			if($arParams["SET_SKU_TITLE"] === "Y"){
+				if(isset($arItem["OFFERS_SELECTED"])){
+					$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IBLOCK_ID'], $arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['ID']);
+					$arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IPROPERTY_VALUES'] = $ipropValues->getValues();
+				}
+			}
 		}
 		else
 		{
@@ -616,6 +624,11 @@ if (!empty($arResult['ITEMS'])){
 			}
 		}
 		$arItem['LAST_ELEMENT'] = 'N';
+
+		if($arParams['IBINHERIT_TEMPLATES']){
+			\Aspro\Next\Property\IBInherited::modifyItemTemplates($arParams, $arItem);
+		}
+
 		$arNewItemsList[$key] = $arItem;
 	}
 	$arNewItemsList[$key]['LAST_ELEMENT'] = 'Y';

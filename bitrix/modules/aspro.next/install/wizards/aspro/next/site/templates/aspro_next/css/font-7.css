@@ -37,7 +37,7 @@ body .buy_block .counter input, body .footer-button .buy_block .counter input{he
 .catalog_detail .item-stock > span{font-size:14px;}
 
 /*filter*/
-.bx_filter_select_popup ul li label{font-family: "Ubuntu", Arial, sans-serif;}
+.bx_filter_select_popup ul li label,.bx_filter_select_popup ul li a{font-family: "Ubuntu", Arial, sans-serif;}
 
 .list-type-block.item-views .item .previewtext{line-height:20px;}
 

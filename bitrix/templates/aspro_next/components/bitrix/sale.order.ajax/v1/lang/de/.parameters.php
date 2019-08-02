@@ -18,6 +18,7 @@ $MESS["BASKET_POSITION_BEFORE"] = "vorher";
 $MESS["BASKET_POSITION_AFTER"] = "nachher";
 $MESS["SHOW_BASKET_HEADERS"] = "Ьberschriften der Warenkorbspalten anzeigen";
 $MESS["DELIVERY_FADE_EXTRA_SERVICES"] = "Ausgewдhlte Zusatzservices in einem versteckten Block anzeigen";
+$MESS["SHOW_COUPONS"] = "Das Feld zur Eingabe des Gutscheins anzeigen";
 $MESS["SHOW_COUPONS_BASKET"] = "Eingabefeld fьr Gutschein im Warenkorbblock anzeigen";
 $MESS["SHOW_COUPONS_DELIVERY"] = "Eingabefeld fьr Gutschein im Lieferblock anzeigen";
 $MESS["SHOW_COUPONS_PAY_SYSTEM"] = "Das Eingabefeld fьr Gutscheincode im Zahlungsblock anzeigen";

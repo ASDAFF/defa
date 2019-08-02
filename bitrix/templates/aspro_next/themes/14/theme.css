@@ -461,18 +461,18 @@ div[class*=bx-sls] .bx-ui-sls-clear:hover:before {
     background: #0c857b;
   }
 }
-@media all and (max-width: 768px) {
-  body .top_slider_wrapp .flex-direction-nav li a {
-    background-image: url(../../images/arrows_big.png);
+@media all and (max-width: 767px) {
+  .top_slider_wrapp .flex-direction-nav li.flex-nav-next a.flex-next {
+    background-position: -26px -49px;
   }
-  body .top_slider_wrapp .flex-direction-nav li a.flex-next {
-    background-position: -30px -94px;
+  .top_slider_wrapp .flex-direction-nav li.flex-nav-next a.flex-next:hover {
+    background-position: -26px -25px;
   }
-  body .top_slider_wrapp .flex-direction-nav li a.flex-prev {
-    background-position: 0 -127px;
+  .top_slider_wrapp .flex-direction-nav li.flex-nav-prev a.flex-prev {
+    background-position: 10px -49px;
   }
-  body .top_slider_wrapp .flex-direction-nav li a.flex-prev:hover {
-    background-position: 0 -94px;
+  .top_slider_wrapp .flex-direction-nav li.flex-nav-prev a.flex-prev:hover {
+    background-position: 10px -25px;
   }
   body .color-controls .flex-control-paging li a.flex-active,
   body .color-controls .flex-control-paging li:hover a:not(.touch) {
@@ -630,6 +630,7 @@ body #content .props_list tr td > .txt:before,
 .ik_select_list .ik_select_list_inner ul li.ik_select_active,
 .bx_filter_select_popup ul li label.selected,
 .filter_opener.opened,
+.filter_opener:hover,
 .no_goods .no_products:before,
 .wr_scrollbar .scrollbar .handle,
 .remove:hover,
@@ -1098,6 +1099,9 @@ body .mega-menu table td .wrap > .dropdown-menu > li:first-of-type:before {
 .catalog_detail .title-tab-heading:hover {
   color: #0d897f;
 }
+#simple-prediction .catalog-element-popup-element {
+  color: #0d897f;
+}
 .style-switcher .switch:hover,
 .style-switcher .switch_presets:hover {
   background: #0d897f;
@@ -1247,6 +1251,19 @@ header .menu_top_block.catalogfirst li.full>.dropdown>li:not(.current)>a {
 .top_slider_wrapp .flexslider .slides > li:after {
   background-color: #0b8077;
 }
+.top_slider_wrapp.view_2 .flexslider .slides li td.tablet_text {
+  background-color: #0c857b;
+}
+.top_slider_wrapp.view_2 .flexslider .slides li td.tablet_text .banner_buttons .btn {
+  background: #0d897f;
+}
+.top_slider_wrapp.view_2 .flexslider .slides li td.tablet_text .banner_buttons .btn:hover {
+  color: #0c857b;
+  background-color: #fff;
+}
+.top_slider_wrapp.view_2 .flexslider .slides li td.tablet_text .banner_buttons .btn:hover .svg-playpause svg path {
+  fill: #222;
+}
 .basket_wrapp:not(.basket_fill_COLOR) .basket_fly .wraps_icon_block.delay .count span {
   background-color: #0b8077;
 }
@@ -1259,7 +1276,7 @@ header .menu_top_block.catalogfirst li.full>.dropdown>li:not(.current)>a {
 .bx_filter .bx_filter_param_label.active .bx_filter_btn_color_icon,
 .bx_catalog_item_scu ul li.active .cnt_item,
 .bx_scu_scroller_container ul li.bx_active .cnt_item {
-  box-shadow: 0px 0px 0px 2px #fff inset, 0px 0px 0px 2px #0b8077;
+  box-shadow: 0px 0px 0px 2px #0b8077;
 }
 .bx_filter_vertical input[type="checkbox"]:not(:checked) + label.sku:hover span,
 .sku_props .bx_item_detail_size ul li:not(.active):hover span,
@@ -1439,6 +1456,16 @@ header .menu_top_block.catalogfirst li.full>.dropdown>li:not(.current)>a {
 .personal_wrapper .sale-order-detail-payment-options-methods-button-element-new-window:hover {
   background: #10a599;
   border-color: transparent;
+}
+.landings_list span.more,
+.landings_list2 span.more,
+.landings_list3 span.more {
+  border-color: #0d897f;
+  color: #0d897f;
+}
+.landings_list3 a:hover,
+.landings_list3 a.active {
+  background-color: #0d897f;
 }
 .reviews.item-views.front .item .image:before {
   background-color: #0d897f;

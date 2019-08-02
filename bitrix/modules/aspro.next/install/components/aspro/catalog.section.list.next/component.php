@@ -46,10 +46,14 @@ else
 		$arrFilter = array();
 }
 
+$arrFilter['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+CNext::makeSectionFilterInRegion($arrFilter);
+
 /*************************************************************************
 			Work with cache
 *************************************************************************/
-if($this->startResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $arrFilter)))
+global $arTheme;
+if($this->startResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $arrFilter, "COMPACT_MOBILE_".$arTheme["CATALOG_SECTIONS_COMPACT_VIEW_MOBILE"]["VALUE"])))
 {
 	if(!Loader::includeModule("iblock"))
 	{

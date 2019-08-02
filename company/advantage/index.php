@@ -5,49 +5,49 @@ $APPLICATION->SetTitle("Преимущества");
 ?>
 
 
-<div class="row main-advantages">
+<div class="row main-advantages advantage-card-shadow-wrapper">
     <h2>Наши преимущества</h2>
     <div class="col-lg-4 advantage-card-shadow better_conditions">
         <h3>Лучшее сочетание цены и качества</h3>
-        <p>Мы предлагаем лучшую цену без посредников благодаря широкой сети собственных складов и логистических комплексов. «Служба высокого сервиса ДЭФО» гарантирует качество мебели и сопутствующих услуг.</p>
+        <p>Лучшая цена без посредников благодаря широкой сети собственных складов.</p>
         <a href="/company/advantage/better_conditions/">Подробнее</a>
     </div>
     <div class="col-lg-4 advantage-card-shadow always_available">
         <h3>Всегда в наличии</h3>
-        <p>Для Вас работает логистический комплекс площадью 55 000м2 с огромным количеством товаров на складе. Большое количество мебели в наличии обеспечивает быструю доставку.</p>
+        <p>Логистический комплекс площадью 55 000м2 с большим количеством товаров на складе.</p>
         <a href="/company/advantage/always_available/">Подробнее</a>
     </div>
     <div class="col-lg-4 advantage-card-shadow ten_years_warranty">
         <h3>Гарантия 10 лет</h3>
-        <p>Мы разделяем желание наших клиентов радоваться своему выбору действительно долго! Поэтому даем дополнительную гарантию сроком до 10 лет на популярные коллекции и модели мебели.</p>
+        <p>Дополнительная гарантия до 10 лет на популярные коллекции и модели.</p>
         <a href="/company/advantage/10_years_warranty/">Подробнее</a>
     </div>
 </div>
 
-    <div class="row main-advantages about-company advantages-cards">
-        <div class="row">
-            <div class="col-lg-4 advantage-card card">
-                <a href="/company/advantage/always_available/" class="advantage-card-text">Поставка мебели из наличия в кратчайшие сроки</a>
-            </div>
-            <div class="col-lg-4 advantage-card card">
-                <a href="/services/dizayn-proekt/" class="advantage-card-text">Бесплатный дизайн-проект<br> помещения в 3D</a>
-            </div>
-            <div class="col-lg-4 advantage-card card">
-                <a href="/services/" class="advantage-card-text">Полный комплекс сервисных услуг: доставка, сборка и т.д.</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 advantage-card card">
-                <a href="/services/vyezd-spetsialista/" class="advantage-card-text">Возможность производства мебели по индивидуальному проекту</a>
-            </div>
-            <div class="col-lg-4 advantage-card card">
-                <a href="/company/advantage/10_years_warranty/" class="advantage-card-text">Расширенная гарантия до 10 лет на мебель и до 5 лет на кресла</a>
-            </div>
-            <div class="col-lg-4 advantage-card card">
-                <a href="/company/b2g/" class="advantage-card-text">Полное сопровождение контрактов по 223-ФЗ и 44-ФЗ</a>
-            </div>
-        </div>
-    </div>
+<!--    <div class="row main-advantages about-company advantages-cards">-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/company/advantage/always_available/" class="advantage-card-text">Поставка мебели из наличия в кратчайшие сроки</a>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/services/dizayn-proekt/" class="advantage-card-text">Бесплатный дизайн-проект<br> помещения в 3D</a>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/services/" class="advantage-card-text">Полный комплекс сервисных услуг: доставка, сборка и т.д.</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/services/vyezd-spetsialista/" class="advantage-card-text">Возможность производства мебели по индивидуальному проекту</a>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/company/advantage/10_years_warranty/" class="advantage-card-text">Расширенная гарантия до 10 лет на мебель и до 5 лет на кресла</a>-->
+<!--            </div>-->
+<!--            <div class="col-lg-4 advantage-card card">-->
+<!--                <a href="/company/b2g/" class="advantage-card-text">Полное сопровождение контрактов по 223-ФЗ и 44-ФЗ</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="row main-advantages payment-page">
         <div class="why-buy">
 
@@ -61,7 +61,7 @@ $APPLICATION->SetTitle("Преимущества");
                             </svg>
                         </div>
                         <span>Надежность</span>
-                        <p>25 лет на рынке, 48 филиалов по России</p>
+                        <p>25 лет на рынке, 70 салонов по России</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -71,8 +71,8 @@ $APPLICATION->SetTitle("Преимущества");
                                 <image id="Векторный_смарт-объект" data-name="Векторный смарт-объект" width="27" height="35" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAjCAYAAABl/XGVAAAEUElEQVRIibWXb2xfUxjHP12nw6YznZhgik4zFsxa4cUSm4QbczeuP6+Iv1nUvCUjvCIjhFeM6BDxjjjCNbnEsgmJJcUQ1Vi62YqYWGdl7bLVNvnK9zR3zd3yq7YnObm/9t7zfM95vs/zfZ5TR8VI0mw6sBi4HLgEaAbOBk4FppdWDAJ7gV+AHcB3wNfAZ0UeBkdbHgFL0uwE4CbgPuAq4Bugy8+dwM/AHuBAkYf9SZqdBEwDTgPOAc4FLgPa/fwCeBUIRR6GR8CSNEuAl4FfgReBD4o8/FV16lpGkmaNwA3AKuAs4P4iD0Vdkma3GED/ePf/AhxrJGmWAS8BD9a3tM7fANxe5OHDiQbS6N3a09PSOl9UdE4B5gA/TAZQacj+nCn+uzNJsxmTgWK7nfodwRQt3ydpdleSZg0TBNIge7Jr+yhAjhR50PN6YDVwMbAe+Bj4Etha5OFwDca18QuBNuBaYBnQDTyteBDOf2DyZ5GH373ofCAFrvbC2UCf5z5goIQxE5Cb5nru9gY3AXmRh+22eQawK4LpJLcVeRiq2LEMagNnAk3AyYASer+nAH4Dthd5GKhYr+/f0knLYBcBjwNvF3k4OBGcAbcCT9qdy8qcLTdnLQb/CPhKqVLk4UgNxuu8dhFwnTnrNWfvlzmbVeRhrxfNA5abs3ZzErXxT2kjMGR3ShtnWRvnWpi7zNl7RR56bVPf7IlgrwErizwcqthx0yjOZpZei6P+Emf9FevrgVeAeyKY3KXwfrjIw6bx8lUCkneecT4vimAqLyuBh+yiYM62VNWl4xhXrVtozjK7+lmfbDiCNajmODEXm7MljtCdLowqkH+7WMahYnqKC2uza1oPsFGcuYgedq08ONWL7gTWWSk+9dROFQCtJc6U4Ce6Wg+arx+VwOJMv4s8HKg49N1EuQJUKF8A1ozFbTW69VHVMqAxnky9xvOSpCTNXgdURDdXRWcNAIq+K91i6ESf235vPNlUGU7STCJ8h7VRebPFs8951m8FlycaHVhNpTxb6Nln175Z5KE7STMdajiebIUbk26ryGqLZ5uDZJ6TPGpjHEPegHqXbbFSRFEvDQXcCGeKskfUK9RSTsbgUkV3B/CUojaCycdrrQ5rfcod4wBpdp49YJXRc3M5qRUM1zgNJKJ/uDZ961zrM1eK1n/Es1Og0Xwpxy6160+3mL8BqKGqP4qzIg/vAJ9o+vhx4QInetTGGd7csIvpiDZagJ9TY1umI0mzGxnF2WPKtUngTDn2hDwQwdrN1Ww3lOJs2zhALjBnHa7k4qwrgtVbw5aU8mzAnOmy8FMN2nieLyFtDrSYZxt9wkPibBewVFzphUTULxeUOLuipI3TzNs+F9LdJc6UZ2vUvo2iY2lseGKv31HkIYyPpUqX3myKVh3rFrO+qlMaA0D1Lab0gcJZpN47gfezdRL1o+5nFTurunlqh2pcRt881QTJI8e/eQL/ApZ20J8wb8inAAAAAElFTkSuQmCC"/>
                             </svg>
                         </div>
-                        <span>Лучшие цены</span>
-                        <p>Скидки и акции на эксклюзивные коллекции</p>
+                        <span>Полный комплекс сервисных услуг</span>
+                        <p>Доставка, сборка, вывоз упаковки</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -82,8 +82,8 @@ $APPLICATION->SetTitle("Преимущества");
                                 <image id="Векторный_смарт-объект" data-name="Векторный смарт-объект" width="36" height="35" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAjCAYAAAD8BaggAAADHUlEQVRYhb2Ya2iOYRjHf9vkNHJIWRlDSVoOzWmYQ0giQqiVb5NDI7QvvmyKhGw5W0oiPiiHIjJqsZx9QYZI+ECJxHIcE131f/X27rmf93mf933ef72tvfe9e7/nvq/7uv7Xk1NaWopDvYH5rsGA+gqcDjh3EVDRwWfCAOAgcCUkTHdgeECg0cAJoNoPqBPwBlgQEigfaAH6AW995tmDXwCOA3W5PhOLgY8hYUzfgEvAWp85tovngUdApX3hAsoBlgO30gAyVQN5jjH7/iTQEVgCtNmXriOrAoYBS9MEeqCPl3YDY4FxOlpcQOuBrcBCxVAUqtQJTAdex68fD1QCbBHxHKAxBRA74j7AhwBzbe09wDLgduKgxVAD8BK4AbzSUaUCY5oLPAZmJZk3QnGzST/bKa+wsNCuWwWwCjgHfE8RxvQcaAWOAJ2BJuBvwpwC4Ko2oMq1kGVq+8NewOcQIImytH8KeAGUA+803lWQP4CZwC/XAn55KIzuKBbbdLtmKL7sFHroojhh8Ln26cgCe7bipEG5zErIhIREa/nnjz7/lekdisn+SY2K81DtzLOEOfWJMAjIklKXiMCsdBQpfuI1SNm5nQzok2pKVGr1WLfIVSdzdSOGRAjkpYHAUxdQs5JhNmVx9cQFdA+YmGWgScB1F5BdzakRpQAv9VS9vOYCsqB+qCSWDZXr1rW4gEyHgdVZAloJHHMNxoCs/owCBkcMY/6nL3A2GdBvYD+wLUIYq2nbgR3Az2RApn3AGKAsIqByWZBDfpPigSyjbtD5dsswTIEeeI0sSCAg1JI06SlsizMh6y6OApe1vq+8qv06WU1rYTKhWqA/sCLIWl7J8AswD7grb1OfBtRGmfky9fmhgFBrYlazUS1xbQiYGnnnKR5eKGUg1N5a3rio/rtK6SGZ8vWSwh5omqpAYCVzjM3qLkeqGBYnmV8iX23VfDxwPxUYAlrY99qpM2rs6vTuKF7WJB4Abirrl4XteoN6avO+O7UDdnwWY7tk3PfqdysJZuY3x14cRAkUk7lL88KTZSPMM1vMmL9ZrPHwAv4BfS+YMd6k4yYAAAAASUVORK5CYII="/>
                             </svg>
                         </div>
-                        <span>Гарантия до 10 лет</span>
-                        <p>Расширенная гарантия на часть ассортимента</p>
+                        <span>Бесплатный 3D дизайн-проект</span>
+                        <p>Планирование пространства в 3D</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -95,7 +95,7 @@ $APPLICATION->SetTitle("Преимущества");
 
                         </div>
                         <span>Быстрая доставка в любой город</span>
-                        <p>Доставка от 24 часов. Мебель в наличии на складе</p>
+                        <p>Доставка от 24 часов. Склады в 47 городах России.</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -105,8 +105,8 @@ $APPLICATION->SetTitle("Преимущества");
                                 <image id="Векторный_смарт-объект" data-name="Векторный смарт-объект" width="35" height="35" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAACmElEQVRYhe2YX4jMURTHP6tZ1EoRIn8itEspxKM/7Zu6Xf9uaUvJA0ryoF0UxYZ4IpR92H2QkuRKrpsXyQPx4MF4EltKHiwPKG2LsDrTGY1pfrOza34zHub7MjNnzr33c8+cOffcXxMpyFi3GjgDtAMPgI0x+C8jrTSumijGugXGumvAY+AFsAKYAhyrZHxVImOskwWPAvuAu8ChGPwr/W4NcB9oi8G/Tg3GWDdBAQTkJdAZg39Uwu8mMByDd1WHMdbJuA7gFPALOAz4GPxwgv9C/dnaS8H+BWOsWwvsBWZWyCN+04ATQE8M/nsFGzgLbAP61TQE3AL6YvCyITLGuq3AVTEC94CfCfMtAfbr+wvA6Rj85wrhUfAdwAfNqznASWAVsFscmox1QnopBn8uYUcShW5gJ3Bd8iMG/2YUEIVzyWY6gdYY/JCxbhnwXD/3Z4BFSirOB4GlBeObpUYALTpIotZtbNk8LCeZby4QjXVv1e+rrpmDEX3T109Acej7xrpygs4XmQfzuZsptMbge6u88Igy1q3P+1S1Av+rGjBJasAkKTO2YaOTsW6D9jbTSwycJ5XdWLcpVRhj3XjgBrAOuK11rFhXgMlS4dOOjDRVbdrLDJSBnl8LmF3AHgEx1q0EjgB3YvCXSzmnlsDGuhbNkaya5NTeAvQa60oGITWYGPyg9iyz8yZtxGIM/kdNYVQeOG6sa47B9wATY/Cbk5zTzpku4CHwxFgnp/9AQvsxI3WYGPx7vUMdALYDk0q4tQpkrl8y1g3rX6suMtZlpeDROJvKqAGTpP8Spp5Qf8qLQHwElteDwlgnrcNi4F2e6qJcV7UyZvX8qIVm6eH5DHiahxGDPD2QO9PUGgZGHhZIw9WRu/gDvwGbxr4u3XihWgAAAABJRU5ErkJggg=="/>
                             </svg>
                         </div>
-                        <span>Любые способы оплаты</span>
-                        <p>Безналичный и наличный расчет, оплата картой</p>
+                        <span>Сопровождение Госконтрактов</span>
+                        <p>Полное сопровождение контрактов по 223-ФЗ и 44-ФЗ</p>
                     </a>
                 </div>
                 <div class="col-md-4">
@@ -116,8 +116,8 @@ $APPLICATION->SetTitle("Преимущества");
                                 <image id="Векторный_смарт-объект" data-name="Векторный смарт-объект" width="40" height="35" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAjCAYAAADmOUiuAAAC50lEQVRYhdXYW4hVdRTH8U/jRGmoSAOCDlaKihI9lOhgBCUp1kOEiniDehB8CAoVQrygpF1AKAeqBx800SLIIIVEBX3xhiDqg5pFhRBIyFRY3sdCFqyTMpwz58xpzj72e9ls9t7/9f3/93+t9V/rgY6ODnVqGF7BNDyN0RiUQ13HTziFg9iN3+sx01rHN+OxCnPxYEIcwmf4Ld95NIGnYCFu4yu8h3ONAhyId/EmLmIlvsCvVb4bjvlYhnn4JL+9WovRWn/xWHyDx7EOnbhV07TuqjUn9w5+wav4vtpHLTUM/BSOxWTwDDbWASd/84c5xj855pT/ChgrdyA3/LM4XwdYT8WqTc3r3tzTdQHGntuFLszEH/0AV9LlHPNibp1BlV7sDXADnsCcfoa7F3I2HsP7fQUcmxt6Pc42AK6k8+l0b2BCXwBX5K/9qIFwJW3CJbxd7mE5wMEZrz7NjNBoRUT4OG0OrQQY1zG5WWfkdXsBcCWFrYfxUtoeU2KLQB0paU+6+xVcwEMYVyBg6LuMj+E0j2QYejkoN+NvPIeteBInC4YLncBEbEmWYNoc6ecFvI7DOI4lGZiL1oXcj8vRjQ/iANKS//qvhOlOx+hqAmBX2u7O+2BqqRRmGhGYq+lyuee1HBaaqv8t4H0DHiDX8ngeasMQjGgCy9W03Zb3wXQ9wswOrM0iaHoeTIsO0qH96cnfYh/eigwTK7gU27AgZ7EGk5oAGF78Ymazhcm0tFxNMiRLxFF5oGyqyjnDnziKWc2G04u3Rj5cXDBLWVUC/BIjs25oqioB3sjycmOd3Yd+U28BuTOfr24mYG+rczPd/XCeD3cXyPWvqqW003gNn2cnq3ANaG9vr2YzjuI/ZN0QBdWRbGMUolod4OusYSO6L8oqbCd+zhbc81lH9NQZ/FgEoCzgJ2c3YEm24iItxWqWEnxPRREUzae6i/++HqvCYDQiI2dGSox6JgqtKHDKKWqbUlOz78IdzaqVvjR9XmAAAAAASUVORK5CYII="/>
                             </svg>
                         </div>
-                        <span>Бесплатный звонок по России</span>
-                        <p>Консультация по любым вопросам по тел.: 8(800)505-45-79</p>
+                        <span>Мебель по индивидуальному заказу</span>
+                        <p>Изготовим мебель под Ваш проект</p>
                     </span>
                 </div>
             </div>

@@ -5,6 +5,7 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 ?>
+
 <?if($arResult["ID"]):?>
 	<?if($arParams["USE_REVIEW"] == "Y"):?>
 		<?if($templateData["YM_ELEMENT_ID"]):?>

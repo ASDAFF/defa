@@ -1,6 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$this->setFrameMode(true);?>
-
+<?//dump($arResult)?>
 <?/* $isSeries = false;
 foreach ($arResult['SECTIONS'] as $arSection){
     if(!empty($arSection['UF_SERIES'])){
@@ -14,7 +14,8 @@ else
 
 */?>
 <?
-
+$arResult['METKI'] = GetMarks();
+$arResult['METKIPOK'] = GetMetkipok(['*']);
 ?>
 
 
@@ -64,6 +65,12 @@ else
 		if($arParams["LINE_ELEMENT_COUNT"] > 5)
 			$col = 5;?>
 		<?foreach($arResult["ITEMS"] as $arItem){?>
+        <?if ($arItem["PROPERTIES"]["LABELSALE"]["VALUE"]) {$metkipok = array();
+            foreach($arItem["PROPERTIES"]["LABELSALE"]["VALUE"] as $metkipokItem){$metkipok[] = $arResult["METKIPOK"][$metkipokItem];}
+            $metkipok = implode(", ",$metkipok);
+            }else unset($metkipok);
+        //dump($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]);
+        ?>
 			<div class="item_block col-<?=$col;?> col-md-<?=ceil(12/$col);?> col-sm-<?=ceil(12/round($col / 2))?> col-xs-6">
 				<div class="catalog_item_wrapp item">
 					<div class="basket_props_block" id="bx_basket_div_<?=$arItem["ID"];?>" style="display: none;">
@@ -166,18 +173,28 @@ else
 					}
 					
 					?>
+                    <style>
+                        .right_block ul li:before, .right_block ol li:before{
+                            display: none!important;
+                        }
+                    </style>
 					<div class="catalog_item main_item_wrapper item_wrap <?=(($_GET['q'])) ? 's' : ''?>" id="<?=$arItemIDs["strMainID"];?>">
+                        <?if($arItem['MARKS']){?>
+                            <ul class="series-item-pros quick-metki-list">
+                                <? foreach($arItem['MARKS'] as $arMetka) { ?>
+                                    <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
+                                        <div class="pros-icon">
+                                            <img src="<?=$arMetka['SRC']?>" alt="">
+                                        </div>
+                                    </li>
+                                <? } ?>
+                            </ul>
+                        <?}?>
 						<div>
+
+
+
 							<div class="image_wrapper_block">
-								<div class="stickers">
-									<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
-										<div><div class="<?=$arSticker['CLASS']?>"><?=$arSticker['VALUE']?></div></div>
-									<?endforeach;?>
-									<?if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
-										<div><div class="sticker_sale_text"><?=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-									<?}?>
-								</div>
 								<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N" || $arParams["DISPLAY_COMPARE"] == "Y"):?>
 									<div class="like_icons">
 										<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N"):?>
@@ -232,25 +249,47 @@ else
 								<div class="item-title">
 									<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="dark_link"><span><?=$elementName;?></span></a>
 								</div>
-								<?if($arParams["SHOW_RATING"] == "Y"):?>
-									<div class="rating">
-										<?$APPLICATION->IncludeComponent(
-										   "bitrix:iblock.vote",
-										   "element_rating_front",
-										   Array(
-											  "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
-											  "IBLOCK_ID" => $arItem["IBLOCK_ID"],
-											  "ELEMENT_ID" =>$arItem["ID"],
-											  "MAX_VOTE" => 5,
-											  "VOTE_NAMES" => array(),
-											  "CACHE_TYPE" => $arParams["CACHE_TYPE"],
-											  "CACHE_TIME" => $arParams["CACHE_TIME"],
-											  "DISPLAY_AS_RATING" => 'vote_avg'
-										   ),
-										   $component, array("HIDE_ICONS" =>"Y")
-										);?>
-									</div>
-								<?endif;?>
+                                <div class="rating-recommend-wrapper">
+                                    <?if($arParams["SHOW_RATING"] == "Y"):?>
+                                        <div class="rating">
+                                            <?$APPLICATION->IncludeComponent(
+                                                "bitrix:iblock.vote",
+                                                "element_rating_front",
+                                                Array(
+                                                    "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
+                                                    "IBLOCK_ID" => $arItem["IBLOCK_ID"],
+                                                    "ELEMENT_ID" =>$arItem["ID"],
+                                                    "MAX_VOTE" => 5,
+                                                    "VOTE_NAMES" => array(),
+                                                    "CACHE_TYPE" => $arParams["CACHE_TYPE"],
+                                                    "CACHE_TIME" => $arParams["CACHE_TIME"],
+                                                    "DISPLAY_AS_RATING" => 'vote_avg'
+                                                ),
+                                                $component, array("HIDE_ICONS" =>"Y")
+                                            );?>
+                                        </div>
+                                    <?endif;?>
+                                    <?if($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]):?>
+                                    <p class="recommend">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 21.03 21">
+                                            <defs>
+                                                <style>
+                                                    .uscls-1 {
+                                                        fill: #666666;
+                                                        fill-rule: evenodd;
+                                                </style>
+                                            </defs>
+                                            <path data-name="Rounded Rectangle 107" class="uscls-1" d="M1425.5,111a6.5,6.5,0,1,1-6.5,6.5A6.5,6.5,0,0,1,1425.5,111Zm0,2a4.5,4.5,0,1,1-4.5,4.5A4.5,4.5,0,0,1,1425.5,113Zm8.35,19c-1.09-2.325-4.24-4-6.85-4h-3c-2.61,0-5.79,1.675-6.88,4h-2.16c1.11-3.448,5.31-6,9.04-6h3c3.73,0,7.9,2.552,9.01,6h-2.16Z" transform="translate(-1414.97 -111)"></path>
+                                        </svg>
+                                        <?=($arItem["PROPERTIES"]["PERCENTREC"]["VALUE"]);?> рекомендует
+                                    </p>
+                                    <?endif;?>
+                                </div>
+                                <?if($metkipok):?>
+                                    <p class="buyers-like">
+                                        Покупателям нравится <span class="green"><?=($metkipok);?></span>
+                                    </p>
+                                <?endif;?>
 								<div class="sa_block">
 									<?=$arQuantityData["HTML"];?>
 									<div class="article_block" <?if(isset($arItem['ARTICLE']) && $arItem['ARTICLE']['VALUE']):?>data-name="<?=$arItem['ARTICLE']['NAME'];?>" data-value="<?=$arItem['ARTICLE']['VALUE'];?>"<?endif;?>>

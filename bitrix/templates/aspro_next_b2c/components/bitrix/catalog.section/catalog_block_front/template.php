@@ -1,6 +1,8 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$this->setFrameMode(true);?>
-<?if( count( $arResult["ITEMS"] ) >= 1 ){?>
+<?if( count( $arResult["ITEMS"] ) >= 1 ){
+
+    ?>
 	<div class="top_wrapper items_wrapper">
 		<div class="fast_view_params" data-params="<?=urlencode(serialize($arTransferParams));?>"></div>
 		<div class="catalog_block items row margin0">
@@ -47,15 +49,26 @@
 
                     <div class="inner_wrap">
 						<div class="image_wrapper_block shine">
-							<div class="stickers">
-								<?$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");?>
-									<?foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):?>
-										<div><div class="<?=$arSticker['CLASS']?>" title="<?=$arSticker['VALUE']?>"><?=$arSticker['VALUE']?></div></div>
-									<?endforeach;?>
-								<?if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){?>
-									<div><div class="sticker_sale_text"><?=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];?></div></div>
-								<?}?>
-							</div>
+                            <?if($arItem['MARKS']){?>
+                            <ul class="series-item-pros quick-metki-list">
+                                <? foreach($arItem['MARKS'] as $arMetka) {if(!$arMetka['SRC'])continue ?>
+                                    <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
+                                        <div class="pros-icon">
+                                            <img src="<?=$arMetka['SRC']?>" alt="">
+                                        </div>
+                                    </li>
+                                <? } ?>
+                            </ul>
+                            <?}?>
+							<!--<div class="stickers">
+								<?/*$prop = ($arParams["STIKERS_PROP"] ? $arParams["STIKERS_PROP"] : "HIT");*/?>
+									<?/*foreach(CNextB2c::GetItemStickers($arItem["PROPERTIES"][$prop]) as $arSticker):*/?>
+										<div><div class="<?/*=$arSticker['CLASS']*/?>" title="<?/*=$arSticker['VALUE']*/?>"><?/*=$arSticker['VALUE']*/?></div></div>
+									<?/*endforeach;*/?>
+								<?/*if($arParams["SALE_STIKER"] && $arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"]){*/?>
+									<div><div class="sticker_sale_text"><?/*=$arItem["PROPERTIES"][$arParams["SALE_STIKER"]]["VALUE"];*/?></div></div>
+								<?/*}*/?>
+							</div>-->
 							<?if($arParams["DISPLAY_WISH_BUTTONS"] != "N" || $arParams["DISPLAY_COMPARE"] == "Y"):?>
 								<div class="like_icons">
 									<?if($arParams["DISPLAY_WISH_BUTTONS"] == "Y" && !$arItem["OFFERS"]):?>
@@ -74,13 +87,29 @@
 							<?endif;?>
 							<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="thumb">
 								<?
+                                if($arItem['DISCOUNT']){
+                                    $arWaterMark = array(
+                                        array(
+                                            'name' => 'watermark',
+                                            'type' =>'text',
+                                            'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+                                            'text' => "Скидка на серию  ".$arItem['DISCOUNT'],
+                                            "position" => "topright",
+                                            "color" => "ffffff",
+                                        )
+
+                                    );
+                                }else{
+                                    $arWaterMark = [];
+                                }
 								$a_alt = ($arItem["PREVIEW_PICTURE"] && strlen($arItem["PREVIEW_PICTURE"]['DESCRIPTION']) ? $arItem["PREVIEW_PICTURE"]['DESCRIPTION'] : ($arItem["IPROPERTY_VALUES"]["ELEMENT_PREVIEW_PICTURE_FILE_ALT"] ? $arItem["IPROPERTY_VALUES"]["ELEMENT_PREVIEW_PICTURE_FILE_ALT"] : $arItem["NAME"] ));
 								$a_title = ($arItem["PREVIEW_PICTURE"] && strlen($arItem["PREVIEW_PICTURE"]['DESCRIPTION']) ? $arItem["PREVIEW_PICTURE"]['DESCRIPTION'] : ($arItem["IPROPERTY_VALUES"]["ELEMENT_PREVIEW_PICTURE_FILE_TITLE"] ? $arItem["IPROPERTY_VALUES"]["ELEMENT_PREVIEW_PICTURE_FILE_TITLE"] : $arItem["NAME"] ));
 								?>
 								<?if( !empty($arItem["PREVIEW_PICTURE"]) ):?>
-									<img class="noborder" src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="<?=$a_alt;?>" title="<?=$a_title;?>" />
+                                    <?$img = CFile::ResizeImageGet($arItem["PREVIEW_PICTURE"]['ID'], array( "width" => 170, "height" => 170 ), BX_RESIZE_IMAGE_PROPORTIONAL,true,$arWaterMark );?>
+									<img class="noborder" src="<?=$img["src"]?>" alt="<?=$a_alt;?>" title="<?=$a_title;?>" />
 								<?elseif( !empty($arItem["DETAIL_PICTURE"])):?>
-									<?$img = CFile::ResizeImageGet($arItem["DETAIL_PICTURE"], array( "width" => 170, "height" => 170 ), BX_RESIZE_IMAGE_PROPORTIONAL,true );?>
+									<?$img = CFile::ResizeImageGet($arItem["DETAIL_PICTURE"], array( "width" => 170, "height" => 170 ), BX_RESIZE_IMAGE_PROPORTIONAL,true,$arWaterMark );?>
 									<img class="noborder" src="<?=$img["src"]?>" alt="<?=$a_alt;?>" title="<?=$a_title;?>" />
 								<?else:?>
 									<img class="noborder" src="<?=SITE_TEMPLATE_PATH?>/images/no_photo_medium.png" alt="<?=$a_alt;?>" title="<?=$a_title;?>" />

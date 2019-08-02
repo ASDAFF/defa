@@ -11,6 +11,16 @@ $arPost = $request->getPostList()->toArray();
 global $APPLICATION;
 $arPost = $APPLICATION->ConvertCharsetArray($arPost, 'UTF-8', LANG_CHARSET);
 
+if(!strlen($arPost["SITE_ID"])){
+	$arPost["SITE_ID"] = SITE_ID;
+}
+
+if($arPost["SITE_ID"]){
+	$dbRes = CSite::GetByID($arPost["SITE_ID"]);
+	$arSite = $dbRes->Fetch();
+	$arSite['DIR'] = str_replace('//', '/', '/'.$arSite['DIR']);
+}
+
 if(!$arPost['CLASS'])
 	$arPost['CLASS'] = "inner_content";
 ?>
@@ -18,6 +28,13 @@ if(!$arPost['CLASS'])
 <?if($arPost["PARAMS"]):?>
 	<?
 	$arPost["PARAMS"]["SHOW_ABSENT"] = true; // set true for opacity 0.4 unable item
+
+	if(!strlen($arPost["PARAMS"]["BASKET_URL"])){
+		$arPost["PARAMS"]["BASKET_URL"] = str_replace('#SITE_DIR#', $arSite['DIR'], \Bitrix\Main\Config\Option::get('aspro.next', 'BASKET_PAGE_URL', '#SITE_DIR#basket/', $arPost["SITE_ID"]));
+	}
+
+	$typeSku = \Bitrix\Main\Config\Option::get('aspro.next', 'TYPE_SKU', 'TYPE_1', $arPost["SITE_ID"]);
+	$bChangeTitleItem = \Bitrix\Main\Config\Option::get('aspro.next', 'CHANGE_TITLE_ITEM', 'N', $arPost["SITE_ID"]) === 'Y';
 
 	\Bitrix\Main\Loader::includeModule("sale");
 	\Bitrix\Main\Loader::includeModule("catalog");
@@ -80,13 +97,14 @@ if(!$arPost['CLASS'])
 
 	$cacheTag = "element_".$arPost['LINK_ID'];
 	$cacheTag = "elements_by_offer";
-	$cacheID = "getSKUjs".$cacheTag.md5(serialize(array_merge((array)($arPost["PARAMS"]["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $arFilter, (array)$arSelect)));
+	$cacheID = "getSKUjs".$cacheTag.$typeSku.$bChangeTitleItem.md5(serialize(array_merge((array)($arPost["PARAMS"]["CACHE_GROUPS"]==="N"? false : $USER->GetGroups()), $arFilter, (array)$arSelect)));
 	$cachePath = "/CNextCache/iblock/getSKUjs/".$cacheTag."/";
 	$cacheTime = $arPost["PARAMS"]["CACHE_TIME"];
 	// $cacheTime = 0;
 
-	if(isset($arPost["clear_cache"]) && $arPost["clear_cache"] == "y")
+	if(isset($arPost["clear_cache"]) && $arPost["clear_cache"] == "y"){
 		\CNextCache::ClearCacheByTag($cacheTag);
+	}
 
 	/*get currency for convert*/
 	$arCurrencyParams = array();
@@ -124,6 +142,12 @@ if(!$arPost['CLASS'])
 			$arItem["FIELDS"] = array();
 			$arItem["PROPERTIES"] = $obElement->GetProperties();
 			$arItem["DISPLAY_PROPERTIES"]=array();
+
+			if($typeSku === 'TYPE_1' && $bChangeTitleItem){
+				$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arItem['IBLOCK_ID'], $arItem['ID']);
+				$arItem['IPROPERTY_VALUES'] = $ipropValues->getValues();
+			}
+
 			foreach($arPost["PARAMS"]["LIST_OFFERS_PROPERTY_CODE"] as $pid)
 			{
 				$prop = &$arItem["PROPERTIES"][$pid];
@@ -203,6 +227,7 @@ if(!$arPost['CLASS'])
 
 			$offerPictures = CIBlockPriceTools::getDoublePicturesForItem($arOffer, $arPost["PARAMS"]['OFFER_ADD_PICT_PROP']);
 			$arOffer['OWNER_PICT'] = empty($offerPictures['PICT']);
+			$arOffer['PREVIEW_PICTURE_FIELD'] = $arOffer['PREVIEW_PICTURE'];
 			$arOffer['PREVIEW_PICTURE'] = false;
 			$arOffer['PREVIEW_PICTURE_SECOND'] = false;
 			$arOffer['SECOND_PICT'] = true;
@@ -240,7 +265,7 @@ if(!$arPost['CLASS'])
 			if($arPost["PARAMS"]["SHOW_DISCOUNT_TIME"] == "Y" && $arPost["PARAMS"]["SHOW_COUNTER_LIST"] != "N")
 			{
 				$active_to = '';
-				$arDiscounts = CCatalogDiscount::GetDiscountByProduct($arOffer['ID'], $arUserGroups, "N", array(), SITE_ID );
+				$arDiscounts = CCatalogDiscount::GetDiscountByProduct($arOffer['ID'], $arUserGroups, "N", array(), $arPost["SITE_ID"]);
 				if($arDiscounts)
 				{
 					foreach($arDiscounts as $arDiscountOffer)
@@ -363,7 +388,6 @@ if(!$arPost['CLASS'])
 		/**/
 
 		/*format tree props*/
-		$arPropSKU = array();
 		foreach ($arSKUPropIDs as $propkey => $strOneCode)
 		{
 			$boolExist = $arMatrixFields[$strOneCode];
@@ -377,8 +401,6 @@ if(!$arPost['CLASS'])
 					$arResult["ITEMS"][$keyOffer]['SKU_SORT_'.$strOneCode] = $arMatrix[$keyOffer][$strOneCode]['SORT'];
 					$arUsedFields[$strOneCode] = true;
 					$arSortFields['SKU_SORT_'.$strOneCode] = SORT_NUMERIC;
-
-					$arPropSKU[$strOneCode][$arMatrix[$keyOffer][$strOneCode]["VALUE"]] = $arSKUPropList[$strOneCode]["VALUES"][$arMatrix[$keyOffer][$strOneCode]["VALUE"]];
 				}
 				else
 				{
@@ -390,6 +412,14 @@ if(!$arPost['CLASS'])
 		\Bitrix\Main\Type\Collection::sortByColumn($arResult["ITEMS"], $arSortFields);
 		/**/
 
+		if($arPost['PARAMS']['IBINHERIT_TEMPLATES']){
+			$arItemTmp = array(
+				'OFFERS' => $arResult["ITEMS"],
+			);
+			\Aspro\Next\Property\IBInherited::modifyItemTemplates($arPost['PARAMS'], $arItemTmp);
+			$arResult["ITEMS"] = $arItemTmp['OFFERS'];
+		}
+
 		/* save cache */
 		$arItems = array();
 		foreach($arResult["ITEMS"] as $key => $arItem)
@@ -399,6 +429,7 @@ if(!$arPost['CLASS'])
 				"IS_OFFER" => $arItem["IS_OFFER"],
 				"NAME" => $arItem["NAME"],
 				"PICTURE" => ($arItem["PREVIEW_PICTURE"] ? $arItem["PREVIEW_PICTURE"]["SRC"] : ($arItem["DETAIL_PICTURE"] ? $arItem["DETAIL_PICTURE"]["SRC"] : ($arPost["PICTURE"] ? $arPost["PICTURE"] : ''))),
+				"PREVIEW_PICTURE_FIELD" => $arItem["PREVIEW_PICTURE_FIELD"],
 				"TREE" => $arItem["TREE"],
 				"CAN_BUY" => $arItem["CAN_BUY"],
 				"MEASURE" => $arItem["CATALOG_MEASURE_NAME"],
@@ -410,7 +441,8 @@ if(!$arPost['CLASS'])
 				"PRICES" => $arItem["PRICES"],
 				"PRICE_MATRIX" => $arItem["PRICE_MATRIX"],
 				"URL" => $arItem["DETAIL_PAGE_URL"],
-				"TOTAL_COUNT" => CNext::GetTotalCount($arItem, $arPost["PARAMS"])
+				"TOTAL_COUNT" => CNext::GetTotalCount($arItem, $arPost["PARAMS"]),
+				"IPROPERTY_VALUES" => $arItem["IPROPERTY_VALUES"],
 			);
 		}
 
@@ -490,6 +522,7 @@ if(!$arPost['CLASS'])
 				}
 			}
 			$arItems["ITEMS"][$key]["ITEM_PRICES"] = $arItem['ITEM_PRICES'];
+			$arItems["ITEMS"][$key]["IPROPERTY_VALUES"] = $arItem['IPROPERTY_VALUES'];
 
 			$arItems["ITEMS"][$key]["SHOW_OLD_PRICE"] = ($arPost["PARAMS"]['SHOW_OLD_PRICE'] == 'Y');
 			$arItems["ITEMS"][$key]["PRODUCT_QUANTITY_VARIABLE"] = $arPost["PARAMS"]['PRODUCT_QUANTITY_VARIABLE'];
@@ -505,8 +538,16 @@ if(!$arPost['CLASS'])
 		unset($arItem);
 	}
 	/**/
-	?>
 
+	$offerShowPreviewPictureProps = array();
+	if($arPost["PARAMS"]['OFFER_SHOW_PREVIEW_PICTURE_PROPS'] && is_array($arPost["PARAMS"]['OFFER_SHOW_PREVIEW_PICTURE_PROPS'])){
+		foreach($arPost["PARAMS"]['OFFER_SHOW_PREVIEW_PICTURE_PROPS'] as $strOneCode){
+			if(isset($arSKUPropList[$strOneCode])){
+				$offerShowPreviewPictureProps[] = $arSKUPropList[$strOneCode]['ID'];
+			}
+		}
+	}
+	?>
 	<script>
 		/* functions */
 		GetRowValues = function(arFilter, index)
@@ -1083,6 +1124,7 @@ if(!$arPost['CLASS'])
 					break;
 				}
 			}
+
 			if(-1 < index)
 			{
 				wrapper.find('.counter_wrapp').data('index', index); // set current sku
@@ -1090,8 +1132,17 @@ if(!$arPost['CLASS'])
 				if(!!obOffers[index].PICTURE)
 					wrapper.find('.thumb img').attr('src', obOffers[index].PICTURE)
 
-				if(arNextOptions["THEME"]["CHANGE_TITLE_ITEM"] != "N")
-					wrapper.find('.item-title span').text(obOffers[index].NAME)
+				if(arNextOptions["THEME"]["TYPE_SKU"] === "TYPE_1" && arNextOptions["THEME"]["CHANGE_TITLE_ITEM"] === "Y"){
+					var skuName = typeof obOffers[index].IPROPERTY_VALUES === 'object' && obOffers[index].IPROPERTY_VALUES.ELEMENT_PAGE_TITLE ? obOffers[index].IPROPERTY_VALUES.ELEMENT_PAGE_TITLE : obOffers[index].NAME;
+
+					var skuAlt = typeof obOffers[index].PREVIEW_PICTURE_FIELD === 'object' && obOffers[index].PREVIEW_PICTURE_FIELD.DESCRIPTION ? obOffers[index].PREVIEW_PICTURE_FIELD.DESCRIPTION : (typeof obOffers[index].IPROPERTY_VALUES === 'object' && obOffers[index].IPROPERTY_VALUES.ELEMENT_PREVIEW_PICTURE_FILE_ALT ? obOffers[index].IPROPERTY_VALUES.ELEMENT_PREVIEW_PICTURE_FILE_ALT : obOffers[index].NAME);
+
+					var skuTitle = typeof obOffers[index].PREVIEW_PICTURE_FIELD === 'object' && obOffers[index].PREVIEW_PICTURE_FIELD.DESCRIPTION ? obOffers[index].PREVIEW_PICTURE_FIELD.DESCRIPTION : (typeof obOffers[index].IPROPERTY_VALUES === 'object' && obOffers[index].IPROPERTY_VALUES.ELEMENT_PREVIEW_PICTURE_FILE_TITLE ? obOffers[index].IPROPERTY_VALUES.ELEMENT_PREVIEW_PICTURE_FILE_TITLE : obOffers[index].NAME);
+
+					wrapper.find('.item-title span').html(skuName)
+					wrapper.find('.image_wrapper_block img').attr('alt', decodeHtmlEntity(skuAlt))
+					wrapper.find('.image_wrapper_block img').attr('title', decodeHtmlEntity(skuTitle))
+				}
 
 				if(!!obOffers[index].URL)
 				{
@@ -1101,8 +1152,12 @@ if(!$arPost['CLASS'])
 						var arUrl2 = wrapper.find('.item-title > a').attr('href').split("?");
 						if(arUrl2.length > 1)
 						{
-							wrapper.find('.item-title > a').attr('href', wrapper.find('.item-title > a').attr('href').replace(arUrl2[1], arUrl[1]));
-							wrapper.find('.thumb.shine').attr('href', wrapper.find('.thumb.shine').attr('href').replace(arUrl2[1], arUrl[1]));
+							var newUrl = wrapper.find('.item-title > a').attr('href').replace(arUrl2[1], arUrl[1]);
+							wrapper.find('.item-title > a').attr('href', newUrl);
+							wrapper.find('.thumb.shine').attr('href', newUrl);
+							if(wrapper.find('.read_more').length){
+								wrapper.find('.read_more').attr('href', newUrl);
+							}
 						}
 					}
 				}
@@ -1133,6 +1188,68 @@ if(!$arPost['CLASS'])
 				/**/
 			}
 		};
+
+		UpdateRowsImages = function()
+		{
+			if(typeof offerShowPreviewPictureProps === 'object' && offerShowPreviewPictureProps.length){
+				var currentTree = $('.<?=$arPost["CLASS"]?>.js_offers__<?=$arPost["LINK_ID"]?> .bx_catalog_item_scu').data('selected');
+				var $obTreeRows = $('.<?=$arPost["CLASS"]?>.js_offers__<?=$arPost["LINK_ID"]?> .bx_catalog_item_scu .item_wrapper');
+
+				for(var i = 0, cnt = $obTreeRows.length; i < cnt; ++i){
+					if(BX.util.in_array($obTreeRows.eq(i).find('>div').data('id'), offerShowPreviewPictureProps)){
+						var RowItems = BX.findChildren($obTreeRows.eq(i).find('.list_values_wrapper')[0], {tagName: 'LI'}, false);
+						if(!!RowItems && 0 < RowItems.length){
+							for(var j in RowItems){
+								var ImgItem = BX.findChild(RowItems[j], {className: 'cnt_item'}, true, false);
+								if(ImgItem){
+									var value = RowItems[j].getAttribute('data-onevalue');
+									if(value != 0){
+										var bgi = ImgItem.style.backgroundImage;
+										var obgi = ImgItem.getAttribute('data-obgi');
+										if(!obgi){
+											obgi = bgi;
+											ImgItem.setAttribute('data-obgi', obgi);
+										}
+
+										var boolOneSearch = false;
+										var rowTree = BX.clone(currentTree, true);
+										rowTree['PROP_' + $obTreeRows.eq(i).find('>div').data('id')] = value;
+
+										for(var m in obOffers){
+											boolOneSearch = true;
+											for(var n in rowTree){
+												if(rowTree[n] !== obOffers[m].TREE[n]){
+													boolOneSearch = false;
+													break;
+												}
+											}
+											if(boolOneSearch){
+												if(typeof obOffers[m].PREVIEW_PICTURE_FIELD === 'object' && obOffers[m].PREVIEW_PICTURE_FIELD.SRC){
+													var newBgi = 'url("' + obOffers[m].PREVIEW_PICTURE_FIELD.SRC + '")';
+													if(bgi !== newBgi){
+														ImgItem.style.backgroundImage = newBgi;
+														BX.addClass(ImgItem, 'pp');
+													}
+												}
+												else{
+													boolOneSearch = false;
+												}
+												break;
+											}
+										}
+
+										if(!boolOneSearch && obgi && bgi !== obgi){
+											ImgItem.style.backgroundImage = obgi;
+											BX.removeClass(ImgItem, 'pp');
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		UpdateRow = function(intNumber, activeID, showID, canBuyID)
 		{
@@ -1216,6 +1333,12 @@ if(!$arPost['CLASS'])
 			}
 		};
 
+		var decodeHtmlEntity = function(str) {
+			return str.replace(/&#(\d+);/g, function(match, dec) {
+				return String.fromCharCode(dec);
+			});
+		};
+
 		/**/
 
 		var strName = '',
@@ -1224,6 +1347,7 @@ if(!$arPost['CLASS'])
 			arCanBuyValues = [],
 			selectedValues = JSON.parse('<?=$arSelectedProps?>'),
 			obOffers = <?=CUtil::PhpToJSObject($arItems["ITEMS"], false, true)?>,
+			offerShowPreviewPictureProps = <?=CUtil::PhpToJSObject($offerShowPreviewPictureProps, false, true)?>,
 			allValues = [],
 			strPropValue = '<?=$arPost['VALUE'];?>',
 			depth = '<?=$arPost['DEPTH'];?>',
@@ -1295,6 +1419,7 @@ if(!$arPost['CLASS'])
 			$('.<?=$arPost["CLASS"]?>.js_offers__<?=$arPost["LINK_ID"]?> .bx_catalog_item_scu').data('selected', arFilter);
 
 			ChangeInfo();
+			UpdateRowsImages();
 		}
 	</script>
 <?endif;?>

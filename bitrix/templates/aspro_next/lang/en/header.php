@@ -114,4 +114,7 @@ $MESS['JS_FORMAT_ORDER'] = 'имеет неверный формат';
 $MESS['JS_BASKET_COUNT_TITLE'] = 'В корзине товаров на SUMM';
 $MESS['POPUP_VIDEO'] = 'Видео';
 $MESS['POPUP_GIFT_TEXT'] = 'Нашли что-то особенное? Намекните другу о подарке!';
+$MESS['ORDER_FIO_LABEL'] = 'Ф.И.О.';
+$MESS['ORDER_PHONE_LABEL'] = 'Телефон';
+$MESS['ORDER_REGISTER_BUTTON'] = 'Регистрация';
 ?>

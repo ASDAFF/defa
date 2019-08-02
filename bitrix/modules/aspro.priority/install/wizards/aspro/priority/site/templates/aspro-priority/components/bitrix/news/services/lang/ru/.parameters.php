@@ -52,7 +52,7 @@ $MESS['T_LIST_WITH_IMAGE_AND_INTERVAL'] = 'Блочный с картинкам�
 $MESS['SHOW_CHILD_SECTIONS'] = 'Показывать вложенные подразделы/элементы';
 $MESS['PREVIEW_REVIEW_TRUNCATE_LEN'] = 'Длина текста';
 
-$MESS["GALLERY_TYPE"] = "Тип галлереи";
+$MESS["GALLERY_TYPE"] = "Тип галереи";
 $MESS["GALLERY_BIG"] = "большая";
 $MESS["GALLERY_SMALL"] = "маленькая";
 

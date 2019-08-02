@@ -312,6 +312,136 @@ if(!$arUserFieldViewType)
 	}
 }
 
+// SmartFilter view
+$arUserFieldFilterView = CUserTypeEntity::GetList(array(), array("ENTITY_ID" => "IBLOCK_".$catalogIBlockID."_SECTION", "FIELD_NAME" => "UF_FILTER_VIEW"))->Fetch();
+if(!$arUserFieldFilterView)
+{
+	$arFields = array(
+		"FIELD_NAME" => "UF_FILTER_VIEW",
+		"USER_TYPE_ID" => "enumeration",
+		"XML_ID" => "UF_FILTER_VIEW",
+		"SORT" => 100,
+		"MULTIPLE" => "N",
+		"MANDATORY" => "N",
+		"SHOW_FILTER" => "N",
+		"SHOW_IN_LIST" => "Y",
+		"EDIT_IN_LIST" => "Y",
+		"IS_SEARCHABLE" => "N",
+		"SETTINGS" => array(
+			"DISPLAY" => "LIST",
+			"LIST_HEIGHT" => 4,
+		)
+	);
+	$arLangs = array(
+		"EDIT_FORM_LABEL" => array(
+			"ru" => GetMessage("CATALOG_FILTER_VIEW"),
+			"en" => "SmartFilter view",
+		),
+		"LIST_COLUMN_LABEL" => array(
+			"ru" => GetMessage("CATALOG_FILTER_VIEW"),
+			"en" => "SmartFilter view",
+		)
+	);
+
+	$ob = new CUserTypeEntity();
+	$FIELD_ID = $ob->Add(array_merge($arFields, array("ENTITY_ID" => "IBLOCK_".$catalogIBlockID."_SECTION"), $arLangs));
+	if($FIELD_ID){
+		$obEnum = new CUserFieldEnum;
+		$obEnum->SetEnumValues($FIELD_ID, array(
+			"n0" => array(
+				"VALUE" => GetMessage("CATALOG_FILTER_VIEW_VERTICAL"),
+				"XML_ID" => "vertical",
+			),
+			"n1" => array(
+				"VALUE" => GetMessage("CATALOG_FILTER_VIEW_HORIZONTAL"),
+				"XML_ID" => "horizontal",
+			),
+			"n2" => array(
+				"VALUE" => GetMessage("CATALOG_FILTER_VIEW_COMPACT"),
+				"XML_ID" => "compact",
+			),
+		));
+	}
+}
+
+$regionIBlockID = CNextCache::$arIBlocks[WIZARD_SITE_ID]['aspro_next_regionality']['aspro_next_regions'][0];
+if($regionIBlockID){
+	$arUserFieldSectionRegion = CUserTypeEntity::GetList(array(), array("ENTITY_ID" => "IBLOCK_".$catalogIBlockID."_SECTION", "FIELD_NAME" => "UF_REGION"))->Fetch();
+	if(!$arUserFieldSectionRegion)
+	{
+		$arFields = array(
+			'FIELD_NAME' => 'UF_REGION',
+			'USER_TYPE_ID' => 'iblock_element',
+			'XML_ID' => 'UF_REGION',
+			'SORT' => 100,
+			'MULTIPLE' => 'Y',
+			'MANDATORY' => 'N',
+			'SHOW_FILTER' => 'N',
+			'SHOW_IN_LIST' => 'Y',
+			'EDIT_IN_LIST' => 'Y',
+			'IS_SEARCHABLE' => 'N',
+			'SETTINGS' => array(
+				'DISPLAY' => 'LIST',
+	            'LIST_HEIGHT' => '5',
+	            'IBLOCK_ID' => $regionIBlockID,
+	            'DEFAULT_VALUE' => '',
+	            'ACTIVE_FILTER' => 'Y',
+			)
+		);
+
+		$ob = new CUserTypeEntity();
+		$FIELD_ID = $ob->Add(
+			array_merge(
+				$arFields,
+				array("ENTITY_ID" => "IBLOCK_".$catalogIBlockID."_SECTION"),
+				array(
+					'EDIT_FORM_LABEL' => array(
+						'ru' => GetMessage('REGION_TITLE'),
+						'en' => 'Region',
+					),
+					'LIST_COLUMN_LABEL' => array(
+						'ru' => GetMessage('REGION_TITLE'),
+						'en' => 'Region',
+					)
+				)
+			)
+		);
+	}
+}
+
+if($stockIBlockID = $arIblocks[$arSite['LID']]['aspro_next_content']['aspro_next_stock'][0]){
+	if($arProperty = CIBlockProperty::GetByID('LINK_GOODS_FILTER', $stockIBlockID)->Fetch()){
+		$ibp = new CIBlockProperty;
+		$ibp->Update($arProperty['ID'], array(
+			'USER_TYPE' => 'SAsproCustomFilter',
+			'USER_TYPE_SETTINGS' => $arUserTypeSettings = array(
+				'IBLOCK_TYPE_ID' => 'aspro_next_catalog',
+				'IBLOCK_ID' => $catalogIBlockID,
+			),
+		));
+		unset($ibp);
+
+		$GLOBALS['DB']->Query('UPDATE b_iblock_property SET USER_TYPE_SETTINGS=\''.serialize($arUserTypeSettings).'\' WHERE CODE="LINK_GOODS_FILTER" AND IBLOCK_ID='.$stockIBlockID, false, $err_mess.__LINE__);
+	}
+}
+
+if($servicesIBlockID){
+	if($arProperty = CIBlockProperty::GetByID('LINK_GOODS_FILTER', $servicesIBlockID)->Fetch()){
+		$ibp = new CIBlockProperty;
+		$ibp->Update($arProperty['ID'], array(
+			'USER_TYPE' => 'SAsproCustomFilter',
+			'USER_TYPE_SETTINGS' => $arUserTypeSettings = array(
+				'IBLOCK_TYPE_ID' => 'aspro_next_catalog',
+				'IBLOCK_ID' => $catalogIBlockID,
+			),
+		));
+		unset($ibp);
+
+		$GLOBALS['DB']->Query('UPDATE b_iblock_property SET USER_TYPE_SETTINGS=\''.serialize($arUserTypeSettings).'\' WHERE
+			CODE="LINK_GOODS_FILTER" AND IBLOCK_ID='.$servicesIBlockID, false, $err_mess.__LINE__);
+	}
+}
+
 unset($_SESSION['CATALOG_COMPARE_LIST']['NEXT_CATALOG_ID']);
 unset($_SESSION['ASPRO_BASKET_COUNTERS']);
 ?>

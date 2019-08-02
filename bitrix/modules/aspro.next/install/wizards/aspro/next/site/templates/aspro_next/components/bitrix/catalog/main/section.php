@@ -12,12 +12,12 @@ $arPageParams = $arSection = $section = array();
 
 // get current section ID
 if($arResult["VARIABLES"]["SECTION_ID"] > 0){
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "DESCRIPTION", "UF_SECTION_DESCR", "UF_OFFERS_TYPE", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
+	$arSectionFilter = array('GLOBAL_ACTIVE' => 'Y', "ID" => $arResult["VARIABLES"]["SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]);
 }
 elseif(strlen(trim($arResult["VARIABLES"]["SECTION_CODE"])) > 0){
-
-	$section=CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "DESCRIPTION", "UF_SECTION_DESCR", "UF_OFFERS_TYPE", $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
+	$arSectionFilter = array('GLOBAL_ACTIVE' => 'Y', "=CODE" => $arResult["VARIABLES"]["SECTION_CODE"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]);
 }
+$section = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), CNext::makeSectionFilterInRegion($arSectionFilter), false, array("ID", "IBLOCK_ID", "NAME", "DESCRIPTION", "UF_SECTION_DESCR", "UF_OFFERS_TYPE", 'UF_FILTER_VIEW', $arParams["SECTION_DISPLAY_PROPERTY"], "IBLOCK_SECTION_ID", "DEPTH_LEVEL", "LEFT_MARGIN", "RIGHT_MARGIN"));
 
 $typeSKU = '';
 
@@ -37,7 +37,14 @@ if($section){
 		$arSection["UF_SECTION_DESCR"] = $section["UF_SECTION_DESCR"];
 	$posSectionDescr = COption::GetOptionString("aspro.next", "SHOW_SECTION_DESCRIPTION", "BOTTOM", SITE_ID);
 
-	$iSectionsCount = CNextCache::CIBlockSection_GetCount(array('CACHE' => array("TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array("SECTION_ID" => $arSection["ID"], "ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y"));
+	global $arSubSectionFilter;
+	$arSubSectionFilter = array(
+		"SECTION_ID" => $arSection["ID"],
+		"IBLOCK_ID" => $arParams['IBLOCK_ID'],
+		"ACTIVE" => "Y",
+		"GLOBAL_ACTIVE" => "Y",
+	);
+	$iSectionsCount = CNextCache::CIBlockSection_GetCount(array('CACHE' => array("TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), CNext::makeSectionFilterInRegion($arSubSectionFilter));
 
 	$catalog_available = $arParams['HIDE_NOT_AVAILABLE'];
 	if (!isset($arParams['HIDE_NOT_AVAILABLE']))
@@ -56,44 +63,62 @@ if($section){
 	if($arParams['HIDE_NOT_AVAILABLE'] == 'Y')
 		$arElementFilter["CATALOG_AVAILABLE"] = $catalog_available;
 
-	$itemsCnt = CNextCache::CIBlockElement_GetList(array("CACHE" => array("TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), $arElementFilter, array());
+	$itemsCnt = CNextCache::CIBlockElement_GetList(array("CACHE" => array("TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), CNext::makeElementFilterInRegion($arElementFilter), array());
 
-	//set offer view type
-	$typeTmpSKU = 0;
-	if($section['UF_OFFERS_TYPE'])
+	// set offer type & smartfilter view
+	$typeTmpSKU = $viewTmpFilter = 0;
+	if($section['UF_OFFERS_TYPE']){
 		$typeTmpSKU = $section['UF_OFFERS_TYPE'];
-	else
-	{
-		if($section["DEPTH_LEVEL"] > 2)
-		{
-			$sectionParent = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $section["IBLOCK_SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "UF_OFFERS_TYPE"));
-			if($sectionParent['UF_OFFERS_TYPE'] && !$typeTmpSKU)
+	}
+	if($section['UF_FILTER_VIEW']){
+		$viewTmpFilter = $section['UF_FILTER_VIEW'];
+	}
+	if(!$typeTmpSKU || !$viewTmpFilter){
+		if($section['DEPTH_LEVEL'] > 1){
+			$sectionParent = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "ID" => $section["IBLOCK_SECTION_ID"], "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "UF_OFFERS_TYPE", 'UF_FILTER_VIEW'));
+			if($sectionParent['UF_OFFERS_TYPE'] && !$typeTmpSKU){
 				$typeTmpSKU = $sectionParent['UF_OFFERS_TYPE'];
+			}
+			if($sectionParent['UF_FILTER_VIEW'] && !$viewTmpFilter){
+				$viewTmpFilter = $sectionParent['UF_FILTER_VIEW'];
+			}
 
-			if(!$typeTmpSKU)
-			{
-				$sectionRoot = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "<=LEFT_BORDER" => $section["LEFT_MARGIN"], ">=RIGHT_BORDER" => $section["RIGHT_MARGIN"], "DEPTH_LEVEL" => 1, "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "UF_OFFERS_TYPE"));
-				if($sectionRoot['UF_OFFERS_TYPE'] && !$typeTmpSKU)
-					$typeTmpSKU = $sectionRoot['UF_OFFERS_TYPE'];
+			if($section['DEPTH_LEVEL'] > 2){
+				if(!$typeTmpSKU || !$viewTmpFilter){
+					$sectionRoot = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "<=LEFT_BORDER" => $section["LEFT_MARGIN"], ">=RIGHT_BORDER" => $section["RIGHT_MARGIN"], "DEPTH_LEVEL" => 1, "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "UF_OFFERS_TYPE", 'UF_FILTER_VIEW'));
+					if($sectionRoot['UF_OFFERS_TYPE'] && !$typeTmpSKU){
+						$typeTmpSKU = $sectionRoot['UF_OFFERS_TYPE'];
+					}
+					if($sectionRoot['UF_FILTER_VIEW'] && !$viewTmpFilter){
+						$viewTmpFilter = $sectionRoot['UF_FILTER_VIEW'];
+					}
+				}
 			}
 		}
-		else
-		{
-			$sectionRoot = CNextCache::CIBlockSection_GetList(array('CACHE' => array("MULTI" =>"N", "TAG" => CNextCache::GetIBlockCacheTag($arParams["IBLOCK_ID"]))), array('GLOBAL_ACTIVE' => 'Y', "<=LEFT_BORDER" => $section["LEFT_MARGIN"], ">=RIGHT_BORDER" => $section["RIGHT_MARGIN"], "DEPTH_LEVEL" => 1, "IBLOCK_ID" => $arParams["IBLOCK_ID"]), false, array("ID", "IBLOCK_ID", "NAME", "UF_OFFERS_TYPE"));
-			if($sectionRoot['UF_OFFERS_TYPE'] && !$typeTmpSKU)
-				$typeTmpSKU = $sectionRoot['UF_OFFERS_TYPE'];
-		}
 	}
-	if($typeTmpSKU)
-	{
+	if($typeTmpSKU){
 		$rsTypes = CUserFieldEnum::GetList(array(), array("ID" => $typeTmpSKU));
-		if($arType = $rsTypes->GetNext())
-		{
+		if($arType = $rsTypes->Fetch()){
 			$typeSKU = $arType['XML_ID'];
-			$arTheme["TYPE_SKU"]["VALUE"] = $typeSKU;
+			$arTheme['TYPE_SKU']['VALUE'] = $typeSKU;
 		}
-
 	}
+	if($viewTmpFilter){
+		$rsViews = CUserFieldEnum::GetList(array(), array('ID' => $viewTmpFilter));
+		if($arView = $rsViews->Fetch()){
+			$viewFilter = $arView['XML_ID'];
+			$arTheme['FILTER_VIEW']['VALUE'] = strtoupper($viewFilter);
+		}
+	}
+}
+else{
+	\Bitrix\Iblock\Component\Tools::process404(
+		""
+		,($arParams["SET_STATUS_404"] === "Y")
+		,($arParams["SET_STATUS_404"] === "Y")
+		,($arParams["SHOW_404"] === "Y")
+		,$arParams["FILE_404"]
+	);
 }
 
 if($arParams['STORES'])
@@ -122,43 +147,57 @@ $NextSectionID = $arSection["ID"];?>
 
 <?
 //seo
-$arSeoItems = CNextCache::CIBLockElement_GetList(array('SORT' => 'ASC', 'CACHE' => array("MULTI" =>"Y", "TAG" => CNextCache::GetIBlockCacheTag(CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_catalog_info"][0]))), array("IBLOCK_ID" => CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_catalog_info"][0], "ACTIVE"=>"Y"), false, false, array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT", "DETAIL_PICTURE", "PROPERTY_FILTER_URL", "PROPERTY_LINK_REGION", "PROPERTY_FORM_QUESTION", "PROPERTY_SECTION_SERVICES", "PROPERTY_TIZERS", "PROPERTY_SECTION", "DETAIL_TEXT", "ElementValues"));
-$arSeoItem = $arTmpRegionsLanding = array();
-if($arSeoItems)
-{
-	$iLandingItemID = 0;
-	$current_url =  $APPLICATION->GetCurDir();
-	$url = urldecode(str_replace(' ', '+', $current_url));
-	foreach($arSeoItems as $arItem)
+$catalogInfoIblockId = CNextCache::$arIBlocks[SITE_ID]["aspro_next_catalog"]["aspro_next_catalog_info"][0];
+if($catalogInfoIblockId){
+	$arSeoItems = CNextCache::CIBLockElement_GetList(array('SORT' => 'ASC', 'CACHE' => array("MULTI" => "Y", "TAG" => CNextCache::GetIBlockCacheTag($catalogInfoIblockId))), array("IBLOCK_ID" => $catalogInfoIblockId, "ACTIVE" => "Y"), false, false, array("ID", "IBLOCK_ID", "PROPERTY_FILTER_URL", "PROPERTY_LINK_REGION"));
+	$arSeoItem = $arTmpRegionsLanding = array();
+	if($arSeoItems)
 	{
-		if(!is_array($arItem['PROPERTY_LINK_REGION_VALUE']))
-			$arItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arItem['PROPERTY_LINK_REGION_VALUE'];
-
-		if(!$arSeoItem)
+		$iLandingItemID = 0;
+		$current_url =  $APPLICATION->GetCurDir();
+		$url = urldecode(str_replace(' ', '+', $current_url));
+		foreach($arSeoItems as $arItem)
 		{
-			if(urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]) == $url)
-			{
-				if($arItem['PROPERTY_LINK_REGION_VALUE'])
-				{
-					if($arRegion && in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE']))
-						$arSeoItem = $arItem;
-				}
-				else
-				{
-					$arSeoItem = $arItem;
-				}
+			if(!is_array($arItem['PROPERTY_LINK_REGION_VALUE']))
+				$arItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arItem['PROPERTY_LINK_REGION_VALUE'];
 
-				if($arSeoItem)
+			if(!$arSeoItem)
+			{
+				$urldecoded = urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]);
+				if($urldecoded == $url || $urldecoded == $current_url)
 				{
-					$iLandingItemID = $arSeoItem['ID'];
+					if($arItem['PROPERTY_LINK_REGION_VALUE'])
+					{
+						if($arRegion && in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE']))
+							$arSeoItem = $arItem;
+					}
+					else
+					{
+						$arSeoItem = $arItem;
+					}
+
+					if($arSeoItem)
+					{
+						$iLandingItemID = $arSeoItem['ID'];
+						$arSeoItem = CNextCache::CIBLockElement_GetList(array('SORT' => 'ASC', 'CACHE' => array("MULTI" => "N", "TAG" => CNextCache::GetIBlockCacheTag($catalogInfoIblockId))), array("IBLOCK_ID" => $catalogInfoIblockId, "ID" => $iLandingItemID), false, false, array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT", "DETAIL_PICTURE", "PROPERTY_FILTER_URL", "PROPERTY_LINK_REGION", "PROPERTY_FORM_QUESTION", "PROPERTY_SECTION_SERVICES", "PROPERTY_TIZERS", "PROPERTY_SECTION", "DETAIL_TEXT", "PROPERTY_I_ELEMENT_PAGE_TITLE", "PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT", "PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE", "PROPERTY_I_SKU_PAGE_TITLE", "PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT", "PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE", "ElementValues"));
+
+						$arIBInheritTemplates = array(
+							"ELEMENT_PAGE_TITLE" => $arSeoItem["PROPERTY_I_ELEMENT_PAGE_TITLE_VALUE"],
+							"ELEMENT_PREVIEW_PICTURE_FILE_ALT" => $arSeoItem["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+							"ELEMENT_PREVIEW_PICTURE_FILE_TITLE" => $arSeoItem["PROPERTY_I_ELEMENT_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+							"SKU_PAGE_TITLE" => $arSeoItem["PROPERTY_I_SKU_PAGE_TITLE_VALUE"],
+							"SKU_PREVIEW_PICTURE_FILE_ALT" => $arSeoItem["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_ALT_VALUE"],
+							"SKU_PREVIEW_PICTURE_FILE_TITLE" => $arSeoItem["PROPERTY_I_SKU_PREVIEW_PICTURE_FILE_TITLE_VALUE"],
+						);
+					}
 				}
 			}
-		}
 
-		if($arItem['PROPERTY_LINK_REGION_VALUE'])
-		{
-			if(!$arRegion || !in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE']))
-				$arTmpRegionsLanding[] = $arItem['ID'];
+			if($arItem['PROPERTY_LINK_REGION_VALUE'])
+			{
+				if(!$arRegion || !in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE']))
+					$arTmpRegionsLanding[] = $arItem['ID'];
+			}
 		}
 	}
 }
@@ -172,9 +211,13 @@ if($arRegion)
 		{
 			$arTmpFilter[] = array(">CATALOG_STORE_AMOUNT_".$storeID => 0);
 		}
+		$arTmpFilter[] = array("TYPE" => "2");
 		$GLOBALS[$arParams["FILTER_NAME"]][] = $arTmpFilter;
 	}
 	$arParams["USE_REGION"] = "Y";
+
+	$GLOBALS[$arParams['FILTER_NAME']]['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+	CNext::makeElementFilterInRegion($GLOBALS[$arParams['FILTER_NAME']]);
 }
 
 /* hide compare link from module options */
@@ -190,6 +233,7 @@ if(CNext::GetFrontParametrValue('CATALOG_COMPARE') == 'N')
 	"HIDE_NOT_AVAILABLE_OFFERS" => $arParams["HIDE_NOT_AVAILABLE_OFFERS"],
 	"PRICE_CODE" => $arParams["PRICE_CODE"],
 	"OFFER_TREE_PROPS" => $arParams["OFFER_TREE_PROPS"],
+	"OFFER_SHOW_PREVIEW_PICTURE_PROPS" => $arParams["OFFER_SHOW_PREVIEW_PICTURE_PROPS"],
 	"CACHE_TIME" => $arParams["CACHE_TIME"],
 	"CONVERT_CURRENCY" => $arParams["CONVERT_CURRENCY"],
 	"CURRENCY_ID" => $arParams["CURRENCY_ID"],
@@ -220,6 +264,7 @@ if(CNext::GetFrontParametrValue('CATALOG_COMPARE') == 'N')
 	"SHOW_ARTICLE_SKU" => $arParams["SHOW_ARTICLE_SKU"],
 	"OFFER_ADD_PICT_PROP" => $arParams["OFFER_ADD_PICT_PROP"],
 	"PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
+	"IBINHERIT_TEMPLATES" => $arSeoItem ? $arIBInheritTemplates : array(),
 );?>
 
 <?// section elements?>
@@ -231,6 +276,14 @@ if(CNext::GetFrontParametrValue('CATALOG_COMPARE') == 'N')
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.history.js');?>
 
 <?if(\Bitrix\Main\Loader::includeModule("sotbit.seometa")):?>
+	<?
+	// unset, because the sotbit:seo.meta component may have already been included
+	unset($APPLICATION->__view['sotbit_seometa_h1']);
+	unset($APPLICATION->__view['sotbit_seometa_top_desc']);
+	unset($APPLICATION->__view['sotbit_seometa_bottom_desc']);
+	unset($APPLICATION->__view['sotbit_seometa_add_desc']);
+	unset($APPLICATION->__view['sotbit_seometa_file']);
+	?>
 	<?$APPLICATION->IncludeComponent(
 		"sotbit:seo.meta",
 		".default",
@@ -241,4 +294,30 @@ if(CNext::GetFrontParametrValue('CATALOG_COMPARE') == 'N')
 			"CACHE_TIME" => $arParams["CACHE_TIME"],
 		)
 	);?>
+	<?
+	if($arTheme['PRIORITY_SECTION_DESCRIPTION_SOURCE']['VALUE'] !== 'NOT'){
+		$top_desc = trim($APPLICATION->GetViewContent('top_desc'));
+		$bottom_desc = trim($APPLICATION->GetViewContent('bottom_desc'));
+		$sotbit_top_desc = trim($APPLICATION->GetViewContent('sotbit_seometa_top_desc'));
+		$sotbit_bottom_desc = trim($APPLICATION->GetViewContent('sotbit_seometa_bottom_desc'));
+		$sotbit_add_desc = trim($APPLICATION->GetViewContent('sotbit_seometa_add_desc'));
+
+		if($arTheme['PRIORITY_SECTION_DESCRIPTION_SOURCE']['VALUE'] !== 'IBLOCK'){
+			if(strlen($top_desc) && strlen($sotbit_top_desc)){
+				unset($APPLICATION->__view['top_desc']);
+			}
+			if(strlen($bottom_desc) && strlen($sotbit_bottom_desc.$sotbit_add_desc)){
+				unset($APPLICATION->__view['bottom_desc']);
+			}
+		}
+		else{
+			if(strlen($top_desc) && strlen($sotbit_top_desc)){
+				unset($APPLICATION->__view['sotbit_seometa_top_desc']);
+			}
+			if(strlen($bottom_desc) && strlen($sotbit_bottom_desc.$sotbit_add_desc)){
+				unset($APPLICATION->__view['sotbit_seometa_bottom_desc'], $APPLICATION->__view['sotbit_seometa_add_desc']);
+			}
+		}
+	}
+	?>
 <?endif;?>

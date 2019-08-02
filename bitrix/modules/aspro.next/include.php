@@ -17,6 +17,16 @@ CModule::AddAutoloadClasses(
 		'Aspro\\Functions\\CAsproNextReCaptcha' => 'lib/functions/CAsproNextReCaptcha.php', //for google reCaptcha
 		'Aspro\\Functions\\CAsproNextCRM' => 'lib/functions/CAsproNextCRM.php', //for integrate crm
 		'Aspro\\Next\\SearchQuery' => 'lib/searchquery.php', //for landings in search
+		'Aspro\\Next\\PhoneAuth' => 'lib/phoneauth.php', //for auth by phone
+		'Aspro\\Next\\PWA' => 'lib/pwa.php', //for auth by phone
+		// custom user types of properties
+		'Aspro\\Next\\Property\\ListStores' => 'lib/property/liststores.php',
+		'Aspro\\Next\\Property\\ListPrices' => 'lib/property/listprices.php',
+		'Aspro\\Next\\Property\\ListLocations' => 'lib/property/listlocations.php',
+		'Aspro\\Next\\Property\\CustomFilter' => 'lib/property/customfilter.php',
+		'Aspro\\Next\\Property\\Service' => 'lib/property/service.php',
+		'Aspro\\Next\\Property\\YaDirectQuery' => 'lib/property/yadirectquery.php',
+		'Aspro\\Next\\Property\\IBInherited' => 'lib/property/ibinherited.php',
 	)
 );
 

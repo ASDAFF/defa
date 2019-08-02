@@ -4,103 +4,7 @@
 
 <? $this->setFrameMode(true); ?>
 
-    <!--ФУНКЦИЯ ОБРЕЗКИ ТЕКСТА ОПИСАНИЯ С УЧЕТОМ ТЭГОВ-->
-<? //
-//function truncate($text, $length = 100, $options = array()) {
-//    $default = array(
-//        'ending' => '...', 'exact' => true, 'html' => false
-//    );
-//    $options = array_merge($default, $options);
-//    extract($options);
-//
-//    if ($html) {
-/*        if (mb_strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {*/
-//            return $text;
-//        }
-//        $totalLength = mb_strlen(strip_tags($ending));
-//        $openTags = array();
-//        $truncate = '';
-//
-//        preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $text, $tags, PREG_SET_ORDER);
-//        foreach ($tags as $tag) {
-//            if (!preg_match('/img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param/s', $tag[2])) {
-//                if (preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
-//                    array_unshift($openTags, $tag[2]);
-//                } else if (preg_match('/<\/([\w]+)[^>]*>/s', $tag[0], $closeTag)) {
-//                    $pos = array_search($closeTag[1], $openTags);
-//                    if ($pos !== false) {
-//                        array_splice($openTags, $pos, 1);
-//                    }
-//                }
-//            }
-//            $truncate .= $tag[1];
-//
-//            $contentLength = mb_strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', ' ', $tag[3]));
-//            if ($contentLength + $totalLength > $length) {
-//                $left = $length - $totalLength;
-//                $entitiesLength = 0;
-//                if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities, PREG_OFFSET_CAPTURE)) {
-//                    foreach ($entities[0] as $entity) {
-//                        if ($entity[1] + 1 - $entitiesLength <= $left) {
-//                            $left--;
-//                            $entitiesLength += mb_strlen($entity[0]);
-//                        } else {
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                $truncate .= mb_substr($tag[3], 0 , $left + $entitiesLength);
-//                break;
-//            } else {
-//                $truncate .= $tag[3];
-//                $totalLength += $contentLength;
-//            }
-//            if ($totalLength >= $length) {
-//                break;
-//            }
-//        }
-//    } else {
-//        if (mb_strlen($text) <= $length) {
-//            return $text;
-//        } else {
-//            $truncate = mb_substr($text, 0, $length - mb_strlen($ending));
-//        }
-//    }
-//    if (!$exact) {
-//        $spacepos = mb_strrpos($truncate, ' ');
-//        if (isset($spacepos)) {
-//            if ($html) {
-//                $bits = mb_substr($truncate, $spacepos);
-//                preg_match_all('/<\/([a-z]+)>/', $bits, $droppedTags, PREG_SET_ORDER);
-//                if (!empty($droppedTags)) {
-//                    foreach ($droppedTags as $closingTag) {
-//                        if (!in_array($closingTag[1], $openTags)) {
-//                            array_unshift($openTags, $closingTag[1]);
-//                        }
-//                    }
-//                }
-//            }
-//            $truncate = mb_substr($truncate, 0, $spacepos);
-//        }
-//    }
-//    $truncate .= $ending;
-//
-//    if ($html) {
-//        foreach ($openTags as $tag) {
-//            $truncate .= '</'.$tag.'>';
-//        }
-//    }
-//
-//    return $truncate;
-//}
-//?>
-
-
 <?
-
-
-//var_dump('it section');
 
 use Bitrix\Main\Loader,
     Bitrix\Main\ModuleManager;
@@ -430,9 +334,6 @@ if (CNext::GetFrontParametrValue('CATALOG_COMPARE') == 'N') {
     "PRODUCT_QUANTITY_VARIABLE" => $arParams["PRODUCT_QUANTITY_VARIABLE"],
 ); ?>
 
-<? // section elements?>
-
-
 <? $isSeries = false;
 
 if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
@@ -524,7 +425,6 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                 $arColorAddIdItem["COLOR_" . $prop][$arOffer["ID"]] = $arOffer["PROPERTY_" . $prop . "_VALUE"];
             }
         }
-
     }
 
     $arColorId = array_unique($arColorId);
@@ -574,24 +474,50 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
 
     $section["COLORS"] = $arColorNew;
 
+
 //UF_SERIES_GALLERY
-    $res = CIBlockElement::GetList
-    (
-        [],
-        ['IBLOCK_ID' => SERIES_GALLERIES_IB_ID, 'ACTIVE' => 'Y', 'ID' => $section["UF_SERIES_GALLERY"]],
-        false,
-        false,
-        ['IBLOCK_ID', 'ID', 'PROPERTY_PICTURES']
-    );
-    while ($el = $res->fetch()) {
-        $seriesGalleries[] = CFile::GetPath($el['PROPERTY_PICTURES_VALUE']);
+	$res=CIBlockElement::GetList
+        (
+            [],
+            ['IBLOCK_ID'=>SERIES_GALLERIES_IB_ID,'ACTIVE'=>'Y','ID'=>$section["UF_SERIES_GALLERY"]],
+            false,
+            false,
+            ['IBLOCK_ID','ID','PROPERTY_PICTURES']
+        );
+		while($el=$res->fetch()){
+		    if($section['UF_DISCOUNT']){
+//                $arWaterMark = array(
+//                      array(
+//                          'name' => 'watermark',
+//                          'type' =>'text',
+//                          'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+//                          'text' => "Скидка на серию  ".$section['UF_DISCOUNT'],
+//                          "position" => "topright",
+//                          "color" => "ffffff",
+//                          )
+//
+//                );
+                $arFileTmp = CFile::ResizeImageGet(
+                    $el['PROPERTY_PICTURES_VALUE'],
+                    array("width" => 854, "height" => 571),
+                    BX_RESIZE_IMAGE_EXACT,
+                    true
+//                    $arWaterMark
+                );
 
-    }
-
-    $section["SERIES_GALLERIES"] = $seriesGalleries;
+                $seriesGalleries[] = ['SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE']),'MIN_SRC'=>$arFileTmp['src']];
+            }else{
+                $seriesGalleries[] = ['SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE']),'MIN_SRC'=>CFile::GetPath($el['PROPERTY_PICTURES_VALUE'])];
+            }
+		}
+		$section["SERIES_GALLERIES"] = $seriesGalleries;
+    //METKI
+    $arResult['METKI'] = GetMarks();
 
 
     ?>
+?>
+
     <div class="series-block series-item inner">
         <div class="series-top">
             <div class="row series-header">
@@ -689,12 +615,26 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
             </div>
             <div class="row series-main current" data-tab="1">
                 <div class="col-md-8">
+                    <ul class="series-item-pros quick-metki">
+
+                        <? foreach($section['UF_METKA'] as $arMetka) { ?>
+                            <li class="series-item-pros-element">
+                                <div class="pros-icon">
+                                    <img src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
+                                </div>
+                                <span class="pros-text"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
+                            </li>
+                        <? } ?>
+                    </ul>
+                    <?if($section['UF_DISCOUNT']){?>
+                        <span class="sale-mark"><?=($section['UF_DISCOUNT'])?></span>
+                    <?}?>
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
-                            <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
-                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"
-                                   href="<?= $image ?>">
-                                    <img src="<?= $image ?>" alt="">
+                            <?foreach($section['SERIES_GALLERIES'] as $image):
+                                ?>
+                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"  href="<?=$image['SRC']?>">
+                                    <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
                             <? endforeach; ?>
                         </div>
@@ -702,7 +642,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                         <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
                             <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
                                 <div class="series-item-preview-slide-item">
-                                    <img src="<?= $image ?>" alt="">
+                                    <img src="<?=$image['SRC']?>" alt="">
                                 </div>
                             <? endforeach; ?>
                         </div>
@@ -774,6 +714,9 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                 <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery"
                                    href="<?= $image ?>">
                                     <img src="<?= $image ?>" alt="">
+                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
+                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
+                                    <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
                             <? endforeach; ?>
                         </div>
@@ -782,6 +725,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                             <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
                                 <div class="series-item-preview-slide-item">
                                     <img src="<?= $image ?>" alt="">
+                                    <img src="<?=$image['SRC']?>" alt="">
                                 </div>
                             <? endforeach; ?>
                         </div>
@@ -822,7 +766,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                                     <p class="price">223 523 &#8381;</p>
                                                 </td>
                                                 <td>
-                                                    <div class="counter_block big_basket">
+                                                    <div class="counter_block">
                                                         <span class="minus">-</span>
                                                         <input type="text" class="text" name="quantity" value="1">
                                                         <span class="plus">+</span>
@@ -838,7 +782,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                                     <p class="price">223 523 &#8381;</p>
                                                 </td>
                                                 <td>
-                                                    <div class="counter_block big_basket">
+                                                    <div class="counter_block">
                                                         <span class="minus">-</span>
                                                         <input type="text" class="text" name="quantity" value="1">
                                                         <span class="plus">+</span>
@@ -854,7 +798,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                                     <p class="price">223 523 &#8381;</p>
                                                 </td>
                                                 <td>
-                                                    <div class="counter_block big_basket">
+                                                    <div class="counter_block">
                                                         <span class="minus">-</span>
                                                         <input type="text" class="text" name="quantity" value="1">
                                                         <span class="plus">+</span>
@@ -870,7 +814,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                                     <p class="price">223 523 &#8381;</p>
                                                 </td>
                                                 <td>
-                                                    <div class="counter_block big_basket">
+                                                    <div class="counter_block">
                                                         <span class="minus">-</span>
                                                         <input type="text" class="text" name="quantity" value="1">
                                                         <span class="plus">+</span>
@@ -898,7 +842,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                                 </div>
                                 <div class="row series-buy">
                                     <div class="col-md-12 counter-wrap">
-                                        <div class="counter_block big_basket">
+                                        <div class="counter_block">
                                             <span class="minus">-</span>
                                             <input type="text" class="text" name="quantity" value="1">
                                             <span class="plus">+</span>

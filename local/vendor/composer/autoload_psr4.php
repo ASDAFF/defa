@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'XFive\\' => array($baseDir . '/lib/XFive'),
+    'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Defo\\' => array($baseDir . '/lib/Defo'),
 );

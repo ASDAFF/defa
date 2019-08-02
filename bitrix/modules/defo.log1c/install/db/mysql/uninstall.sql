@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS b_defo_log1c_entity;

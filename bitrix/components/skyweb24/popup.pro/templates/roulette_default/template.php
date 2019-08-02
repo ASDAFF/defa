@@ -80,7 +80,6 @@
           var email = BX('skyweb24_roulette').querySelector('label.input');
           var getContinue=true;
             url+="&email="+email.querySelector('input').value+"&idPopup=<?=$arParams['ID_POPUP']?>&addtotable=<?=$arResult['EMAIL_ADD2BASE']?>&unique=<?=$arResult['EMAIL_NOT_NEW']?>&resultText="+text;
-
             BX.ajax({
               url:url,
               method:'POST',

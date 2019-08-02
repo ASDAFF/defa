@@ -22,5 +22,10 @@
 				<?=CNext::showCabinetLink(true, false, 'big white');?>
 			</div>
 		</div>
+			<div class="pull-right">
+				<div class="wrap_icon wrap_phones">
+					<?CNext::ShowHeaderMobilePhones("big white");?>
+				</div>
+			</div>
 	</div>
 </div>

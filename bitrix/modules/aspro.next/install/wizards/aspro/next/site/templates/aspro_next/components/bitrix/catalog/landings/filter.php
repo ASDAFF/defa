@@ -48,6 +48,8 @@ if($dbFilterPath)
 		"SEF_RULE" => $arResult["FOLDER"].$arResult['VARIABLES']['ELEMENT_CODE'].'/'.$filterPath,
 		"SMART_FILTER_PATH" => $filterPath,
 		"HIDE_NOT_AVAILABLE" => $arParams["HIDE_NOT_AVAILABLE"],
+		"SORT_BUTTONS" => $arParams["SORT_BUTTONS"],
+		"SORT_PRICES" => $arParams["SORT_PRICES"],
 	),
 	$component);
 ?>

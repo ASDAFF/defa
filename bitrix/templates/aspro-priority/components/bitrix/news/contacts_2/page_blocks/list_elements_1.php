@@ -7,17 +7,17 @@ $bAlternativeName = ($arItem['PROPERTY_ALTERNATIVE_NAME_VALUE'] ? true : false);
 $arPlacemarks = array();
 if($bUseMap && $arItem['PROPERTY_MAP_VALUE']){
 	$arCoords = explode(',', $arItem['PROPERTY_MAP_VALUE']);
-	
+
 	$html = '';
-	
+
 	$html .= '<div class="title">'.$arItem['NAME'].'</div>';
-	
+
 	if(strlen($arItem['PROPERTY_SCHEDULE_VALUE']['TEXT']) || $arItem['PROPERTY_PHONE_VALUE'] || $arItem['PROPERTY_METRO_VALUE'] || $arItem['PROPERTY_EMAIL_VALUE']){
 		$html .= '<div class="properties">';
-			
+
 			$html .= (strlen($arItem['PROPERTY_METRO_VALUE']) ? '<div class="property schedule"><div class="title-prop font_upper">'.$arProperties['METRO']['NAME'].'</div><div class="value font_sm">'.$arItem['PROPERTY_METRO_VALUE'].'</div></div>' : '');
 			$html .= (strlen($arItem['PROPERTY_SCHEDULE_VALUE']['TEXT']) ? '<div class="property schedule"><div class="title-prop font_upper">'.$arProperties['SCHEDULE']['NAME'].'</div><div class="value font_sm">'.$arItem['PROPERTY_SCHEDULE_VALUE']['TEXT'].'</div></div>' : '');
-			
+
 			if($arItem['PROPERTY_PHONE_VALUE']){
 				$phone = '';
 				if(is_array($arItem['PROPERTY_PHONE_VALUE'])){
@@ -27,16 +27,16 @@ if($bUseMap && $arItem['PROPERTY_MAP_VALUE']){
 				}
 				else{
 					$phone = '<div class="value font_sm"><a rel= "nofollow" href="tel:'.str_replace(array(' ', ',', '-', '(', ')'), '', $arItem['PROPERTY_PHONE_VALUE']).'">'.$arItem['PROPERTY_PHONE_VALUE'].'</a></div>';
-				
-					
+
+
 				}
 				$html .= '<div class="property phone"><div class="title-prop font_upper">'.$arProperties['PHONE']['NAME'].'</div>'.$phone.'</div>';
 			}
-		
+
 			$html .= (strlen($arItem['PROPERTY_EMAIL_VALUE']) ? '<div class="property email"><div class="title-prop font_upper">'.$arProperties['EMAIL']['NAME'].'</div><div class="value font_sm"><a href="'.$arItem['PROPERTY_EMAIL_VALUE'].'">'.$arItem['PROPERTY_EMAIL_VALUE'].'</a></div></div>' : '');
 		$html .= '</div>';
 	}
-	
+
 
 	$arPlacemarks[] = array(
 		"ID" => $arItem["ID"],
@@ -45,7 +45,7 @@ if($bUseMap && $arItem['PROPERTY_MAP_VALUE']){
 		"TEXT" => $html,
 	);
 }
-?>				
+?>
 <?if($arItem):?>
 	<div class="contacts contacts-page-map-inline type_3" itemscope itemtype="http://schema.org/Organization">
 		<div class="maxwidth-theme">
@@ -123,30 +123,32 @@ if($bUseMap && $arItem['PROPERTY_MAP_VALUE']){
 		</div>
 	</div>
 <?endif;?>
-<div class="contacts-page-map type_3">
-	<?$APPLICATION->IncludeComponent(
-		"bitrix:map.yandex.view",
-		"map",
-		array(
-			"INIT_MAP_TYPE" => "MAP",
-			"MAP_DATA" => serialize(array("yandex_lat" => $arCoords[0], "yandex_lon" => $arCoords[1], "yandex_scale" => 16, "PLACEMARKS" => $arPlacemarks)),
-			"MAP_WIDTH" => "100%",
-			"MAP_HEIGHT" => "650",
-			"CONTROLS" => array(
-				0 => "ZOOM",
-				1 => "TYPECONTROL",
-				2 => "SCALELINE",
+<?if($bUseMap):?>
+	<div class="contacts-page-map type_3">
+		<?$APPLICATION->IncludeComponent(
+			"bitrix:map.yandex.view",
+			"map",
+			array(
+				"INIT_MAP_TYPE" => "MAP",
+				"MAP_DATA" => serialize(array("yandex_lat" => $arCoords[0], "yandex_lon" => $arCoords[1], "yandex_scale" => 16, "PLACEMARKS" => $arPlacemarks)),
+				"MAP_WIDTH" => "100%",
+				"MAP_HEIGHT" => "650",
+				"CONTROLS" => array(
+					0 => "ZOOM",
+					1 => "TYPECONTROL",
+					2 => "SCALELINE",
+				),
+				"OPTIONS" => array(
+					0 => "ENABLE_DBLCLICK_ZOOM",
+					1 => "ENABLE_DRAGGING",
+				),
+				"MAP_ID" => "MAP_v33",
+				"COMPONENT_TEMPLATE" => "map"
 			),
-			"OPTIONS" => array(
-				0 => "ENABLE_DBLCLICK_ZOOM",
-				1 => "ENABLE_DRAGGING",
-			),
-			"MAP_ID" => "MAP_v33",
-			"COMPONENT_TEMPLATE" => "map"
-		),
-		false
-	);?>
-</div>
+			false
+		);?>
+	</div>
+<?endif;?>
 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",

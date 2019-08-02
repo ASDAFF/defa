@@ -7,14 +7,4 @@ if(\Bitrix\Main\Loader::includeModule('aspro.priority')){
 	$arPageBlocks = CPriority::GetComponentTemplatePageBlocks(__DIR__);
 	$arPageBlocksParams = CPriority::GetComponentTemplatePageBlocksParams($arPageBlocks);
 }
-
-$arTemplateParameters = array_merge($arPageBlocksParams, array(
-	'SHOW_TOP_MAP' => array(
-		'PARENT' => 'LIST_SETTINGS',
-		'SORT' => 100,
-		'NAME' => GetMessage('SHOW_TOP_MAP_TITLE'),
-		'TYPE' => 'CHECKBOX',
-		'DEFAULT' => 'N',
-	),
-));
 ?>

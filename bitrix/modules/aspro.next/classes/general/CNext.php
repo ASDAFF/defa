@@ -20,7 +20,6 @@ Loc::loadMessages(__FILE__);
 include_once __DIR__.'/../../parametrs.php';
 include_once __DIR__.'/../../presets.php';
 
-
 class CNext{
     const partnerName	= 'aspro';
     const solutionName	= 'next';
@@ -99,7 +98,7 @@ class CNext{
 					$file = $path.$arTheme['LEFT_BLOCK']['VALUE'].'.php';
 					break;
 				default:
-					$path = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.'b2b/'.$type);
+					$path = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.$type);
 					$file = $path.'_'.$arTheme['INDEX_TYPE']['VALUE'].'.php';
 					break;
 			endswitch;
@@ -348,6 +347,14 @@ class CNext{
 											$arValues[$key] = Option::get(self::moduleID, $key, $arSubOption['DEFAULT'], $SITE_ID);
 										}
 									}
+
+									elseif($optionCode === 'USE_PHONE_AUTH')
+									{
+										list($bPhoneAuthSupported, $bPhoneAuthShow, $bPhoneAuthRequired, $bPhoneAuthUse) = Aspro\Next\PhoneAuth::getOptions();
+										if(!$bPhoneAuthSupported || !$bPhoneAuthShow){
+											self::$arParametrsList[$blockCode]['OPTIONS'][$optionCode]['DISABLED'] = 'Y';
+										}
+									}
 								}
 							}
 						}
@@ -581,8 +588,11 @@ class CNext{
 									<?
 									$phone = $arRegion['PHONES'][$i];
 									$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+									$description = '';
+									$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+									$description = (!empty($description)) ? 'title="' . $description . '"' : '';
 									?>
-									<div itemprop="telephone"><a href="<?=$href?>"><?=$phone?></a></div>
+									<div itemprop="telephone"><a <?=$description;?> href="<?=$href?>"><?=$phone?></a></div>
 								<?endfor;?>
 							</div>
 						<?else:?>
@@ -681,8 +691,8 @@ class CNext{
 	public static function showContactSchedule($txt = '', $wrapTable = true, $class = '', $icon = 'WorkingHours_lg.svg', $subclass = ''){
 		global $arRegion, $APPLICATION;
 		$iCalledID = ++$cshc_call;
-		$bAddr = ($arRegion ? $arRegion['PROPERTY_REGION_TAG_SHEDULLE_VALUE']['TEXT'] : self::checkContentFile(SITE_DIR.'include/contacts-site-schedule.php'));
 		$bRegionContact = (\Bitrix\Main\Config\Option::get(self::moduleID, 'SHOW_REGION_CONTACT', 'N') == 'Y');
+		$bAddr = ($arRegion && $bRegionContact && $arRegion['PROPERTY_REGION_TAG_SHEDULLE_VALUE']['TEXT'] ? $arRegion['PROPERTY_REGION_TAG_SHEDULLE_VALUE']['TEXT'] : self::checkContentFile(SITE_DIR.'include/contacts-site-schedule.php'));
 		?>
 		<?if($arRegion):?>
 			<?$frame = new \Bitrix\Main\Page\FrameHelper('header-allcaddr-block'.$iCalledID);?>
@@ -696,7 +706,7 @@ class CNext{
 					<td class="icon"><i class="fa big-icon s45 <?=$subclass;?> fa-clock-o"></i></td>
 					<td>
 						<span class="dark_table"><?=$txt;?></span>
-						<?if($arRegion && $bRegionContact):?>
+						<?if($arRegion && $arRegion['PROPERTY_SHCEDULE_VALUE']['TEXT'] && $bRegionContact):?>
 							<div itemprop="schedule" class="<?=($class ? ' '.$class : '')?>">
 								<?=$arRegion['PROPERTY_REGION_TAG_SHEDULLE_VALUE']['TEXT'];?>
 							</div>
@@ -900,12 +910,14 @@ class CNext{
 		global $APPLICATION, $arRegion, $arTheme;
 		$arBackParametrs = self::GetBackParametrsValues(SITE_ID);
 		$iCountPhones = ($arRegion ? count($arRegion['PHONES']) : $arBackParametrs['HEADER_PHONES']);
-		$regionID = ($arRegion ? $arRegion['ID'] : '');
+		$regionId = ($arRegion ? $arRegion['ID'] : '');
 		?>
 		<?if($iCountPhones): // count of phones?>
 			<?
 			$phone = ($arRegion ? $arRegion['PHONES'][0] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_0']);
 			$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+			$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][0] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_0']);
+			$description = (!empty($description)) ? '<span class="descr">' . $description . '</span>' : '';
 			static $mphones_call;
 
 			$iCalledID = ++$mphones_call;
@@ -917,12 +929,12 @@ class CNext{
 			<?endif;?>
 
 			<!-- noindex -->
-			<div class="menu middle">
+			<div class="menu middle mobile-menu-contacts">
 				<ul>
 					<li>
-						<a rel="nofollow" href="<?=$href?>" class="dark-color<?=($iCountPhones > 1 ? ' parent' : '')?>">
+						<a rel="nofollow" href="<?=$href?>" class="dark-color<?=($iCountPhones > 1 ? ' parent' : '')?> <?=(empty($description)?'no-decript':'decript')?> ">
 							<i class="svg svg-phone"></i>
-							<span><?=$phone?></span>
+							<span><?=$phone?><?=$description?></span>
 							<?if($iCountPhones > 1):?>
 								<span class="arrow"><i class="svg svg_triangle_right"></i></span>
 							<?endif;?>
@@ -935,8 +947,10 @@ class CNext{
 									<?
 									$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
 									$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+									$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+									$description = (!empty($description)) ? '<span class="descr">' . $description . '</span>' : '';
 									?>
-									<li><a rel="nofollow" href="<?=$href?>" class="dark-color"><?=$phone?></a></li>
+									<li><a rel="nofollow" href="<?=$href?>" class="bold dark-color <?=(empty($description)?'no-decript':'decript')?>"><?=$phone?><?=$description?></a></li>
 								<?endfor;?>
 								<?if($arTheme['SHOW_CALLBACK']['VALUE'] == 'Y'):?>
 									<li><a rel="nofollow" class="dark-color" href="" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback"><?=Loc::getMessage('CALLBACK')?></a></li>
@@ -1016,7 +1030,7 @@ class CNext{
 
 			$iCalledID = ++$mregions_call;
 			$arRegions = CNextRegionality::getRegions();
-			$regionID = ($arRegion ? $arRegion['ID'] : '');
+			$regionId = ($arRegion ? $arRegion['ID'] : '');
 			$iCountRegions = count($arRegions);?>
 			<?Bitrix\Main\Page\Frame::getInstance()->startDynamicWithID('mobile-region-block'.$iCalledID);?>
 			<!-- noindex -->
@@ -1122,23 +1136,6 @@ class CNext{
 
 		return false;
 	}
-
-	public static function OnSearchGetURL($arFields)
-    {
-    	if(strpos($arFields["URL"], "#YEAR#") !== false)
-    	{
-			$arElement = CNextCache::CIblockElement_GetList(array('CACHE' => array('TAG' => CNextCache::GetIBlockCacheTag($arFields['PARAM2']), 'MULTI' => 'N')), array('ID' => $arFields['ITEM_ID']), false, false, array('ID', 'ACTIVE_FROM'));
-	    	if($arElement['ACTIVE_FROM'])
-	    	{
-	    		if($arDateTime = ParseDateTime($arElement['ACTIVE_FROM'], FORMAT_DATETIME))
-	    		{
-			        $url = str_replace("#YEAR#", $arDateTime['YYYY'], $arFields['URL']);
-			        return $url;
-	    		}
-	    	}
-    	}
-		return $arFields["URL"];
-    }
 
 	public static function FormatNewsUrl($arItem){
     	$url = $arItem['DETAIL_PAGE_URL'];
@@ -1401,6 +1398,16 @@ class CNext{
 						$optionList['YENISITE_GRUPPER']['TITLE'] .= Loc::getMessage('NOT_INSTALLED', array('#MODULE_NAME#' => 'yenisite.infoblockpropsplus'));
 					}
 				}
+				elseif($optionCode === 'PRIORITY_SECTION_DESCRIPTION_SOURCE')
+				{
+					// sotbit.seometa
+					$optionList['SOTBIT_SEOMETA']['TITLE'] = Loc::getMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_SOTBIT_SEOMETA');
+					if(!\Bitrix\Main\Loader::includeModule('sotbit.seometa'))
+					{
+						$optionList['SOTBIT_SEOMETA']['DISABLED'] = 'Y';
+						$optionList['SOTBIT_SEOMETA']['TITLE'] .= Loc::getMessage('NOT_INSTALLED', array('#MODULE_NAME#' => 'sotbit.seometa'));
+					}
+				}
 				?>
 
 				<?if($optionType == "checkbox"):?>
@@ -1466,30 +1473,40 @@ class CNext{
 						<?if($bIBlocks)
 						{
 							foreach($arIBlocks as $key => $arValue) {
-								$selected="";
-								if(!$optionVal && $arValue["CODE"]=="aspro_next_catalog"){
-									$selected="selected";
-								}elseif($optionVal && $optionVal==$key){
-									$selected="selected";
-								}?>
-								<option value="<?=$key;?>" <?=$selected;?>><?=htmlspecialcharsbx($arValue["NAME"]);?></option>
-							<?}
+								$selected = "";
+								if(!$optionVal && $arValue["CODE"] === "aspro_next_catalog"){
+									$selected = "selected";
+								}
+								elseif($optionVal && $optionVal==$key){
+									$selected = "selected";
+								}
+								?><option value="<?=$key?>" <?=$selected?>><?=htmlspecialcharsbx($arValue["NAME"])?></option><?
+							}
 						}
-						elseif($optionCode == 'GRUPPER_PROPS')
+						elseif($optionCode === 'BASE_COLOR'){
+							foreach($optionList as $key => $arValue){
+								$selected = "";
+								if($optionVal && $optionVal == $key){
+									$selected = "selected";
+								}
+								?><option value="<?=$key?>" <?=$selected?> <?=($arValue['DISABLED'] === 'Y' ? 'disabled' : '')?> style="background-color:<?=$arValue["COLOR"]?>;"><?=htmlspecialcharsbx($arValue["TITLE"].' ('.$arValue["COLOR"].')')?></option><?
+							}
+						}
+						elseif($optionCode === 'GRUPPER_PROPS' || $optionCode === 'PRIORITY_SECTION_DESCRIPTION_SOURCE' || $optionCode === 'AUTH_TYPE')
 						{
-							foreach($optionList as $key => $arValue):
-								$selected="";
-								if($optionVal && $optionVal==$key)
-									$selected="selected";
-								?>
-								<option value="<?=$key;?>" <?=$selected;?> <?=(isset($arValue['DISABLED']) ? 'disabled' : '');?>><?=htmlspecialcharsbx($arValue["TITLE"]);?></option>
-							<?endforeach;?>
-						<?}
+							foreach($optionList as $key => $arValue){
+								$selected = "";
+								if($optionVal && $optionVal == $key){
+									$selected = "selected";
+								}
+								?><option value="<?=$key?>" <?=$selected?> <?=($arValue['DISABLED'] === 'Y' ? 'disabled' : '')?>><?=htmlspecialcharsbx($arValue["TITLE"])?></option><?
+							}
+						}
 						else
 						{
-							for($j = 0, $c = count($arr_keys); $j < $c; ++$j):?>
-								<option value="<?=$arr_keys[$j]?>" <?if($optionVal == $arr_keys[$j]) echo "selected"?>><?=htmlspecialcharsbx((is_array($optionList[$arr_keys[$j]]) ? $optionList[$arr_keys[$j]]["TITLE"] : $optionList[$arr_keys[$j]]))?></option>
-							<?endfor;
+							for($j = 0, $c = count($arr_keys); $j < $c; ++$j){
+								?><option value="<?=$arr_keys[$j]?>" <?if($optionVal == $arr_keys[$j]) echo "selected"?>><?=htmlspecialcharsbx((is_array($optionList[$arr_keys[$j]]) ? $optionList[$arr_keys[$j]]["TITLE"] : $optionList[$arr_keys[$j]]))?></option><?
+							}
 						}?>
 					</select>
 				<?elseif($optionType == "multiselectbox"):?>
@@ -1858,6 +1875,8 @@ class CNext{
 			$APPLICATION->SetPageProperty('apple-mobile-web-app-status-bar-style', 'black');
 			$APPLICATION->SetPageProperty('SKYPE_TOOLBAR', 'SKYPE_TOOLBAR_PARSER_COMPATIBLE');
 
+			\Aspro\Next\PWA::showMeta(SITE_ID);
+
 			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/vendor/css/bootstrap.css');
 
 			if(!$bIndexBot)
@@ -2116,7 +2135,7 @@ class CNext{
     }
 
     public static function GetComponentTemplatePageBlocks($templateAbsPath, $pageBlocksDirName = 'page_blocks'){
-    	$arResult = array('SECTIONS' => array(), 'SUBSECTIONS' => array(), 'ELEMENTS' => array(), 'ELEMENT' => array());
+    	$arResult = array('SECTIONS' => array(), 'SUBSECTIONS' => array(), 'ELEMENTS' => array(), 'ELEMENT' => array(), 'LANDING' => array());
 
     	if($templateAbsPath){
     		$templateAbsPath = str_replace('//', '//', $templateAbsPath).'/';
@@ -2141,6 +2160,9 @@ class CNext{
 						}
 						elseif(strpos($file, 'bigdata_') !== false){
 							$arResult['BIGDATA'][$file] = $file;
+						}
+						elseif(strpos($file, 'landing_') !== false){
+							$arResult['LANDING'][$file] = $file;
 						}
 					}
     			}
@@ -2192,6 +2214,16 @@ class CNext{
 					'TYPE' => 'LIST',
 					'VALUES' => $arPageBlocks['ELEMENT'],
 					'DEFAULT' => key($arPageBlocks['ELEMENT']),
+				);
+    		}
+		if(isset($arPageBlocks['LANDING']) && $arPageBlocks['LANDING'] && is_array($arPageBlocks['LANDING'])){
+    			$arResult['LANDING_TYPE_VIEW'] = array(
+					'PARENT' => 'BASE',
+					'SORT' => 1,
+					'NAME' => GetMessage('M_LANDING_TYPE_VIEW'),
+					'TYPE' => 'LIST',
+					'VALUES' => $arPageBlocks['LANDING'],
+					'DEFAULT' => key($arPageBlocks['LANDING']),
 				);
     		}
     	}
@@ -2428,7 +2460,7 @@ class CNext{
 		global $arTheme;
 		$basket_class = ($arTheme['ORDER_BASKET_VIEW']['VALUE'] == 'FLY2' ? 'fly fly2' : strToLower($arTheme['ORDER_BASKET_VIEW']['VALUE']));
 		// print_r($arTheme);
-		return 'basket_'.$basket_class.' basket_fill_'.$arTheme['ORDER_BASKET_COLOR']['VALUE'].' side_'.$arTheme['SIDE_MENU']['VALUE'].' catalog_icons_'.$arTheme['LEFT_BLOCK_CATALOG_ICONS']['VALUE'].' banner_auto '.($arTheme['USE_FAST_VIEW_PAGE_DETAIL']['VALUE'] != 'NO' ? 'with_fast_view' : '').' mheader-v'.$arTheme['HEADER_MOBILE']['VALUE'].' header-v'.$arTheme['HEADER_TYPE']['VALUE'].' regions_'.$arTheme['USE_REGIONALITY']['VALUE'].' fill_'.$arTheme['SHOW_BG_BLOCK']['VALUE'].' footer-v'.$arTheme['FOOTER_TYPE']['VALUE'].' front-v'.$arTheme['INDEX_TYPE']['VALUE'].' mfixed_'.$arTheme['HEADER_MOBILE_FIXED']['VALUE'].' mfixed_view_'.strtolower($arTheme['HEADER_MOBILE_FIXED']['DEPENDENT_PARAMS']['HEADER_MOBILE_SHOW']['VALUE']).' title-v'.$arTheme['PAGE_TITLE']['VALUE'].((int)($arTheme['HEADER_PHONES']) > 0 ? ' with_phones' : '');
+		return 'basket_'.$basket_class.' basket_fill_'.$arTheme['ORDER_BASKET_COLOR']['VALUE'].' side_'.$arTheme['SIDE_MENU']['VALUE'].' catalog_icons_'.$arTheme['LEFT_BLOCK_CATALOG_ICONS']['VALUE'].' banner_auto '.($arTheme['USE_FAST_VIEW_PAGE_DETAIL']['VALUE'] != 'NO' ? 'with_fast_view' : '').' mheader-v'.$arTheme['HEADER_MOBILE']['VALUE'].' header-v'.$arTheme['HEADER_TYPE']['VALUE'].' regions_'.$arTheme['USE_REGIONALITY']['VALUE'].' fill_'.$arTheme['SHOW_BG_BLOCK']['VALUE'].' footer-v'.$arTheme['FOOTER_TYPE']['VALUE'].' front-v'.$arTheme['INDEX_TYPE']['VALUE'].' mfixed_'.$arTheme['HEADER_MOBILE_FIXED']['VALUE'].' mfixed_view_'.strtolower($arTheme['HEADER_MOBILE_FIXED']['DEPENDENT_PARAMS']['HEADER_MOBILE_SHOW']['VALUE']).' title-v'.$arTheme['PAGE_TITLE']['VALUE'].((int)($arTheme['HEADER_PHONES']) > 0 ? ' with_phones' : '').($arTheme['MOBILE_CATALOG_LIST_ELEMENTS_COMPACT']['VALUE'] === 'Y' ? ' ce_cmp' : '');
 	}
 
 	public static function getCurrentPageClass(){
@@ -2461,7 +2493,7 @@ class CNext{
 		static $result;
 
 		if(!isset($result))
-			$result = CSite::InDir(SITE_DIR.'b2b/index.php');
+			$result = CSite::InDir(SITE_DIR.'index.php');
 
 		return $result;
 	}
@@ -2627,10 +2659,7 @@ class CNext{
 				{
 					if(($bCustom = ($colorCode == 'CUSTOM')) && $bGenerateCustom)
 					{
-						if(strlen($baseColorCustom))
-						{
-							$less->setVariables(array('bcolor' => (strlen($baseColorCustom) ? '#'.$baseColorCustom : $arBaseColors[self::$arParametrsList['MAIN']['OPTIONS']['BASE_COLOR']['DEFAULT']]['COLOR'])));
-						}
+						$less->setVariables(array('bcolor' => (strlen($baseColorCustom) ? '#'.$baseColorCustom : $arBaseColors[self::$arParametrsList['MAIN']['OPTIONS']['BASE_COLOR']['DEFAULT']]['COLOR'])));
 					}
 					elseif($bGenerateAll)
 					{
@@ -3065,6 +3094,24 @@ class CNext{
 		}
 
 		$start = $i;
+
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y' && $GLOBALS['arRegion']){
+			if(is_array($childs)){
+				foreach($childs as $i => $item){
+					if($item['PARAMS'] && isset($item['PARAMS']['LINK_REGION'])){
+						if($item['PARAMS']['LINK_REGION']){
+							if(!in_array($GLOBALS['arRegion']['ID'], $item['PARAMS']['LINK_REGION'])){
+								unset($childs[$i]);
+							}
+						}
+						else{
+							unset($childs[$i]);
+						}
+					}
+				}
+			}
+		}
+
 		return $childs;
 	}
 
@@ -3134,15 +3181,16 @@ class CNext{
 				$childs[] = $item;
 			}
 		}
+
 		$start = $i;
 
 		if(is_array($childs)){
-			foreach($childs as $j => $item){
+			foreach($childs as $i => $item){
 				if($item['PARAMS']){
 					$md5 = md5($item['TEXT'].$item['LINK'].$item['SELECTED'].$item['PERMISSION'].$item['ITEM_TYPE'].$item['IS_PARENT'].serialize($item['ADDITIONAL_LINKS']).serialize($item['PARAMS']));
 					if(isset($arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']])){
 						if(isset($arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']][$level]) || ($item['DEPTH_LEVEL'] === 1 && !$level)){
-							unset($childs[$j]);
+							unset($childs[$i]);
 							continue;
 						}
 					}
@@ -3151,6 +3199,23 @@ class CNext{
 					}
 					else{
 						$arIblockItemsMD5[$md5][$item['PARAMS']['DEPTH_LEVEL']][$level] = true;
+					}
+				}
+			}
+		}
+
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y' && $GLOBALS['arRegion']){
+			if(is_array($childs)){
+				foreach($childs as $i => $item){
+					if($item['PARAMS'] && isset($item['PARAMS']['LINK_REGION'])){
+						if($item['PARAMS']['LINK_REGION']){
+							if(!in_array($GLOBALS['arRegion']['ID'], $item['PARAMS']['LINK_REGION'])){
+								unset($childs[$i]);
+							}
+						}
+						else{
+							unset($childs[$i]);
+						}
 					}
 				}
 			}
@@ -3169,8 +3234,12 @@ class CNext{
 				if($arSection['IBLOCK_SECTION_ID'] == $PSID){
 					$arItem = array($arSection['NAME'], $arSection['SECTION_PAGE_URL'], array(), array('FROM_IBLOCK' => 1, 'DEPTH_LEVEL' => $arSection['DEPTH_LEVEL']));
 					$arItem[3]['IS_PARENT'] = (isset($arItemsBySectionID[$arSection['ID']]) || isset($arSectionsByParentSectionID[$arSection['ID']]) ? 1 : 0);
-					if($arSection["PICTURE"])
+					if($arSection["PICTURE"]){
 						$arItem[3]["PICTURE"]=$arSection["PICTURE"];
+					}
+					if($arSection["UF_REGION"]){
+						$arItem[3]["LINK_REGION"]=$arSection["UF_REGION"];
+					}
 					$aMenuLinksExt[] = $arItem;
 					if($arItem[3]['IS_PARENT']){
 						// subsections
@@ -3217,6 +3286,7 @@ class CNext{
 
 	public static function getChainNeighbors($curSectionID, $chainPath){
 		static $arSections, $arSectionsIDs, $arSubSections;
+
 		$arResult = array();
 
 		if($arSections === NULL){
@@ -3230,14 +3300,16 @@ class CNext{
 			}
 
 			if($arSectionsIDs){
-				$resSubSection = CIBlockSection::GetList(array('SORT' => 'ASC'), array("ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $IBLOCK_ID, "SECTION_ID" => $arSectionsIDs), false, array("ID", "NAME", "IBLOCK_SECTION_ID", "SECTION_PAGE_URL"));
+				$arSubSectionsFilter = array("ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $IBLOCK_ID, "SECTION_ID" => $arSectionsIDs);
+				$resSubSection = CIBlockSection::GetList(array('SORT' => 'ASC'), self::makeSectionFilterInRegion($arSubSectionsFilter), false, array("ID", "NAME", "IBLOCK_SECTION_ID", "SECTION_PAGE_URL"));
 				while($arSubSection = $resSubSection->GetNext()){
 					$arSubSection["IBLOCK_SECTION_ID"] = ($arSubSection["IBLOCK_SECTION_ID"] ? $arSubSection["IBLOCK_SECTION_ID"] : 0);
 					$arSubSections[$arSubSection["IBLOCK_SECTION_ID"]][] = $arSubSection;
 				}
 
 				if(in_array(0, $arSectionsIDs)){
-					$resSubSection = CIBlockSection::GetList(array('SORT' => 'ASC'), array("ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $IBLOCK_ID, "SECTION_ID" => false), false, array("ID", "NAME", "IBLOCK_SECTION_ID", "SECTION_PAGE_URL"));
+					$arSubSectionsFilter = array("ACTIVE" => "Y", "GLOBAL_ACTIVE" => "Y", "IBLOCK_ID" => $IBLOCK_ID, "SECTION_ID" => false);
+					$resSubSection = CIBlockSection::GetList(array('SORT' => 'ASC'), self::makeSectionFilterInRegion($arSubSectionsFilter), false, array("ID", "NAME", "IBLOCK_SECTION_ID", "SECTION_PAGE_URL"));
 					while($arSubSection = $resSubSection->GetNext()){
 						$arSubSections[$arSubSection["IBLOCK_SECTION_ID"]][] = $arSubSection;
 					}
@@ -3261,6 +3333,254 @@ class CNext{
 		}
 
 		return $arResult;
+	}
+
+	public static function getSectionsIds_NotInRegion($iblockId = false, $regionId = false){
+		static $arCache, $arIblockHasUFRegion;
+
+		$arSectionsIds = array();
+
+		if(!$iblockId){
+			$iblockId = CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0];
+		}
+
+		if($iblockId){
+			if(!isset($arIblockHasUFRegion)){
+				$arIblockHasUFRegion = array();
+			}
+
+			if(!isset($arIblockHasUFRegion[$iblockId])){
+				$arIblockHasUFRegion[$iblockId] = false;
+
+				$rsData = \CUserTypeEntity::GetList(array('ID' => 'ASC'), array('ENTITY_ID' => 'IBLOCK_'.$iblockId.'_SECTION', 'FIELD_NAME' => 'UF_REGION'));
+				if($arRes = $rsData->Fetch()){
+					$arIblockHasUFRegion[$iblockId] = true;
+				}
+			}
+
+			if($arIblockHasUFRegion[$iblockId]){
+				if(!$regionId && $GLOBALS['arRegion']){
+					$regionId = $GLOBALS['arRegion']['ID'];
+				}
+
+				if($regionId){
+					if(!isset($arCache)){
+						$arCache = array();
+					}
+
+					if(!isset($arCache[$iblockId])){
+						$arCache[$iblockId] = array();
+					}
+
+					if(!isset($arCache[$iblockId][$regionId])){
+						if($arSections = CNextCache::CIBLockSection_GetList(
+							array(
+								'CACHE' => array(
+									'TAG' => CNextCache::GetIBlockCacheTag($iblockId),
+									'MULTI' => 'Y'
+								)
+							),
+							array(
+								'IBLOCK_ID' => $iblockId,
+								'!UF_REGION' => $regionId,
+							),
+							false,
+							array(
+								'ID',
+								'RIGHT_MARGIN',
+								'LEFT_MARGIN',
+							),
+							false
+						)){
+							$arSectionsIds = array_column($arSections, 'ID');
+
+							if($arSectionsIds){
+								if($arSectionsIds_ = CNextCache::CIBLockSection_GetList(
+									array(
+										'CACHE' => array(
+											'TAG' => CNextCache::GetIBlockCacheTag($iblockId),
+											'MULTI' => 'Y',
+											'RESULT' => array('ID'),
+										)
+									),
+									array(
+										'IBLOCK_ID' => $iblockId,
+										'ID' => $arSectionsIds,
+										'UF_REGION' => $regionId,
+									),
+									false,
+									array('ID'),
+									false
+								)){
+									$arSectionsIds = array_diff($arSectionsIds, $arSectionsIds_);
+								}
+							}
+
+							$arSubSectionsIds = array();
+							foreach($arSections as $arSection){
+								if(in_array($arSection['ID'], $arSectionsIds)){
+									if(($arSection['LEFT_MARGIN'] + 1) < $arSection['RIGHT_MARGIN']){
+										$arSubSectionsIds[] = $arSection['ID'];
+									}
+								}
+							}
+
+							while($arSubSectionsIds){
+								if($arSections = CNextCache::CIBLockSection_GetList(
+									array(
+										'CACHE' => array(
+											'TAG' => CNextCache::GetIBlockCacheTag($iblockId),
+											'MULTI' => 'Y'
+										)
+									),
+									array(
+										'IBLOCK_ID' => $iblockId,
+										'SECTION_ID' => $arSubSectionsIds,
+									),
+									false,
+									array(
+										'ID',
+										'RIGHT_MARGIN',
+										'LEFT_MARGIN',
+									),
+									false
+								)){
+									$arSubSectionsIds = array_column($arSections, 'ID');
+									if($arSubSectionsIds){
+										if($arSectionsIds_ = CNextCache::CIBLockSection_GetList(
+											array(
+												'CACHE' => array(
+													'TAG' => CNextCache::GetIBlockCacheTag($iblockId),
+													'MULTI' => 'Y',
+													'RESULT' => array('ID'),
+												)
+											),
+											array(
+												'IBLOCK_ID' => $iblockId,
+												'ID' => $arSubSectionsIds,
+												'UF_REGION' => $regionId,
+											),
+											false,
+											array('ID'),
+											false
+										)){
+											$arSubSectionsIds = array_diff($arSubSectionsIds, $arSectionsIds_);
+										}
+									}
+
+									if($arSubSectionsIds){
+										$arSectionsIds = array_merge($arSectionsIds, $arSubSectionsIds);
+									}
+
+									$arSubSubSectionsIds = array();
+									foreach($arSections as $arSection){
+										if(in_array($arSection['ID'], $arSubSectionsIds)){
+											if(($arSection['LEFT_MARGIN'] + 1) < $arSection['RIGHT_MARGIN']){
+												$arSubSubSectionsIds[] = $arSection['ID'];
+											}
+										}
+									}
+									$arSubSectionsIds = $arSubSubSectionsIds;
+								}
+								else{
+									$arSubSectionsIds = array();
+								}
+							}
+						}
+
+						$arCache[$iblockId][$regionId] = $arSectionsIds;
+					}
+					else{
+						$arSectionsIds = $arCache[$iblockId][$regionId];
+					}
+				}
+			}
+		}
+
+		return $arSectionsIds;
+	}
+
+	public static function makeSectionFilterInRegion(&$arFilter, $regionId = false){
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y'){
+			$iblockId = $arFilter['IBLOCK_ID'];
+			if(!$iblockId){
+				$iblockId = CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0];
+			}
+
+			if($iblockId){
+				if(!$regionId && $GLOBALS['arRegion']){
+					$regionId = $GLOBALS['arRegion']['ID'];
+				}
+
+				if($regionId){
+					if($arSectionsIds = self::getSectionsIds_NotInRegion($arFilter['IBLOCK_ID'], $regionId)){
+						$arFilter['!ID'] = $arSectionsIds;
+					}
+				}
+			}
+		}
+
+		return $arFilter;
+	}
+
+	public static function makeElementFilterInRegion(&$arFilter, $regionId = false){
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y'){
+			$iblockId = $arFilter['IBLOCK_ID'];
+			if(!$iblockId){
+				$iblockId = CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0];
+			}
+
+			if($iblockId){
+				if(!$regionId && $GLOBALS['arRegion']){
+					$regionId = $GLOBALS['arRegion']['ID'];
+				}
+
+				if($regionId){
+					if($arSectionsIds = self::getSectionsIds_NotInRegion($arFilter['IBLOCK_ID'], $regionId)){
+						$arFilter['!IBLOCK_SECTION_ID'] = $arSectionsIds;
+					}
+				}
+			}
+		}
+		return $arFilter;
+	}
+
+	public static function checkElementsIdsInRegion(&$arIds, $iblockId = false, $regionId = false){
+		if($GLOBALS['arTheme']['USE_REGIONALITY']['VALUE'] === 'Y' && $GLOBALS['arTheme']['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y' && $arIds){
+			if(!$iblockId){
+				$iblockId = CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0];
+			}
+
+			if($iblockId){
+				if(!$regionId && $GLOBALS['arRegion']){
+					$regionId = $GLOBALS['arRegion']['ID'];
+				}
+
+				if($regionId){
+					if($arSectionsIds = self::getSectionsIds_NotInRegion($arFilter['IBLOCK_ID'], $regionId)){
+						$arIds = CNextCache::CIBLockElement_GetList(
+							array(
+								'CACHE' => array(
+									'TAG' => CNextCache::GetIBlockCacheTag($iblockId),
+									'RESULT' => array('ID'),
+									'MULTI' => 'Y',
+								)
+							),
+							array(
+								'ID' => $arIds,
+								'IBLOCK_ID' => $iblockId,
+								'!IBLOCK_SECTION_ID' => $arSectionsIds,
+							),
+							false,
+							false,
+							array('ID')
+						);
+					}
+				}
+			}
+		}
+
+		return $arIds;
 	}
 
 	public static function drawFormField($FIELD_SID, $arQuestion){
@@ -3335,8 +3655,32 @@ class CNext{
 					$totalCount += $quantity;
 				}
 			}
-			else
-			{
+			elseif(isset($arItem['SET_ITEMS']) && is_array($arItem['SET_ITEMS'])){
+			    $arProductSet = array();
+			    foreach ($arItem['SET_ITEMS'] as $k => $v){
+				$arProductSet[] = $v["ID"];
+			    }
+
+			    if(count($arProductSet)>0) {
+				$arSelect[] = "ELEMENT_ID";
+				$rsStore = CCatalogStore::GetList(array(), array_merge($arFilter, array('PRODUCT_ID' => $arProductSet)), false, false, $arSelect);
+				unset($arProductSet);
+				$quantity = array();
+				while($arStore = $rsStore->Fetch())
+				{
+				    $quantity[$arStore["ELEMENT_ID"]] += $arStore['PRODUCT_AMOUNT'];
+				}
+
+				if(!empty($quantity) && is_array($quantity)){
+				    foreach ($arItem['SET_ITEMS'] as $k => $v){
+					$quantity[$v["ID"]] /= $v["QUANTITY"];
+					$quantity[$v["ID"]] = floor($quantity[$v["ID"]]);
+				    }
+				}
+				$totalCount = min($quantity);
+			    }
+			}
+			else{
 				$rsStore = CCatalogStore::GetList(array(), array_merge($arFilter, array('PRODUCT_ID' => $arItem['ID'])), false, false, $arSelect);
 				while($arStore = $rsStore->Fetch())
 				{
@@ -3362,7 +3706,10 @@ class CNext{
 		return self::CheckTypeCount($totalCount);
 	}
 
-	public static function GetQuantityArray($totalCount, $arItemIDs = array(), $useStoreClick="N"){
+	public static function GetQuantityArray($totalCount, $arItemIDs = array(), $useStoreClick="N", $productType=1){
+		if($productType==2){
+		    return;
+		}
 		static $arQuantityOptions, $arQuantityRights;
 		if($arQuantityOptions === NULL){
 			$arQuantityOptions = array(
@@ -3559,7 +3906,7 @@ class CNext{
 		return $result;
 	}
 
-	public static function GetSKUPropsArray(&$arSkuProps, $iblock_id=0, $type_view="list", $hide_title_props="N", $group_iblock_id="N", $arItem = array()){
+	public static function GetSKUPropsArray(&$arSkuProps, $iblock_id=0, $type_view="list", $hide_title_props="N", $group_iblock_id="N", $arItem = array(), $offerShowPreviewPictureProps = array()){
 		$arSkuTemplate = array();
 		$class_title=($hide_title_props=="Y" ? "hide_class" : "show_class");
 		$class_title.=' bx_item_section_name';
@@ -3627,11 +3974,11 @@ class CNext{
 					$class_title.= (($arProp["HINT"] && $arProp["SHOW_HINTS"] == "Y") ? ' whint char_name' : '');
 					$hint_block = (($arProp["HINT"] && $arProp["SHOW_HINTS"]=="Y") ? '<div class="hint"><span class="icon"><i>?</i></span><div class="tooltip">'.$arProp["HINT"].'</div></div>' : '');
 					if(($arProp["DISPLAY_TYPE"]=="P" || $arProp["DISPLAY_TYPE"]=="R" ) && $type_view!= 'block' ){
-						$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="SELECT" data-id="'.$arProp['ID'].'">'.
+						$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="SELECT" data-id="'.$arProp['ID'].'">'.
 		'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 		'<div class="bx_size_scroller_container form-control bg"><div class="bx_size"><select id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 						foreach ($arProp['VALUES'] as $arOneValue){
-							if($arOneValue['ID']>0){
+							//if($arOneValue['ID']>0){
 								$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
 								$templateRow .= '<option '.$arOneValue['SELECTED'].' '.$arOneValue['DISABLED'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="select" data-onevalue="'.$arOneValue['ID'].'" ';
 								if($arProp["DISPLAY_TYPE"]=="R"){
@@ -3640,69 +3987,106 @@ class CNext{
 								$templateRow .= 'title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'">';
 								$templateRow .= '<span class="cnt">'.$arOneValue['NAME'].'</span>';
 								$templateRow .= '</option>';
-							}
+							//}
 						}
 						$templateRow .= '</select></div>'.
 		'</div></div>';
 					}elseif ('TEXT' == $arProp['SHOW_MODE']){
-						$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+						$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 		'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 		'<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 						foreach ($arProp['VALUES'] as $arOneValue){
-							if($arOneValue['ID']>0){
+							//if($arOneValue['ID']>0){
 								$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
 								$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><i></i><span class="cnt">'.$arOneValue['NAME'].'</span></li>';
-							}
+							//}
 						}
 						$templateRow .= '</ul></div>'.
 		'</div></div>';
 					}elseif ('PICT' == $arProp['SHOW_MODE']){
-						$isHasPicture = true;
-
-						foreach ($arProp['VALUES'] as $arOneValue){
-							if($arOneValue['ID']>0){
-								if(!isset($arOneValue['PICT']['SRC']) || !$arOneValue['PICT']['SRC'])
-								{
-									if(!$bTextViewProp)
-									{
-										$arProp['VALUES'][$keyProp]['PICT']['SRC'] = SITE_TEMPLATE_PATH.'/images/no_photo_small.png';
-										$arProp['VALUES'][$keyProp]['NO_PHOTO'] = 'Y';
-									}
-									else
-									{
-										$isHasPicture = false;
-									}
+						$arCurrentTree = array();
+						if($offerShowPreviewPictureProps && is_array($offerShowPreviewPictureProps)){
+							if(in_array($arProp['CODE'], $offerShowPreviewPictureProps)){
+								if($arCurrentOffer && $arCurrentOffer['TREE']){
+									$arCurrentTree = $arCurrentOffer['TREE'];
 								}
 							}
 						}
+
+						$isHasPicture = true;
+						foreach($arProp['VALUES'] as &$arOneValue){
+							$boolOneSearch = false;
+							if($arCurrentTree && $arOneValue['ID'] != 0){
+								$arRowTree = $arCurrentTree;
+								$arRowTree['PROP_'.$arProp['ID']] = $arOneValue['ID'];
+
+								foreach($arItem['OFFERS'] as &$arOffer){
+									$boolOneSearch = true;
+									foreach($arRowTree as $rkey => $rval){
+										if($rval !== $arOffer['TREE'][$rkey]){
+											$boolOneSearch = false;
+											break;
+										}
+									}
+									if($boolOneSearch){
+										if($arOffer['PREVIEW_PICTURE_FIELD'] && is_array($arOffer['PREVIEW_PICTURE_FIELD']) && $arOffer['PREVIEW_PICTURE_FIELD']['SRC']){
+											$arOneValue['NEW_PICT'] = $arOffer['PREVIEW_PICTURE_FIELD'];
+										}
+										else{
+											$boolOneSearch = false;
+										}
+										break;
+									}
+								}
+								unset($arOffer);
+							}
+
+							if(!$boolOneSearch){
+								//if($arOneValue['ID']>0){
+									if(!isset($arOneValue['PICT']['SRC']) || !$arOneValue['PICT']['SRC'])
+									{
+										if(!$bTextViewProp)
+										{
+											$arOneValue['PICT']['SRC'] = SITE_TEMPLATE_PATH.'/images/no_photo_small.png';
+											$arOneValue['NO_PHOTO'] = 'Y';
+										}
+										else
+										{
+											$isHasPicture = false;
+										}
+									}
+								//}
+							}
+						}
+						unset($arOneValue);
+
 						if($isHasPicture)
 						{
-							$templateRow .= '<div class="bx_item_detail_scu" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+							$templateRow .= '<div class="bx_item_detail_scu" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 		'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 		'<div class="bx_scu_scroller_container"><div class="bx_scu"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 						}
 						else
 						{
-							$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+							$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 		'<span class="'.$class_title.'">'.htmlspecialcharsex($arProp['NAME']).'</span>'.
 		'<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 						}
 						foreach ($arProp['VALUES'] as $arOneValue){
-							if($arOneValue['ID']>0){
+							//if($arOneValue['ID']>0){
 								$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
-								if(isset($arOneValue['PICT']['SRC']) && $arOneValue['PICT']['SRC'] && $isHasPicture)
+								if($isHasPicture && ($arOneValue['NEW_PICT'] || (isset($arOneValue['PICT']['SRC']) && $arOneValue['PICT']['SRC'])))
 								{
-									$str = '<span class="cnt1"><span class="cnt_item" style="background-image:url(\''.$arOneValue['PICT']['SRC'].'\');" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></span></span>';
+									$str = '<span class="cnt1"><span class="cnt_item'.($arOneValue['NEW_PICT'] ? ' pp' : '').'" style="background-image:url(\''.($arOneValue['NEW_PICT'] ? $arOneValue['NEW_PICT']['SRC'] : $arOneValue['PICT']['SRC']).'\');" data-obgi="url(\''.$arOneValue['PICT']['SRC'].'\')" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></span></span>';
 									if(isset($arOneValue['NO_PHOTO']) && $arOneValue['NO_PHOTO'] == 'Y')
 										$str = '<span class="cnt1 nf"><span class="cnt_item" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><span class="bg" style="background-image:url(\''.$arOneValue['PICT']['SRC'].'\');"></span></span></span>';
 									$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'"><i title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></i>'.$str.'</li>';
-
 								}
 								else
 								{
 									$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><i></i><span class="cnt">'.$arOneValue['NAME'].'</span></li>';
 								}
-							}
+							//}
 						}
 						$templateRow .= '</ul></div>'.
 		'</div></div>';
@@ -3716,11 +4100,11 @@ class CNext{
 				$class_title.= (($arProp["HINT"] && $arProp["SHOW_HINTS"] == "Y") ? ' whint char_name' : '');
 				$hint_block = (($arProp["HINT"] && $arProp["SHOW_HINTS"]=="Y") ? '<div class="hint"><span class="icon"><i>?</i></span><div class="tooltip">'.$arProp["HINT"].'</div></div>' : '');
 				if(($arProp["DISPLAY_TYPE"]=="P" || $arProp["DISPLAY_TYPE"]=="R" ) && $type_view!= 'block' ){
-					$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="SELECT" data-id="'.$arProp['ID'].'">'.
+					$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="SELECT" data-id="'.$arProp['ID'].'">'.
 	'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 	'<div class="bx_size_scroller_container form-control bg"><div class="bx_size"><select id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 					foreach ($arProp['VALUES'] as $arOneValue){
-						if($arOneValue['ID']>0){
+						//if($arOneValue['ID']>0){
 							$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
 							$templateRow .= '<option '.$arOneValue['SELECTED'].' '.$arOneValue['DISABLED'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="select" data-onevalue="'.$arOneValue['ID'].'" ';
 							if($arProp["DISPLAY_TYPE"]=="R"){
@@ -3729,60 +4113,98 @@ class CNext{
 							$templateRow .= 'title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'">';
 							$templateRow .= '<span class="cnt">'.$arOneValue['NAME'].'</span>';
 							$templateRow .= '</option>';
-						}
+						//}
 					}
 					$templateRow .= '</select></div>'.
 	'</div></div>';
 				}elseif ('TEXT' == $arProp['SHOW_MODE']){
-					$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+					$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 	'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 	'<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 					foreach ($arProp['VALUES'] as $arOneValue){
-						if($arOneValue['ID']>0){
+						//if($arOneValue['ID']>0){
 							$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
 							$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><i></i><span class="cnt">'.$arOneValue['NAME'].'</span></li>';
-						}
+						//}
 					}
 					$templateRow .= '</ul></div>'.
 	'</div></div>';
 				}elseif ('PICT' == $arProp['SHOW_MODE']){
-					$isHasPicture = $bHasPhoto = true;
-					foreach ($arProp['VALUES'] as $keyProp => $arOneValue){
-						if($arOneValue['ID']>0){
-							if(!isset($arOneValue['PICT']['SRC']) || !$arOneValue['PICT']['SRC'])
-							{
-								if(!$bTextViewProp)
-								{
-									$arProp['VALUES'][$keyProp]['PICT']['SRC'] = SITE_TEMPLATE_PATH.'/images/no_photo_small.png';
-									$arProp['VALUES'][$keyProp]['NO_PHOTO'] = 'Y';
-								}
-								else
-								{
-									$isHasPicture = false;
-								}
+					$arCurrentTree = array();
+					if($offerShowPreviewPictureProps && is_array($offerShowPreviewPictureProps)){
+						if(in_array($arProp['CODE'], $offerShowPreviewPictureProps)){
+							if($arCurrentOffer && $arCurrentOffer['TREE']){
+								$arCurrentTree = $arCurrentOffer['TREE'];
 							}
 						}
 					}
 
+					$isHasPicture = true;
+					foreach($arProp['VALUES'] as &$arOneValue){
+						$boolOneSearch = false;
+						if($arCurrentTree && $arOneValue['ID'] != 0){
+							$arRowTree = $arCurrentTree;
+							$arRowTree['PROP_'.$arProp['ID']] = $arOneValue['ID'];
+
+							foreach($arItem['OFFERS'] as &$arOffer){
+								$boolOneSearch = true;
+								foreach($arRowTree as $rkey => $rval){
+									if($rval !== $arOffer['TREE'][$rkey]){
+										$boolOneSearch = false;
+										break;
+									}
+								}
+								if($boolOneSearch){
+									if($arOffer['PREVIEW_PICTURE_FIELD'] && is_array($arOffer['PREVIEW_PICTURE_FIELD']) && $arOffer['PREVIEW_PICTURE_FIELD']['SRC']){
+										$arOneValue['NEW_PICT'] = $arOffer['PREVIEW_PICTURE_FIELD'];
+									}
+									else{
+										$boolOneSearch = false;
+									}
+									break;
+								}
+							}
+							unset($arOffer);
+						}
+
+						if(!$boolOneSearch){
+							//if($arOneValue['ID']>0){
+								if(!isset($arOneValue['PICT']['SRC']) || !$arOneValue['PICT']['SRC'])
+								{
+									if(!$bTextViewProp)
+									{
+										$arOneValue['PICT']['SRC'] = SITE_TEMPLATE_PATH.'/images/no_photo_small.png';
+										$arOneValue['NO_PHOTO'] = 'Y';
+									}
+									else
+									{
+										$isHasPicture = false;
+									}
+								}
+							//}
+						}
+					}
+					unset($arOneValue);
+
 					if($isHasPicture)
 					{
-						$templateRow .= '<div class="bx_item_detail_scu" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+						$templateRow .= '<div class="bx_item_detail_scu" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 	'<span class="'.$class_title.'">'.$hint_block.'<span>'.htmlspecialcharsex($arProp['NAME']).'</span></span>'.
 	'<div class="bx_scu_scroller_container"><div class="bx_scu"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 					}
 					else
 					{
-						$templateRow .= '<div class="bx_item_detail_size" id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
+						$templateRow .= '<div class="bx_item_detail_size" '.$arProp['STYLE'].' id="#ITEM#_prop_'.$arProp['ID'].'_cont" data-display_type="LI" data-id="'.$arProp['ID'].'">'.
 	'<span class="'.$class_title.'">'.htmlspecialcharsex($arProp['NAME']).'</span>'.
 	'<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_'.$arProp['ID'].'_list" class="list_values_wrapper">';
 
 					}
 					foreach ($arProp['VALUES'] as $arOneValue){
-						if($arOneValue['ID']>0){
+						//if($arOneValue['ID']>0){
 							$arOneValue['NAME'] = htmlspecialcharsbx($arOneValue['NAME']);
-							if(isset($arOneValue['PICT']['SRC']) && $arOneValue['PICT']['SRC'] && $isHasPicture)
+							if($isHasPicture && ($arOneValue['NEW_PICT'] || (isset($arOneValue['PICT']['SRC']) && $arOneValue['PICT']['SRC'])))
 							{
-								$str = '<span class="cnt1"><span class="cnt_item" style="background-image:url(\''.$arOneValue['PICT']['SRC'].'\');" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></span></span>';
+								$str = '<span class="cnt1"><span class="cnt_item'.($arOneValue['NEW_PICT'] ? ' pp' : '').'" style="background-image:url(\''.($arOneValue['NEW_PICT'] ? $arOneValue['NEW_PICT']['SRC'] : $arOneValue['PICT']['SRC']).'\');" data-obgi="url(\''.$arOneValue['PICT']['SRC'].'\')" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></span></span>';
 								if(isset($arOneValue['NO_PHOTO']) && $arOneValue['NO_PHOTO'] == 'Y')
 									$str = '<span class="cnt1 nf"><span class="cnt_item" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><span class="bg" style="background-image:url(\''.$arOneValue['PICT']['SRC'].'\');"></span></span></span>';
 								$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'"><i title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"></i>'.$str.'</li>';
@@ -3791,7 +4213,7 @@ class CNext{
 							{
 								$templateRow .= '<li class="item '.$arOneValue['CLASS'].'" '.$arOneValue['STYLE'].' data-treevalue="'.$arProp['ID'].'_'.$arOneValue['ID'].'" data-showtype="li" data-onevalue="'.$arOneValue['ID'].'" title="'.$arProp['NAME'].': '.$arOneValue['NAME'].'"><i></i><span class="cnt">'.$arOneValue['NAME'].'</span></li>';
 							}
-						}
+						//}
 					}
 					$templateRow .= '</ul></div>'.
 	'</div></div>';
@@ -3806,43 +4228,57 @@ class CNext{
 
 	public static function UpdateRow($arFilter, $arShowValues, $arCanBuyValues, $arProp, $type_view){
 		$isCurrent = false;
-		foreach($arProp['VALUES'] as $key => $arValue)
-		{
-			$value = $arValue['ID'];
-			$isCurrent = ($value === $arFilter && $value != 0);
-			$selectMode = (($arProp["DISPLAY_TYPE"] == "P" || $arProp["DISPLAY_TYPE"] == "R" ) && $type_view != 'block' );
+		$showI = 0;
 
-			if(in_array($value, $arCanBuyValues))
+		if($arProp['VALUES']){
+			foreach($arProp['VALUES'] as $key => $arValue)
 			{
-				$arProp['VALUES'][$key]['CLASS'] = ($isCurrent ? 'active' : '');
-			}
-			else
-			{
-				$arProp['VALUES'][$key]['CLASS'] = ($isCurrent ? 'active missing' : 'missing');
-			}
-			if($selectMode)
-			{
-				$arProp['VALUES'][$key]['DISABLED'] = 'disabled';
-				$arProp['VALUES'][$key]['SELECTED'] = ($isCurrent ? 'selected' : '');
-			}
-			else
-			{
-				$arProp['VALUES'][$key]['STYLE'] = 'style="display: none"';
-			}
+				$value = $arValue['ID'];
+				$isCurrent = ($value === $arFilter);
+				$selectMode = (($arProp["DISPLAY_TYPE"] == "P" || $arProp["DISPLAY_TYPE"] == "R" ) && $type_view != 'block' );
 
-			if(in_array($value, $arShowValues))
-			{
-				if($selectMode)
+				if(in_array($value, $arCanBuyValues))
 				{
-					$arProp['VALUES'][$key]['DISABLED'] = '';
+					$arProp['VALUES'][$key]['CLASS'] = ($isCurrent ? 'active' : '');
 				}
 				else
 				{
-					$arProp['VALUES'][$key]['STYLE'] = '';
+					$arProp['VALUES'][$key]['CLASS'] = ($isCurrent ? 'active missing' : 'missing');
+					// $arProp['VALUES'][$key]['CLASS'] = ($isCurrent ? 'active' : '');
+				}
+				if($selectMode)
+				{
+					$arProp['VALUES'][$key]['DISABLED'] = 'disabled';
+					$arProp['VALUES'][$key]['SELECTED'] = ($isCurrent ? 'selected' : '');
+				}
+				else
+				{
+					$arProp['VALUES'][$key]['STYLE'] = 'style="display: none"';
+				}
+
+				if(in_array($value, $arShowValues))
+				{
+					if($selectMode)
+					{
+						$arProp['VALUES'][$key]['DISABLED'] = '';
+					}
+					else
+					{
+						$arProp['VALUES'][$key]['STYLE'] = '';
+					}
+
+					if($value != 0)
+						++$showI;
 				}
 			}
-		}
 
+			if(!$showI){
+				$arProp['STYLE'] = 'style="display: none"';
+			}
+			else{
+				$arProp['STYLE'] = 'style=""';
+			}
+		}
 
 		return $arProp;
 	}
@@ -3855,35 +4291,39 @@ class CNext{
 
 		if(!$arFilter)
 		{
-			foreach($arItem['OFFERS'] as $arOffer)
-			{
-				if(!in_array($arOffer['TREE'][$index], $arValues))
+			if($arItem['OFFERS']){
+				foreach($arItem['OFFERS'] as $arOffer)
 				{
-					$arValues[] = $arOffer['TREE'][$index];
+					if(!in_array($arOffer['TREE'][$index], $arValues))
+					{
+						$arValues[] = $arOffer['TREE'][$index];
+					}
 				}
 			}
 			$boolSearch = true;
 		}
 		else
 		{
-			foreach($arItem['OFFERS'] as $arOffer)
-			{
-				$boolOneSearch = true;
-				foreach($arFilter as $propName => $filter)
+			if($arItem['OFFERS']){
+				foreach($arItem['OFFERS'] as $arOffer)
 				{
-					if ($filter !== $arOffer['TREE'][$propName])
+					$boolOneSearch = true;
+					foreach($arFilter as $propName => $filter)
 					{
-						$boolOneSearch = false;
-						break;
+						if ($filter !== $arOffer['TREE'][$propName])
+						{
+							$boolOneSearch = false;
+							break;
+						}
 					}
-				}
-				if ($boolOneSearch)
-				{
-					if(!in_array($arOffer['TREE'][$index], $arValues))
+					if ($boolOneSearch)
 					{
-						$arValues[] = $arOffer['TREE'][$index];
+						if(!in_array($arOffer['TREE'][$index], $arValues))
+						{
+							$arValues[] = $arOffer['TREE'][$index];
+						}
+						$boolSearch = true;
 					}
-					$boolSearch = true;
 				}
 			}
 		}
@@ -4023,6 +4463,7 @@ class CNext{
 				$display_type = ((($arItem['OFFERS_PROPS_JS'][$arOneProp['CODE']]['DISPLAY_TYPE'] == "P" || $arItem['OFFERS_PROPS_JS'][$arOneProp['CODE']]['DISPLAY_TYPE'] == "R") && $arParams["DISPLAY_TYPE"] != 'block' ) ? "SELECT" : "LI" );
 			$arSkuProps[] = array(
 				'ID' => $arOneProp['ID'],
+				'CODE' => $arOneProp['CODE'],
 				'SHOW_MODE' => $arOneProp['SHOW_MODE'],
 				'VALUES_COUNT' => $arOneProp['VALUES_COUNT'],
 				'DISPLAY_TYPE' => $display_type,
@@ -4205,6 +4646,7 @@ class CNext{
 			);
 		}
 		$arJSParams['SHOW_DISCOUNT_PERCENT_NUMBER'] = $arParams['SHOW_DISCOUNT_PERCENT_NUMBER'];
+		$arJSParams['OFFER_SHOW_PREVIEW_PICTURE_PROPS'] = $arParams['OFFER_SHOW_PREVIEW_PICTURE_PROPS'];
 		if ($arParams['DISPLAY_COMPARE']){
 			$arJSParams['COMPARE'] = array(
 				'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
@@ -4265,7 +4707,7 @@ class CNext{
 		}
 		$arItem["CAN_BUY"] = $canBuy;
 
-		$arItemProps = (($arParams['PRODUCT_PROPERTIES']) ? implode(';', $arParams['PRODUCT_PROPERTIES']) : "");
+		$arItemProps = $arItem['IS_OFFER'] === 'Y' ? ($arParams['OFFERS_CART_PROPERTIES'] ? implode(';', $arParams['OFFERS_CART_PROPERTIES']) : "") : ($arParams['PRODUCT_PROPERTIES'] ? implode(';', $arParams['PRODUCT_PROPERTIES']) : "");
 		$partProp=($arParams["PARTIAL_PRODUCT_PROPERTIES"] ? $arParams["PARTIAL_PRODUCT_PROPERTIES"] : "" );
 		$addProp=($arParams["ADD_PROPERTIES_TO_BASKET"] ? $arParams["ADD_PROPERTIES_TO_BASKET"] : "" );
 		$emptyProp=$arItem["EMPTY_PROPS_JS"];
@@ -4282,6 +4724,11 @@ class CNext{
 				$buttonText = array($arAddToBasketOptions['EXPRESSION_READ_MORE_OFFERS_DEFAULT']);
 				$buttonHTML = '<a class="btn btn-default basket read_more" rel="nofollow" href="'.$arItem["DETAIL_PAGE_URL"].'" data-item="'.$arItem["ID"].'">'.$buttonText[0].'</a>';
 			}
+		}
+		elseif(isset($arItem["PRODUCT"]["TYPE"]) && $arItem["PRODUCT"]["TYPE"] == 2) {
+			$buttonACTION = 'MORE';
+			$buttonText = array($arAddToBasketOptions['EXPRESSION_READ_MORE_OFFERS_DEFAULT']);
+			$buttonHTML = '<a class="btn btn-default basket read_more" rel="nofollow" href="'.$arItem["DETAIL_PAGE_URL"].'" data-item="'.$arItem["ID"].'">'.$buttonText[0].'</a>';
 		}
 		else{
 			if($bPriceExists = isset($arItem["MIN_PRICE"]) && $arItem["MIN_PRICE"]["VALUE"] > 0){
@@ -4769,6 +5216,8 @@ class CNext{
 		$DATETIME_MASK = ($tmp == 'DOT' ? 'd.m.y' : ($tmp == 'HYPHEN' ? 'd-m-y' : ($tmp == 'SPACE' ? 'd m y' : ($tmp == 'SLASH' ? 'd/m/y' : 'd:m:y')))).' h:s';
 		$DATETIME_PLACEHOLDER = ($tmp == 'DOT' ? GetMessage('DATE_FORMAT_DOT') : ($tmp == 'HYPHEN' ? GetMessage('DATE_FORMAT_HYPHEN') : ($tmp == 'SPACE' ? GetMessage('DATE_FORMAT_SPACE') : ($tmp == 'SLASH' ? GetMessage('DATE_FORMAT_SLASH') : GetMessage('DATE_FORMAT_COLON'))))).' '.GetMessage('TIME_FORMAT_COLON');
 		$VALIDATE_DATETIME_MASK = ($tmp == 'DOT' ? '^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'HYPHEN' ? '^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'SPACE' ? '^[0-9]{1,2} [0-9]{1,2} [0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : ($tmp == 'SLASH' ? '^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$' : '^[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{4} [0-9]{1,2}\:[0-9]{1,2}$'))));
+
+		list($bPhoneAuthSupported, $bPhoneAuthShow, $bPhoneAuthRequired, $bPhoneAuthUse) = Aspro\Next\PhoneAuth::getOptions();
 		?>
 		<?Bitrix\Main\Page\Frame::getInstance()->startDynamicWithID('basketitems-component-block');?>
 			<?if(self::getShowBasket()):?>
@@ -4849,6 +5298,7 @@ class CNext{
 				'SCROLLTOTOP_TYPE' : '<?=$arFrontParametrs['SCROLLTOTOP_TYPE']?>',
 				'SCROLLTOTOP_POSITION' : '<?=$arFrontParametrs['SCROLLTOTOP_POSITION']?>',
 				'CAPTCHA_FORM_TYPE' : '<?=$arFrontParametrs['CAPTCHA_FORM_TYPE']?>',
+				'ONE_CLICK_BUY_CAPTCHA' : '<?=$arFrontParametrs['ONE_CLICK_BUY_CAPTCHA']?>',
 				'PHONE_MASK' : '<?=$arFrontParametrs['PHONE_MASK']?>',
 				'VALIDATE_PHONE_MASK' : '<?=$arFrontParametrs['VALIDATE_PHONE_MASK']?>',
 				'DATE_MASK' : '<?=$DATE_MASK?>',
@@ -4870,6 +5320,8 @@ class CNext{
 				"SHOW_ONECLICKBUY_ON_BASKET_PAGE" : '<?=$arFrontParametrs['SHOW_ONECLICKBUY_ON_BASKET_PAGE'];?>',
 				'SHOW_LICENCE' : '<?=$arFrontParametrs['SHOW_LICENCE'];?>',
 				'LICENCE_CHECKED' : '<?=$arFrontParametrs['LICENCE_CHECKED'];?>',
+				'LOGIN_EQUAL_EMAIL' : '<?=$arFrontParametrs['LOGIN_EQUAL_EMAIL'];?>',
+				'PERSONAL_ONEFIO' : '<?=$arFrontParametrs['PERSONAL_ONEFIO'];?>',
 				'SHOW_TOTAL_SUMM' : '<?=$arFrontParametrs['SHOW_TOTAL_SUMM'];?>',
 				'SHOW_TOTAL_SUMM_TYPE' : '<?=$arFrontParametrs['SHOW_TOTAL_SUMM_TYPE'];?>',
 				'CHANGE_TITLE_ITEM' : '<?=$arFrontParametrs['CHANGE_TITLE_ITEM'];?>',
@@ -4904,6 +5356,8 @@ class CNext{
 				'USE_DEBUG_GOALS' : '<?=$arFrontParametrs['USE_DEBUG_GOALS']?>',
 				'SHOW_HEADER_GOODS' : '<?=$arFrontParametrs['SHOW_HEADER_GOODS']?>',
 				'INSTAGRAMM_INDEX' : '<?=(isset($arFrontParametrs[$arFrontParametrs['INDEX_TYPE'].'_INSTAGRAMM']) ? $arFrontParametrs[$arFrontParametrs['INDEX_TYPE'].'_INSTAGRAMM'] : 'Y')?>',
+				'USE_PHONE_AUTH': '<?=($bPhoneAuthUse ? 'Y' : 'N')?>',
+				'MOBILE_CATALOG_LIST_ELEMENTS_COMPACT': '<?=$arFrontParametrs['MOBILE_CATALOG_LIST_ELEMENTS_COMPACT']?>',
 			}),
 			"PRESETS": <?=CUtil::PhpToJSObject(self::$arPresetsList)?>,
 			"REGIONALITY":({
@@ -4942,7 +5396,7 @@ class CNext{
 		global $arRegion, $APPLICATION;
 		static $addr_call;
 		$iCalledID = ++$addr_call;
-		$regionID = ($arRegion ? $arRegion['ID'] : '');?>
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
 
 		<?if($arRegion):?>
 		<?$frame = new \Bitrix\Main\Page\FrameHelper('address-block'.$iCalledID);?>
@@ -4976,7 +5430,7 @@ class CNext{
 		global $arRegion, $APPLICATION;
 		static $email_call;
 		$iCalledID = ++$email_call;
-		$regionID = ($arRegion ? $arRegion['ID'] : '');?>
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
 
 		<?if($arRegion):?>
 		<?$frame = new \Bitrix\Main\Page\FrameHelper('email-block'.$iCalledID);?>
@@ -5008,6 +5462,56 @@ class CNext{
 
 	<?}
 
+	public static function ShowHeaderMobilePhones($class = ''){
+		global $arRegion;
+		static $hphones_call_m;
+
+		$iCalledID = ++$hphones_call_m;
+		$arBackParametrs = self::GetBackParametrsValues(SITE_ID);
+
+		$iCountPhones = ($arRegion ? count($arRegion['PHONES']) : $arBackParametrs['HEADER_PHONES']);
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
+
+		<?if($arRegion):?>
+		<?$frame = new \Bitrix\Main\Page\FrameHelper('header-allphones-block'.$iCalledID);?>
+		<?$frame->begin();?>
+		<?endif;?>
+		<?//$iCountPhones=1;?>
+		<?if($iCountPhones): // count of phones?>
+			<!-- noindex -->
+
+			<?=self::showIconSvg('phone', SITE_TEMPLATE_PATH.'/images/svg/phone.svg', "", $class);?>
+
+			<?if($iCountPhones >= 1): // if more than one?>
+				<div id="mobilePhone" class="dropdown-mobile-phone">
+					<div class="wrap">
+						<div class="more_phone title"><span class="no-decript dark-color "><?=Loc::getMessage('NEXT_T_MENU_CALLBACK')?> <?=CNext::showIconSvg("close dark dark-i", SITE_TEMPLATE_PATH."/images/svg/Close.svg");?></span></div>
+
+						<?for($i = 0; $i < $iCountPhones; ++$i):?>
+							<?
+							$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
+							$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+							$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+							$description = (!empty($description)) ? "<span>" . $description . "</span>" : "";
+							?>
+							<div class="more_phone">
+							    <a class="dark-color <?=(empty($description)?'no-decript':'')?>" rel="nofollow" href="<?=$href?>"><?=$phone?><?=$description?></a>
+							</div>
+						<?endfor;?>
+
+						<div class="more_phone"><a rel="nofollow" class="dark-color no-decript callback" href="" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback"><?=Loc::getMessage('CALLBACK')?></a></div>
+					</div>
+				</div>
+			<?endif;?>
+			<!-- /noindex -->
+		<?endif;?>
+
+		<?if($arRegion):?>
+		<?$frame->end();?>
+		<?endif;?>
+
+	<?}
+
 	public static function ShowHeaderPhones($class = '', $bFooter = false){
 		global $arRegion;
 		static $hphones_call;
@@ -5015,7 +5519,7 @@ class CNext{
 		$iCalledID = ++$hphones_call;
 		$arBackParametrs = self::GetBackParametrsValues(SITE_ID);
 		$iCountPhones = ($arRegion ? count($arRegion['PHONES']) : $arBackParametrs['HEADER_PHONES']);
-		$regionID = ($arRegion ? $arRegion['ID'] : '');?>
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
 
 		<?if($arRegion):?>
 		<?$frame = new \Bitrix\Main\Page\FrameHelper('header-allphones-block'.$iCalledID);?>
@@ -5041,8 +5545,12 @@ class CNext{
 								<?
 								$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
 								$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+								$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+								$description = (!empty($description)) ? "<span>" . $description . "</span>" : "";
 								?>
-								<div class="more_phone"><a rel="nofollow" href="<?=$href?>"><?=$phone?></a></div>
+								<div class="more_phone">
+								    <a <?=(empty($description)?'class="no-decript"':'')?> rel="nofollow" href="<?=$href?>"><?=$phone?><?=$description?></a>
+								</div>
 							<?endfor;?>
 						</div>
 					</div>
@@ -5067,7 +5575,7 @@ class CNext{
 		$iCalledID = ++$fphones_call;
 		$arBackParametrs = self::GetBackParametrsValues(SITE_ID);
 		$iCountPhones = ($arRegion ? count($arRegion['PHONES']) : $arBackParametrs['HEADER_PHONES']);
-		$regionID = ($arRegion ? $arRegion['ID'] : '');?>
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
 
 		<?if($arRegion):?>
 		<?$frame = new \Bitrix\Main\Page\FrameHelper('footer-allphones-block'.$iCalledID);?>
@@ -5776,7 +6284,7 @@ class CNext{
 		<?}
 	}
 
-	public static function getBasketItems($iblockID=0, $field="PRODUCT_ID"){
+	public static function getBasketItems($iblockId=0, $field="PRODUCT_ID"){
 		$basket_items = $delay_items = $subscribe_items = $not_available_items = array();
 		$arItems = array();
 		// static $arItems;
@@ -5796,9 +6304,9 @@ class CNext{
 				if(!is_array($compare_items))
 				{
 					$compare_items = array();
-					$iblockID=((isset($iblockID) && $iblockID) ? $iblockID : \Bitrix\Main\Config\Option::get(self::moduleID, "CATALOG_IBLOCK_ID", CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0], SITE_ID ));
-					if($iblockID && isset($_SESSION["CATALOG_COMPARE_LIST"][$iblockID]["ITEMS"]))
-						$compare_items = array_keys($_SESSION["CATALOG_COMPARE_LIST"][$iblockID]["ITEMS"]);
+					$iblockId=((isset($iblockId) && $iblockId) ? $iblockId : \Bitrix\Main\Config\Option::get(self::moduleID, "CATALOG_IBLOCK_ID", CNextCache::$arIBlocks[SITE_ID]['aspro_next_catalog']['aspro_next_catalog'][0], SITE_ID ));
+					if($iblockId && isset($_SESSION["CATALOG_COMPARE_LIST"][$iblockId]["ITEMS"]))
+						$compare_items = array_keys($_SESSION["CATALOG_COMPARE_LIST"][$iblockId]["ITEMS"]);
 
 				}
 				if($arBasketItems)

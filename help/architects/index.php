@@ -1,6 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Дизайнерам и архитектор");
+$APPLICATION->SetTitle("Дизайнерам и архитекторам");
 ?><div class="row architects">
 	<div class="col-lg-12 big-banner">
 		<div class="background-opacity">
@@ -8,10 +8,16 @@ $APPLICATION->SetTitle("Дизайнерам и архитектор");
 			<p>
 				 Зарегистрируйтесь и скачайте 3D-модели и другие материалы
 			</p>
- <a href="" class="simple-link">Список материалов</a>
+ <a href="/help/architects/3d-models/" class="simple-link">Список материалов</a>
+            <?if(!$USER->IsAuthorized()):?>
 			<p class="links-wrapper">
- <a href="">Войти</a> <a href="">Регистрация</a>
+ <a href="/help/architects/3d-models/" data-event="jqm" data-param-type="auth" data-param-backurl="/help/architects/" data-name="auth">Войти</a> <a href="/auth/registration/?register=yes&backurl=/help/architects/?login=yes&wait_architect">Регистрация</a>
 			</p>
+            <?else:?>
+                <p class="links-wrapper">
+                    <a href="/help/architects/3d-models/" style="width:100%">Перейти к материалам</a>
+                </p>
+            <?endif;?>
 		</div>
 	</div>
 </div>

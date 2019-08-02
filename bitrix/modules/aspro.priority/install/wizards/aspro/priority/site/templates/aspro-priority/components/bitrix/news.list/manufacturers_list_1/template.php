@@ -1,11 +1,17 @@
-<?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
-<?$this->setFrameMode(true);?>
+<?
+if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+$this->setFrameMode(true);
 
+use \Bitrix\Main\Localization\Loc;
+
+$arParams['COUNT_IN_LINE'] = (isset($arParams['COUNT_IN_LINE']) ? intval($arParams['COUNT_IN_LINE']) : 3);
+$arParams['COUNT_IN_LINE'] = (($arParams['COUNT_IN_LINE'] > 1 && $arParams['COUNT_IN_LINE'] < 6) ? $arParams['COUNT_IN_LINE'] : 3);
+?>
 <?if($arResult['ITEMS']):?>
 	<div class="item-views partners within">
 		<?// top pagination?>
 		<?if($arParams["DISPLAY_TOP_PAGER"]):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult["NAV_STRING"]?>
 			</div>
 		<?endif;?>
@@ -19,8 +25,10 @@
 				// use detail link?
 				$bDetailLink = ($arParams['SHOW_DETAIL_LINK'] != 'N' ? true : false);
 				// preview picture
-				$bImage = strlen($arItem['FIELDS']['PREVIEW_PICTURE']['SRC']);
-				$imageSrc = ($bImage ? $arItem['FIELDS']['PREVIEW_PICTURE']['SRC'] : SITE_TEMPLATE_PATH.'/images/noimage.png');
+				$bImage = (isset($arItem['FIELDS']['PREVIEW_PICTURE']) && strlen($arItem['PREVIEW_PICTURE']['SRC']));
+				$nImageID = ($bImage ? (is_array($arItem['FIELDS']['PREVIEW_PICTURE']) ? $arItem['FIELDS']['PREVIEW_PICTURE']['ID'] : $arItem['FIELDS']['PREVIEW_PICTURE']) : "");
+				$arImage = ($bImage ? CFile::ResizeImageGet($nImageID, array('width' => 1000, 'height' => 10000), BX_RESIZE_IMAGE_PROPORTIONAL, true) : SITE_TEMPLATE_PATH.'/images/noimage.png');
+				$imageSrc = $arImage['src'];
 				$imageDetailSrc = ($bImage ? $arItem['FIELDS']['DETAIL_PICTURE']['SRC'] : false);
 				// show active date period
 				$bActiveDate = strlen($arItem['DISPLAY_PROPERTIES']['PERIOD']['VALUE']) || ($arItem['DISPLAY_ACTIVE_FROM'] && in_array('DATE_ACTIVE_FROM', $arParams['FIELD_CODE']));
@@ -154,7 +162,7 @@
 						<hr />
 					</div>
 				<?elseif($arParams['VIEW_TYPE'] == 'table'):?>
-					<div class="item-wrap col-md-4 col-sm-6 col-xs-6">
+					<div class="item-wrap col-md-4 col-sm-6 col-xs-6 count_<?=$arParams['COUNT_IN_LINE']?>">
 						<div class="item border shadow<?=($bImage ? '' : ' wti')?>" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
 							<div class="row">
 								<div class="col-md-12">
@@ -205,7 +213,7 @@
 		</div>
 		<?// bottom pagination?>
 		<?if($arParams['DISPLAY_BOTTOM_PAGER']):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult['NAV_STRING']?>
 			</div>
 		<?endif;?>

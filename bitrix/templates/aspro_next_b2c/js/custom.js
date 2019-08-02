@@ -113,41 +113,44 @@ $(document).ready(function () {
 
 //карта из плавающих тизеров
 
-window.onload=function () {
-    var btn = document.querySelector("#callMap");
-    var map = document.querySelector(".map-fly");
-    var close = document.querySelector(".button-close");
-    // var gift = document.querySelector(".gift-activate");
-    // var giftBanner = document.querySelector(".gift-banner");
-    // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
-    // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
+$(document).ready(function () {
+    if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
+        var btn = document.querySelector("#callMap");
+        var map = document.querySelector(".map-fly");
+        var close = document.querySelector(".button-close");
+        // var gift = document.querySelector(".gift-activate");
+        // var giftBanner = document.querySelector(".gift-banner");
+        // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
+        // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
 
-    btn.addEventListener("click", function (evt) {
-        evt.preventDefault();
-        map.classList.add("show");
-    });
+        btn.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            map.classList.add("show");
+        });
 
-    close.addEventListener("click", function (evt) {
-        evt.preventDefault();
-        map.classList.remove("show");
-    });
+        close.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            map.classList.remove("show");
+        });
 
-    window.addEventListener("keydown", function (evt) {
-        if (evt.keyCode === 27) {
-            if (map.classList.contains("show")) {
-                evt.preventDefault();
+        window.addEventListener("keydown", function (evt) {
+            if (evt.keyCode === 27) {
+                if (map.classList.contains("show")) {
+                    evt.preventDefault();
+                    map.classList.remove("show");
+                }
+            }
+        });
+
+        $(document).mouseup(function (e){
+            var div = $(".map-fly");
+            if (!div.is(e.target)
+                && div.has(e.target).length === 0) {
                 map.classList.remove("show");
             }
-        }
-    });
+        });
+    };
 
-    $(document).mouseup(function (e){
-        var div = $(".map-fly");
-        if (!div.is(e.target)
-            && div.has(e.target).length === 0) {
-            map.classList.remove("show");
-        }
-    });
 
 //подарок
 
@@ -209,29 +212,33 @@ window.onload=function () {
     // });
 
 
-};
+});
 
 window.addEventListener("load", function () {
     //открытие бокового меню по клику
 
-    if ( $(window).width() <= 1366 ) {
+    if ($('#callMenu').length || $("#hideMenu").length) {
+        if ( $(window).width() <= 1366 ) {
 
-        var callMenu = document.querySelector("#callMenu");
-        var hideMenu = document.querySelector("#hideMenu");
+            var callMenu = document.querySelector("#callMenu");
+            var hideMenu = document.querySelector("#hideMenu");
 
-        callMenu.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
-                callMenu.classList.add("special-move-translate");
-                hideMenu.classList.add("special-move-right");
-            } else {
-                callMenu.classList.remove("special-move-translate");
-                hideMenu.classList.remove("special-move-right");
-            }
+            callMenu.addEventListener("click", function (evt) {
+                evt.preventDefault();
+                if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
+                    callMenu.classList.add("special-move-translate");
+                    hideMenu.classList.add("special-move-right");
+                } else {
+                    callMenu.classList.remove("special-move-translate");
+                    hideMenu.classList.remove("special-move-right");
+                }
 
-        });
+            });
 
+        }
     }
+
+
 
 });
 
@@ -292,26 +299,34 @@ $(document).ready(function () {
         infinite: true,
         slidesToScroll: 1,
         slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '40px',
         mobileFirst: true,
         responsive: [
             {
                 breakpoint: 576,
                 settings: {
-                    slidesToShow: 2
+                    slidesToShow: 2,
+                    centerMode: false
+
                 }
 
             },
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 3
+                    slidesToShow: 3,
+                    centerMode: false
+
                 }
 
             },
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 4
+                    slidesToShow: 4,
+                    centerMode: false
+
                 }
 
             },
@@ -321,6 +336,7 @@ $(document).ready(function () {
             }]
 
     });
+
 });
 
 
@@ -424,88 +440,92 @@ $(document).ready(function() {
 //слайдер на странице серий
     $(document).ready(function() {
         if ($(".sections_wrapper.series").length > 0){
-                $('.slider-for').each(function(key, item) {
 
-                    var sliderIdName = 'slider' + key;
-                    var sliderNavIdName = 'sliderNav' + key;
+            $('.series-desc-block .slider-for').each(function(key, item) {
 
-                    this.id = sliderIdName;
-                    $('.slider-nav')[key].id = sliderNavIdName;
+                var sliderIdNameDesc = 'sliderDesc' + key;
+                var sliderNavIdNameDesc = 'sliderDescNav' + key;
 
-                    var sliderId = '#' + sliderIdName;
-                    var sliderNavId = '#' + sliderNavIdName;
+                this.id = sliderIdNameDesc;
+                $('.series-desc-block .slider-nav')[key].id = sliderNavIdNameDesc;
 
-                    $(sliderId).slick({
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        arrows: true,
-                        fade: true,
-                        asNavFor: sliderNavId
-                    });
+                var sliderIdDesc = '#' + sliderIdNameDesc;
+                var sliderNavIdDesc = '#' + sliderNavIdNameDesc;
 
-                    $(sliderNavId).slick({
-                        slidesToShow: 4,
-                        slidesToScroll: 1,
-                        asNavFor: sliderId,
-                        dots: false,
-                        arrows: false,
-                        centerMode: false,
-                        infinite: true,
-                        focusOnSelect: true,
-                        responsive: [
-                            {
-                                breakpoint: 1367,
-                                settings: {
-                                    slidesToShow: 4,
-                                    slidesToScroll: 4
-                                }
-                            }
-                        ]
-                    });
-
+                $(sliderIdDesc).slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    fade: true,
+                    adaptiveHeight: true,
+                    asNavFor: sliderNavIdDesc
                 });
 
+                $(sliderNavIdDesc).slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: sliderIdDesc,
+                    dots: false,
+                    arrows: false,
+                    centerMode: false,
+                    infinite: true,
+                    focusOnSelect: true,
+                    adaptiveHeight: true,
+                    responsive: [
+                        {
+                            breakpoint: 1367,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        }
+                    ]
+                });
 
-                // $('.sets-block .slider-for').each(function(key, item) {
-                //
-                //     var sliderIdName = 'slider' + key;
-                //     var sliderNavIdName = 'sliderNav' + key;
-                //
-                //     this.id = sliderIdName;
-                //     $('.sets-block .slider-nav')[key].id = sliderNavIdName;
-                //
-                //     var sliderId = '#' + sliderIdName;
-                //     var sliderNavId = '#' + sliderNavIdName;
-                //
-                //     $(sliderId).slick({
-                //         slidesToShow: 1,
-                //         slidesToScroll: 1,
-                //         arrows: true,
-                //         fade: true,
-                //         asNavFor: sliderNavId
-                //     });
-                //
-                //     $(sliderNavId).slick({
-                //         slidesToShow: 4,
-                //         slidesToScroll: 1,
-                //         asNavFor: sliderId,
-                //         dots: false,
-                //         arrows: false,
-                //         centerMode: false,
-                //         infinite: true,
-                //         focusOnSelect: true,
-                //         responsive: [
-                //             {
-                //                 breakpoint: 1367,
-                //                 settings: {
-                //                     slidesToShow: 4,
-                //                     slidesToScroll: 4
-                //                 }
-                //             }
-                //         ]
-                //     });
-                //
-                // });
+            });
+
+            $('.series-main.sets-block .slider-for').each(function(key, item) {
+
+                var sliderIdNameSets = 'sliderSets' + key;
+                var sliderNavIdNameSets = 'sliderSetsNav' + key;
+
+                this.id = sliderIdNameSets;
+                $('.series-main.sets-block .slider-nav')[key].id = sliderNavIdNameSets;
+
+                var sliderIdSets = '#' + sliderIdNameSets;
+                var sliderNavIdSets = '#' + sliderNavIdNameSets;
+
+                $(sliderIdSets).slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    fade: true,
+                    adaptiveHeight: true,
+                    asNavFor: sliderNavIdSets
+                });
+
+                $(sliderNavIdSets).slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: sliderIdSets,
+                    dots: false,
+                    arrows: false,
+                    centerMode: false,
+                    infinite: true,
+                    focusOnSelect: true,
+                    adaptiveHeight: true,
+                    responsive: [
+                        {
+                            breakpoint: 1367,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        }
+                    ]
+                });
+
+            });
 
         }
 
@@ -538,7 +558,7 @@ $(document).ready(function() {
                     ]
                 });
 
-    })
+    });
 
 //табы на странице одной серии
 $(document).ready(function() {
@@ -555,6 +575,14 @@ $(document).ready(function() {
                 content.addClass('active');
             });
     // }
+
+    
+//панель якорей ТОЛЬКО для страницы одной серии
+
+    if($('.series-item').hasClass('inner')){
+        $('.panel-anchors').addClass('show');
+    };
+
 
 //арендодателям, переключение склад-салон
     if ($(".tenants").length > 0) {
@@ -740,8 +768,12 @@ $(document).ready(function () {
     };
 });
 
-
-
-
+/*ТАБЫ (ДОСТАВКА, ВЫВОЗ МУСОРА, СБОРКА)*/
+$(document).ready(function () {
+    $('.catalog_detail .info_item .tabs-block .tabs-item a').click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.tabs-content .item').removeClass('active').eq($(this).index()).addClass('active');
+    });
+});
 
 

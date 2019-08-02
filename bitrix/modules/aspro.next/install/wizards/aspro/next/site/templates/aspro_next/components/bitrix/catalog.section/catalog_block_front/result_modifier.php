@@ -13,7 +13,7 @@ $arDefaultParams = array(
 $arParams = array_merge($arDefaultParams, $arParams);
 
 
-if ('TYPE_2' != $arParams['TYPE_SKU'] )
+if ('TYPE_1' !== $arParams['TYPE_SKU'] )
 	$arParams['TYPE_SKU'] = 'N';
 
 if (!is_array($arParams['OFFER_TREE_PROPS']))
@@ -105,7 +105,7 @@ if (!empty($arResult['ITEMS'])){
 		$arSKU = CCatalogSKU::GetInfoByProductIBlock($arParams['IBLOCK_ID']);
 
 		$boolSKU = !empty($arSKU) && is_array($arSKU);
-		if ($boolSKU && !empty($arParams['OFFER_TREE_PROPS']))
+		if ($boolSKU && !empty($arParams['OFFER_TREE_PROPS']) && 'TYPE_1' == $arParams['TYPE_SKU'])
 		{
 			$arSKUPropList = CIBlockPriceTools::getTreeProperties(
 				$arSKU,
@@ -126,7 +126,7 @@ if (!empty($arResult['ITEMS'])){
 				$arSKUPropKeys = array_fill_keys($arSKUPropIDs, false);
 		}
 	}
-	
+
 	$arNewItemsList = array();
 	foreach ($arResult['ITEMS'] as $key => $arItem)
 	{
@@ -141,7 +141,7 @@ if (!empty($arResult['ITEMS'])){
 				$arResult['ITEMS'][$key]['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'] = $arItem['DISPLAY_PROPERTIES']['CML2_ARTICLE']['VALUE'];
 			}
 		}
-		
+
 		$arItem['CHECK_QUANTITY'] = false;
 		if (!isset($arItem['CATALOG_MEASURE_RATIO']))
 			$arItem['CATALOG_MEASURE_RATIO'] = 1;
@@ -254,6 +254,7 @@ if (!empty($arResult['ITEMS'])){
 				$offerPictures = CIBlockPriceTools::getDoublePicturesForItem($arOffer, $arParams['OFFER_ADD_PICT_PROP']);
 
 				$arOffer['OWNER_PICT'] = empty($offerPictures['PICT']);
+				$arOffer['PREVIEW_PICTURE_FIELD'] = $arOffer['PREVIEW_PICTURE'];
 				$arOffer['PREVIEW_PICTURE'] = false;
 				$arOffer['PREVIEW_PICTURE_SECOND'] = false;
 				$arOffer['SECOND_PICT'] = true;
@@ -313,7 +314,8 @@ if (!empty($arResult['ITEMS'])){
 				}
 				if($arPropSKU[$strOneCode])
 				{
-					Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_NUMERIC, SORT_ASC))); // sort sku prop values
+					// sort sku prop values
+					Collection::sortByColumn($arPropSKU[$strOneCode], array("SORT" => array(SORT_NUMERIC, SORT_ASC), "NAME" => array(SORT_STRING, SORT_ASC)));
 					$arItem['OFFERS_PROPS_JS'][$strOneCode] = array(
 						"ID" => $arSKUPropList[$strOneCode]["ID"],
 						"CODE" => $arSKUPropList[$strOneCode]["CODE"],
@@ -378,21 +380,19 @@ if (!empty($arResult['ITEMS'])){
 			{
 				foreach ($arItem['OFFERS'] as $keyOffer => $arOffer)
 				{
-					//if (empty($arItem['MIN_PRICE']))
-					//{
-						if ($arItem['OFFER_ID_SELECTED'] > 0)
-							$foundOffer = ($arItem['OFFER_ID_SELECTED'] == $arOffer['ID']);
-						else
-							$foundOffer = $arOffer['CAN_BUY'];
-						if ($foundOffer && $intSelected == -1)
-						{
-							$intSelected = $keyOffer;
-							$arItem['MIN_PRICE'] = (isset($arOffer['RATIO_PRICE']) ? $arOffer['RATIO_PRICE'] : $arOffer['MIN_PRICE']);
-							$arItem['MIN_BASIS_PRICE'] = $arOffer['MIN_PRICE'];
-						}
-						unset($foundOffer);
-					//}
-					$arSKUProps =$arSKUArticle = false;
+					if ($arItem['OFFER_ID_SELECTED'] > 0){
+						$foundOffer = ($arItem['OFFER_ID_SELECTED'] == $arOffer['ID']);
+					}
+					else{
+						$foundOffer = $arOffer['CAN_BUY'];
+					}
+
+					if ($foundOffer && $intSelected == -1){
+						$intSelected = $keyOffer;
+					}
+					unset($foundOffer);
+
+					$arSKUProps = $arSKUArticle = false;
 					if (!empty($arOffer['DISPLAY_PROPERTIES']))
 					{
 						$boolSKUDisplayProperties = true;
@@ -491,22 +491,73 @@ if (!empty($arResult['ITEMS'])){
 						'ITEM_MEASURE_RATIOS' => $arOffer['ITEM_MEASURE_RATIOS'],
 						'ITEM_MEASURE_RATIO_SELECTED' => $arOffer['ITEM_MEASURE_RATIO_SELECTED'],
 					);
+
 					if($arOneRow["PRICE"]["DISCOUNT_DIFF"]){
 						$percent=round(($arOneRow["PRICE"]["DISCOUNT_DIFF"]/$arOneRow["PRICE"]["VALUE"])*100, 2);
 						$arOneRow["PRICE"]["DISCOUNT_DIFF_PERCENT_RAW"]="-".$percent."%";
 					}
 					$arMatrix[$keyOffer] = $arOneRow;
 				}
-				if (-1 == $intSelected)
+
+				if (-1 == $intSelected){
 					$intSelected = 0;
-				if (!$arMatrix[$intSelected]['OWNER_PICT'])
-				{
+				}
+
+				if (!$arMatrix[$intSelected]['OWNER_PICT']){
 					$arItem['PREVIEW_PICTURE'] = $arMatrix[$intSelected]['PREVIEW_PICTURE'];
 					$arItem['PREVIEW_PICTURE_SECOND'] = $arMatrix[$intSelected]['PREVIEW_PICTURE_SECOND'];
 				}
+
 				$arItem['JS_OFFERS'] = $arMatrix;
 				$arItem['OFFERS_SELECTED'] = $intSelected;
 				$arItem['OFFERS_PROPS_DISPLAY'] = $boolSKUDisplayProperties;
+			}
+
+			// get MIN_PRICE
+			$arItem['MIN_PRICE'] = CNext::getMinPriceFromOffersExt(
+				$arItem['OFFERS'],
+				$boolConvert ? $arResult['CONVERT_CURRENCY']['CURRENCY_ID'] : $strBaseCurrency
+			);
+
+			// get MIN_PRICE_ID
+			$minItemPriceID = 0;
+			$minItemPrice = 0;
+			$minItemPriceFormat = "";
+			foreach ($arItem['OFFERS'] as $keyOffer => $arOffer){
+				if($arOffer["MIN_PRICE"]["CAN_ACCESS"]){
+					if($arOffer["MIN_PRICE"]["DISCOUNT_VALUE"] < $arOffer["MIN_PRICE"]["VALUE"]){
+						$minOfferPrice = $arOffer["MIN_PRICE"]["DISCOUNT_VALUE"];
+						$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_DISCOUNT_VALUE"];
+						$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
+					}
+					else{
+						$minOfferPrice = $arOffer["MIN_PRICE"]["VALUE"];
+						$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_VALUE"];
+						$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
+					}
+
+					if($minItemPrice > 0 && $minOfferPrice < $minItemPrice){
+						$minItemPrice = $minOfferPrice;
+						$minItemPriceFormat = $minOfferPriceFormat;
+						$minItemPriceID = $minOfferPriceID;
+						$minItemID = $arOffer["ID"];
+					}
+					elseif($minItemPrice == 0){
+						$minItemPrice = $minOfferPrice;
+						$minItemPriceFormat = $minOfferPriceFormat;
+						$minItemPriceID = $minOfferPriceID;
+						$minItemID = $arOffer["ID"];
+					}
+				}
+			}
+			$arItem['MIN_PRICE']["MIN_PRICE_ID"]=$minItemPriceID;
+			$arItem['MIN_PRICE']["MIN_ITEM_ID"]=$minItemID;
+
+			if($arParams["SET_SKU_TITLE"] === "Y"){
+				if(isset($arItem["OFFERS_SELECTED"])){
+					$ipropValues = new \Bitrix\Iblock\InheritedProperty\ElementValues($arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IBLOCK_ID'], $arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['ID']);
+					$arItem['OFFERS'][$arItem["OFFERS_SELECTED"]]['IPROPERTY_VALUES'] = $ipropValues->getValues();
+				}
 			}
 		}
 
@@ -533,7 +584,7 @@ if (!empty($arResult['ITEMS'])){
 			foreach ($arItem['DISPLAY_PROPERTIES'] as $propKey => $arDispProp)
 			{
 				if ('F' == $arDispProp['PROPERTY_TYPE'])
-					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);				
+					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);
 
 			}
 		}
@@ -553,18 +604,34 @@ if (!empty($arResult['ITEMS'])){
 					unset($arItem['DISPLAY_PROPERTIES'][$propKey]);
 			}
 		}
-		
 		$arItem['LAST_ELEMENT'] = 'N';
+
+		if($arParams['IBINHERIT_TEMPLATES']){
+			\Aspro\Next\Property\IBInherited::modifyItemTemplates($arParams, $arItem);
+		}
+
 		$arNewItemsList[$key] = $arItem;
 	}
-	
+
 	$arNewItemsList[$key]['LAST_ELEMENT'] = 'Y';
 	$arResult['ITEMS'] = $arNewItemsList;
+	unset($arNewItemsList);
+
+	if($arSKUPropList)
+	{
+		foreach($arSKUPropList as $prop => $arProps)
+		{
+			unset($arSKUPropList[$prop]["USER_TYPE_SETTINGS"]);
+			unset($arSKUPropList[$prop]["VALUES"]);
+		}
+
+	}
+
 	$arResult['SKU_PROPS'] = $arSKUPropList;
+	unset($arSKUPropList);
+
 	$arResult['DEFAULT_PICTURE'] = $arEmptyPreview;
 
-
-	unset($arNewItemsList);
 	$arResult['CURRENCIES'] = array();
 	if ($arResult['MODULES']['currency'])
 	{

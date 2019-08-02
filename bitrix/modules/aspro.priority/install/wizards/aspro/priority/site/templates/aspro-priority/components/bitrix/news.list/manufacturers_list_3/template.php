@@ -1,11 +1,17 @@
-<?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
-<?$this->setFrameMode(true);?>
-<?use \Bitrix\Main\Localization\Loc;?>
+<?
+if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+$this->setFrameMode(true);
+
+use \Bitrix\Main\Localization\Loc;
+
+$arParams['COUNT_IN_LINE'] = (isset($arParams['COUNT_IN_LINE']) ? intval($arParams['COUNT_IN_LINE']) : 3);
+$arParams['COUNT_IN_LINE'] = (($arParams['COUNT_IN_LINE'] > 1 && $arParams['COUNT_IN_LINE'] < 6) ? $arParams['COUNT_IN_LINE'] : 3);
+?>
 <?if($arResult['ITEMS']):?>
 	<div class="item-views partners within type_3">
 		<?// top pagination?>
 		<?if($arParams["DISPLAY_TOP_PAGER"]):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult["NAV_STRING"]?>
 			</div>
 		<?endif;?>
@@ -24,8 +30,8 @@
 				$imageSrc = $arImage['src'];
 				$imageDetailSrc = ($bImage ? $arItem['FIELDS']['DETAIL_PICTURE']['SRC'] : false);
 				?>
-				
-				<div class="item border shadow" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
+
+				<div class="item border shadow count_<?=$arParams['COUNT_IN_LINE']?>" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
 					<?if($bImage):?>
 						<div class="image">
 							<?if($bDetailLink):?>
@@ -52,9 +58,9 @@
 		</div>
 		<?// bottom pagination?>
 		<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
-			<div class="pagination_nav">		
+			<div class="pagination_nav">
 				<?=$arResult["NAV_STRING"]?>
 			</div>
-		<?endif;?>								
+		<?endif;?>
 	</div>
 <?endif;?>

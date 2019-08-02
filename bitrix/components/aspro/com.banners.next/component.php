@@ -77,7 +77,9 @@ if($arParams["USE_PERMISSIONS"] && isset($GLOBALS["USER"]) && is_object($GLOBALS
 	}
 }
 
-if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $bUSER_HAVE_ACCESS, $arNavigation, $arrFilter)))
+$BIGBANNER_MOBILE = \Bitrix\Main\Config\Option::get('aspro.next', 'BIGBANNER_MOBILE', '1', SITE_ID);
+
+if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $bUSER_HAVE_ACCESS, $arNavigation, $arrFilter, $BIGBANNER_MOBILE)))
 {
 	if(!CModule::IncludeModule("iblock"))
 	{
@@ -109,7 +111,7 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 			"IBLOCK_ID",
 			"IBLOCK_SECTION_ID",
 			"NAME",
-			"ACTIVE_FROM",			
+			"ACTIVE_FROM",
 			"DETAIL_PICTURE",
 			"PREVIEW_PICTURE",
 			"PREVIEW_TEXT",
@@ -122,7 +124,7 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 		$bannerTypeID=0;
 		$arBannersCode = array();
 
-		
+
 		if($arParams["BANNER_TYPE_THEME"])
 		{
 			$arCode = array($arParams["BANNER_TYPE_THEME"]);
@@ -144,7 +146,7 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 			"IBLOCK_LID" => SITE_ID,
 			"ACTIVE" => "Y",
 		);
-		
+
 		if($arParams["CHECK_DATES"])
 			$arFilter["ACTIVE_DATE"] = "Y";
 
@@ -160,12 +162,12 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 		$arResult["ITEMS"] = array();
 		$arResult["ELEMENTS"] = array();
 		$arResult['HAS_SLIDE_BANNERS'] = $arResult['HAS_CHILD_BANNERS'] = false;
-				
+
 		foreach($arBannersCode as $key => $arTypeBaner)
 		{
 			$count = (!$key ? '' : ++$key);
-		
-			$rsElement = CIBlockElement::GetList($arSort, array_merge($arFilter, $arrFilter, array("PROPERTY_TYPE_BANNERS.CODE" => $arTypeBaner["CODE"])), false, array("nTopCount" => $arParams["NEWS_COUNT".$count]), $arSelect);		
+
+			$rsElement = CIBlockElement::GetList($arSort, array_merge($arFilter, $arrFilter, array("PROPERTY_TYPE_BANNERS.CODE" => $arTypeBaner["CODE"])), false, array("nTopCount" => $arParams["NEWS_COUNT".$count]), $arSelect);
 			while($obElement = $rsElement->GetNextElement())
 			{
 
@@ -180,7 +182,7 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 				);
 				$arItem["EDIT_LINK"] = $arButtons["edit"]["edit_element"]["ACTION_URL"];
 				$arItem["DELETE_LINK"] = $arButtons["edit"]["delete_element"]["ACTION_URL"];
-				
+
 				$arItem["FORMAT_NAME"]=str_replace("&lt;br/&gt;", "", $arItem["NAME"]);
 
 				if($arParams["PREVIEW_TRUNCATE_LEN"] > 0)
@@ -193,7 +195,7 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 
 				if(array_key_exists("DETAIL_PICTURE", $arItem))
 					$arItem["DETAIL_PICTURE"] = CFile::GetFileArray($arItem["DETAIL_PICTURE"]);
-					
+
 				if(array_key_exists("PREVIEW_PICTURE", $arItem))
 					$arItem["PREVIEW_PICTURE"] = CFile::GetFileArray($arItem["PREVIEW_PICTURE"]);
 
@@ -215,19 +217,22 @@ if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 					{
 						$arItem["DISPLAY_PROPERTIES"][$pid] = CIBlockFormatProperties::GetDisplayValue($arItem, $prop, "news_out");
 					}
-				}						
+				}
 				$arResult["ITEMS"][] = $arItem;
 				$arResult["ELEMENTS"][] = $arItem["ID"];
 			}
 		}
-		
+
+		$arResult['BIGBANNER_MOBILE'] = $BIGBANNER_MOBILE;
+
 		$this->SetResultCacheKeys(array(
 			"ID",
 			"IBLOCK_TYPE_ID",
-			"LIST_PAGE_URL",			
+			"LIST_PAGE_URL",
 			"NAME",
 			"SECTION",
 			"ELEMENTS",
+			"BIGBANNER_MOBILE",
 		));
 		$this->IncludeComponentTemplate();
 	}
@@ -288,6 +293,6 @@ if(isset($arResult["ID"]))
 	}
 
 	$this->SetTemplateCachedData($arResult["NAV_CACHED_DATA"]);
-	
+
 	return $arResult["ELEMENTS"];
 }?>

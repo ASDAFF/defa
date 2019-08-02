@@ -11,6 +11,9 @@ if($arRegion)
 		if(reset($arRegion['LIST_STORES']) != 'component')
 			$arParams['STORES'] = $arRegion['LIST_STORES'];
 	}
+
+	$GLOBALS['arrProductsFilter']['IBLOCK_ID'] = \Bitrix\Main\Config\Option::get("aspro.next", "CATALOG_IBLOCK_ID", "#IBLOCK_CATALOG_ID#");
+	CNext::makeElementFilterInRegion($GLOBALS['arrProductsFilter']);
 }
 ?>
 <?$APPLICATION->IncludeComponent(

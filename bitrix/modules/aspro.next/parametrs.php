@@ -949,6 +949,12 @@ $moduleClass::$arParametrsList = array(
 					'URL' => '',
 				),
 			),
+			'CATALOG_SECTIONS_COMPACT_VIEW_MOBILE' => array(
+				'TITLE' => GetMessage('CATALOG_SECTIONS_COMPACT_VIEW_MOBILE'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
 		),
 	),
 	'HEADER' => array(
@@ -1118,6 +1124,13 @@ $moduleClass::$arParametrsList = array(
 						'THEME' => 'N',
 						'REQUIRED' => 'Y',
 					),
+					'PHONE_DESCRIPTION' => array(
+						'TITLE' => GetMessage('HEADER_PHONE_OPTION_DESCRIPTION_TITLE'),
+						'TYPE' => 'text',
+						'DEFAULT' => '',
+						'THEME' => 'N',
+						'REQUIRED' => 'N',
+					),
 				),
 			),
 		),
@@ -1253,7 +1266,7 @@ $moduleClass::$arParametrsList = array(
 				'TYPE' => 'selectbox',
 				'LIST' => array(
 					'NO' => GetMessage('NO'),
-					'fast_view_1' => 1,
+					'fast_view_1' => GetMessage('YES'),
 				),
 				'DEFAULT' => 'fast_view_1',
 				'THEME' => 'Y',
@@ -1394,8 +1407,8 @@ $moduleClass::$arParametrsList = array(
 				'TITLE' => GetMessage('TOP_SECTION_DESCRIPTION_POSITION_TITLE'),
 				'TYPE' => 'selectbox',
 				'LIST' => array(
-					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').'(DESCRIPTION)',
-					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').'(UF_SECTION_DESCR)',
+					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').' (DESCRIPTION)',
+					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').' (UF_SECTION_DESCR)',
 				),
 				'DEFAULT' => 'UF_SECTION_DESCR',
 				'THEME' => 'N',
@@ -1404,10 +1417,24 @@ $moduleClass::$arParametrsList = array(
 				'TITLE' => GetMessage('BOTTOM_SECTION_DESCRIPTION_POSITION_TITLE'),
 				'TYPE' => 'selectbox',
 				'LIST' => array(
-					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').'(DESCRIPTION)',
-					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').'(UF_SECTION_DESCR)',
+					'DESCRIPTION' => GetMessage('DESCRIPTION_SECTION').' (DESCRIPTION)',
+					'UF_SECTION_DESCR' => GetMessage('SEO_DESCRIPTION_SECTION').' (UF_SECTION_DESCR)',
 				),
 				'DEFAULT' => 'DESCRIPTION',
+				'THEME' => 'N',
+			),
+			'PRIORITY_SECTION_DESCRIPTION_SOURCE' => array(
+				'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_TITLE'),
+				'TYPE' => 'selectbox',
+				'LIST' => array(
+					'NOT' => array(
+						'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_NOT'),
+					),
+					'IBLOCK' => array(
+						'TITLE' => GetMessage('PRIORITY_SECTION_DESCRIPTION_SOURCE_IBLOCK'),
+					),
+				),
+				'DEFAULT' => 'NOT',
 				'THEME' => 'N',
 			),
 			'ITEM_STICKER_CLASS_SOURCE' => array(
@@ -2484,7 +2511,19 @@ $moduleClass::$arParametrsList = array(
 						'HIDE' => 'Y',
 					),
 				),
-				'DEFAULT' => '1',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
+			'HEADER_MOBILE_MENU_COMPACT' => array(
+				'TITLE' => GetMessage('HEADER_MOBILE_MENU_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
+				'THEME' => 'Y',
+			),
+			'HEADER_MOBILE_MENU_CATALOG_EXPANDED' => array(
+				'TITLE' => GetMessage('HEADER_MOBILE_MENU_CATALOG_EXPANDED'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'N',
 				'THEME' => 'Y',
 			),
 			'HEADER_MOBILE_MENU_OPEN' => array(
@@ -2508,12 +2547,42 @@ $moduleClass::$arParametrsList = array(
 				'DEFAULT' => '1',
 				'THEME' => 'Y',
 			),
+			'BIGBANNER_MOBILE' => array(
+				'TITLE' => GetMessage('BIGBANNER_MOBILE'),
+				'TYPE' => 'selectbox',
+				'LIST' => array(
+					'1' => GetMessage('BIGBANNER_MOBILE_1'),
+					'2' => GetMessage('BIGBANNER_MOBILE_2'),
+					'3' => GetMessage('BIGBANNER_MOBILE_3'),
+				),
+				'DEFAULT' => '1',
+				'THEME' => 'N',
+			),
+			'MOBILE_FILTER_COMPACT' => array(
+				'TITLE' => GetMessage('MOBILE_FILTER_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'THEME' => 'Y',
+			),
+			'MOBILE_CATALOG_LIST_ELEMENTS_COMPACT' => array(
+				'TITLE' => GetMessage('MOBILE_CATALOG_LIST_ELEMENTS_COMPACT'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'THEME' => 'Y',
+			),
 		)
 	),
 	'LK' => array(
 		'TITLE' => GetMessage('LK_OPTIONS'),
 		'THEME' => 'Y',
 		'OPTIONS' => array(
+			'LOGIN_EQUAL_EMAIL' => array(
+				'TITLE' => GetMessage('LOGIN_EQUAL_EMAIL_TITLE'),
+				'TYPE' => 'checkbox',
+				'DEFAULT' => 'Y',
+				'THEME' => 'Y',
+				'ONE_ROW' => 'Y',
+			),
 			'PERSONAL_ONEFIO' => array(
 				'TITLE' => GetMessage('PERSONAL_ONEFIO_TITLE'),
 				'TYPE' => 'checkbox',
@@ -2521,12 +2590,16 @@ $moduleClass::$arParametrsList = array(
 				'THEME' => 'Y',
 				'ONE_ROW' => 'Y',
 			),
-			'LOGIN_EQUAL_EMAIL' => array(
-				'TITLE' => GetMessage('LOGIN_EQUAL_EMAIL_TITLE'),
+			'USE_PHONE_AUTH' => array(
+				'TITLE' => GetMessage('USE_PHONE_AUTH_TITLE'),
 				'TYPE' => 'checkbox',
-				'DEFAULT' => 'Y',
-				'THEME' => 'Y',
-				'ONE_ROW' => 'Y',
+				'DEFAULT' => 'N',
+				'THEME' => 'N',
+			),
+			'USE_PHONE_AUTH_NOTE' => array(
+				'TITLE' => GetMessage('USE_PHONE_AUTH_NOTE_TITLE'),
+				'TYPE' => 'note',
+				'THEME' => 'N',
 			),
 		)
 	),

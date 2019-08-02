@@ -72,6 +72,7 @@ $templateData = array(
 		"STORES_FILTER_ORDER" => $arParams['STORES_FILTER_ORDER'],
 		"STORES_FILTER" => $arParams['STORES_FILTER'],
 		"STORES" => $arParams['STORES'] = array_diff($arParams['STORES'], array('')),
+		"SET_ITEMS" => $arResult["SET_ITEMS"],
 	)
 );
 unset($currencyList, $templateLibrary);
@@ -362,6 +363,9 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 		<?}else{?>
 			<div class="item_slider flex color-controls"></div>
 		<?}?>
+		<?if($arResult['PROPERTIES']['POPUP_VIDEO']['VALUE']):?>
+			<div class="popup_video mobile"><a class="various video_link" href="<?=$arResult['PROPERTIES']['POPUP_VIDEO']['VALUE']?>"><?=GetMessage("VIDEO")?></a></div>
+		<?endif;?>
 	</div>
 	<div class="right_info">
 		<div class="info_item">
@@ -1178,6 +1182,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 												"FIELDS" => $arParams['FIELDS'],
 												"STORES" => $arParams['STORES'],
 												"CACHE_TYPE" => "A",
+												"SET_ITEMS" => $arResult["SET_ITEMS"],
 											),
 											$component
 										);?>
@@ -1501,6 +1506,7 @@ $showProps = false;
 							"USER_FIELDS" => $arParams['USER_FIELDS'],
 							"FIELDS" => $arParams['FIELDS'],
 							"STORES" => $arParams['STORES'],
+							"SET_ITEMS" => $arResult["SET_ITEMS"],
 						),
 						$component
 					);?>
@@ -1522,9 +1528,12 @@ $showProps = false;
 					<div class="flexslider loading_state shadow border custom_flex top_right" data-plugin-options='{"animation": "slide", "animationSpeed": 600, "directionNav": true, "controlNav" :false, "animationLoop": true, "slideshow": false, "controlsContainer": ".tabs_slider_navigation.access_nav", "counts": [4,3,3,2,1]}'>
 						<ul class="tabs_slider access_slides slides">
 							<?
-
 							if($arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"])
-								$GLOBALS['arrFilterAccess'] = array("ID" => $arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"]);?>
+								$GLOBALS['arrFilterAccess'] = array("ID" => $arResult["PROPERTIES"]["EXPANDABLES"]["VALUE"]);
+
+							$GLOBALS['arrFilterAccess']['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
+							CNext::makeElementFilterInRegion($GLOBALS['arrFilterAccess']);
+							?>
 							<?$APPLICATION->IncludeComponent(
 								"bitrix:catalog.top",
 								"main",
@@ -1876,7 +1885,7 @@ $showProps = false;
 	<?endif;?>
 </div>
 <?
-if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
+if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && $arParams['USE_PREDICTION'] === 'Y' && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
 	$APPLICATION->IncludeComponent(
 		'bitrix:sale.prediction.product.detail',
 		'main',

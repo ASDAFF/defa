@@ -53,7 +53,7 @@
 		"COUNT_MD" => $arParams["COUNT_MD"],
 		"COUNT_SM" => $arParams["COUNT_SM"],
 		"COUNT_XS" => $arParams["COUNT_XS"],
-		"SHOW_PROPS_NAME" => $arParams["SHOW_PROPS_NAME"]
+		"SHOW_PROPS_NAME" => $arParams["SHOW_PROPS_NAME"],
 		"ORDER_VIEW" => $bOrderViewBasket,
 		"T_TARIF" => ($arParams["T_TARIF"] ? $arParams["T_TARIF"] : GetMessage("T_TARIF")),
 		"S_ORDER_PRODUCT" => $arParams["S_ORDER_SERVISE"],

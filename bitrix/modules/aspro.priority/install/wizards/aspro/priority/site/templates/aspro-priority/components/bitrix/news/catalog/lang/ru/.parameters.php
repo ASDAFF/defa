@@ -19,6 +19,7 @@ $MESS["IMAGE_POSITION_BOTTOM"] = "Снизу";
 $MESS['IMAGE_CATALOG_POSITION'] = 'Положение картинки каталогов';
 $MESS['COUNT_IN_FILTER'] = 'Количестсво строк выводимых в фильтре до кнопки "Показать еще"';
 $MESS['SHOW_ICONS_SUBCATEGORY'] = 'Выводить иконку подкатегории вместо картинки';
+$MESS['INCLUDE_SUBSECTIONS'] = 'Отображать элементы подразделов раздела';
 
 $MESS["USE_SHARE"] = "Показывать ссылки на соцсети";
 $MESS["T_SORT_PROP"] = "Доступные поля для сортировки";
@@ -79,16 +80,17 @@ $MESS['T_COUNT_MD'] = 'Количество элементов при разре
 $MESS['T_COUNT_SM'] = 'Количество элементов при разрешении 767px-601px';
 $MESS['T_COUNT_XS'] = 'Количество элементов при разрешении <600px';
 
+$MESS['SHOW_SMALL_GALLERY'] = 'Отображать галерею в развернутом виде';
 $MESS['VIEW_TYPE'] = 'Вид отображения разделов';
 $MESS['TYPE_LIST'] = 'построчно';
 $MESS['TYPE_ROW'] = 'в 2 столбца';
-$MESS['SHOW_CHILD_SECTIONS'] = 'Показывать вложенные подразделы/элементы';
-$MESS['SHOW_ELEMENTS_IN_LAST_SECTION'] = 'Показывать вложенные элементы если у разделов на странице нет подразделов';
+$MESS['SHOW_CHILD_SECTIONS'] = 'Показывать вложенные подразделы корневых разделов';
+$MESS['SHOW_ELEMENTS_IN_LAST_SECTION'] = 'Показывать вложенные элементы корневых разделов, если не имеют подразделов';
 
 $MESS["CP_BC_TPL_DETAIL_BRAND_USE"] = "Использовать компонент \"Бренды\"";
 $MESS["CP_BC_TPL_DETAIL_PROP_CODE"] = "Таблица с брендами";
 
-$MESS["GALLERY_TYPE"] = "Тип галлереи";
+$MESS["GALLERY_TYPE"] = "Тип галереи";
 $MESS["GALLERY_BIG"] = "большая";
 $MESS["GALLERY_SMALL"] = "маленькая";
 

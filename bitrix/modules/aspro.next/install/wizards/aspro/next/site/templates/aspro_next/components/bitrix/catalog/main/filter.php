@@ -43,6 +43,8 @@
 			"SEF_RULE" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["smart_filter"],
 			"SMART_FILTER_PATH" => $arResult["VARIABLES"]["SMART_FILTER_PATH"],
 			"HIDE_NOT_AVAILABLE" => $arParams["HIDE_NOT_AVAILABLE"],
+			"SORT_BUTTONS" => $arParams["SORT_BUTTONS"],
+			"SORT_PRICES" => $arParams["SORT_PRICES"],
 		),
 		$component);
 	?>

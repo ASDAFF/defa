@@ -126,7 +126,7 @@
                     "UF_SERIES_BTN_NAME",
                     "UF_SERIES_BTN_LINK",
                     "UF_SERIES_BTN_FORM",
-
+                    "UF_METKA",
                     "PICTURE",
                     "DETAIL_PICTURE",
                     "DESCRIPTION",
@@ -135,10 +135,12 @@
                     "TMP_ID",
                     "SOCNET_GROUP_ID",
 			        "UF_NAME_RUS",
-                    "UF_PREVIEW"
+			        "UF_DISCOUNT",
+                    "UF_PREVIEW",
+                    'UF_PODBORKA'
                     ),
 				"DISPLAY_PANEL" => $arParams["DISPLAY_PANEL"],
-				"CACHE_TYPE" => $arParams["CACHE_TYPE"],
+				"CACHE_TYPE" => 'N',
 				"CACHE_TIME" => $arParams["CACHE_TIME"],
 				"CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
 				"SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
@@ -149,6 +151,7 @@
 			),
 			$component
 		);?>
+
 	</div>
 <?endif;?>
 <?global $arTheme;?>

@@ -53,6 +53,7 @@
 				"STORES_FILTER_ORDER" => $_POST['STORES_FILTER_ORDER'],
 				"STORES_FILTER" => $_POST['STORES_FILTER'],
 				"CACHE_TYPE" => "N",
+				"SET_ITEMS" => $_POST['SET_ITEMS'],
 			),
 			false
 		);?>

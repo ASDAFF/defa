@@ -5,7 +5,7 @@
 /** @global CDatabase $DB */
 
 $this->setFrameMode(true);
-	
+
 	$class_block="s_".$this->randString();
 	$arTab=array();
 	$col=4;
@@ -34,13 +34,15 @@ $this->setFrameMode(true);
 			<ul class="tabs_content">
 				<?$j=1;?>
 				<?foreach($arResult["TABS"] as $code => $arTab){?>
+					<?
+					$arTab["FILTER"] = $arTab["FILTER"] ? CNext::makeElementFilterInRegion($arTab["FILTER"]) : array();
+					?>
 					<li class="tab <?=$code?>_wrapp <?=($j == 1 ? "cur opacity1" : "");?>" data-code="<?=$code?>" data-col="<?=$col;?>" data-filter="<?=($arTab["FILTER"] ? urlencode(serialize($arTab["FILTER"])) : '');?>">
 						<div class="tabs_slider <?=$code?>_slides wr">
 							<?if($j++ == 1)
 							{
 								if($arTab["FILTER"])
 									$GLOBALS[$arParams["FILTER_NAME"]] = $arTab["FILTER"];
-
 
 								include(str_replace("//", "/", $_SERVER["DOCUMENT_ROOT"].SITE_DIR."include/mainpage/comp_catalog_ajax.php"));
 							}?>

@@ -9,7 +9,7 @@
 		<div class="col-md-9 col-sm-12 col-xs-12 content-md">
 		<?CPriority::get_banners_position('CONTENT_TOP');?>
 	<?endif;?>
-		
+
 		<?$APPLICATION->IncludeComponent(
 			"bitrix:news.detail",
 			"services2",
@@ -110,7 +110,10 @@
 				"COUNT_MD" => $arParams["COUNT_MD"],
 				"COUNT_SM" => $arParams["COUNT_SM"],
 				"COUNT_XS" => $arParams["COUNT_XS"],
-				"SHOW_PROPS_NAME" => $arParams["SHOW_PROPS_NAME"]
+				"SHOW_PROPS_NAME" => $arParams["SHOW_PROPS_NAME"],
+				"STRICT_SECTION_CHECK" => $arParams["STRICT_SECTION_CHECK"],
+				'SECTION_ID' => $arResult['VARIABLES']['SECTION_ID'],
+				'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE'],
 			),
 			$component
 		);?>
@@ -123,5 +126,5 @@
 		<div class="col-md-3 col-sm-3 hidden-xs hidden-sm right-menu-md">
 			<?CPriority::ShowPageType('left_block')?>
 		</div>
-	<?endif;?>		
+	<?endif;?>
 </div>

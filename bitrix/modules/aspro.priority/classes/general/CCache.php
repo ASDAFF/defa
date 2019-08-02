@@ -52,8 +52,13 @@ if(!class_exists("CCache")){
 			if(is_array($arSelectFields) && $arSelectFields){
 				$arSelectFields[] = "ID";
 			}
+
+			$siteID = 's1';
+			if(defined('SITE_ID'))
+				$siteID = SITE_ID;
+
 			$obCache = new CPHPCache();
-			$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, $arFilter, (array)$arGroupBy, (array)$arNavStartParams, (array)$arSelectFields)));
+			$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, array($siteID), (array)$arFilter, (array)$arGroupBy, (array)$arNavStartParams, (array)$arSelectFields)));
 			if(self::$bEnabled && $obCache->InitCache($cacheTime, $cacheID, $cachePath)){
 				$res = $obCache->GetVars();
 				$arRes = $res["arRes"];
@@ -142,7 +147,7 @@ if(!class_exists("CCache")){
 						}
 
 						foreach($arRes as $i => $arItem){
-							if(count($arNewDetailPageUrls[$arItem["ID"]]) > 1){
+							if($arNewDetailPageUrls[$arItem["ID"]] && count($arNewDetailPageUrls[$arItem["ID"]]) > 1){
 								if(isset($arCanonicalPageUrls[$arItem["ID"]]) && strlen($arCanonicalPageUrls[$arItem["ID"]])){
 									$arRes[$i]["DETAIL_PAGE_URL"] = $arCanonicalPageUrls[$arItem["ID"]];
 								}
@@ -176,8 +181,13 @@ if(!class_exists("CCache")){
 			if(is_array($arSelectFields) && $arSelectFields){
 				$arSelectFields[] = "ID";
 			}
+
+			$siteID = 's1';
+			if(defined('SITE_ID'))
+				$siteID = SITE_ID;
+
 			$obCache = new CPHPCache();
-			$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, (array)$arFilter, (array)$bIncCnt, (array)$arNavStartParams, (array)$arSelectFields)));
+			$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, array($siteID), (array)$arFilter, (array)$bIncCnt, (array)$arNavStartParams, (array)$arSelectFields)));
 			if(self::$bEnabled && $obCache->InitCache($cacheTime, $cacheID, $cachePath)){
 				$res = $obCache->GetVars();
 				$arRes = $res["arRes"];
@@ -316,8 +326,8 @@ if(!class_exists("CCache")){
 
 		function GroupArrayBy($arItems, $arParams){
 			$arRes = array();
-			$resultIDsCount = count($arParams["RESULT"]);
-			$arParams["RESULT"] = array_diff((array)$arParams["RESULT"], array(null));
+			$resultIDsCount = (!$arParams["RESULT"] ? 0 : count($arParams["RESULT"]));
+			$arParams["RESULT"] = (!$arParams["RESULT"] ? array() : $arParams["RESULT"]);
 			$arParams["GROUP"] = array_diff((array)$arParams["GROUP"], array(null));
 			foreach($arItems as $arItem){
 				$val = false;

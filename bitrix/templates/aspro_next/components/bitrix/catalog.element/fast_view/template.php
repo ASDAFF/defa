@@ -457,7 +457,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 	</div>
 	<div class="right_info">
 		<div class="info_item scrollbar">
-			<div class="title"><a href="<?=$arResult["DETAIL_PAGE_URL"];?>" class="dark_link"><?=$elementName;?></a></div>
+			<div class="title hidden"><a href="<?=$arResult["DETAIL_PAGE_URL"];?>" class="dark_link"><?=$elementName;?></a></div>
 			<div class="top_info">
 				<?if($arParams["SHOW_RATING"] == "Y"):?>
 					<?$frame = $this->createFrame('dv_'.$arResult["ID"])->begin('');?>
@@ -602,7 +602,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
 		</div>
 	</div>
 	<?
-	if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
+	if($arResult['CATALOG'] && $actualItem['CAN_BUY'] && $arParams['USE_PREDICTION'] === 'Y' && \Bitrix\Main\ModuleManager::isModuleInstalled('sale')){
 		$APPLICATION->IncludeComponent(
 			'bitrix:sale.prediction.product.detail',
 			'main',

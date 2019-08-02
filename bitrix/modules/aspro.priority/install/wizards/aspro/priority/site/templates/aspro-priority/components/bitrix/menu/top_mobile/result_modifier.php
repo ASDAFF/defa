@@ -3,18 +3,20 @@ $arResult = CPriority::getChilds($arResult);
 
 global $APPLICATION, $arRegion, $arTheme;
 
-if($arResult){	
+if($arResult){
 	foreach($arResult as $key=>$arItem)
 	{
 		if(isset($arItem['CHILD']))
-		{		
+		{
 			foreach($arItem['CHILD'] as $key2=>$arItemChild)
 			{
 				$bSectionChildRegion = false;
 				if($arItemChild['PARAMS']['TYPE'] == 'PRODUCT'){
 					unset($arResult[$key]['CHILD'][$key2]);
 				}
-				
+
+				$arMenuParametrs = CPriority::GetDirMenuParametrs($_SERVER['DOCUMENT_ROOT'].'/'.str_replace('/', '', $arItem['LINK']));
+
 				if($arRegion && $arTheme['USE_REGIONALITY']['VALUE'] === 'Y' && $arTheme['USE_REGIONALITY']['DEPENDENT_PARAMS']['REGIONALITY_FILTER_ITEM']['VALUE'] === 'Y' && ($arTheme['SHOW_SECTIONS_REGION']['VALUE'] == 'Y' || $arMenuParametrs['MENU_SHOW_SECTIONS'] != 'Y'))
 				{
 					// filter items by region
@@ -48,9 +50,9 @@ if($arResult){
 										$bSectionChildRegion = true;
 									}
 								}
-								else{									
+								else{
 									unset($arResult[$key]['CHILD'][$key2]['CHILD'][$key3]);
-								}								
+								}
 							}
 						}
 						if(!$bSectionChildRegion && $arTheme['SHOW_SECTIONS_REGION']['VALUE'] == 'Y'){
@@ -59,10 +61,9 @@ if($arResult){
 					}
 					elseif(isset($arItemChild['PARAMS']) && $arItemChild['PARAMS']['FROM_IBLOCK'] && !isset($arItemChild['CHILD']) && !isset($arItemChild['PARAMS']['LINK_REGION'])){
 						unset($arResult[$key]['CHILD'][$key2]);
-					}					
+					}
 				}
-				
-				$arMenuParametrs = CPriority::GetDirMenuParametrs($_SERVER['DOCUMENT_ROOT'].'/'.str_replace('/', '', $arItem['LINK']));
+
 				if($arMenuParametrs['MENU_SHOW_ELEMENTS'] != 'Y' && $arItemChild['CHILD']){
 					foreach($arItemChild['CHILD'] as $key3 => $arSubChild){
 						if($arMenuParametrs['MENU_SHOW_ELEMENTS'] != 'Y' && $arItemChild['CHILD'] && isset($arSubChild['PARAMS']['LINK_REGION'])){
@@ -77,6 +78,6 @@ if($arResult){
 				}
 			}
 		}
-	}	
+	}
 }
 ?>

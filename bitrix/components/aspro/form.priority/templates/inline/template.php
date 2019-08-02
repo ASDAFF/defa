@@ -138,7 +138,7 @@
 		if(arPriorityOptions['THEME']['CAPTCHA_FORM_TYPE'] == 'RECAPTCHA' || arPriorityOptions['THEME']['CAPTCHA_FORM_TYPE'] == 'RECAPTCHA2'){
 			reCaptchaRender();
 		}
-		$('.popup form[name="<?=$arResult["IBLOCK_CODE"]?>"]').validate({
+		$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"]').validate({
 			ignore: ".ignore",
 			highlight: function( element ){
 				$(element).parent().addClass('error');
@@ -147,7 +147,7 @@
 				$(element).parent().removeClass('error');
 			},
 			submitHandler: function( form ){
-				if( $('.popup form[name="<?=$arResult["IBLOCK_CODE"]?>"]').valid() ){
+				if( $('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"]').valid() ){
 					$(form).find('button[type="submit"]').attr("disabled", "disabled");
 					var eventdata = {type: 'form_submit', form: form, form_name: '<?=$arResult["IBLOCK_CODE"]?>'};
 					BX.onCustomEvent('onSubmitForm', [eventdata]);
@@ -187,8 +187,8 @@
 
 		if(arPriorityOptions['THEME']['PHONE_MASK'].length){
 			var base_mask = arPriorityOptions['THEME']['PHONE_MASK'].replace( /(\d)/g, '_' );
-			$('.popup form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.phone').inputmask('mask', {'mask': arPriorityOptions['THEME']['PHONE_MASK'], 'showMaskOnHover': false });
-			$('.popup form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.phone').blur(function(){
+			$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.phone').inputmask('mask', {'mask': arPriorityOptions['THEME']['PHONE_MASK'], 'showMaskOnHover': false });
+			$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.phone').blur(function(){
 				if( $(this).val() == base_mask || $(this).val() == '' ){
 					if( $(this).hasClass('required') ){
 						$(this).parent().find('div.error').html(BX.message('JS_REQUIRED'));
@@ -196,9 +196,22 @@
 				}
 			});
 		}
-		
-		if(arPriorityOptions['THEME']['DATE_MASK'].length)
-			$('.popup form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.date').inputmask(arPriorityOptions['THEME']['DATE_MASK'], { 'placeholder': arPriorityOptions['THEME']['DATE_PLACEHOLDER'], 'showMaskOnHover': false  });
+
+		if(arPriorityOptions['THEME']['DATE_MASK'].length){
+			$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.date').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATE_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATE_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
+
+		if(arPriorityOptions['THEME']['DATETIME_MASK'].length){
+			$('.inline form[name="<?=$arResult["IBLOCK_CODE"]?>"] input.datetime').inputmask('datetime', {
+				inputFormat: arPriorityOptions['THEME']['DATETIME_MASK'],
+				placeholder: arPriorityOptions['THEME']['DATETIME_PLACEHOLDER'],
+				showMaskOnHover: false
+			});
+		}
 
 		$('.jqmClose').closest('.jqmWindow').jqmAddClose('.jqmClose');
 
@@ -215,17 +228,17 @@
 		})
 		$('.form .add_file').on('click', function(){
 			var index = $(this).closest('.input').find('input[type=file]').length+1;
-			
+
 			$(this).closest('.form-group').find('.input').append('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />');
 			//$('<input type="file" id="POPUP_FILE" name="FILE_n'+index+'"   class="inputfile" value="" />').closest()($(this));
 			$('input[type=file]').uniform({fileButtonHtml: BX.message('JS_FILE_BUTTON_NAME'), fileDefaultHtml: BX.message('JS_FILE_DEFAULT')});
 		});
-		
+
 		$('.form .add_text').on('click', function(){
 			var input = $(this).closest('.form-group').find('input[type=text]').first(),
 				index = $(this).closest('.form-group').find('input[type=text]').length,
 				name = input.attr('id').split('POPUP_')[1];
-			
+
 			$(this).closest('.form-group').find('.input').append('<input type="text" id="POPUP_'+name+'" name="'+name+'['+index+']"  class="form-control " value="" />');
 		});
 	});

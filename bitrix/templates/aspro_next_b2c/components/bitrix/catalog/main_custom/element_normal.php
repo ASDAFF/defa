@@ -346,6 +346,7 @@ if($arAccessories){
 			</div>
 		</div>
 	<?endif;?>
+
 <?}?>
 <?/*fix title after ajax form start*/
 endif;

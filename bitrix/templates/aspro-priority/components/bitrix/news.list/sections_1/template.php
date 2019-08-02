@@ -28,21 +28,18 @@ $this->setFrameMode(true);
 								<div class="wrap"><img src="<?=$imageSectionSrc?>" alt="<?=( $arItem['PICTURE']['ALT'] ? $arItem['PICTURE']['ALT'] : $arItem['NAME']);?>" title="<?=( $arItem['PICTURE']['TITLE'] ? $arItem['PICTURE']['TITLE'] : $arItem['NAME']);?>" class="img-responsive" /></div>
 							</div>
 						<?endif;?>
-						
+
 						<div class="body-info">
 							<?// section name?>
 							<?if(in_array('NAME', $arParams['FIELD_CODE'])):?>
 								<div class="title"><a class="dark-color" href="<?=$arItem['SECTION_PAGE_URL']?>"><?=$arItem['NAME']?></a></div>
 							<?endif;?>
-							<?
-							$countElements = ($arItem['CHILD'] ? count($arItem['CHILD']) : 0);
-							?>
-							<div class="count_elements font_upper"><?=CPriority::Vail($countElements, array(Loc::getMessage('COUNT_ELEMENTS_TITLE'), Loc::getMessage('COUNT_ELEMENTS_TITLE_2'), Loc::getMessage('COUNT_ELEMENTS_TITLE_3')));?></div>
+							<div class="count_elements font_upper"><?=CPriority::Vail($arItem['ELEMENTS_COUNT'], array(Loc::getMessage('COUNT_ELEMENTS_TITLE'), Loc::getMessage('COUNT_ELEMENTS_TITLE_2'), Loc::getMessage('COUNT_ELEMENTS_TITLE_3')));?></div>
 						</div>
 						<a href="<?=$arItem['SECTION_PAGE_URL']?>"></a>
 					</div>
 				</div>
 			<?endforeach;?>
-		</div>		
+		</div>
 	</div>
 <?endif;?>
