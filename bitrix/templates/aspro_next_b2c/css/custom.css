@@ -16769,11 +16769,18 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     color: #000000;
 }
 
-.item_main_info .buyers-like {
+.item_main_info .buyers-like,
+.series-top + .buyers-like {
     width: 100%;
     margin: 0;
     margin-left: 43px;
     margin-bottom: 30px;
+}
+
+.series-top + .buyers-like {
+    margin-left: 25px;
+    margin-bottom: 0;
+    font-weight: 500;
 }
 
 .buyers-like .green {
@@ -16781,7 +16788,8 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     color: #29a22d;
 }
 
-.item_main_info .buyers-like .green {
+.item_main_info .buyers-like .green,
+.series-top + .buyers-like .green {
     font-weight: 500;
 }
 
