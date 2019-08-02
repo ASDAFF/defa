@@ -408,8 +408,9 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
         'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arElements,
         "ACTIVE" => "Y"
     ), false, false, $arSelectColor);
-    while ($arOffer = $rsOffers->getNext()) {
 
+    while ($arOffer = $rsOffers->getNext()) {
+        //TODO $arColorItem not defined - need fix it
         if ($arOffer["PROPERTY_COLOR_REF_VALUE"] && !in_array($arOffer["PROPERTY_COLOR_REF_VALUE"],
                 $arColorItem["COLOR"])) {
             $arColorId[] = $arOffer["PROPERTY_COLOR_REF_VALUE"];
@@ -443,12 +444,11 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
 
     foreach ($arColorItem["COLOR"] as $item) {
         $arColorNew["COLOR"][$item] = $arColor[$item];
-
     }
+
     foreach ($arParams['SERIES_LIST_COLORS_ADD_PROPS'] as $prop) {
         foreach ($arColorItem["COLOR_" . $prop] as $item) {
             $arColorNew["COLOR_" . $prop][$item] = $arColor[$item];
-
         }
     }
 
@@ -457,6 +457,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
             $arColorNew["COLOR"][$item]["COUNT"] = $arColorNew["COLOR"][$item]["COUNT"] + 1;
         }
     }
+
     foreach ($arParams['SERIES_LIST_COLORS_ADD_PROPS'] as $prop) {
         if ($prop) {
             foreach ($arColorAddIdItem["COLOR_" . $prop] as $id => $item) {
@@ -466,6 +467,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
             }
         }
     }
+
     foreach ($arColorNew as $key => $item) {
         usort($arColorNew[$key], function ($a, $b) {
             return ($a['COUNT'] < $b['COUNT']);
@@ -473,7 +475,6 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
     }
 
     $section["COLORS"] = $arColorNew;
-
 
 //UF_SERIES_GALLERY
 	$res=CIBlockElement::GetList
@@ -513,10 +514,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
 		$section["SERIES_GALLERIES"] = $seriesGalleries;
     //METKI
     $arResult['METKI'] = GetMarks();
-
-
     ?>
-?>
 
     <div class="series-block series-item inner">
         <div class="series-top">
@@ -710,24 +708,20 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                 <div class="col-md-8 sets-demonstration">
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
-                            <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
-                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery"
-                                   href="<?= $image ?>">
-                                    <img src="<?= $image ?>" alt="">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
-                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
+                            <?foreach($section['SERIES_GALLERIES'] as $image):
+                                ?>
+                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"  href="<?=$image['SRC']?>">
                                     <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
-                            <? endforeach; ?>
+                            <?endforeach;?>
                         </div>
 
                         <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
-                            <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
+                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
                                 <div class="series-item-preview-slide-item">
-                                    <img src="<?= $image ?>" alt="">
                                     <img src="<?=$image['SRC']?>" alt="">
                                 </div>
-                            <? endforeach; ?>
+                            <?endforeach;?>
                         </div>
                     </div>
                 </div>
@@ -1354,6 +1348,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
             </div>
         </div>
     </div>
+
 <? endif; ?>
 
     <div class="js_wrapper_items"
