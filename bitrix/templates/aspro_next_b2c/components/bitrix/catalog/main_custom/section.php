@@ -1379,7 +1379,7 @@ if ($section["UF_LABELSALE"]){
 
     <div class="js_wrapper_items"
          data-params='<?= str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false)) ?>'>
-        <? @include_once('page_blocks/' . $arParams["SECTION_ELEMENTS_TYPE_VIEW"] . '.php'); ?>
+        <? //@include_once('page_blocks/' . $arParams["SECTION_ELEMENTS_TYPE_VIEW"] . '.php'); ?>
     </div>
 
 
