@@ -418,6 +418,7 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
     while ($arOffer = $rsOffers->getNext()) {
         //TODO $arColorItem not defined - need fix it
         if ($arOffer["PROPERTY_COLOR_REF_VALUE"] && !in_array($arOffer["PROPERTY_COLOR_REF_VALUE"],
+                //TODO
                 $arColorItem["COLOR"])) {
             $arColorId[] = $arOffer["PROPERTY_COLOR_REF_VALUE"];
             $arColorItem["COLOR"][] = $arOffer["PROPERTY_COLOR_REF_VALUE"];
@@ -732,6 +733,7 @@ if ($section["UF_LABELSALE"]){
                                 <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery"
                                    href="<?= $image ?>">
                                     <img src="<?= $image ?>" alt="">
+                            <? endforeach; ?>
                             <?foreach($section['SERIES_GALLERIES'] as $image):?>
                                 <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
                                     <img src="<?=$image['MIN_SRC']?>" alt="">
