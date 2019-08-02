@@ -58,8 +58,8 @@
         }
 
         window.X5Slider.iteration = function () {
-            console.log('iteration');
-            console.log(new Date().toTimeString());
+            /*console.log('iteration');
+            console.log(new Date().toTimeString());*/
             var sliders = $('.x5slider');
             if (sliders.length <= 0) {
                 console.log('clear слайдеров нет');
