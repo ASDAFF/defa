@@ -560,6 +560,12 @@ if ($section["UF_LABELSALE"]){
                 </div>
             </div>
         </div>
+
+        <?if($metkipok):?>
+            <p class="buyers-like">
+                Покупателям нравится <span class="green"><?=($metkipok);?></span>
+            </p>
+        <?endif;?>
         <div class="row series-content">
             <div class="series-tabs">
                 <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>
