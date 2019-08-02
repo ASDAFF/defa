@@ -2046,6 +2046,22 @@ function GetMetkipok($select = ['*'], $filter = [])
     return $tizers;
 }
 
+function GetMetkipokSect($select = ['*'], $filter = [])
+{
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(18)->fetch();
+    $entity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass = $entity->getDataClass();
+    $res = $entityClass::getList([
+        'select' => $select,
+        'filter' => $filter,
+    ]);
+    $tizers = [];
+    while ($el = $res->fetch()) {
+        $tizers[$el['ID']] = $el['UF_NAME'];
+    }
+    return $tizers;
+}
+
 AddEventHandler("sale", "OnOrderAdd", "OnOrderAdd2Quick");
 function OnOrderAdd2Quick($intOrderID, $arFields){
     require_once($_SERVER["DOCUMENT_ROOT"] . '/ddsdev/tcpdf/tcpdf.php');

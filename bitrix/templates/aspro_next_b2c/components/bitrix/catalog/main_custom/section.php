@@ -241,40 +241,46 @@ $arSeoItems = CNextCache::CIBLockElement_GetList(array(
     "ElementValues"
 ));
 $arSeoItem = $arTmpRegionsLanding = array();
-if ($arSeoItems) {
-    $iLandingItemID = 0;
-    $current_url = $APPLICATION->GetCurDir();
-    $url = urldecode(str_replace(' ', '+', $current_url));
-    foreach ($arSeoItems as $arItem) {
-        if (urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]) == $url) {
-            $arSeoItem = $arItem;
-            $iLandingItemID = $arSeoItem['ID'];
-            break;
-        }
-    }
-    if ($arRegion) {
-        if ($arSeoItem) {
-            if ($arSeoItem['PROPERTY_LINK_REGION_VALUE']) {
-                if (!is_array($arSeoItem['PROPERTY_LINK_REGION_VALUE'])) {
-                    $arSeoItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arSeoItem['PROPERTY_LINK_REGION_VALUE'];
-                }
-                if (!in_array($arRegion['ID'], $arSeoItem['PROPERTY_LINK_REGION_VALUE'])) {
-                    $arSeoItem = array();
-                }
-            }
-        } else {//top-page-tizers
-            foreach ($arSeoItems as $arItem) {
-                if ($arItem['PROPERTY_LINK_REGION_VALUE']) {
-                    if (!is_array($arItem['PROPERTY_LINK_REGION_VALUE'])) {
-                        $arItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arItem['PROPERTY_LINK_REGION_VALUE'];
-                    }
-                    if (!in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE'])) {
-                        $arTmpRegionsLanding[] = $arItem['ID'];
-                    }
-                }
-            }
-        }
-    }
+if($arSeoItems)
+{
+	$iLandingItemID = 0;
+	$current_url =  $APPLICATION->GetCurDir();
+	$url = urldecode(str_replace(' ', '+', $current_url));
+	foreach($arSeoItems as $arItem)
+	{
+		if(urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]) == $url)
+		{
+			$arSeoItem = $arItem;
+			$iLandingItemID = $arSeoItem['ID'];
+			break;
+		}
+	}
+	if($arRegion)
+	{
+		if($arSeoItem)
+		{
+			if($arSeoItem['PROPERTY_LINK_REGION_VALUE'])
+			{
+				if(!is_array($arSeoItem['PROPERTY_LINK_REGION_VALUE']))
+					$arSeoItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arSeoItem['PROPERTY_LINK_REGION_VALUE'];
+				if(!in_array($arRegion['ID'], $arSeoItem['PROPERTY_LINK_REGION_VALUE']))
+					$arSeoItem = array();
+			}
+		}
+		else
+		{//top-page-tizers
+			foreach($arSeoItems as $arItem)
+			{
+				if($arItem['PROPERTY_LINK_REGION_VALUE'])
+				{
+					if(!is_array($arItem['PROPERTY_LINK_REGION_VALUE']))
+						$arItem['PROPERTY_LINK_REGION_VALUE'] = (array)$arItem['PROPERTY_LINK_REGION_VALUE'];
+					if(!in_array($arRegion['ID'], $arItem['PROPERTY_LINK_REGION_VALUE']))
+						$arTmpRegionsLanding[] = $arItem['ID'];
+				}
+			}
+		}
+	}
 }
 if ($arRegion) {
     if ($arRegion["LIST_STORES"] && $arParams["HIDE_NOT_AVAILABLE"] == "Y") {
@@ -514,7 +520,15 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
 		$section["SERIES_GALLERIES"] = $seriesGalleries;
     //METKI
     $arResult['METKI'] = GetMarks();
-    ?>
+    $arResult['METKIPOK'] = GetMetkipokSect();
+if ($section["UF_LABELSALE"]){
+	$metkipok = array();
+        foreach($section["UF_LABELSALE"] as $metkipokItem){
+		$metkipok[] = $arResult["METKIPOK"][$metkipokItem];
+	}
+            $metkipok = implode(", ",$metkipok);
+}
+?>
 
     <div class="series-block series-item inner">
         <div class="series-top">
@@ -606,6 +620,12 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                 </div>
             </div>
         </div>
+
+        <?if($metkipok):?>
+            <p class="buyers-like">
+                Покупателям нравится <span class="green"><?=($metkipok);?></span>
+            </p>
+        <?endif;?>
         <div class="row series-content">
             <div class="series-tabs">
                 <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>
@@ -708,20 +728,24 @@ if (!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])) {
                 <div class="col-md-8 sets-demonstration">
                     <div class="series-item-slider">
                         <div class="series-item-main-slide slick-slider">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):
-                                ?>
-                                <a class="series-item-main-fancy thumb" rel="group_1" data-fancybox="gallery"  href="<?=$image['SRC']?>">
+                            <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
+                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery"
+                                   href="<?= $image ?>">
+                                    <img src="<?= $image ?>" alt="">
+                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
+                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
                                     <img src="<?=$image['MIN_SRC']?>" alt="">
                                 </a>
-                            <?endforeach;?>
+                            <? endforeach; ?>
                         </div>
 
                         <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
+                            <? foreach ($section['SERIES_GALLERIES'] as $image): ?>
                                 <div class="series-item-preview-slide-item">
+                                    <img src="<?= $image ?>" alt="">
                                     <img src="<?=$image['SRC']?>" alt="">
                                 </div>
-                            <?endforeach;?>
+                            <? endforeach; ?>
                         </div>
                     </div>
                 </div>
