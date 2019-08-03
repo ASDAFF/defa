@@ -1028,7 +1028,7 @@ if ($section["UF_LABELSALE"]){
                 <div class="col-lg-12 filters-main-title">
                     <div class="top_block">
                         <h3 class="title_block big">Товары серии</h3>
-                        <div id="show_all" class="show_all">Скрыть все</div>
+                        <div id="show_all" class="show_all opened">Скрыть все</div>
                     </div>
                 </div>
             </div>
@@ -1264,20 +1264,86 @@ if ($section["UF_LABELSALE"]){
             <? } ?>
 
             <script>
+                function openCloseSection($target, openedAll = null) {
+                    var hBlock = $target.siblings('.hidden_section');
+                    const OPEN_SECTION_LABEL = 'Показать секцию';
+                    const CLOSE_SECTION_LABEL = 'Скрыть секцию';
+
+                    if (openedAll || hBlock.is(':visible')) {
+                        $target.text(OPEN_SECTION_LABEL)
+                    }
+
+                    if (openedAll == false || hBlock.is(':visible') == false) {
+                        $target.text(CLOSE_SECTION_LABEL)
+                    }
+
+                    if (openedAll === null) {
+                        hBlock.toggle({
+                            duration: 500,
+                            complete: function () {
+                                changeAllButtonState(checkSectionsOpenClose());
+                            }
+                        });
+                    } else {
+                        if (openedAll === true) {
+                            $target.siblings('.hidden_section').hide();
+                        } else {
+                            $target.siblings('.hidden_section').show();
+                        }
+                    }
+                }
+
+                const SHOW_LABEL_ALL = 'Показать все';
+                const HIDE_LABEL_ALL = 'Скрыть все';
+
+                /**
+                 * if true - closed
+                 * if false - opened
+                 *
+                 * @returns {null|boolean}
+                 */
+                function checkSectionsOpenClose(){
+                    var visibleSections = $('.open_section').siblings('.hidden_section:visible');
+                    if (visibleSections.length === 0){
+                        return true;
+                    } else {
+                        var notVisibleSections = $('.open_section').siblings('.hidden_section:hidden');
+                        if (notVisibleSections.length === 0) {
+                            return false;
+                        }
+                    }
+                    return null;
+                }
+
+                function changeAllButtonState(show){
+                    if (show === true){
+                        $('#show_all').text(SHOW_LABEL_ALL);
+                    } else {
+                        $('#show_all').text(HIDE_LABEL_ALL);
+                    }
+                }
+
                 $('.element_container').on('click', '.open_section',
                     function () {
-                        var hBlock = $(this).siblings('.hidden_section');
-                        $(this).text(hBlock.is(':visible') ? 'Показать секцию' : 'Скрыть секцию');
-                        hBlock.toggle('slow');
-                    });
-            </script>
-            <script>$(function () {
+                        openCloseSection($(this));
+                    }
+                );
+
+                $(function () {
                     $('#show_all').on('click', function (e) {
-                        $('.hidden_section').slideToggle(function () {
-                            $(e.target).text($(this).is(':visible') ? 'Скрыть все' : 'Показать все');
-                        });
+
+                        $target = $(e.target);
+                        $this = $(this);
+
+                        $groupOpenSectionLinks = $('.group_block').find('.open_section');
+                        $isOpened = $this.hasClass('.opened');
+                        $target.text($isOpened ? SHOW_LABEL_ALL : HIDE_LABEL_ALL);
+                        $this.toggleClass('.opened');
+
+                        openCloseSection($groupOpenSectionLinks,$isOpened);
                     });
-                });</script>
+                });
+            </script>
             <div class="sort-list-wrapper floating" id="section_block_bottom">
                 <p class="sort-evt">Выберите тип:</p>
                 <ul class="sort-list">
@@ -1379,7 +1445,7 @@ if ($section["UF_LABELSALE"]){
 
     <div class="js_wrapper_items"
          data-params='<?= str_replace('\'', '"', CUtil::PhpToJSObject($arTransferParams, false)) ?>'>
-        <? @include_once('page_blocks/' . $arParams["SECTION_ELEMENTS_TYPE_VIEW"] . '.php'); ?>
+        <? //@include_once('page_blocks/' . $arParams["SECTION_ELEMENTS_TYPE_VIEW"] . '.php'); ?>
     </div>
 
 
