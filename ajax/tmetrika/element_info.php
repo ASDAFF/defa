@@ -4,10 +4,13 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_be
 use Tmetrika\Offer;
 use Tmetrika\Product;
 
+
+
 $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
 
-$showProps = Product::$showProps;
-$limit = Product::$limit;
+$settings = Product::parseSettings();
+$showProps = $settings["props"];
+$limit = $settings["limit"];
 
 $Product = new Product($_REQUEST["id"]);
 

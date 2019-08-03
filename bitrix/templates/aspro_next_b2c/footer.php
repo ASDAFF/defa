@@ -1,4 +1,6 @@
-						<?CNextB2c::checkRestartBuffer();?>
+						<? use Tmetrika\Product;
+
+                        CNextB2c::checkRestartBuffer();?>
 						<?IncludeTemplateLangFile(__FILE__);?>
 							<?if(!$isIndex):?>
 								<?if($isBlog):?>
