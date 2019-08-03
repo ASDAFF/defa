@@ -59,7 +59,9 @@
                     </li>
                     <li class="alphabet-hide-item alphabet-demo">
 
-
+                    </li>
+                    <li class="alphabet-loader alphabet-hide-item">
+                        <img src="/images/loader.gif" alt="">
                     </li>
                 </ul>
             </li>

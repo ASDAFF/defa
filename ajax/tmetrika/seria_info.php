@@ -47,7 +47,10 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
             <a href="<?= $Section->Section["SECTION_PAGE_URL"] ?>"><?= $Section->Section["NAME"] ?></a>
         </h3>
         <h4 class="series-subname">
-            <?= $parent["NAME"] ?>
+            <a href="<?= $parent["SECTION_PAGE_URL"] ?>">
+                <?= $parent["NAME"] ?>
+            </a>
+
         </h4>
         <div class="series-slider-wrapper">
             <div class="main-img main-slide">
@@ -99,18 +102,18 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
             <div class="series-item-color-solutions">
                 <h3>Дополнительные цвета</h3>
                 <? foreach ($Section->getSeriaUniqueDopColors() as $color): ?>
-                <div class="series-item-color-content">
-                    <div class="series-item-color-wrapper">
-                        <div class="series-item-color-pic" data-title=""
-                             style="background: url()">
-                            <a href="#"
-                               class="series-item-color-link series-item-color-link-add"
-                               data-color-xml-id="">
-                                <img src="https://via.placeholder.com/90x60" alt="">
-                            </a>
+                    <div class="series-item-color-content">
+                        <div class="series-item-color-wrapper">
+                            <div class="series-item-color-pic" data-title=""
+                                 style="background: url()">
+                                <a href="#"
+                                   class="series-item-color-link series-item-color-link-add"
+                                   data-color-xml-id="">
+                                    <img src="https://via.placeholder.com/90x60" alt="">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <? endforeach ?>
             </div>
         </div>

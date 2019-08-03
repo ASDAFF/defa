@@ -2,6 +2,8 @@ $(function () {
 
     var loading = false;
 
+    $(".alphabet-loader").hide();
+
     $(".element_hover, .seria_hover").on("mouseenter", function () {
 
         // не делаем повторную загрузку
@@ -10,6 +12,10 @@ $(function () {
         }
 
         loading = true;
+
+        var loader = $(this).closest(".alphabet-item").find(".alphabet-loader");
+
+        loader.show();
 
         var $this = $(this);
 
@@ -31,6 +37,7 @@ $(function () {
                 var element = $this.closest(".alphabet-item").find(".alphabet-demo");
                 element.html(data).addClass("active");
                 loading = false;
+                loader.hide();
             }
         });
     });

@@ -14,4 +14,20 @@
     overflow-y: auto;
 }
 
+.alphabet-loader {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.alphabet-loader img{
+    width: 50px;
+    height: auto;
+}
+
+.alphabet-demo {
+    position: relative;
+}
+
 
