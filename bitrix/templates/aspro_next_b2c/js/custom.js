@@ -4,7 +4,6 @@ It will not be overwritten when you upgrade solution.
 */
 
 
-
 /*ШИРИНА ВЫПАДАЮЩЕГО МЕНЮ ДЛЯ СЕРИЙ*/
 $(document).ready(function () {
     var dropdownMenu = $('.dropdown-menu.last-dropdown-level');
@@ -16,14 +15,11 @@ $(document).ready(function () {
             var countRowsItem = $(this).children('.menu-item').size();
             if (countRowsItem === 4) {
                 $(this).addClass('four-elem');
-            }
-            else if (countRowsItem === 3) {
+            } else if (countRowsItem === 3) {
                 $(this).addClass('three-elem');
-            }
-            else if (countRowsItem === 2) {
+            } else if (countRowsItem === 2) {
                 $(this).addClass('two-elem');
-            }
-            else if (countRowsItem === 1) {
+            } else if (countRowsItem === 1) {
                 $(this).addClass('one-elem');
             }
         });
@@ -94,7 +90,6 @@ $(document).ready(function () {
     })
 
 
-
 });
 
 
@@ -142,14 +137,15 @@ $(document).ready(function () {
             }
         });
 
-        $(document).mouseup(function (e){
+        $(document).mouseup(function (e) {
             var div = $(".map-fly");
             if (!div.is(e.target)
                 && div.has(e.target).length === 0) {
                 map.classList.remove("show");
             }
         });
-    };
+    }
+    ;
 
 
 //подарок
@@ -187,7 +183,6 @@ $(document).ready(function () {
     // });
 
 
-
 //открытие бокового меню по клику
 
     // $(window).resize(function() {
@@ -218,7 +213,7 @@ window.addEventListener("load", function () {
     //открытие бокового меню по клику
 
     if ($('#callMenu').length || $("#hideMenu").length) {
-        if ( $(window).width() <= 1366 ) {
+        if ($(window).width() <= 1366) {
 
             var callMenu = document.querySelector("#callMenu");
             var hideMenu = document.querySelector("#hideMenu");
@@ -239,7 +234,6 @@ window.addEventListener("load", function () {
     }
 
 
-
 });
 
 //скрипт, показывающий скрытый контент тизеров в заголовке страницы
@@ -251,12 +245,9 @@ window.addEventListener("load", function () {
 });*/
 
 
-
-
-
 //Перемещение цветов на мобилке
-$(function() {
-    $(window).on('load resize', function() {
+$(function () {
+    $(window).on('load resize', function () {
         var $windowWidth = $(window).width();
         var $colorsBlock = $('.catalog_detail .info_item .buy_block');
         var $beforeBlock = $('.catalog_detail .info_item .prices_block');
@@ -264,13 +255,11 @@ $(function() {
 
         if ($windowWidth <= 991) {
             $beforeBlock.before($colorsBlock);
-        }
-        else {
+        } else {
             $beforeBlock.after($colorsBlock);
         }
     });
 });
-
 
 
 /*КЛИК НА ЗАНК ВОПРОС В ЦЕНЕ*/
@@ -284,11 +273,10 @@ $(document).ready(function () {
 
 /*раскрытие всех характеристик на мобилке*/
 $(document).ready(function () {
-   $('.catalog_detail .mobile-props .view_all_char').click(function () {
-       $('.catalog_detail .mobile-props .inner_props').slideToggle();
-   })
+    $('.catalog_detail .mobile-props .view_all_char').click(function () {
+        $('.catalog_detail .mobile-props .inner_props').slideToggle();
+    })
 });
-
 
 
 /*СЛАЙДЕР НОВОСТЕЙ НА ГЛАВНОЙ*/
@@ -342,7 +330,7 @@ $(document).ready(function () {
 
 //страница серий. вывод товаров в 4 строчки в случае отсутствия комплектов
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
     $('.extra-inform').each(function (key, element) {
         var testSets = $(element).find(".popular-content").is(".popular-content-sets");
         if (testSets === false) {
@@ -352,11 +340,11 @@ window.addEventListener("load", function() {
 })
 
 // страница серий. открыть панель со всеми цветами
-$(document).ready(function() {
-    $('.series-item').each(function(key, element) {
+$(document).ready(function () {
+    $('.series-item').each(function (key, element) {
 
 
-        $(element).find('.more-color').on('click', function(evt) {
+        $(element).find('.more-color').on('click', function (evt) {
             evt.preventDefault();
 
             var t = $(element).find('.series-item-color__modal');
@@ -369,7 +357,7 @@ $(document).ready(function() {
 
         });
 
-        $(document).mouseup(function(e) {
+        $(document).mouseup(function (e) {
             var w = $(element).find('.series-item-color__modal');
             if (!w.is(e.target) &&
                 w.has(e.target).length === 0) {
@@ -378,15 +366,15 @@ $(document).ready(function() {
         });
 
         // табы "описание" и "готовые наборы"
-        $(element).find('.series-content-toggle').on('click', function(evt) {
-               evt.preventDefault();
-               var id = $(this).attr('data-tab'),
-                   content = $(element).find('.series-main[data-tab="'+ id +'"]');
-                $(element).find('.series-content-toggle.current').removeClass('current');
-                $(this).addClass('current');
+        $(element).find('.series-content-toggle').on('click', function (evt) {
+            evt.preventDefault();
+            var id = $(this).attr('data-tab'),
+                content = $(element).find('.series-main[data-tab="' + id + '"]');
+            $(element).find('.series-content-toggle.current').removeClass('current');
+            $(this).addClass('current');
 
-                $(element).find('.series-main.current').removeClass('current');
-                content.addClass('current');
+            $(element).find('.series-main.current').removeClass('current');
+            content.addClass('current');
         });
 
 
@@ -438,150 +426,151 @@ $(document).ready(function() {
 });
 
 //слайдер на странице серий
-    $(document).ready(function() {
-        if ($(".sections_wrapper.series").length > 0){
+$(document).ready(function () {
+    if ($(".sections_wrapper.series").length > 0) {
 
-            $('.series-desc-block .slider-for').each(function(key, item) {
+        $('.series-desc-block .slider-for').each(function (key, item) {
 
-                var sliderIdNameDesc = 'sliderDesc' + key;
-                var sliderNavIdNameDesc = 'sliderDescNav' + key;
+            var sliderIdNameDesc = 'sliderDesc' + key;
+            var sliderNavIdNameDesc = 'sliderDescNav' + key;
 
-                this.id = sliderIdNameDesc;
-                $('.series-desc-block .slider-nav')[key].id = sliderNavIdNameDesc;
+            this.id = sliderIdNameDesc;
+            $('.series-desc-block .slider-nav')[key].id = sliderNavIdNameDesc;
 
-                var sliderIdDesc = '#' + sliderIdNameDesc;
-                var sliderNavIdDesc = '#' + sliderNavIdNameDesc;
+            var sliderIdDesc = '#' + sliderIdNameDesc;
+            var sliderNavIdDesc = '#' + sliderNavIdNameDesc;
 
-                $(sliderIdDesc).slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    fade: true,
-                    adaptiveHeight: true,
-                    asNavFor: sliderNavIdDesc
-                });
-
-                $(sliderNavIdDesc).slick({
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                    asNavFor: sliderIdDesc,
-                    dots: false,
-                    arrows: false,
-                    centerMode: false,
-                    infinite: true,
-                    focusOnSelect: true,
-                    adaptiveHeight: true,
-                    responsive: [
-                        {
-                            breakpoint: 1367,
-                            settings: {
-                                slidesToShow: 4,
-                                slidesToScroll: 4
-                            }
-                        }
-                    ]
-                });
-
+            $(sliderIdDesc).slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                fade: true,
+                adaptiveHeight: true,
+                asNavFor: sliderNavIdDesc
             });
 
-            $('.series-main.sets-block .slider-for').each(function(key, item) {
-
-                var sliderIdNameSets = 'sliderSets' + key;
-                var sliderNavIdNameSets = 'sliderSetsNav' + key;
-
-                this.id = sliderIdNameSets;
-                $('.series-main.sets-block .slider-nav')[key].id = sliderNavIdNameSets;
-
-                var sliderIdSets = '#' + sliderIdNameSets;
-                var sliderNavIdSets = '#' + sliderNavIdNameSets;
-
-                $(sliderIdSets).slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    fade: true,
-                    adaptiveHeight: true,
-                    asNavFor: sliderNavIdSets
-                });
-
-                $(sliderNavIdSets).slick({
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                    asNavFor: sliderIdSets,
-                    dots: false,
-                    arrows: false,
-                    centerMode: false,
-                    infinite: true,
-                    focusOnSelect: true,
-                    adaptiveHeight: true,
-                    responsive: [
-                        {
-                            breakpoint: 1367,
-                            settings: {
-                                slidesToShow: 4,
-                                slidesToScroll: 4
-                            }
+            $(sliderNavIdDesc).slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: sliderIdDesc,
+                dots: false,
+                arrows: false,
+                centerMode: false,
+                infinite: true,
+                focusOnSelect: true,
+                adaptiveHeight: true,
+                responsive: [
+                    {
+                        breakpoint: 1367,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 4
                         }
-                    ]
-                });
-
+                    }
+                ]
             });
 
-        }
+        });
+
+        $('.series-main.sets-block .slider-for').each(function (key, item) {
+
+            var sliderIdNameSets = 'sliderSets' + key;
+            var sliderNavIdNameSets = 'sliderSetsNav' + key;
+
+            this.id = sliderIdNameSets;
+            $('.series-main.sets-block .slider-nav')[key].id = sliderNavIdNameSets;
+
+            var sliderIdSets = '#' + sliderIdNameSets;
+            var sliderNavIdSets = '#' + sliderNavIdNameSets;
+
+            $(sliderIdSets).slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                fade: true,
+                adaptiveHeight: true,
+                asNavFor: sliderNavIdSets
+            });
+
+            $(sliderNavIdSets).slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: sliderIdSets,
+                dots: false,
+                arrows: false,
+                centerMode: false,
+                infinite: true,
+                focusOnSelect: true,
+                adaptiveHeight: true,
+                responsive: [
+                    {
+                        breakpoint: 1367,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 4
+                        }
+                    }
+                ]
+            });
+
+        });
+
+    }
 
     //    выбор отображения списка серий
-        $(".view-item").click(function(evt) {
-            evt.preventDefault();
-            $('.view-item').removeClass('active');
-            $(this).addClass('active');
-            $('.series_content').removeClass('active');
-            $('.'+$(this).attr('data-id')).addClass('active');
-        })
+    $(".view-item").click(function (evt) {
+        evt.preventDefault();
+        $('.view-item').removeClass('active');
+        $(this).addClass('active');
+        $('.series_content').removeClass('active');
+        $('.' + $(this).attr('data-id')).addClass('active');
+    })
 
     //    слайдер похожие серии
-                $(".similar-series-slider.slick-slider").slick({
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    arrows: true,
-                    infinite: true,
-                    centerMode: true,
-                    autoplay: true,
-                    autoplaySpeed: 2500,
-                    responsive: [
-                        {
-                            breakpoint: 1367,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ]
-                });
-
+    $(".similar-series-slider.slick-slider").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: true,
+        infinite: true,
+        centerMode: true,
+        autoplay: true,
+        autoplaySpeed: 2500,
+        responsive: [
+            {
+                breakpoint: 1367,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     });
 
+});
+
 //табы на странице одной серии
-$(document).ready(function() {
+$(document).ready(function () {
     // if ($(".series-block.inner").length > 0){
-            $('.inform-item').click(function(evt) {
-                evt.preventDefault();
-                var id = $(this).attr('data-tab'),
-                    content = $('.inform-content[data-tab="'+ id +'"]');
+    $('.inform-item').click(function (evt) {
+        evt.preventDefault();
+        var id = $(this).attr('data-tab'),
+            content = $('.inform-content[data-tab="' + id + '"]');
 
-                $('.inform-item.active').removeClass('active');
-                $(this).addClass('active');
+        $('.inform-item.active').removeClass('active');
+        $(this).addClass('active');
 
-                $('.inform-content.active').removeClass('active');
-                content.addClass('active');
-            });
+        $('.inform-content.active').removeClass('active');
+        content.addClass('active');
+    });
     // }
 
-    
+
 //панель якорей ТОЛЬКО для страницы одной серии
 
-    if($('.series-item').hasClass('inner')){
+    if ($('.series-item').hasClass('inner')) {
         $('.panel-anchors').addClass('show');
-    };
+    }
+    ;
 
 
 //арендодателям, переключение склад-салон
@@ -597,36 +586,34 @@ $(document).ready(function() {
 });
 
 
-
 //слайдер на странице серии
-$(document).ready(function() {
-    if ($(".series-block.inner").length > 0){
+$(document).ready(function () {
+    if ($(".series-block.inner").length > 0) {
 
-    $(".series-item-main-fancy").fancybox({
-        showNavArrows: true,
-        infobar: false,
-        thumbs: false
-    });
-
+        $(".series-item-main-fancy").fancybox({
+            showNavArrows: true,
+            infobar: false,
+            thumbs: false
+        });
 
 
         $('.series-item-main-slide.slick-slider').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                // arrows: true,
-                fade: true,
-                asNavFor: $('.series-item-preview-slide.slick-nav')
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            // arrows: true,
+            fade: true,
+            asNavFor: $('.series-item-preview-slide.slick-nav')
         });
 
         $('.series-item-preview-slide.slick-nav').slick({
             slidesToShow: 4,
-                slidesToScroll: 1,
-                asNavFor: $('.series-item-main-slide.slick-slider'),
-                dots: false,
-                arrows: false,
-                centerMode: false,
-                infinite: true,
-                focusOnSelect: true
+            slidesToScroll: 1,
+            asNavFor: $('.series-item-main-slide.slick-slider'),
+            dots: false,
+            arrows: false,
+            centerMode: false,
+            infinite: true,
+            focusOnSelect: true
         });
     }
 
@@ -634,12 +621,12 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-    if ($(".guaranty-conditions").length > 0){
-        $('.text-show-more').each(function(key, element) {
+$(document).ready(function () {
+    if ($(".guaranty-conditions").length > 0) {
+        $('.text-show-more').each(function (key, element) {
             $(element).find('.details-more').on('click', function (evt) {
                 evt.preventDefault();
-                if($(element).find('.text-show-block').hasClass('more')){
+                if ($(element).find('.text-show-block').hasClass('more')) {
                     $(element).find('.text-show-block').removeClass('more');
                     $(element).find('.details-more').html("Развернуть полностью");
                 } else {
@@ -652,14 +639,14 @@ $(document).ready(function() {
 
     //страница серии, переход к вкладке "все цвета"
 
-    if ($("#moreInformSeries").length > 0){
+    if ($("#moreInformSeries").length > 0) {
         $("#showMeMoreColors").on("click", function (evt) {
             evt.preventDefault();
             var el = $(this);
             var dest = el.attr('href');
-            if(dest !== undefined && dest !== '') {
+            if (dest !== undefined && dest !== '') {
                 $('html').animate({
-                    scrollTop: $(dest).offset().top
+                        scrollTop: $(dest).offset().top
                     }, 500
                 );
             }
@@ -674,13 +661,12 @@ $(document).ready(function() {
         })
     }
 
-    $(".show_more").on("click", function(evt){
+    $(".show_more").on("click", function (evt) {
         $(".description-details_gradient").toggleClass("height_auto");
         $(".gradient-more").toggleClass("hide");
         $(".show_more").toggleClass("transform");
     });
 });
-
 
 
 /*СЛАЙДЕР ПРОЕКТОВ НА СТРАНИЦЕ КОМПАНИИ C ФИЛЬТРОМ*/
@@ -689,7 +675,7 @@ $(document).ready(function () {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: false,
-        infinite:false,
+        infinite: false,
         responsive: [
             {
                 breakpoint: 767,
@@ -715,38 +701,29 @@ $(document).ready(function () {
 
         if (cat == ".s-1029") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1029');
-        }
-        else if (cat == ".s-27") {
+        } else if (cat == ".s-27") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-27');
-        }
-        else if (cat == ".s-1030") {
+        } else if (cat == ".s-1030") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1030');
-        }
-        else if (cat == ".s-1031") {
+        } else if (cat == ".s-1031") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1031');
-        }
-        else if (cat == ".s-1032") {
+        } else if (cat == ".s-1032") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1032');
-        }
-        else if (cat == ".s-1033") {
+        } else if (cat == ".s-1033") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1033');
-        }
-        else if (cat == ".s-1034") {
+        } else if (cat == ".s-1034") {
             $('.news-project-company-page .items').slick('slickFilter', '.s-1034');
-        }
-        else if(cat == 'all'){
+        } else if (cat == 'all') {
             $('.news-project-company-page .items').slick('slickUnfilter');
         }
     });
 });
 
 
-
-
 /*ФИКСАЦИЯ ЛЕВОГО БЛОКА*/
 
 $(document).ready(function () {
-    if ($('.left_block').length){
+    if ($('.left_block').length) {
         var $sidebar = $('.left_block .fixed-left-block');
         /*var $sidebarHeight = $sidebar.outerHeight();*/
         var $sidebarTop = $sidebar.offset().top;
@@ -755,17 +732,17 @@ $(document).ready(function () {
         $(window).scroll(function () {
             var $scrollTop = $(window).scrollTop();
             var $sidebarHeight = $sidebar.outerHeight();
-            if ($scrollTop > ($sidebarTop - 100) ) {
-                $sidebar.css({'position' : 'fixed', 'top' : '100px'});
+            if ($scrollTop > ($sidebarTop - 100)) {
+                $sidebar.css({'position': 'fixed', 'top': '100px'});
                 if ($scrollTop + $sidebarHeight > $footerTop) {
                     $sidebar.css("top", $footerTop - $scrollTop - $sidebarHeight);
                 }
-            }
-            else {
-                $sidebar.css({'position' : 'static', 'top' : '0'});
+            } else {
+                $sidebar.css({'position': 'static', 'top': '0'});
             }
         });
-    };
+    }
+    ;
 });
 
 /*ТАБЫ (ДОСТАВКА, ВЫВОЗ МУСОРА, СБОРКА)*/
@@ -776,4 +753,41 @@ $(document).ready(function () {
     });
 });
 
+/** WBL **/
+class Wbl {
+    static loadForm(strClassPrefix, strFormId, defaultData) {
+        $('body').find('.' + strClassPrefix + '_frame').remove();
+        $('body').find('.' + strClassPrefix + '_trigger').remove();
+        $('body').append('<div class="' + strClassPrefix + '_frame popup"></div>');
+        $('body').append('<div class="' + strClassPrefix + '_trigger"></div>');
+        $('.'+strClassPrefix+'_frame').jqm({
+            trigger: '.' + strClassPrefix + '_trigger', onHide: function (hash) {
+                onHidejqm(strClassPrefix, hash);
+            }, toTop: false, onLoad: function (hash) {
+                onLoadjqm(strClassPrefix, hash);
+            }, ajax: '/ajax/form.php?form_id=' + strFormId
+        });
 
+        if( defaultData instanceof Array && defaultData.length > 0)
+        {
+            var tmpInterval = setInterval(function () {
+                if( document.querySelectorAll('form[name="'+strFormId+'"]').length > 0 )
+                {
+                    for(var o in defaultData)
+                    {
+                        if( !isNaN(o) && defaultData[o].hasOwnProperty('KEY') && defaultData[o].hasOwnProperty('VALUE') )
+                        {
+                            if( document.querySelectorAll('form[name="'+strFormId+'"] [data-sid="'+( defaultData[o].KEY )+'"]').length > 0 )
+                            {
+                                document.querySelector('form[name="'+strFormId+'"] [data-sid="'+( defaultData[o].KEY )+'"]').value=defaultData[o].VALUE;
+                            }
+                        }
+                    }
+                    clearInterval(tmpInterval);
+                }
+            }, 100);
+        }
+
+        $('.' + strClassPrefix + '_trigger').click();
+    }
+}
