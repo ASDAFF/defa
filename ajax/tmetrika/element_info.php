@@ -1,13 +1,19 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+
 use Tmetrika\Offer;
 use Tmetrika\Product;
 
 $hideProps = array("SERVICES", "BRAND", "HIT", "RECOMMEND", "NEW", "STOCK", "VIDEO", "VIDEO_YOUTUBE", "CML2_ARTICLE", "POPUP_VIDEO");
 
+$showProps = Product::$showProps;
+$limit = Product::$limit;
+
 $Product = new Product($_REQUEST["id"]);
 
 $Offer = $Product->Offers[0];
+
+
 ?>
 
 <div class="alphabet-demo-product alphabet-demo-item active">
@@ -51,14 +57,14 @@ $Offer = $Product->Offers[0];
             </span>
         </div>
         <div class="price-wrap">
-            <?if($Offer->saleValue()):?>
-            <span class="price"><?=$Product->discountValue()?> &#8381;</span>
-            <span class="old-price"><?=$Product->getMinPrice(true)?></span>
+            <? if ($Offer->saleValue()): ?>
+                <span class="price"><?= $Product->discountValue() ?> &#8381;</span>
+                <span class="old-price"><?= $Product->getMinPrice(true) ?></span>
 
-            <span class="sale">-<?=$Offer->saleValue()?>%</span>
-            <?else:?>
-                <span class="price"><?=$Product->getMinPrice(true)?>&#8381;</span>
-            <?endif?>
+                <span class="sale">-<?= $Offer->saleValue() ?>%</span>
+            <? else: ?>
+                <span class="price"><?= $Product->getMinPrice(true) ?>&#8381;</span>
+            <? endif ?>
         </div>
         <a href="" class="blue-link">Гарантируем лучшие условия</a>
 
@@ -67,10 +73,10 @@ $Offer = $Product->Offers[0];
             <div class="colors-wrapper">
                 <? /** @var Offer $locOffer */
                 foreach ($Product->Offers as $locOffer):?>
-                <div class="color-item">
-                    <img src="<?=$locOffer->getColor()->getFile(['width' => 33,'height' => 33])?>" alt="">
-                </div>
-                <?endforeach?>
+                    <div class="color-item">
+                        <img src="<?= $locOffer->getColor()->getFile(['width' => 33, 'height' => 33]) ?>" alt="">
+                    </div>
+                <? endforeach ?>
             </div>
             <a href="" class="blue-link">Нужен в другом цвете?</a>
         </div>
@@ -94,14 +100,22 @@ $Offer = $Product->Offers[0];
             </div>
         <? } ?>
         <ul class="characters">
-            <? foreach ($Product->product['PROPS'] as $item) {
+            <?
+            $count = 0;
+            foreach ($Product->product['PROPS'] as $item) {
+                if ($count >= $limit) {
+                    break;
+                }
                 $showProperty = $item["USER_TYPE"] === null &&
                     data_get($item, "VALUE") &&
                     $item["PROPERTY_TYPE"] !== "F" &&
                     !is_array(data_get($item, "VALUE")) &&
-                    !in_array($item["CODE"], $hideProps);
+                    !in_array($item["CODE"], $hideProps) &&
+                    in_array($item["CODE"], $showProps);
 
-                if ($showProperty) { ?>
+                if ($showProperty) {
+                    $count++;
+                    ?>
                     <li>
                         <?= data_get($item, "NAME") ?>: <?= data_get($item, "VALUE") ?>
                     </li>

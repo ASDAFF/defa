@@ -6,6 +6,8 @@ class AlphabetMenu extends CBitrixComponent
 
     protected $catalogId = 17;
 
+
+
     protected $alphabet = [
         "а",
         "б",
@@ -13,7 +15,6 @@ class AlphabetMenu extends CBitrixComponent
         "г",
         "д",
         "е",
-        "ё",
         "ж",
         "з",
         "и",
@@ -101,6 +102,7 @@ class AlphabetMenu extends CBitrixComponent
     /**
      * Проверяет, что раздел является серией (не должно быть подразделов)
      * @param $id
+     * @return bool
      */
     protected function isSeria($id)
     {

@@ -1,6 +1,15 @@
 $(function () {
 
-    $(".element_hover, .seria_hover").click(function () {
+    var loading = false;
+
+    $(".element_hover, .seria_hover").on("mouseenter", function () {
+
+        // не делаем повторную загрузку
+        if (loading) {
+            return;
+        }
+
+        loading = true;
 
         var $this = $(this);
 
@@ -21,6 +30,7 @@ $(function () {
             success: function (data) {
                 var element = $this.closest(".alphabet-item").find(".alphabet-demo");
                 element.html(data).addClass("active");
+                loading = false;
             }
         });
     });
