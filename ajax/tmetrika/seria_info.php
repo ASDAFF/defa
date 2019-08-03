@@ -54,12 +54,18 @@ $parent = CIBlockSection::GetByID($Section->Section["IBLOCK_SECTION_ID"])->GetNe
         </h4>
         <div class="series-slider-wrapper">
             <div class="main-img main-slide">
-                <img src="<?= CFile::GetPath($Section->Section["PICTURE"]) ?>" class="series-item__main-photo">
+                <img src="<?= CFile::ResizeImageGet($Section->Section["PICTURE"], [
+                    "width" => 300,
+                    "height" => 300,
+                ], BX_RESIZE_IMAGE_PROPORTIONAL)["src"] ?>" class="series-item__main-photo">
             </div>
             <div class="toggle-img">
                 <? foreach ($photos as $photo) { ?>
                     <div class="toggle-img-item">
-                        <img src="<?= CFile::GetPath($photo) ?>">
+                        <img src="<?= CFile::ResizeImageGet($photo, [
+                            "width" => 300,
+                            "height" => 300,
+                        ], BX_RESIZE_IMAGE_PROPORTIONAL)["src"] ?>">
                     </div>
                 <? } ?>
             </div>
