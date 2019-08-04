@@ -931,7 +931,7 @@ if ($arResult['MODULES']['catalog'] && $arResult['CATALOG'])
 }
 
 /*complect*/
-if($arParams["SHOW_KIT_PARTS"] == "Y"){
+if(true || $arParams["SHOW_KIT_PARTS"] == "Y"){
 	//const TYPE_SET = 1;
 	//const TYPE_GROUP = 2;
 	$arSetItems = $arSetItemsOtherID = array();

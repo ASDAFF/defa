@@ -1152,8 +1152,12 @@ if(!$arPost['CLASS'])
 						var arUrl2 = wrapper.find('.item-title > a').attr('href').split("?");
 						if(arUrl2.length > 1)
 						{
-							wrapper.find('.item-title > a').attr('href', wrapper.find('.item-title > a').attr('href').replace(arUrl2[1], arUrl[1]));
-							wrapper.find('.thumb.shine').attr('href', wrapper.find('.thumb.shine').attr('href').replace(arUrl2[1], arUrl[1]));
+							var newUrl = wrapper.find('.item-title > a').attr('href').replace(arUrl2[1], arUrl[1]);
+							wrapper.find('.item-title > a').attr('href', newUrl);
+							wrapper.find('.thumb.shine').attr('href', newUrl);
+							if(wrapper.find('.read_more').length){
+								wrapper.find('.read_more').attr('href', newUrl);
+							}
 						}
 					}
 				}

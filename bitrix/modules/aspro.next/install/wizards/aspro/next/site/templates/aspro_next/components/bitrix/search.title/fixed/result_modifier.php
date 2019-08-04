@@ -219,7 +219,16 @@ if (!empty($arResult["ELEMENTS"]) && CModule::IncludeModule("iblock"))
 		}
 	}
 
-	$arOffersWithoutPictureProductsIDs = array();
+	$arOffersWithoutPictureProductsIDs = $arFilterIBlocks = array();
+
+	$rsElements = CIBlockElement::GetList(array(), $arFilter, false, false, array('ID', 'IBLOCK_ID'));
+	while($arElement = $rsElements->Fetch())
+	{
+		$arFilterIBlocks[] = $arElement['IBLOCK_ID'];
+	}
+	if($arFilterIBlocks){
+		$arFilter['IBLOCK_ID'] = array_unique($arFilterIBlocks);
+	}
 
 	$rsElements = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 	while($arElement = $rsElements->Fetch())

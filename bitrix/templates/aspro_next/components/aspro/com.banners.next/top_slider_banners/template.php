@@ -3,8 +3,8 @@
 <?if($arResult["ITEMS"]):?>
 	<?global $arTheme;
 	$bHideOnNarrow = $arTheme['BIGBANNER_HIDEONNARROW']['VALUE'] === 'Y';?>
-	<div class="top_slider_wrapp maxwidth-banner<?=($bHideOnNarrow ? ' hidden_narrow' : '')?> 123">
-		<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.flexslider-min.js',true)?> 
+	<div class="top_slider_wrapp maxwidth-banner view_<?=$arResult['BIGBANNER_MOBILE']?><?=($bHideOnNarrow ? ' hidden_narrow' : '')?>">
+		<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH.'/js/jquery.flexslider-min.js',true)?>
 		<div class="flexslider">
 			<ul class="slides">
 				<?foreach($arResult["ITEMS"] as $i => $arItem):?>
@@ -12,6 +12,7 @@
 					$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 					$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 					$background = is_array($arItem["DETAIL_PICTURE"]) ? $arItem["DETAIL_PICTURE"]["SRC"] : $this->GetFolder()."/images/background.jpg";
+					$bHasUrl = boolval(strlen($arItem["PROPERTIES"]["URL_STRING"]["VALUE"]));
 					$target = $arItem["PROPERTIES"]["TARGETS"]["VALUE_XML_ID"];
 
 					// video options
@@ -39,7 +40,7 @@
 							// <iframe src="https://player.vimeo.com/video/211336204?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 							// RUTUBE:
 							// <iframe width="720" height="405" src="//rutube.ru/play/embed/10314281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
-							
+
 							$videoPlayer = 'YOUTUBE';
 							$videoSrc = htmlspecialchars_decode($videoSrc);
 							if(strpos($videoSrc, 'iframe') !== false){
@@ -79,7 +80,7 @@
 
 							if(strlen($videoPlayerSrc)){
 								$videoPlayerSrc = trim($videoPlayerSrc.
-									($bVideoPlayerYoutube ? '?autoplay=1&enablejsapi=1&controls=0&showinfo=0&rel=0&disablekb=1&iv_load_policy=3' :
+									($bVideoPlayerYoutube ? '?autoplay=1&enablejsapi=1&controls=0&showinfo=0&rel=0&disablekb=1&iv_load_policy=3&modestbranding=1' :
 									($bVideoPlayerVimeo ? '?autoplay=1&badge=0&byline=0&portrait=0&title=0' :
 									($bVideoPlayerRutube ? '?quality=1&autoStart=0&sTitle=false&sAuthor=false&platform=someplatform' : '')))
 								);
@@ -89,13 +90,17 @@
 							$videoPlayer = 'HTML5';
 							$videoPlayerSrc = $videoFileSrc;
 						}
-					}?>
-					<li class="box<?=($arItem["PROPERTIES"]["TEXTCOLOR"]["VALUE_XML_ID"] ? " ".$arItem["PROPERTIES"]["TEXTCOLOR"]["VALUE_XML_ID"] : "");?><?=($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] ? " ".$arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] : " left");?><?=($bShowVideo ? ' wvideo' : '');?>" data-nav_color="<?=($arItem["PROPERTIES"]["NAV_COLOR"]["VALUE_XML_ID"] ? $arItem["PROPERTIES"]["NAV_COLOR"]["VALUE_XML_ID"] : "");?>" data-slide_index="<?=$i?>" <?=($bShowVideo ? ' data-video_source="'.$videoSource.'"' : '')?><?=(strlen($videoPlayer) ? ' data-video_player="'.$videoPlayer.'"' : '')?><?=(strlen($videoPlayerSrc) ? ' data-video_src="'.$videoPlayerSrc.'"' : '')?><?=($bVideoAutoStart ? ' data-video_autoplay="1"' : '')?><?=($bVideoDisableSound ? ' data-video_disable_sound="1"' : '')?><?=($bVideoLoop ? ' data-video_loop="1"' : '')?><?=($bVideoCover ? ' data-video_cover="1"' : '')?> id="<?=$this->GetEditAreaId($arItem['ID']);?>" style="background-image: url('<?=$background?>') !important;">
-						<?if($arItem["PROPERTIES"]["URL_STRING"]["VALUE"]):?>
+					}
+
+					$bImgWithVideo = ($bShowVideo && !$bVideoAutoStart && $arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "image");
+					$bTabletImgWithVideo = $bShowVideo && !$bVideoAutoStart;
+					?>
+					<li class="box<?=($bHasUrl ? ' wurl' : '')?><?=($arItem["PROPERTIES"]["TEXTCOLOR"]["VALUE_XML_ID"] ? " ".$arItem["PROPERTIES"]["TEXTCOLOR"]["VALUE_XML_ID"] : "");?><?=($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] ? " ".$arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] : " left");?><?=($bShowVideo ? ' wvideo' : '');?>" data-nav_color="<?=($arItem["PROPERTIES"]["NAV_COLOR"]["VALUE_XML_ID"] ? $arItem["PROPERTIES"]["NAV_COLOR"]["VALUE_XML_ID"] : "");?>" data-slide_index="<?=$i?>" <?=($bShowVideo ? ' data-video_source="'.$videoSource.'"'.(strlen($videoPlayer) ? ' data-video_player="'.$videoPlayer.'"' : '').(strlen($videoPlayerSrc) ? ' data-video_src="'.$videoPlayerSrc.'"' : '').(strlen($videoPlayerSrc) ? ' data-video_src="'.$videoPlayerSrc.'"' : '').($bVideoAutoStart ? ' data-video_autoplay="1"' : '').($bVideoDisableSound ? ' data-video_disable_sound="1"' : '').($bVideoLoop ? ' data-video_loop="1"' : '').($bVideoCover ? ' data-video_cover="1"' : '') : '')?> id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+						<?if($bHasUrl):?>
 							<a class="target" href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>></a>
 						<?endif;?>
-						<div class="wrapper_inner">	
-							<? 
+						<div class="wrapper_inner">
+							<?
 							$position = "0% 100%";
 							if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"])
 							{
@@ -104,96 +109,175 @@
 								elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "right")
 									$position = "0% 100%";
 								else
-									$position = "center center";									
+									$position = "center center";
 							}
 							?>
-							<table class="table-no-border" <?/*if($arItem["PREVIEW_PICTURE"]):?>style="background: url(<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>) <?=$position;?> no-repeat"<?endif;*/?>>
-								<tbody><tr>
-									<?if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] != "image"):?>
-										<?ob_start();?>
-											<td class="text <?=$arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"];?>">
-												<?
-													$bShowButton1 = (strlen($arItem['PROPERTIES']['BUTTON1TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON1LINK']['VALUE']));
-													$bShowButton2 = (strlen($arItem['PROPERTIES']['BUTTON2TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON2LINK']['VALUE']));
-												?>
-												<?if($arItem["NAME"]):?>
-													<div class="banner_title">
-														<span>
-															<?if($arItem["PROPERTIES"]["URL_STRING"]["VALUE"]):?>
-																<a href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
-															<?endif;?>
-															<?=strip_tags($arItem["~NAME"], "<br><br/>");?>
-															<?if($arItem["PROPERTIES"]["URL_STRING"]["VALUE"]):?>
-																</a>
-															<?endif;?>
-														</span>
-													</div>
+							<?if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] != "image"):?>
+								<?ob_start();?>
+									<td class="text <?=$arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"];?>">
+										<?
+											$bShowButton1 = (strlen($arItem['PROPERTIES']['BUTTON1TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON1LINK']['VALUE']));
+											$bShowButton2 = (strlen($arItem['PROPERTIES']['BUTTON2TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON2LINK']['VALUE']));
+										?>
+										<?if($arItem["NAME"]):?>
+											<div class="banner_title">
+												<span>
+													<?if($bHasUrl):?>
+														<a href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+													<?endif;?>
+													<?=strip_tags($arItem["~NAME"], "<br><br/>");?>
+													<?if($bHasUrl):?>
+														</a>
+													<?endif;?>
+												</span>
+											</div>
+										<?endif;?>
+										<?if($arItem["PREVIEW_TEXT"]):?>
+											<div class="banner_text"><?=$arItem["PREVIEW_TEXT"];?></div>
+										<?endif;?>
+										<?if($bShowButton1 || $bShowButton2 || ($bShowVideo && !$bVideoAutoStart)):?>
+											<div class="banner_buttons">
+												<?if($bShowVideo && !$bVideoAutoStart && !$bShowButton1 && !$bShowButton2):?>
+													<span class="play btn-video small <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?>" title="<?=$buttonVideoText?>"></span>
+												<?elseif($bShowButton1 || $bShowButton2):?>
+													<?if($bShowVideo && !$bVideoAutoStart):?>
+														<span class="btn <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?> btn-video" title="<?=$buttonVideoText?>"></span>
+													<?endif;?>
+													<?if($bShowButton1):?>
+														<a href="<?=$arItem["PROPERTIES"]["BUTTON1LINK"]["VALUE"]?>" class="<?=!empty($arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"] : "btn btn-default btn-lg"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+															<?=$arItem["PROPERTIES"]["BUTTON1TEXT"]["VALUE"]?>
+														</a>
+													<?endif;?>
+													<?if($bShowButton2):?>
+														<a href="<?=$arItem["PROPERTIES"]["BUTTON2LINK"]["VALUE"]?>" class="<?=!empty( $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"] : "btn btn-default btn-lg btn-info"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+															<?=$arItem["PROPERTIES"]["BUTTON2TEXT"]["VALUE"]?>
+														</a>
+													<?endif;?>
 												<?endif;?>
-												<?if($arItem["PREVIEW_TEXT"]):?>
-													<div class="banner_text"><?=$arItem["PREVIEW_TEXT"];?></div>
-												<?endif;?>
-												<?if($bShowButton1 || $bShowButton2 || ($bShowVideo && !$bVideoAutoStart)):?>
-													<div class="banner_buttons">
-														<?if($bShowVideo && !$bVideoAutoStart && !$bShowButton1 && !$bShowButton2):?>
-															<span class="play btn-video small <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?>" title="<?=$buttonVideoText?>"></span>
-														<?elseif($bShowButton1 || $bShowButton2):?>
-															<?if($bShowVideo && !$bVideoAutoStart):?>
-																<span class="btn <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?> btn-video" title="<?=$buttonVideoText?>"></span>
-															<?endif;?>
-															<?if($bShowButton1):?>
-																<a href="<?=$arItem["PROPERTIES"]["BUTTON1LINK"]["VALUE"]?>" class="<?=!empty($arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"] : "btn btn-default btn-lg"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
-																	<?=$arItem["PROPERTIES"]["BUTTON1TEXT"]["VALUE"]?>
-																</a>
-															<?endif;?>
-															<?if($bShowButton2):?>
-																<a href="<?=$arItem["PROPERTIES"]["BUTTON2LINK"]["VALUE"]?>" class="<?=!empty( $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"] : "btn btn-default btn-lg btn-info"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
-																	<?=$arItem["PROPERTIES"]["BUTTON2TEXT"]["VALUE"]?>
-																</a>
-															<?endif;?>
-														<?endif;?>
-													</div>
-												<?endif;?>
-											</td>
-										<?$text = ob_get_clean();?>
+											</div>
+										<?endif;?>
+									</td>
+								<?$text = trim(ob_get_clean());?>
+							<?endif;?>
+							<?ob_start();?>
+								<td class="img<?=($bImgWithVideo ? ' with_video' : '');?>">
+									<?if($bImgWithVideo):?>
+										<div class="video_block">
+											<span class="play btn btn-video <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?>" title="<?=$buttonVideoText?>"></span>
+										</div>
+									<?elseif($arItem["PREVIEW_PICTURE"]):?>
+										<span class="wrap_plaxy" style="width:<?=$arItem['PREVIEW_PICTURE']['WIDTH']?>px;height:<?=$arItem['PREVIEW_PICTURE']['HEIGHT']?>px;">
+											<?if(!empty($arItem["PROPERTIES"]["URL_STRING"]["VALUE"])):?>
+												<a href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+											<?endif;?>
+											<img class="plaxy" src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>" alt="<?=($arItem['PREVIEW_PICTURE']['ALT'] ? $arItem['PREVIEW_PICTURE']['ALT'] : $arItem['NAME'])?>" title="<?=($arItem['PREVIEW_PICTURE']['TITLE'] ? $arItem['PREVIEW_PICTURE']['TITLE'] : $arItem['NAME'])?>" />
+											<?if(!empty($arItem["PROPERTIES"]["URL_STRING"]["VALUE"])):?>
+												</a>
+											<?endif;?>
+										</span>
 									<?endif;?>
-									<?ob_start();?>
-										<?$bHasVideo = ($bShowVideo && !$bVideoAutoStart && $arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "image");?>
-										<td class="img <?=($bHasVideo ? 'with_video' : '');?>">
-											<?if($bHasVideo):?>
-												<div class="video_block">
-													<span class="play btn btn-video  <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?>" title="<?=$buttonVideoText?>"></span>
-												</div>
-											<?elseif($arItem["PREVIEW_PICTURE"]):?>
-												<?if(!empty($arItem["PROPERTIES"]["URL_STRING"]["VALUE"])):?>
-													<a href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
-												<?endif;?>
-												<img class="plaxy" src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>" alt="<?=($arItem['PREVIEW_PICTURE']['ALT'] ? $arItem['PREVIEW_PICTURE']['ALT'] : $arItem['NAME'])?>" title="<?=($arItem['PREVIEW_PICTURE']['TITLE'] ? $arItem['PREVIEW_PICTURE']['TITLE'] : $arItem['NAME'])?>" />
-												<?if(!empty($arItem["PROPERTIES"]["URL_STRING"]["VALUE"])):?>
-													</a>
-												<?endif;?>
-											<?endif;?>									
+								</td>
+							<?$image = trim(ob_get_clean());?>
+							<table class="table-no-border">
+								<tbody>
+									<tr>
+										<td class="bg" <?=(strlen($text) && strlen($image) ? ' colspan="2"' : '')?>>
+											<div class="banner_bg" style="background-image: url('<?=$background?>');"></div>
 										</td>
-									<?$image = ob_get_clean();?>
-									<? 
-									if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"]){
-										if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "left"){
+									</tr>
+									<tr>
+										<?
+										if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"]){
+											if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "left"){
+												echo $text.$image;
+											}
+											elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "right"){
+												echo $image.$text;
+											}
+											elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "center"){
+												echo $text;
+											}
+											elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "image"){
+												echo $image;
+											}
+										}
+										else{
 											echo $text.$image;
 										}
-										elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "right"){
-											echo $image.$text;
-										}
-										elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "center"){
-											echo $text;
-										}
-										elseif($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] == "image"){
-											echo $image;
-										}
-									}
-									else{
-										echo $text.$image;
-									}
-									?>
-								</tr></tbody>
+										?>
+									</tr>
+									<tr>
+										<?if($arResult['BIGBANNER_MOBILE'] == 2):?>
+											<td class="tablet_text"<?=(strlen($text) && strlen($image) ? ' colspan="2"' : '')?>>
+												<?ob_start();?>
+													<?if($arItem["PROPERTIES"]["TEXT_POSITION"]["VALUE_XML_ID"] != "image"):?>
+														<?
+														$bShowButton1 = (strlen($arItem['PROPERTIES']['BUTTON1TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON1LINK']['VALUE']));
+														$bShowButton2 = (strlen($arItem['PROPERTIES']['BUTTON2TEXT']['VALUE']) && strlen($arItem['PROPERTIES']['BUTTON2LINK']['VALUE']));
+														?>
+														<?if($arItem["NAME"]):?>
+															<div class="banner_title">
+																<span>
+																	<?if($bHasUrl):?>
+																		<a href="<?=$arItem["PROPERTIES"]["URL_STRING"]["VALUE"]?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+																	<?endif;?>
+																	<?=strip_tags($arItem["~NAME"], "<br><br/>");?>
+																	<?if($bHasUrl):?>
+																		</a>
+																	<?endif;?>
+																</span>
+															</div>
+														<?endif;?>
+														<?if($arItem["PREVIEW_TEXT"]):?>
+															<div class="banner_text"><?=$arItem["PREVIEW_TEXT"];?></div>
+														<?endif;?>
+														<?if($bShowButton1 || $bShowButton2 || ($bShowVideo && !$bVideoAutoStart)):?>
+															<div class="banner_buttons">
+																<?if($bShowVideo && !$bVideoAutoStart && !$bShowButton1 && !$bShowButton2):?>
+																	<span class="btn <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?> btn-video" title="<?=$buttonVideoText?>"><?=CNext::showIconSvg('playpause', SITE_TEMPLATE_PATH.'/images/svg/play_pause.svg', '', 'svg-playpause');?></span>
+																<?elseif($bShowButton1 || $bShowButton2):?>
+																	<?if($bShowVideo && !$bVideoAutoStart):?>
+																		<span class="btn <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?> btn-video" title="<?=$buttonVideoText?>"><?=CNext::showIconSvg('playpause', SITE_TEMPLATE_PATH.'/images/svg/play_pause.svg', '', 'svg-playpause');?></span>
+																	<?endif;?>
+																	<?if($bShowButton1):?>
+																		<a href="<?=$arItem["PROPERTIES"]["BUTTON1LINK"]["VALUE"]?>" class="<?=!empty($arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON1CLASS"]["VALUE"] : "btn btn-default btn-lg"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+																			<?=$arItem["PROPERTIES"]["BUTTON1TEXT"]["VALUE"]?>
+																		</a>
+																	<?endif;?>
+																	<?if($bShowButton2):?>
+																		<a href="<?=$arItem["PROPERTIES"]["BUTTON2LINK"]["VALUE"]?>" class="<?=!empty( $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"]) ? $arItem["PROPERTIES"]["BUTTON2CLASS"]["VALUE"] : "btn btn-default btn-lg btn-info"?>" <?=(strlen($target) ? 'target="'.$target.'"' : '')?>>
+																			<?=$arItem["PROPERTIES"]["BUTTON2TEXT"]["VALUE"]?>
+																		</a>
+																	<?endif;?>
+																<?endif;?>
+															</div>
+														<?endif;?>
+													<?else:?>
+														<?if($bShowVideo && !$bVideoAutoStart):?>
+															<div class="banner_buttons" style="margin-top:0;">
+																<span class="btn <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?> btn-video" title="<?=$buttonVideoText?>"><?=CNext::showIconSvg('playpause', SITE_TEMPLATE_PATH.'/images/svg/play_pause.svg', '', 'svg-playpause');?></span>
+															</div>
+														<?endif;?>
+													<?endif;?>
+												<?$tablet_text = trim(ob_get_clean());?>
+												<div class="wrap"><?if(strlen($tablet_text)):?><div class="inner"><?=$tablet_text?></div><?endif;?></div>
+											</td>
+										<?elseif($arResult['BIGBANNER_MOBILE'] == 3):?>
+											<?$tabletImgSrc = ($arItem["PROPERTIES"]['TABLET_IMAGE']['VALUE'] ? CFile::GetPath($arItem["PROPERTIES"]['TABLET_IMAGE']['VALUE']) : $background);?>
+											<td class="tablet_img<?=($bTabletImgWithVideo ? ' with_video' : '');?>"<?=(strlen($text) && strlen($image) ? ' colspan="2"' : '')?>>
+												<div style="background-image:url('<?=$tabletImgSrc?>');">
+													<?if($bTabletImgWithVideo):?>
+														<div class="wrap">
+															<div class="video_block">
+																<span class="play btn btn-video <?=(strlen($arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID']) ? $arItem['PROPERTIES']['BUTTON_VIDEO_CLASS']['VALUE_XML_ID'] : 'btn-default')?>" title="<?=$buttonVideoText?>"></span>
+															</div>
+														</div>
+													<?endif;?>
+												</div>
+											</td>
+										<?endif;?>
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</li>

@@ -163,7 +163,8 @@ if($catalogInfoIblockId){
 
 			if(!$arSeoItem)
 			{
-				if(urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]) == $url)
+				$urldecoded = urldecode($arItem["PROPERTY_FILTER_URL_VALUE"]);
+				if($urldecoded == $url || $urldecoded == $current_url)
 				{
 					if($arItem['PROPERTY_LINK_REGION_VALUE'])
 					{
@@ -210,6 +211,7 @@ if($arRegion)
 		{
 			$arTmpFilter[] = array(">CATALOG_STORE_AMOUNT_".$storeID => 0);
 		}
+		$arTmpFilter[] = array("TYPE" => "2");
 		$GLOBALS[$arParams["FILTER_NAME"]][] = $arTmpFilter;
 	}
 	$arParams["USE_REGION"] = "Y";

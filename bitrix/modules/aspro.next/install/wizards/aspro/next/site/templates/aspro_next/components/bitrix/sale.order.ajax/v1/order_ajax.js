@@ -43,39 +43,44 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 	}
 
 	BX.Sale.OrderAjaxComponent = {
-		BXFormPosting: false,
-		regionBlockNotEmpty: false,
-		locationsInitialized: false,
-		locations: {},
-		cleanLocations: {},
-		locationsTemplate: '',
-		pickUpMapFocused: false,
-		basketColumns: [],
-		options: {},
-		activeSectionId: '',
-		firstLoad: true,
-		initialized: {},
-		mapsReady: false,
-		lastSelectedDelivery: 0,
-		deliveryLocationInfo: {},
-		deliveryPagination: {},
-		deliveryCachedInfo: [],
-		paySystemPagination: {},
-		validation: {},
-		hasErrorSection: {},
-		pickUpPagination: {},
-		timeOut: {},
-		isMobile: BX.browser.IsMobile(),
-		isHttps: window.location.protocol === "https:",
-		orderSaveAllowed: false,
-		socServiceHiddenNode: false,
-		isDeliveryChanged: false,
+
+		initializePrimaryFields: function()
+		{
+			this.BXFormPosting = false;
+			this.regionBlockNotEmpty = false;
+			this.locationsInitialized = false;
+			this.locations = {};
+			this.cleanLocations = {};
+			this.locationsTemplate = '';
+			this.pickUpMapFocused = false;
+			this.options = {};
+			this.activeSectionId = '';
+			this.firstLoad = true;
+			this.initialized = {};
+			this.mapsReady = false;
+			this.lastSelectedDelivery = 0;
+			this.deliveryLocationInfo = {};
+			this.deliveryPagination = {};
+			this.deliveryCachedInfo = [];
+			this.paySystemPagination = {};
+			this.validation = {};
+			this.hasErrorSection = {};
+			this.pickUpPagination = {};
+			this.timeOut = {};
+			this.isMobile = BX.browser.IsMobile();
+			this.isHttps = window.location.protocol === "https:";
+			this.orderSaveAllowed = false;
+			this.socServiceHiddenNode = false;
+			this.isDeliveryChanged = false;
+		},
 
 		/**
 		 * Initialization of sale.order.ajax component js
 		 */
 		init: function(parameters)
 		{
+			this.initializePrimaryFields();
+
 			this.result = parameters.result || {};
 			this.prepareLocations(parameters.locations);
 			this.params = parameters.params || {};
@@ -114,7 +119,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			{
 				this.authBlockNode.style.display = '';
 				BX.addClass(this.authBlockNode, 'bx-active');
-				this.authGenerateUser = this.result.AUTH.new_user_registration_email_confirmation != 'Y';
+				this.authGenerateUser = this.result.AUTH.new_user_registration_email_confirmation !== 'Y' && this.result.AUTH.new_user_phone_required !== 'Y';
 			}
 
 			if (this.totalBlockNode)
@@ -179,7 +184,23 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 					form.querySelector('input[type=hidden][name=sessid]').value = BX.bitrix_sessid();
 				}
 
-				BX.ajax.submit(BX('bx-soa-order-form'), BX.proxy(this.saveOrder, this));
+				BX.ajax.submitAjax(
+					BX('bx-soa-order-form'),
+					{
+						url: this.ajaxUrl,
+						method: 'POST',
+						dataType: 'json',
+						data: {
+							via_ajax: 'Y',
+							action: 'saveOrderAjax',
+							sessid: BX.bitrix_sessid(),
+							SITE_ID: this.siteId,
+							signedParamsString: this.signedParamsString
+						},
+						onsuccess: BX.proxy(this.saveOrderWithJson, this),
+						onfailure: BX.proxy(this.handleNotRedirected, this)
+					}
+				);
 			}
 			else
 			{
@@ -198,6 +219,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 							case 'refreshOrderAjax':
 								this.refreshOrder(result);
 								break;
+							case 'confirmSmsCode':
 							case 'showAuthForm':
 								this.firstLoad = true;
 								this.refreshOrder(result);
@@ -284,7 +306,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			}
 			else if (result.order.SHOW_AUTH)
 			{
-				var animation = this.result.OK_MESSAGE && this.result.OK_MESSAGE.length ? 'bx-step-good' : 'bx-step-bad';
+				var animation = result.order.OK_MESSAGE && result.order.OK_MESSAGE.length || result.order.SMS_AUTH.TYPE === 'OK' ? 'bx-step-good' : 'bx-step-bad';
 				this.addAnimationEffect(this.authBlockNode, animation);
 				BX.merge(this.result, result.order);
 				this.editAuthBlock();
@@ -339,46 +361,50 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			return true;
 		},
 
-		saveOrder: function(result)
+		saveOrderWithJson: function(result)
 		{
-			// safari mobile fix
-			result = result.replace(/<a href="\S*">(\S*)<\/a>/g, '$1');
+			var redirected = false;
 
-			var res = BX.parseJSON(result), redirected = false;
-			if (res && res.order)
+			if (result && result.order)
 			{
-				result = res.order;
-				this.result.SHOW_AUTH = result.SHOW_AUTH;
-				this.result.AUTH = result.AUTH;
+				result = result.order;
 
-				if (this.result.SHOW_AUTH)
+				if (result.REDIRECT_URL)
 				{
+					if (this.params.USE_ENHANCED_ECOMMERCE === 'Y')
+					{
+						this.setAnalyticsDataLayer('purchase', result.ID);
+					}
+
+					redirected = true;
+					location.href = result.REDIRECT_URL;
+				}
+				else if (result.SHOW_AUTH)
+				{
+					this.result.SHOW_AUTH = result.SHOW_AUTH;
+					this.result.AUTH = result.AUTH;
+					this.result.SMS_AUTH = result.SMS_AUTH;
+
 					this.editAuthBlock();
 					this.showAuthBlock();
 					this.animateScrollTo(this.authBlockNode);
 				}
 				else
 				{
-					if (result.REDIRECT_URL && result.REDIRECT_URL.length)
-					{
-						if (this.params.USE_ENHANCED_ECOMMERCE === 'Y')
-						{
-							this.setAnalyticsDataLayer('purchase', result.ID);
-						}
-
-						redirected = true;
-						document.location.href = result.REDIRECT_URL;
-					}
-
 					this.showErrors(result.ERROR, true, true);
 				}
 			}
 
 			if (!redirected)
 			{
-				this.endLoader();
-				this.disallowOrderSave();
+				this.handleNotRedirected();
 			}
+		},
+
+		handleNotRedirected: function()
+		{
+			this.endLoader();
+			this.disallowOrderSave();
 		},
 
 		/**
@@ -1757,7 +1783,9 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			var target = event.target || event.srcElement,
 				actionSection = BX.findParent(target, {className : "bx-active"}),
 				section = this.getNextSection(actionSection),
-				allSections, editStep;
+				allSections,
+				//titleNode,
+				editStep;
 
 			this.reachGoal('next', actionSection);
 
@@ -1766,6 +1794,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				&& section.next.getAttribute('data-visited') == 'false'
 			)
 			{
+				// titleNode = section.next.querySelector('.bx-soa-section-title-container');
+				// BX.bind(titleNode, 'click', BX.proxy(this.showByClick, this));
+				// editStep = section.next.querySelector('.bx-soa-editstep');
+				// if (editStep)
+				// 	editStep.style.display = '';
+
 				allSections = this.orderBlockNode.querySelectorAll('.bx-soa-section.bx-active');
 				if (section.next.id == allSections[allSections.length - 1].id)
 					this.switchOrderSaveButtons(true);
@@ -1891,12 +1925,16 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 		markSectionAsCompleted: function(section)
 		{
+			// var titleNode;
+
 			if (
 				(!this.result.IS_AUTHORIZED || typeof this.result.LAST_ORDER_DATA.FAIL !== 'undefined')
 				&& section.getAttribute('data-visited') === 'false'
 			)
 			{
 				this.changeVisibleSection(section, true);
+				// titleNode = section.querySelector('.bx-soa-section-title-container');
+				// BX.bind(titleNode, 'click', BX.proxy(this.showByClick, this));
 			}
 
 			section.setAttribute('data-visited', 'true');
@@ -2371,7 +2409,9 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 		changeVisibleSection: function(section, state)
 		{
-			var content, editStep;
+			var
+				// titleNode,
+				content, editStep;
 
 			if (section.id !== this.basketBlockNode.id)
 			{
@@ -2379,6 +2419,14 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				if (content)
 					content.style.display = state ? '' : 'none';
 			}
+
+			// editStep = section.querySelector('.bx-soa-editstep');
+			// if (editStep)
+			// 	editStep.style.display = state ? '' : 'none';
+
+			// titleNode = section.querySelector('.bx-soa-section-title-container');
+			// if (titleNode && !state)
+			// 	BX.unbindAll(titleNode);
 		},
 
 		/**
@@ -2451,6 +2499,8 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				}
 				else
 				{
+					// BX.bind(titleNode, 'click', BX.proxy(this.showByClick, this));
+					// editButton = titleNode.querySelector('.bx-soa-editstep');
 					editButton && BX.bind(editButton, 'click', BX.proxy(this.showByClick, this));
 				}
 			}
@@ -2642,7 +2692,8 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			if (required)
 				labelHtml += '<span class="bx-authform-starrequired">*</span>';
 
-			labelHtml += labelText;
+			labelHtml = labelText + labelHtml;
+			//labelHtml += labelText;
 
 			return BX.create('DIV', {
 				props: {className: 'bx-authform-formgroup-container'},
@@ -2653,252 +2704,372 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			});
 		},
 
+		activatePhoneAuth: function()
+		{
+			if (!this.result.SMS_AUTH)
+				return;
+
+			new BX.PhoneAuth({
+				containerId: 'bx_register_resend',
+				errorContainerId: 'bx_register_error',
+				interval: 60,
+				data: {
+					signedData: this.result.SMS_AUTH.SIGNED_DATA
+				},
+				onError: function(response)
+				{
+					var errorDiv = BX('bx_register_error');
+					var errorNode = BX.findChildByClassName(errorDiv, 'errortext');
+					errorNode.innerHTML = '';
+
+					for (var i = 0; i < response.errors.length; i++)
+					{
+						errorNode.innerHTML = errorNode.innerHTML + BX.util.htmlspecialchars(response.errors[i].message) + '<br>';
+					}
+
+					errorDiv.style.display = '';
+				}
+			});
+		},
+
 		editRegistrationForm: function(authContent)
 		{
 			if (!this.result.AUTH)
 				return;
 
 			var authFormNodes = [];
+			var showSmsConfirm = this.result.SMS_AUTH && this.result.SMS_AUTH.TYPE === 'OK';
 
-			authFormNodes.push(BX.create('H3', {
-				props: {className: 'bx-title'},
-				text: BX.message('STOF_REG_REQUEST')
-			}));
-			authFormNodes.push(this.createAuthFormInputContainer(
-				BX.message('STOF_NAME'),
-				BX.create('INPUT', {
-					attrs: {'data-next': 'NEW_LAST_NAME'},
-					props: {
-						name: 'NEW_NAME',
-						type: 'text',
-						size: 40,
-						value: this.result.AUTH.NEW_NAME || ''
-					},
-					events: {keypress: BX.proxy(this.checkKeyPress, this)}
-				}),
-				true
-			));
-			authFormNodes.push(this.createAuthFormInputContainer(
-				BX.message('STOF_LASTNAME'),
-				BX.create('INPUT', {
-					attrs: {'data-next': 'NEW_EMAIL'},
-					props: {
-						name: 'NEW_LAST_NAME',
-						type: 'text',
-						size: 40,
-						value: this.result.AUTH.NEW_LAST_NAME || ''
-					},
-					events: {keypress: BX.proxy(this.checkKeyPress, this)}
-				}),
-				true
-			));
-			authFormNodes.push(this.createAuthFormInputContainer(
-				BX.message('STOF_EMAIL'),
-				BX.create('INPUT', {
-					attrs: {'data-next': 'captcha_word'},
-					props: {
-						name: 'NEW_EMAIL',
-						type: 'text',
-						size: 40,
-						value: this.result.AUTH.NEW_EMAIL || ''
-					},
-					events: {keypress: BX.proxy(this.checkKeyPress, this)}
-				}),
-				this.result.AUTH.new_user_email_required == 'Y'
-			));
-
-			if (this.result.AUTH.new_user_registration_email_confirmation != 'Y')
+			if (showSmsConfirm)
 			{
-				authFormNodes.push(
-					BX.create('LABEL', {
-						props: {for: 'NEW_GENERATE_N'},
-						children: [
-							BX.create('INPUT', {
-								attrs: {checked: !this.authGenerateUser},
-								props: {
-									id: 'NEW_GENERATE_N',
-									type: 'radio',
-									name: 'NEW_GENERATE',
-									value: 'N'
-								}
-							}),
-							BX.message('STOF_MY_PASSWORD')
-						],
-						events: {
-							change: BX.delegate(function(){
-								var generated = this.authBlockNode.querySelector('.generated');
-								generated.style.display = '';
-								this.authGenerateUser = false;
-							}, this)
-						}
-					})
-				);
-				authFormNodes.push(BX.create('BR'));
-				authFormNodes.push(
-					BX.create('LABEL', {
-						props: {for: 'NEW_GENERATE_Y'},
-						children: [
-							BX.create('INPUT', {
-								attrs: {checked: this.authGenerateUser},
-								props: {
-									id: 'NEW_GENERATE_Y',
-									type: 'radio',
-									name: 'NEW_GENERATE',
-									value: 'Y'
-								}
-							}),
-							BX.message('STOF_SYS_PASSWORD')
-						],
-						events: {
-							change: BX.delegate(function(){
-								var generated = this.authBlockNode.querySelector('.generated');
-								generated.style.display = 'none';
-								this.authGenerateUser = true;
-							}, this)
-						}
-					})
-				);
-			}
-
-			authFormNodes.push(
-				BX.create('DIV', {
-					props: {className: 'generated'},
-					style: {display: this.authGenerateUser ? 'none' : ''},
+				authFormNodes.push(BX.create('DIV', {
+					props: {className: 'alert alert-success'},
+					text: BX.message('STOF_REG_SMS_REQUEST')
+				}));
+				authFormNodes.push(BX.create('INPUT', {
+					props: {
+						type: 'hidden',
+						name: 'SIGNED_DATA',
+						value: this.result.SMS_AUTH.SIGNED_DATA || ''
+					}
+				}));
+				authFormNodes.push(this.createAuthFormInputContainer(
+					BX.message('STOF_SMS_CODE'),
+					BX.create('INPUT', {
+						attrs: {'data-send': true},
+						props: {
+							name: 'SMS_CODE',
+							type: 'text',
+							size: 40,
+							value: ''
+						},
+						events: {keypress: BX.proxy(this.checkKeyPress, this)}
+					}),
+					true
+				));
+				authFormNodes.push(BX.create('DIV', {
+					props: {className: 'bx-authform-formgroup-container'},
 					children: [
-						this.createAuthFormInputContainer(
-							BX.message('STOF_LOGIN'),
-							BX.create('INPUT', {
-								props: {
-									name: 'NEW_LOGIN',
-									type: 'text',
-									size: 30,
-									value: this.result.AUTH.NEW_LOGIN || ''
-								},
-								events: {
-									keypress: BX.proxy(this.checkKeyPress, this)
-								}
-							}),
-							true
-						),
-						this.createAuthFormInputContainer(
-							BX.message('STOF_PASSWORD'),
-							BX.create('INPUT', {
-								props: {
-									name: 'NEW_PASSWORD',
-									type: 'password',
-									size: 30
-								},
-								events: {
-									keypress: BX.proxy(this.checkKeyPress, this)
-								}
-							}),
-							true
-						),
-						this.createAuthFormInputContainer(
-							BX.message('STOF_RE_PASSWORD'),
-							BX.create('INPUT', {
-								props: {
-									name: 'NEW_PASSWORD_CONFIRM',
-									type: 'password',
-									size: 30
-								},
-								events: {
-									keypress: BX.proxy(this.checkKeyPress, this)
-								}
-							}),
-							true
-						)
+						BX.create('INPUT', {
+							props: {
+								name: 'code_submit_button',
+								type: 'submit',
+								className: 'btn btn-lg btn-default',
+								value: BX.message('STOF_SEND')
+							},
+							events: {
+								click: BX.delegate(function(e)
+								{
+									this.sendRequest('confirmSmsCode');
+									return BX.PreventDefault(e);
+								}, this)
+							}
+						})
 					]
-				})
-			);
-			if (this.result.AUTH.captcha_registration == 'Y')
-			{
+				}));
 				authFormNodes.push(BX.create('DIV', {
 					props: {className: 'bx-authform-formgroup-container'},
 					children: [
 						BX.create('DIV', {
-							props: {className: 'bx-authform-label-container'},
-							children: [
-								BX.create('SPAN', {props: {className: 'bx-authform-starrequired'}, text: '*'}),
-								BX.message('CAPTCHA_REGF_PROMT'),
-								BX.create('DIV', {
-									props: {className: 'bx-captcha'},
-									children: [
-										BX.create('INPUT', {
-											props: {
-												name: 'captcha_sid',
-												type: 'hidden',
-												value: this.result.AUTH.capCode || ''
-											}
-										}),
-										BX.create('IMG', {
-											props: {
-												src: '/bitrix/tools/captcha.php?captcha_sid=' + this.result.AUTH.capCode,
-												alt: ''
-											}
-										})
-									]
-								})
-							]
+							props: {id: 'bx_register_error'},
+							style: {display: 'none'}
 						}),
 						BX.create('DIV', {
-							props: {className: 'bx-authform-input-container'},
-							children: [
-								BX.create('INPUT', {
-									attrs: {'data-send': true},
-									props: {
-										name: 'captcha_word',
-										type: 'text',
-										size: '30',
-										maxlength: '50',
-										value: ''
-									},
-									events: {keypress: BX.proxy(this.checkKeyPress, this)}
-								})
-							]
+							props: {id: 'bx_register_resend'}
 						})
 					]
 				}));
 			}
-			authFormNodes.push(
-				BX.create('DIV', {
-					props: {className: 'bx-authform-formgroup-container'},
-					children: [
+			else
+			{
+				authFormNodes.push(BX.create('H3', {
+					props: {className: 'bx-title'},
+					text: BX.message('STOF_REG_REQUEST')
+				}));
+				authFormNodes.push(this.createAuthFormInputContainer(
+					BX.message('STOF_NAME'),
+					BX.create('INPUT', {
+						attrs: {'data-next': 'NEW_LAST_NAME'},
+						props: {
+							name: 'NEW_NAME',
+							type: 'text',
+							size: 40,
+							value: this.result.AUTH.NEW_NAME || ''
+						},
+						events: {keypress: BX.proxy(this.checkKeyPress, this)}
+					}),
+					true
+				));
+				authFormNodes.push(this.createAuthFormInputContainer(
+					BX.message('STOF_LASTNAME'),
+					BX.create('INPUT', {
+						attrs: {'data-next': 'NEW_EMAIL'},
+						props: {
+							name: 'NEW_LAST_NAME',
+							type: 'text',
+							size: 40,
+							value: this.result.AUTH.NEW_LAST_NAME || ''
+						},
+						events: {keypress: BX.proxy(this.checkKeyPress, this)}
+					}),
+					true
+				));
+				authFormNodes.push(this.createAuthFormInputContainer(
+					BX.message('STOF_EMAIL'),
+					BX.create('INPUT', {
+						attrs: {'data-next': 'PHONE_NUMBER'},
+						props: {
+							name: 'NEW_EMAIL',
+							type: 'text',
+							size: 40,
+							value: this.result.AUTH.NEW_EMAIL || ''
+						},
+						events: {keypress: BX.proxy(this.checkKeyPress, this)}
+					}),
+					this.result.AUTH.new_user_email_required == 'Y'
+				));
+
+				if (this.result.AUTH.new_user_phone_auth === 'Y')
+				{
+					authFormNodes.push(this.createAuthFormInputContainer(
+						BX.message('STOF_PHONE'),
 						BX.create('INPUT', {
+							attrs: {'data-next': 'captcha_word', 'autocomplete': 'tel'},
 							props: {
-								id: 'do_register',
-								name: 'do_register',
-								type: 'hidden',
-								value: 'N'
-							}
-						}),
-						BX.create('INPUT', {
-							props: {
-								type: 'submit',
-								className: 'btn btn-lg btn-default',
-								value: BX.message('STOF_REGISTER')
+								name: 'PHONE_NUMBER',
+								type: 'text',
+								size: 40,
+								value: this.result.AUTH.PHONE_NUMBER || ''
 							},
-							events: {
-								click: BX.delegate(function(e){
-									BX('do_register').value = 'Y';
-									this.sendRequest('showAuthForm');
-									return BX.PreventDefault(e);
-								}, this)
-							}
+							events: {keypress: BX.proxy(this.checkKeyPress, this)}
 						}),
-						BX.create('A', {
-							props: {className: 'btn btn-link', href: ''},
-							text: BX.message('STOF_DO_AUTHORIZE'),
+						this.result.AUTH.new_user_phone_required === 'Y'
+					));
+				}
+
+				if (this.authGenerateUser)
+				{
+					authFormNodes.push(
+						BX.create('LABEL', {
+							props: {for: 'NEW_GENERATE_N'},
+							children: [
+								BX.create('INPUT', {
+									attrs: {checked: !this.authGenerateUser},
+									props: {
+										id: 'NEW_GENERATE_N',
+										type: 'radio',
+										name: 'NEW_GENERATE',
+										value: 'N'
+									}
+								}),
+								BX.message('STOF_MY_PASSWORD')
+							],
 							events: {
-								click: BX.delegate(function(e){
-									this.toggleAuthForm(e);
-									return BX.PreventDefault(e);
+								change: BX.delegate(function(){
+									var generated = this.authBlockNode.querySelector('.generated');
+									generated.style.display = '';
+									this.authGenerateUser = false;
 								}, this)
 							}
 						})
-					]
-				})
-			);
+					);
+					authFormNodes.push(BX.create('BR'));
+					authFormNodes.push(
+						BX.create('LABEL', {
+							props: {for: 'NEW_GENERATE_Y'},
+							children: [
+								BX.create('INPUT', {
+									attrs: {checked: this.authGenerateUser},
+									props: {
+										id: 'NEW_GENERATE_Y',
+										type: 'radio',
+										name: 'NEW_GENERATE',
+										value: 'Y'
+									}
+								}),
+								BX.message('STOF_SYS_PASSWORD')
+							],
+							events: {
+								change: BX.delegate(function(){
+									var generated = this.authBlockNode.querySelector('.generated');
+									generated.style.display = 'none';
+									this.authGenerateUser = true;
+								}, this)
+							}
+						})
+					);
+				}
+
+				authFormNodes.push(
+					BX.create('DIV', {
+						props: {className: 'generated'},
+						style: {display: this.authGenerateUser ? 'none' : ''},
+						children: [
+							this.createAuthFormInputContainer(
+								BX.message('STOF_LOGIN'),
+								BX.create('INPUT', {
+									props: {
+										name: 'NEW_LOGIN',
+										type: 'text',
+										size: 30,
+										value: this.result.AUTH.NEW_LOGIN || ''
+									},
+									events: {
+										keypress: BX.proxy(this.checkKeyPress, this)
+									}
+								}),
+								true
+							),
+							this.createAuthFormInputContainer(
+								BX.message('STOF_PASSWORD'),
+								BX.create('INPUT', {
+									props: {
+										name: 'NEW_PASSWORD',
+										type: 'password',
+										size: 30
+									},
+									events: {
+										keypress: BX.proxy(this.checkKeyPress, this)
+									}
+								}),
+								true
+							),
+							this.createAuthFormInputContainer(
+								BX.message('STOF_RE_PASSWORD'),
+								BX.create('INPUT', {
+									props: {
+										name: 'NEW_PASSWORD_CONFIRM',
+										type: 'password',
+										size: 30
+									},
+									events: {
+										keypress: BX.proxy(this.checkKeyPress, this)
+									}
+								}),
+								true
+							)
+						]
+					})
+				);
+
+				if (this.result.AUTH.captcha_registration == 'Y')
+				{
+					authFormNodes.push(BX.create('DIV', {
+						props: {className: 'bx-authform-formgroup-container'},
+						children: [
+							BX.create('DIV', {
+								props: {className: 'bx-authform-label-container'},
+								children: [
+									BX.create('SPAN', {props: {className: 'bx-authform-starrequired'}, text: '*'}),
+									BX.message('CAPTCHA_REGF_PROMT'),
+									BX.create('DIV', {
+										props: {className: 'bx-captcha'},
+										children: [
+											BX.create('INPUT', {
+												props: {
+													name: 'captcha_sid',
+													type: 'hidden',
+													value: this.result.AUTH.capCode || ''
+												}
+											}),
+											BX.create('IMG', {
+												props: {
+													src: '/bitrix/tools/captcha.php?captcha_sid=' + this.result.AUTH.capCode,
+													alt: ''
+												}
+											})
+										]
+									})
+								]
+							}),
+							BX.create('DIV', {
+								props: {className: 'bx-authform-input-container'},
+								children: [
+									BX.create('INPUT', {
+										attrs: {'data-send': true},
+										props: {
+											name: 'captcha_word',
+											type: 'text',
+											size: '30',
+											maxlength: '50',
+											value: ''
+										},
+										events: {keypress: BX.proxy(this.checkKeyPress, this)}
+									})
+								]
+							})
+						]
+					}));
+				}
+				authFormNodes.push(
+					BX.create('DIV', {
+						props: {className: 'bx-authform-formgroup-container'},
+						children: [
+							BX.create('INPUT', {
+								props: {
+									id: 'do_register',
+									name: 'do_register',
+									type: 'hidden',
+									value: 'N'
+								}
+							}),
+							BX.create('INPUT', {
+								props: {
+									type: 'submit',
+									className: 'btn btn-lg btn-default',
+									value: BX.message('STOF_REGISTER')
+								},
+								events: {
+									click: BX.delegate(function(e){
+										var email = BX.findChild(BX('bx-soa-auth'), {attribute: {'name': 'NEW_EMAIL'}}, true, false);
+										var login = BX.findChild(BX('bx-soa-auth'), {attribute: {'name': 'NEW_LOGIN'}}, true, false);
+
+										if(arNextOptions.THEME.LOGIN_EQUAL_EMAIL === 'Y'){
+											if(login && email){
+												login.value = email.value;
+											}
+										}
+
+										BX('do_register').value = 'Y';
+										this.sendRequest('showAuthForm');
+										return BX.PreventDefault(e);
+									}, this)
+								}
+							}),
+							BX.create('A', {
+								props: {className: 'btn btn-link', href: ''},
+								text: BX.message('STOF_DO_AUTHORIZE'),
+								events: {
+									click: BX.delegate(function(e){
+										this.toggleAuthForm(e);
+										return BX.PreventDefault(e);
+									}, this)
+								}
+							})
+						]
+					})
+				);
+			}
 
 			authContent.appendChild(
 				BX.create('DIV', {
@@ -2906,6 +3077,11 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 					children: [BX.create('DIV', {props: {className: 'bx-authform'}, children: authFormNodes})]
 				})
 			);
+
+			if (showSmsConfirm)
+			{
+				this.activatePhoneAuth();
+			}
 		},
 
 		editSocialContent: function(authContent)
@@ -2913,20 +3089,24 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			if (!BX('bx-soa-soc-auth-services'))
 				return;
 
-			var nodes = [],
-				socServiceHiddenNode = BX('bx-soa-soc-auth-services').querySelector('.bx-authform-social');
+			var nodes = [];
 
-			if (socServiceHiddenNode)
+			if (this.socServiceHiddenNode === false)
 			{
-				if (this.socServiceHiddenNode === false)
+				var socServiceHiddenNode = BX('bx-soa-soc-auth-services').querySelector('.bx-authform-social');
+
+				if (BX.type.isDomNode(socServiceHiddenNode))
 				{
 					this.socServiceHiddenNode = socServiceHiddenNode.innerHTML;
 					BX.remove(socServiceHiddenNode);
 				}
+			}
 
+			if (this.socServiceHiddenNode)
+			{
 				nodes.push(BX.create('DIV', {
 					props: {className: 'bx-authform-social'},
-					html: '<h3 class="bx-title">' + BX.message('SOA_DO_SOC_SERV') + '</h3>' + this.socServiceHiddenNode,
+					html: '<h3 class="bx-title">' + BX.message('SOA_DO_SOC_SERV') + '</h3>' + this.socServiceHiddenNode
 				}));
 				nodes.push(BX.create('hr', {props: {className: 'bxe-light'}}));
 			}
@@ -4872,8 +5052,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			if (!this.result.PAY_SYSTEM || (this.result.PAY_SYSTEM.length == 0 && this.result.PAY_FROM_ACCOUNT != 'Y'))
 				return;
 
-			var
-				paySystemInfoContainer = BX.create('DIV', {
+			var paySystemInfoContainer = BX.create('DIV', {
 					props: {
 						className: (this.result.PAY_SYSTEM.length == 0 ? 'col-sm-12' : 'col-sm-5') + ' bx-soa-pp-desc-container'
 					}
@@ -5310,8 +5489,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			if (!this.result.DELIVERY)
 				return;
 
-			var
-				deliveryInfoContainer = BX.create('DIV', {props: {className: 'col-sm-5 bx-soa-pp-desc-container'}}),
+			var deliveryInfoContainer = BX.create('DIV', {props: {className: 'col-sm-5 bx-soa-pp-desc-container'}}),
 				currentDelivery, logotype, name, logoNode,
 				subTitle, label, title, price, period,
 				clear, infoList, extraServices, extraServicesNode;
@@ -6788,7 +6966,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 						for (i = 0; i < propNodes.length; i++)
 						{
 							locationString = this.getLocationString(propNodes[i]);
-							values.push(locationString.length ? locationString : BX.message('SOA_NOT_SELECTED'));
+							values.push(locationString.length ? BX.util.htmlspecialchars(locationString) : BX.message('SOA_NOT_SELECTED'));
 						}
 					}
 					propsItemNode.innerHTML += values.join('<br>');
@@ -7102,7 +7280,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 		{
 			var str = values.join(', ');
 
-			return str.length ? str : BX.message('SOA_NOT_SELECTED');
+			return str.length ? BX.util.htmlspecialchars(str) : BX.message('SOA_NOT_SELECTED');
 		},
 
 		alterProperty: function(settings, propContainer)

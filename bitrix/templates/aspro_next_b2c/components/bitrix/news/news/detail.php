@@ -110,9 +110,14 @@ if($arParams["SHOW_NEXT_ELEMENT"] == "Y")
 			<?endif;?>
 		<?endif;?>
 
-		<?//element?>
+		<?
+
+        //element?>
 		<?$sViewElementTemplate = ($arParams["ELEMENT_TYPE_VIEW"] == "FROM_MODULE" ? $arTheme["NEWS_PAGE_DETAIL"]["VALUE"] : $arParams["ELEMENT_TYPE_VIEW"]);?>
-		<?@include_once('page_blocks/'.$sViewElementTemplate.'.php');?>
+		<?
+
+
+        @include_once('page_blocks/'.$sViewElementTemplate.'.php');?>
 
 	</div>
 	<?/*

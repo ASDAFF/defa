@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $(".tizers_block .tizers_slider").slick({
         slidesToShow: 5,
+        arrows: false,
+        dots: false,
         responsive: [
             {
                 breakpoint: 1200,

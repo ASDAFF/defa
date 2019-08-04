@@ -13,8 +13,9 @@ if($bAjaxMode)
 	$arIncludeParams = ($bAjaxMode ? $_POST["AJAX_PARAMS"] : $arParamsTmp);
 	$arGlobalFilter = ($bAjaxMode ? unserialize(urldecode($_POST["GLOBAL_FILTER"])) : array());
 	$arComponentParams = unserialize(urldecode($arIncludeParams));
+	$arComponentParams['TYPE_SKU'] = \Bitrix\Main\Config\Option::get('aspro.next', 'TYPE_SKU', 'TYPE_1', SITE_ID);
 	?>
-	
+
 	<?
 	if($bAjaxMode && (is_array($arGlobalFilter) && $arGlobalFilter))
 		$GLOBALS[$arComponentParams["FILTER_NAME"]] = $arGlobalFilter;
@@ -27,12 +28,12 @@ if($bAjaxMode)
 		$arComponentParams["DISPLAY_COMPARE"] = 'N';
 	/**/
 	?>
-	
+
 	<?$APPLICATION->IncludeComponent(
 		"bitrix:catalog.section",
 		"catalog_block_front",
 		$arComponentParams,
 		false, array("HIDE_ICONS"=>"Y")
 	);?>
-	
+
 <?endif;?>

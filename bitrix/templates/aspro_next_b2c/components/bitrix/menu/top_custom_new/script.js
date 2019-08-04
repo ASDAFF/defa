@@ -87,10 +87,17 @@ $(document).ready(function(){
 
                 wrap.find('.sectionContainer .wrap').html(result);
 
+
+
+                $('.collections.mlist li .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.collections.mlist').toggleClass('opacity');
+                });
                 /*$('.js-series.mlist li').first().addClass('active');
                 $('.mlist .model-elements').first().addClass('active');*/
                 //x5 20190627 инициализируем слайдер для баннеров
                 window.X5Slider();
+
             },
             onfailure : function()
             {
@@ -102,7 +109,7 @@ $(document).ready(function(){
         return false;
 	});
 
-    $(document).on('click','.collections li',function(){
+    $(document).on('mouseenter','.collections li',function(){
     	var id = $(this).data('id');
         $('.collections li').removeClass('active');
         $(this).addClass('active');
@@ -135,8 +142,15 @@ $(document).ready(function(){
             {
                 BX.closeWait();
                 $('.ajax-element').html(result);
+                $('.model-elements-list .mlist .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.mlist').toggleClass('opacity');
+                });
+
+
                 //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
                 ElementInfoJsOnLoad();
+
             },
             onfailure : function()
             {
@@ -148,6 +162,8 @@ $(document).ready(function(){
         return false;
 
     });
+
+
 
     $(document).on('mouseenter','.collections.js-series.mlist li',function(){
          var id = $(this).data('id');
@@ -189,6 +205,10 @@ $(document).ready(function(){
             {
                 BX.closeWait();
                 $('.ajax-element').html(result);
+                $('.model-elements-list .mlist .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.mlist').toggleClass('opacity');
+                });
                 //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
                 ElementInfoJsOnLoad();
             },
@@ -206,8 +226,9 @@ $(document).ready(function(){
     $(document).on('mouseenter','.js-series li,.js-desc-series',function(){
         var id = $(this).data('id');
         var sectionid = $(this).data('sectionid');
-        $('.js-series li').removeClass('active');
-        $('.model-elements-list li').removeClass('active');
+        /*$('.js-series li').removeClass('active');*/
+        $('.model-elements-list li.js-kit-series').removeClass('active');
+        $('.model-elements-list li.model-elements').removeClass('active');
 
         $(this).addClass('active');
         BX.showWait();
@@ -228,6 +249,10 @@ $(document).ready(function(){
             {
                 BX.closeWait();
                 $('.ajax-element').html(result);
+                $('.model-elements-list .mlist .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.mlist').toggleClass('opacity');
+                });
             },
             onfailure : function()
             {
@@ -245,7 +270,7 @@ $(document).ready(function(){
     $(document).on('mouseenter','.js-kit-series',function(){
         var id = $(this).data('id');
         var sectionid = $(this).data('sectionid');
-        $('.js-series li').removeClass('active');
+        /*$('.js-series li').removeClass('active');*/
         $('.model-elements-list li').removeClass('active');
 
         $(this).addClass('active');
@@ -267,6 +292,10 @@ $(document).ready(function(){
             {
                 BX.closeWait();
                 $('.ajax-element').html(result);
+                $('.model-elements-list .mlist .fix-icon').click(function () {
+                    $(this).toggleClass('active');
+                    $('.mlist').toggleClass('opacity');
+                });
             },
             onfailure : function()
             {

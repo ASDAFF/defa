@@ -18,6 +18,7 @@ CModule::AddAutoloadClasses(
 		'Aspro\\Functions\\CAsproNextCRM' => 'lib/functions/CAsproNextCRM.php', //for integrate crm
 		'Aspro\\Next\\SearchQuery' => 'lib/searchquery.php', //for landings in search
 		'Aspro\\Next\\PhoneAuth' => 'lib/phoneauth.php', //for auth by phone
+		'Aspro\\Next\\PWA' => 'lib/pwa.php', //for auth by phone
 		// custom user types of properties
 		'Aspro\\Next\\Property\\ListStores' => 'lib/property/liststores.php',
 		'Aspro\\Next\\Property\\ListPrices' => 'lib/property/listprices.php',

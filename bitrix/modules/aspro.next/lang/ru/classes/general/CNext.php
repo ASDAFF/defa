@@ -91,6 +91,7 @@ $MESS["M_SECTIONS_TYPE_VIEW"] = "Шаблон страницы блока спи
 $MESS["M_SECTION_TYPE_VIEW"] = "Шаблон страницы блока списка подразделов";
 $MESS["M_SECTION_ELEMENTS_TYPE_VIEW"] = "Шаблон страницы блока списка элементов";
 $MESS["M_ELEMENT_TYPE_VIEW"] = "Шаблон страницы блока детальной страницы";
+$MESS["M_LANDING_TYPE_VIEW"] = "Шаблон страницы блока  \"Популярные категории\"";
 $MESS["M_FROM_MODULE_PARAMS"] = "Из настроек центра управления";
 
 $MESS["PHONE_AUTH_EVENT_NAME_ru"] = "Авторизация на сайте по СМС";

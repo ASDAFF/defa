@@ -19,7 +19,8 @@ if(file_exists(__DIR__.'/functions.php')) {
 //x5 20190628
 //\XFive\Events\EventManager::initEvents();
 
-\Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'onSaleAdminOrderInfoBlockShow', 'onSaleAdminOrderInfoBlockShow');// Split delivery in order_view for managers
+\Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'onSaleAdminOrderInfoBlockShow',
+    'onSaleAdminOrderInfoBlockShow');// Split delivery in order_view for managers
 AddEventHandler("sale", "OnOrderNewSendEmail", "OnOrderNewSendMailHandler");
 AddEventHandler("main", "OnBeforeUserLogin", "OnBeforeUserLoginHandler");
 AddEventHandler("main", "OnBeforeUserSendPassword", "OnBeforeUserSendPasswordHandler");
@@ -38,7 +39,8 @@ AddEventHandler("iblock", "OnAfterIBlockElementDelete", Array("MyElement", "OnAf
 AddEventHandler("iblock", "OnBeforeIBlockElementUpdate",  Array("MyElement", "OnElementUpdateHandler"));
 AddEventHandler("search", "BeforeIndex", "BeforeIndexHandler");
 AddEventHandler("iblock", "OnBeforeIBlockElementUpdate",  "dropName");
-\Bitrix\Main\EventManager::getInstance()->addEventHandler('', 'PatternReferenceOnAfterAdd', 'OnAfterAdd');//Событие на добавление новой записи в highloadblock PatternReference
+\Bitrix\Main\EventManager::getInstance()->addEventHandler('', 'PatternReferenceOnAfterAdd',
+    'OnAfterAdd');//Событие на добавление новой записи в highloadblock PatternReference
 AddEventHandler('main', 'OnBeforeEventSend', Array("EventSend", "my_OnBeforeEventSend"));
 AddEventHandler("catalog", "OnSuccessCatalogImport1C",  "success1c");
 AddEventHandler("catalog", "OnBeforePriceDelete",  "savingCurrentPrice");
@@ -47,7 +49,9 @@ AddEventHandler("catalog", "OnBeforePriceUpdate",  "savingCurrentPrice3");
 AddEventHandler("catalog", "OnBeforeCatalogStoreDelete", "deleteStore");
 
 
-function updateBalance($arAgent =false,$state = false, $eval_result = false, $e = false){
+
+function updateBalance($arAgent = false, $state = false, $eval_result = false, $e = false)
+{
  	//$f = fopen ($_SERVER['DOCUMENT_ROOT']."/bitrix/test333222.log", "a+");
   	//fwrite ($f, print_r (array("start" , date ("r")),true));
   	//fclose($f);
@@ -55,7 +59,8 @@ function updateBalance($arAgent =false,$state = false, $eval_result = false, $e 
 }
 
 
-function onSaleAdminOrderInfoBlockShow(\Bitrix\Main\Event $event) {
+function onSaleAdminOrderInfoBlockShow(\Bitrix\Main\Event $event)
+{
 	$order = $event->getParameter('ORDER');
 	$fields = $order->getFields();
 	$additionals = explode(';', $fields->get('ADDITIONAL_INFO'));
@@ -104,7 +109,8 @@ if ($_POST["BasketDelete"] and CModule::IncludeModule("sale")) {
 }
 
 
-function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
+function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields)
+{
 	$arOrder = CSaleOrder::GetByID($ID);
 
 	// for crm
@@ -118,18 +124,20 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 			$locationPropertyValue = $arOrderProps['VALUE'];
 		}*/
 
-		if ($arOrderProps["TYPE"] == "LOCATION" && $arOrderProps["ACTIVE"] == "Y" && $arOrderProps["IS_LOCATION"] == "Y" && in_array($arOrderProps["INPUT_FIELD_LOCATION"], $arTownOrderProps)) {
+        if ($arOrderProps["TYPE"] == "LOCATION" && $arOrderProps["ACTIVE"] == "Y" && $arOrderProps["IS_LOCATION"] == "Y" && in_array($arOrderProps["INPUT_FIELD_LOCATION"],
+                $arTownOrderProps)) {
 			if(CSaleLocation::isLocationProMigrated()) {
 				$arEnableTownProps[$arOrderProps["INPUT_FIELD_LOCATION"]] = true; //CSaleLocation::checkLocationIsAboveCity($arOrderProps["VALUE"]);
 			} else {
 				$arLocation = CSaleLocation::GetByID($arOrderProps["VALUE"]);
-				if (IntVal($arLocation["CITY_ID"]) <= 0)
+                if (IntVal($arLocation["CITY_ID"]) <= 0) {
 					$arEnableTownProps[$arOrderProps["INPUT_FIELD_LOCATION"]] = true;
-				else
+                } else {
 					$arEnableTownProps[$arOrderProps["INPUT_FIELD_LOCATION"]] = false;
 			}
 		}
 	}
+    }
 
 	// collect emails by selected city choosed in order {[(
     /*$arBccEmails = explode(',', $arFields['BCC']);
@@ -168,11 +176,34 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 		false,
 		false,
 		array(
-			"ID", "PRODUCT_ID", "PRODUCT_PRICE_ID", "PRICE", "CURRENCY", "WEIGHT",
-			"QUANTITY", "NAME", "MODULE", "CALLBACK_FUNC", "NOTES", "DETAIL_PAGE_URL", "DISCOUNT_PRICE",
-			"DISCOUNT_VALUE", "ORDER_CALLBACK_FUNC", "CANCEL_CALLBACK_FUNC", "PAY_CALLBACK_FUNC", "CATALOG_XML_ID",
-			"PRODUCT_XML_ID", "VAT_RATE", "DISCOUNT_NAME", "DISCOUNT_COUPON", "PRODUCT_PROVIDER_CLASS", "CUSTOM_PRICE",
-			"TYPE", "SET_PARENT_ID", "DIMENSIONS", "RECOMMENDATION"
+            "ID",
+            "PRODUCT_ID",
+            "PRODUCT_PRICE_ID",
+            "PRICE",
+            "CURRENCY",
+            "WEIGHT",
+            "QUANTITY",
+            "NAME",
+            "MODULE",
+            "CALLBACK_FUNC",
+            "NOTES",
+            "DETAIL_PAGE_URL",
+            "DISCOUNT_PRICE",
+            "DISCOUNT_VALUE",
+            "ORDER_CALLBACK_FUNC",
+            "CANCEL_CALLBACK_FUNC",
+            "PAY_CALLBACK_FUNC",
+            "CATALOG_XML_ID",
+            "PRODUCT_XML_ID",
+            "VAT_RATE",
+            "DISCOUNT_NAME",
+            "DISCOUNT_COUPON",
+            "PRODUCT_PROVIDER_CLASS",
+            "CUSTOM_PRICE",
+            "TYPE",
+            "SET_PARENT_ID",
+            "DIMENSIONS",
+            "RECOMMENDATION"
 		)
 	);
 	while ($arBasketTmp = $dbBasketTmp->GetNext()) {
@@ -192,8 +223,9 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 		$arElementId[] = $arBasketTmp["PRODUCT_ID"];
 		$arBasketPropsValues[$arBasketTmp["PRODUCT_ID"]] = array();
 	
-		if (!CSaleBasketHelper::isSetItem($arBasketTmp))
+        if (!CSaleBasketHelper::isSetItem($arBasketTmp)) {
 			$orderTotalPrice += ($arBasketTmp["PRICE"] + $arBasketTmp["DISCOUNT_PRICE"]) * $arBasketTmp["QUANTITY"];
+        }
 	
 			if (!CSaleBasketHelper::isSetParent($arBasketTmp)) {
 				$orderTotalWeight += floatval($arBasketTmp["WEIGHT"] * $arBasketTmp["QUANTITY"]);
@@ -218,8 +250,9 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 				false,
 				array("ID", "BASKET_ID", "NAME", "VALUE", "CODE", "SORT")
 			);
-	while ($arBasketPropsTmp = $dbBasketPropsTmp->Fetch())
+    while ($arBasketPropsTmp = $dbBasketPropsTmp->Fetch()) {
 		$arBasketProps[$arBasketPropsTmp["BASKET_ID"]][] = $arBasketPropsTmp;
+    }
 	
 	
 	$orderList = '<table cellspacing="0" style="font-size:14px;width:100%;border-collapse:collapse;"><tr style="color:#777;border-bottom:1px solid #ddd;height:40px;"><td>Артикул</td><td style="width:40%;">Наименование</td><td>Количество</td><td>Цена товара</td><td>Сумма</td></tr>';
@@ -230,7 +263,8 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 						'<td style="font-weight:bold;">'.$arItem["NAME"].'</td>'.
 						'<td>'.$arItem["QUANTITY"].'</td>'.
 						'<td>'.CCurrencyLang::CurrencyFormat($arItem["PRICE"], $arItem["CURRENCY"]).'</td>'.
-						'<td style="font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arItem["PRICE"]*$arItem["QUANTITY"], $arItem["CURRENCY"]).'</td></tr>';
+            '<td style="font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arItem["PRICE"] * $arItem["QUANTITY"],
+                $arItem["CURRENCY"]) . '</td></tr>';
 	}
 	$orderList .= '</table>';
 	
@@ -243,8 +277,19 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 		
 		$arByCodes = array();
 		foreach ( $arOrderPropsValue as $key=>$arProp) {
-			if ( in_array($arProp["CODE"], array("LOCATION", "STREET", "HOUSE_NUMBER", "HOUSING", "FLOOR", "ROOM",
-												"FLOORING_NEED", "SERVICE_LIFT", "FURNITURE_ASSEMBLING", "GARBAGE_REMOVAL_VAL", "ZIP"))) {
+            if (in_array($arProp["CODE"], array(
+                "LOCATION",
+                "STREET",
+                "HOUSE_NUMBER",
+                "HOUSING",
+                "FLOOR",
+                "ROOM",
+                "FLOORING_NEED",
+                "SERVICE_LIFT",
+                "FURNITURE_ASSEMBLING",
+                "GARBAGE_REMOVAL_VAL",
+                "ZIP"
+            ))) {
 				$arByCodes[$arProp["CODE"]] = $arProp["VALUE"];
 				unset($arOrderPropsValue[$key]);
 			}
@@ -260,16 +305,19 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 	
 		
 		if ( isset($arByCodes["LOCATION"])) {
-			$arFilter = array(	"IBLOCK_ID"=>21, /// блок с городами салонов
+            $arFilter = array(
+                "IBLOCK_ID" => 21, /// блок с городами салонов
 								"IBLOCK_ACTIVE"=>"Y",
 								"ACTIVE"=>"Y",
 								"GLOBAL_ACTIVE"=>"Y",
-								"PROPERTY_LOCATION"=>IntVal($arByCodes["LOCATION"]),	);
+                "PROPERTY_LOCATION" => IntVal($arByCodes["LOCATION"]),
+            );
 			$rsElements = CIBlockElement::GetList(	array(),
 													$arFilter,
 													false,
 													array(),
-													array(	"NAME",
+                array(
+                    "NAME",
 															"PROPERTY_PICKUP_PLACE"
 													)	);
 			$city = $rsElements->GetNext();
@@ -288,22 +336,26 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 			if ( $arOrder["ADDITIONAL_INFO"] != "") {
 				$costList .=	'<tr>'.
 								'<td>Стоимость доставки:</td>'.
-								'<td style="text-align:right;font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arByCodes["DELIVERY_COST"], $arOrder["CURRENCY"]).'</td></tr>';
+                    '<td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arByCodes["DELIVERY_COST"],
+                        $arOrder["CURRENCY"]) . '</td></tr>';
 				
 				if ( $arByCodes["FLOORING_NEED"] == "Y") {
 					$costList .=	'<tr>'.
 									'<td>Подъем на этаж:</td>'.
-									'<td style="text-align:right;font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arByCodes["FLOORING_COST"], $arOrder["CURRENCY"]).'</td></tr>';
+                        '<td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arByCodes["FLOORING_COST"],
+                            $arOrder["CURRENCY"]) . '</td></tr>';
 				}
 				if ( $arByCodes["FURNITURE_ASSEMBLING"] == "Y") {
 					$costList .=	'<tr>'.
 									'<td>Сборка мебели:</td>'.
-									'<td style="text-align:right;font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arByCodes["ASSEMBLING_COST"], $arOrder["CURRENCY"]).'</td></tr>';
+                        '<td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arByCodes["ASSEMBLING_COST"],
+                            $arOrder["CURRENCY"]) . '</td></tr>';
 				}
 				if ( $arByCodes["GARBAGE_REMOVAL_VAL"] == "Y") {
 					$costList .=	'<tr>'.
 									'<td>Вывоз упаковки:</td>'.
-									'<td style="text-align:right;font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arByCodes["GARBAGE_REMOVAL_COST"], $arOrder["CURRENCY"]).'</td></tr>';
+                        '<td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arByCodes["GARBAGE_REMOVAL_COST"],
+                            $arOrder["CURRENCY"]) . '</td></tr>';
 				}
 			} else {
 				if ( $arByCodes["FLOORING_NEED"] == "Y") {
@@ -328,7 +380,8 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 				}
 				$costList .=	'<tr>'.
 								'<td>Стоимость доставки:</td>'.
-								'<td style="text-align:right;font-weight:bold;">'.CCurrencyLang::CurrencyFormat($arResult["ORDER"]["PRICE_DELIVERY"], $arResult["ORDER"]["CURRENCY"]).'</td></tr>';
+                    '<td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arResult["ORDER"]["PRICE_DELIVERY"],
+                        $arResult["ORDER"]["CURRENCY"]) . '</td></tr>';
 			}
 		} else {
 			$deliveryInfo .= '<tr><td colspan="2" style="color:#777;">Адрес доставки:</td><tr><td colspan="2" style="font-weight:bold;">';
@@ -368,22 +421,26 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 		
 		$arByCodes = array();
 		foreach ( $arOrderPropsValue as $key=>$arProp) {
-			if ( in_array($arProp["CODE"], array("LOCATION", "STREET", "HOUSE_NUMBER", "HOUSING", "FLOOR", "ROOM", "ZIP"))) {
+            if (in_array($arProp["CODE"],
+                array("LOCATION", "STREET", "HOUSE_NUMBER", "HOUSING", "FLOOR", "ROOM", "ZIP"))) {
 				$arByCodes[$arProp["CODE"]] = $arProp["VALUE"];
 				unset($arOrderPropsValue[$key]);
 			}
 		}
 		if ( isset($arByCodes["LOCATION"])) {
-			$arFilter = array(	"IBLOCK_ID"=>21, /// блок с городами салонов
+            $arFilter = array(
+                "IBLOCK_ID" => 21, /// блок с городами салонов
 								"IBLOCK_ACTIVE"=>"Y",
 								"ACTIVE"=>"Y",
 								"GLOBAL_ACTIVE"=>"Y",
-								"PROPERTY_LOCATION"=>IntVal($arByCodes["LOCATION"]),	);
+                "PROPERTY_LOCATION" => IntVal($arByCodes["LOCATION"]),
+            );
 			$rsElements = CIBlockElement::GetList(	array(),
 													$arFilter,
 													false,
 													array(),
-													array(	"NAME",
+                array(
+                    "NAME",
 															"PROPERTY_PICKUP_PLACE"
 													)	);
 			$city = $rsElements->GetNext();
@@ -422,7 +479,8 @@ function OnOrderNewSendMailHandler($ID, &$eventName, &$arFields) {
 }
 
 
-function OnBeforeUserLoginHandler(&$arFields) {
+function OnBeforeUserLoginHandler(&$arFields)
+{
 	if ( SITE_ID == "ro") {
 		$filter = Array(
 			"EMAIL" => $arFields["LOGIN"],
@@ -447,16 +505,19 @@ function OnBeforeUserLoginHandler(&$arFields) {
 }
 
 
-function OnBeforeUserSendPasswordHandler(&$arFields) {
+function OnBeforeUserSendPasswordHandler(&$arFields)
+{
 	if ( SITE_ID == "ro") {
 		$arFields["LOGIN"] = "";
 	}
 	if ( $arFields["LOGIN"] == "") {
 		if ( SITE_ID == "ro") {
 			$group = 11;
-		} else if ( SITE_ID == "s1") {
+        } else {
+            if (SITE_ID == "s1") {
 			$group = 5;
 		}
+        }
 		
 		$filter = Array(
 			"EMAIL" => $arFields["EMAIL"],
@@ -483,7 +544,8 @@ function OnBeforeUserSendPasswordHandler(&$arFields) {
 }
 
 
-function OnBeforeUserRegisterHandler(&$arFields) {
+function OnBeforeUserRegisterHandler(&$arFields)
+{
 	if ( SITE_ID == "ro") {
 		$arFields["GROUP_ID"] = array();
 		$arFields["GROUP_ID"][] = 11;
@@ -516,7 +578,8 @@ function OnBeforeUserRegisterHandler(&$arFields) {
 			
 			COption::SetOptionString("main", "new_user_email_uniq_check", 'N');
 		}
-	} else if ( SITE_ID == "s1") {
+    } else {
+        if (SITE_ID == "s1") {
 		$arFields["GROUP_ID"] = array();
 		$arFields["GROUP_ID"][] = 5;
 		
@@ -538,11 +601,13 @@ function OnBeforeUserRegisterHandler(&$arFields) {
 		}*/
 	}
 }
+}
 
 
 class SubscribeMe
 {
-   function OnAfterUserRegisterHandler(&$arFields) {
+    function OnAfterUserRegisterHandler(&$arFields)
+    {
 		COption::SetOptionString("main", "new_user_email_uniq_check", 'Y');
 		
 		if ( SITE_ID == "s1") {
@@ -579,8 +644,7 @@ class SubscribeMe
 				),
 				false
 				);
-			}
-			else {
+            } else {
 				$rs = $obSubscription->Add(array(
 				"USER_ID" => $USER_ID,
 				"ACTIVE" => "Y",
@@ -596,10 +660,13 @@ class SubscribeMe
 }
 
 
-class DefoSearcher {
-    function BeforeIndexHandler($arFields) {
-        if(!CModule::IncludeModule("iblock"))
+class DefoSearcher
+{
+    function BeforeIndexHandler($arFields)
+    {
+        if (!CModule::IncludeModule("iblock")) {
             return $arFields;
+        }
         if($arFields["MODULE_ID"] == "iblock") {
             $res = CIBlockElement::GetByID($arFields["ITEM_ID"]);
             if ( $obRes = $res->GetNextElement()) {
@@ -626,12 +693,15 @@ function sendOrdersEmail($dateInsert = null)
 
 	$arOrdersOfCities = array();
 
-	$arFilter = array(	"IBLOCK_ID" => 21, /// список городов с email адресами
+    $arFilter = array(
+        "IBLOCK_ID" => 21, /// список городов с email адресами
 		"!UF_EMAIL_ORDER" => ""
 	);
 	$rsElements = CIBlockElement::GetList(
-		array( "UF_EMAIL_ORDER" => "ASC",
-			'SORT' => 'ASC'),
+        array(
+            "UF_EMAIL_ORDER" => "ASC",
+            'SORT' => 'ASC'
+        ),
 		$arFilter,
 		false,
 		array(),
@@ -670,14 +740,18 @@ function sendOrdersEmail($dateInsert = null)
 
 	$htmlReport = '<h1>Отчет отправленных писем с заказами руководителям</h1>';
 	foreach ($arOrdersOfCities as $idCity => $cityItem){
-		if($idCity == 617 || $idCity == 671 || $idCity == 697) continue;
+        if ($idCity == 617 || $idCity == 671 || $idCity == 697) {
+            continue;
+        }
 		$emailTo = '</br><p>Кому отправлено: '.$cityItem["PROPERTY_EMAIL_SEND_ORDER_VALUE"].'</p>';
 		$table = getTableOrderbyCity($cityItem, $dateInsert);
 		$htmlTable = getHtmlDoc($table);
-		$sendMail = mail($cityItem["PROPERTY_EMAIL_SEND_ORDER_VALUE"], 'Заказ с сайта за '.$dateInsert.' - '.$cityItem["NAME"], $htmlTable, $headers);
-		if ($sendMail)
+        $sendMail = mail($cityItem["PROPERTY_EMAIL_SEND_ORDER_VALUE"],
+            'Заказ с сайта за ' . $dateInsert . ' - ' . $cityItem["NAME"], $htmlTable, $headers);
+        if ($sendMail) {
 			$htmlReport .= $emailTo . $table;
 	}
+    }
 	$arDivisions = getOrderDevisionList($arOrdersOfCities);
 	$htmlReport .= '<h1>Отчет отправленных писем с заказми дивизионным директорам</h1>';
 	foreach ($arDivisions as $item) {
@@ -685,18 +759,21 @@ function sendOrdersEmail($dateInsert = null)
 		$table = getHtmlDivisionOrder($item, $dateInsert);
 		$htmlDivision = getHtmlDoc($table);
 		$sendMail = mail($item["EMAIL"], 'Заказ с сайта за '.$dateInsert, $htmlDivision, $headers);
-		if($sendMail)
+        if ($sendMail) {
 			$htmlReport .= $emailTo . $table;
+        }
 
 	}
     fwrite($fp, $time." 5. pered mail: \n");
-	mail('ak@defo.ru, cvo@defo.ru, ka@defo.ru', 'Отчет рассылки с заказами за '.$dateInsert.' число', getHtmlDoc($htmlReport), $headers);
+    mail('ak@defo.ru, cvo@defo.ru, ka@defo.ru', 'Отчет рассылки с заказами за ' . $dateInsert . ' число',
+        getHtmlDoc($htmlReport), $headers);
     fwrite($fp, $time." 6. posle mail: \n");
 
 	return "sendOrdersEmail();";
 }
 
-function getOrderDevisionList ($orderList){
+function getOrderDevisionList($orderList)
+{
 	$divisionalDirectors = array(
 		1 => array(
 			"NAME" => "Захарченко Олег",
@@ -758,7 +835,8 @@ function getOrderDevisionList ($orderList){
 	return $divisionalDirectors;
 }
 
-function getHtmlDoc ($htmlTable) {
+function getHtmlDoc($htmlTable)
+{
 
 	$htmlDoc = <<<HTML
 <html>
@@ -772,7 +850,8 @@ HTML;
 	return $htmlDoc;
 }
 
-function getHtmlDivisionOrder ($arDivision, $dateInsert) {
+function getHtmlDivisionOrder($arDivision, $dateInsert)
+{
 	$htmlDivisionOrder = <<<HTML
 
 		<h2>Заказы с сайта за {$dateInsert}</h2>
@@ -802,7 +881,8 @@ HTML;
 return $htmlDivisionOrder . $htmlDetailOrder;
 }
 
-function getTableOrderbyCity($arCity, $dateInsert){
+function getTableOrderbyCity($arCity, $dateInsert)
+{
 
 	$htmlOrderTable = <<<HTML
 
@@ -855,19 +935,23 @@ HTML;
 
 }
 
-function getInitLocationShopId($locationId){
+function getInitLocationShopId($locationId)
+{
  if(CModule::IncludeModule("iblock")){
     if ($locationId > 0){
-        $arFilter = array("IBLOCK_ID" => 21, /// блок с городами салонов
+            $arFilter = array(
+                "IBLOCK_ID" => 21, /// блок с городами салонов
             "IBLOCK_ACTIVE" => "Y",
             "ACTIVE" => "Y",
             "GLOBAL_ACTIVE" => "Y",
-            "PROPERTY_LOCATION" => IntVal($locationId));
+                "PROPERTY_LOCATION" => IntVal($locationId)
+            );
         $rsElements = CIBlockElement::GetList(array(),
             $arFilter,
             false,
             array(),
-            array("PROPERTY_YAK_SHOPID"
+                array(
+                    "PROPERTY_YAK_SHOPID"
             ));
         $arCity = $rsElements->GetNext();
         if (is_numeric($arCity["PROPERTY_YAK_SHOPID_VALUE"])){//делаем для яндекс-кассы чтобы параметры брались из инфоблока городов
@@ -881,8 +965,7 @@ function getInitLocationShopId($locationId){
 function _Check404Error()
 {
     //if (defined('ERROR_404') && ERROR_404=='Y' && !defined('ADMIN_SECTION'))
-    if (defined('ERROR_404') && ERROR_404=='Y')
-    {
+    if (defined('ERROR_404') && ERROR_404 == 'Y') {
         GLOBAL $APPLICATION;
         //$APPLICATION->RestartBuffer();
         $GLOBALS['APPLICATION']->RestartBuffer();
@@ -916,8 +999,7 @@ function _Check404Error()
 
 function OnAfterUserAddHandler(&$arFields)
 {
-    if($arFields["ID"] > 0)
-    {
+    if ($arFields["ID"] > 0) {
         if(strlen($arFields["UF_ARCHBAZA"]) > 0){
             /*$arGroups = CUser::GetUserGroup($arFields["ID"]);
             $arGroups[] = 17; //То добаляем пользователя в группу c ID15
@@ -948,7 +1030,6 @@ function OnAfterUserAddHandler(&$arFields)
 			$idEvent = CEvent::Send("NEW_USER_ARCHITECTS", "s1", $arEventFields);
 
 
-
 			if($idEvent) {
 //				LocalRedirect('/architects/after_registration.php');
 			}
@@ -957,7 +1038,8 @@ function OnAfterUserAddHandler(&$arFields)
 }
 
 
-function OnAfterIBlockElementUpdateHandler(&$arFields) {
+function OnAfterIBlockElementUpdateHandler(&$arFields)
+{
     $fp = fopen($_SERVER["DOCUMENT_ROOT"].'/send.log', 'a');
     $time = date("d.m.Y H:i:s");
     fwrite($fp, "\n--$time-Запуск события!-----------------------------------------------------\n");
@@ -970,19 +1052,22 @@ function OnAfterIBlockElementUpdateHandler(&$arFields) {
 }
 
 
-function OnAfterIBlockElementAddHandler(&$arFields) {
+function OnAfterIBlockElementAddHandler(&$arFields)
+{
 	if ($arFields["IBLOCK_ID"] == 20) {
 		loadJsonFiles($arFields);
 	}
 }
 
-function OnAfterIBlockElementDeleteHandler($arFields) {
+function OnAfterIBlockElementDeleteHandler($arFields)
+{
 	if ($arFields["IBLOCK_ID"] == 20) {
         loadJsonFiles(1, true);
     }
 }
 
-function loadJsonFiles ($arFields, $delete = false) {
+function loadJsonFiles($arFields, $delete = false)
+{
 	if(!$delete){
 		if(CModule::IncludeModule("iblock")) {
 			$dbElement = CIBlockElement::GetByID($arFields['ID']);
@@ -991,11 +1076,12 @@ function loadJsonFiles ($arFields, $delete = false) {
 					if (is_array($arFields['PROPERTY_VALUES'][114])) {
 						$cityId = array_shift($arFields['PROPERTY_VALUES'][114])['VALUE'];
 						$dbCity = CIBlockElement::GetByID($cityId);
-						if($arCity = $dbCity->GetNext())
+                        if ($arCity = $dbCity->GetNext()) {
 							getJsonSalonList($cityId, $arCity['CODE']);
 					}
 				}
 			}
+            }
 
 		}
 	} else {
@@ -1003,7 +1089,8 @@ function loadJsonFiles ($arFields, $delete = false) {
 	}
 }
 
-function getJsonContactList (){
+function getJsonContactList()
+{
 	if(!CModule::IncludeModule("iblock")){
 		return null;
 	}
@@ -1020,7 +1107,8 @@ function getJsonContactList (){
 	}
 }
 
-function getJsonSalonList($cityId, $cityCode = null) {
+function getJsonSalonList($cityId, $cityCode = null)
+{
 	if(!CModule::IncludeModule("iblock")){
 		return null;
 	}
@@ -1070,10 +1158,10 @@ function getJsonSalonList($cityId, $cityCode = null) {
 }
 
 
-
 class MyElement
 {
-function OnElementUpdateHandler(&$arFields){
+    function OnElementUpdateHandler(&$arFields)
+    {
 	if ($arFields["IBLOCK_ID"] == 16){
         $db_props = CIBlockElement::GetProperty(16, $arFields["ID"], array(), Array("CODE"=>"M%_PRICE"));
         while($prop = $db_props->Fetch()){
@@ -1093,7 +1181,9 @@ function OnElementUpdateHandler(&$arFields){
         }
 	}
 }
-    function OnAfterIBlockElementDeleteHandler($arFields){
+
+    function OnAfterIBlockElementDeleteHandler($arFields)
+    {
     	if ($arFields["IBLOCK_ID"] == 17){
         	$product_id = CCatalogSku::GetProductInfo($arFields["ID"])["ID"];
 
@@ -1122,7 +1212,8 @@ function OnElementUpdateHandler(&$arFields){
         }
 	}
 
-    function OnBeforeIBlockElementUpdateHandler($ID, $arFields){
+    function OnBeforeIBlockElementUpdateHandler($ID, $arFields)
+    {
 		$product_id = CCatalogSku::GetProductInfo($arFields["PRODUCT_ID"])["ID"];
 
 		$db_props = CIBlockElement::GetProperty(16, $product_id, array(), Array("CODE"=>"M%_PRICE"));
@@ -1158,7 +1249,8 @@ function OnElementUpdateHandler(&$arFields){
 			}
     }
 
-    public function get_offer_min_price($item_id){
+    public function get_offer_min_price($item_id)
+    {
         if ($item_id) {
             $res = CIBlockElement::GetList(Array("CATALOG_PRICE_1" => "asc"),
                 array('IBLOCK_ID' => 17, 'ACTIVE' => 'Y', 'PROPERTY_60' => $item_id, "!CATALOG_PRICE_1" => false),
@@ -1177,7 +1269,8 @@ function OnElementUpdateHandler(&$arFields){
         return $ret;
     }
 
-    public function get_offer_max_price($item_id){
+    public function get_offer_max_price($item_id)
+    {
         $ret = 0;
         if ($item_id) {
             $res = CIBlockElement::GetList(Array("CATALOG_PRICE_1"=>"desc"),
@@ -1197,7 +1290,8 @@ function OnElementUpdateHandler(&$arFields){
 }
 
 
-function BeforeIndexHandler($arFields) {
+function BeforeIndexHandler($arFields)
+{
     $arrIblock = array(16);   //ID инфоблоков, для которых производить модификацию
 	if (CModule::IncludeModule('iblock')
 		&& $arFields["MODULE_ID"] == 'iblock'
@@ -1209,8 +1303,9 @@ function BeforeIndexHandler($arFields) {
 			$arFields["ITEM_ID"],          // ID индексируемого свойства
 			array("sort" => "asc"),         // Сортировка (можно упустить)
 			Array("CODE"=>"NAME3")); // CODE свойства, по которому нужно
-		if($ar_props = $db_props->Fetch())
-			$arFields["TITLE"] = $ar_props["VALUE"]." ".$arFields["TITLE"];   // Добавим свойство в конец заголовка индексируемого элемента
+        if ($ar_props = $db_props->Fetch()) {
+            $arFields["TITLE"] = $ar_props["VALUE"] . " " . $arFields["TITLE"];
+        }   // Добавим свойство в конец заголовка индексируемого элемента
 		return $arFields;
 	}
 }
@@ -1303,7 +1398,8 @@ class EventSend
 		}
 	}
 
-	static function getArFieldsOrderSend ($orderId, $arFields, $arOrderPropsValue, $arCityProps) {
+    static function getArFieldsOrderSend($orderId, $arFields, $arOrderPropsValue, $arCityProps)
+    {
 		$arFields['ORDER_LIST'] = $arSaleToManager['ORDER_LIST'] = self::getBasketList($orderId);
 		$arOrderProps = self::getOrderParams($arFields["ORDER_ID"]);
 
@@ -1319,7 +1415,8 @@ class EventSend
 
 			$arFields['COST_LIST'] = self::getHtmlAdditionalInfo($arOrderPropsValue, $arOrderProps);
 
-			$arFields['DELIVERY_INFO'] = self::getHtmlDeliveryInfo($arOrderProps['DELIVERY_ID'], $arOrderPropsValue, $arCityProps['PROPERTY_PICKUP_PLACE_VALUE']);
+            $arFields['DELIVERY_INFO'] = self::getHtmlDeliveryInfo($arOrderProps['DELIVERY_ID'], $arOrderPropsValue,
+                $arCityProps['PROPERTY_PICKUP_PLACE_VALUE']);
 
 			$arFields['PAYSYSTEM'] = self::getPaySystemProps($arOrderProps['PAY_SYSTEM_ID'])['NAME'];
 			$arFields['DATE_PAYED'] = $arOrderProps['DATE_PAYED'];
@@ -1328,7 +1425,8 @@ class EventSend
 			if (CModule::IncludeModule("sale")) {
 				$arFields['DELIVERY_NAME'] = CSaleDelivery::GetByID($arOrderProps['DELIVERY_ID'])['NAME'];
 			}
-			$arFields['DELIVERY_PRICE'] = CurrencyFormat($arOrderPropsValue["DELIVERY_COST"], $arOrderProps['CURRENCY']);
+            $arFields['DELIVERY_PRICE'] = CurrencyFormat($arOrderPropsValue["DELIVERY_COST"],
+                $arOrderProps['CURRENCY']);
 			if($arOrderProps['PAY_SYSTEM_ID'] == 11) {
 				$payLink = 'https://' . $_SERVER['SERVER_NAME'] . '/personal/order/pay?ORDER_ID=' . $orderId;
 				$arFields['PAY_ONLINE'] = '<a href="'.$payLink.'" style="text-decoration: none; 
@@ -1344,30 +1442,37 @@ class EventSend
 		}
 	}
 
-	static function getHtmlAdditionalInfo ($arOrderPropsValue, $arOrderProps) {
+    static function getHtmlAdditionalInfo($arOrderPropsValue, $arOrderProps)
+    {
 		$htmlAdditionalInfo = '<table cellspacing="0" style="font-size:14px;display:inline-table;"><tbody>';
 		if($arOrderPropsValue['DELIVERY_COST']) {
-			$htmlAdditionalInfo .= '<tr><td>Стоимость доставки:</td><td style="text-align:right;font-weight:bold;">'. CCurrencyLang::CurrencyFormat($arOrderPropsValue["DELIVERY_COST"], $arOrderProps['CURRENCY']) .'</td></tr>';
+            $htmlAdditionalInfo .= '<tr><td>Стоимость доставки:</td><td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arOrderPropsValue["DELIVERY_COST"],
+                    $arOrderProps['CURRENCY']) . '</td></tr>';
 		}
 
 		if($arOrderPropsValue['FLOORING_COST'] and $arOrderPropsValue['FLOORING_COST'] > 0){
-			$htmlAdditionalInfo .= '<tr><td>Подъем на этаж:</td><td style="text-align:right;font-weight:bold;">'. CCurrencyLang::CurrencyFormat($arOrderPropsValue["FLOORING_COST"], $arOrderProps['CURRENCY']) .'</td></tr>';
+            $htmlAdditionalInfo .= '<tr><td>Подъем на этаж:</td><td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arOrderPropsValue["FLOORING_COST"],
+                    $arOrderProps['CURRENCY']) . '</td></tr>';
 		}
 
 		if($arOrderPropsValue['ASSEMBLING_COST'] and $arOrderPropsValue['ASSEMBLING_COST'] > 0) {
-			$htmlAdditionalInfo .= '<tr><td>Сборка мебели:</td><td style="text-align:right;font-weight:bold;">'. CCurrencyLang::CurrencyFormat($arOrderPropsValue["ASSEMBLING_COST"], $arOrderProps['CURRENCY']) .'</td></tr>';
+            $htmlAdditionalInfo .= '<tr><td>Сборка мебели:</td><td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arOrderPropsValue["ASSEMBLING_COST"],
+                    $arOrderProps['CURRENCY']) . '</td></tr>';
 		}
 		if($arOrderPropsValue['GARBAGE_REMOVAL_COST'] and $arOrderPropsValue['GARBAGE_REMOVAL_COST'] > 0) {
-			$htmlAdditionalInfo .= '<tr><td>Вывоз упаковки:</td><td style="text-align:right;font-weight:bold;">'. CCurrencyLang::CurrencyFormat($arOrderPropsValue["GARBAGE_REMOVAL_COST"], $arOrderProps['CURRENCY']) .'</td></tr>';
+            $htmlAdditionalInfo .= '<tr><td>Вывоз упаковки:</td><td style="text-align:right;font-weight:bold;">' . CCurrencyLang::CurrencyFormat($arOrderPropsValue["GARBAGE_REMOVAL_COST"],
+                    $arOrderProps['CURRENCY']) . '</td></tr>';
 		}
 		if($arOrderPropsValue['ORDER_TOTAL_PRICE_FORMATED']){
-			$htmlAdditionalInfo .= '<tr style="font-size:16px;font-weight:bold;"><td>Стоимость заказа: </td><td style="text-align:right;">' . CCurrencyLang::CurrencyFormat($arOrderProps['PRICE'], $arOrderProps['CURRENCY']) . '</td></tr>';
+            $htmlAdditionalInfo .= '<tr style="font-size:16px;font-weight:bold;"><td>Стоимость заказа: </td><td style="text-align:right;">' . CCurrencyLang::CurrencyFormat($arOrderProps['PRICE'],
+                    $arOrderProps['CURRENCY']) . '</td></tr>';
 		}
 		$htmlAdditionalInfo .= '</tbody></table>';
 		return $htmlAdditionalInfo;
 	}
 
-	static function getHtmlDeliveryInfo ($deliveryId, $arOrderPropsValue, $pickupPlace) {
+    static function getHtmlDeliveryInfo($deliveryId, $arOrderPropsValue, $pickupPlace)
+    {
 		unset($arOrderPropsValue["DELIVERY_COST"], $arOrderPropsValue["FLOORING_COST"], $arOrderPropsValue["ASSEMBLING_COST"], $arOrderPropsValue["GARBAGE_REMOVAL_COST"], $arOrderPropsValue['ZIP']);
 		$deliveryAddressByService = !empty($arOrderPropsValue["LOCATION"]['VALUE'])? $arOrderPropsValue["LOCATION"]['VALUE'].", ": "";
 		$deliveryAddressByService .= !empty($arOrderPropsValue["STREET"]['VALUE'])? $arOrderPropsValue["STREET"]['VALUE'] . " ": "";
@@ -1397,7 +1502,8 @@ class EventSend
 		return $deliveryInfo;
 	}
 
-	static function getButtonPayedOnline ($orderId) {
+    static function getButtonPayedOnline($orderId)
+    {
 		Bitrix\Main\Loader::includeModule("sale");
 		$order = Sale\Order::load($orderId);
 		//var_dump($order);
@@ -1431,14 +1537,24 @@ class EventSend
 		//}
 	}
 
-	static function getPropsCityByLocationID ($locationId) {
-		if(!CModule::IncludeModule("iblock"))
+    static function getPropsCityByLocationID($locationId)
+    {
+        if (!CModule::IncludeModule("iblock")) {
 			return null;
+        }
 		$dbCity = CIBlockElement::GetList(
 			array(),
 			array('IBLOCK_ID' => 21, 'PROPERTY_LOCATION' => $locationId, 'ACTIVE' => 'Y'),
-			array('IBLOCK_ID', 'ID', 'NAME', 'PROPERTY_LOCATION', 'PROPERTY_EMAIL_BACK_CALL',
-				'PROPERTY_PICKUP_PLACE', 'PROPERTY_YAK_SHOPID', 'PROPERTY_YAK_SCID')
+            array(
+                'IBLOCK_ID',
+                'ID',
+                'NAME',
+                'PROPERTY_LOCATION',
+                'PROPERTY_EMAIL_BACK_CALL',
+                'PROPERTY_PICKUP_PLACE',
+                'PROPERTY_YAK_SHOPID',
+                'PROPERTY_YAK_SCID'
+            )
 		);
 
 		$arCity = $dbCity->Fetch();
@@ -1446,7 +1562,8 @@ class EventSend
 		return $arCity;
 	}
 
-	static function getOrderPropsValue($orderId) {
+    static function getOrderPropsValue($orderId)
+    {
 		if(CModule::IncludeModule("sale")) {
 
 			$dbOrderProps = CSaleOrderPropsValue::GetOrderProps($orderId);
@@ -1458,11 +1575,13 @@ class EventSend
 		}
 	}
 
-	static function getPaySystemProps ($payId) {
+    static function getPaySystemProps($payId)
+    {
 		return CModule::IncludeModule("sale") ? CSalePaySystem::GetByID($payId) : null ;
 	}
 
-	static function getOrderParams ($orderId){ // полчуение данных заказа
+    static function getOrderParams($orderId)
+    { // полчуение данных заказа
 		$arPropOrderIsNeed = array(
 			'PRICE',
 			'CURRENCY',
@@ -1475,8 +1594,7 @@ class EventSend
 		);
 		if (CModule::IncludeModule("sale")) {
 			$dbSale = CSaleOrder::GetList( array(), array("ID" => $orderId) );
-			while ($arSale = $dbSale->Fetch())
-			{
+            while ($arSale = $dbSale->Fetch()) {
 				foreach ($arSale as $item => $value) {
 					if(in_array($item, $arPropOrderIsNeed)) {
 						$arSaleCut[$item] = $value;
@@ -1488,9 +1606,11 @@ class EventSend
 		}
 	}
 
-	static  function getArrayBasketList ($orderId) {
-		if(!CModule::IncludeModule("sale"))
+    static function getArrayBasketList($orderId)
+    {
+        if (!CModule::IncludeModule("sale")) {
 			return null;
+        }
 		$arBasketList = array();
 		$dbBasketItems = CSaleBasket::GetList(
 			array("ID" => "ASC"),
@@ -1499,10 +1619,10 @@ class EventSend
 			false,
 			array("ID", "PRODUCT_ID", "NAME", "QUANTITY", "PRICE", "CURRENCY", "TYPE", "SET_PARENT_ID")
 		);
-		while ($arItem = $dbBasketItems->Fetch())
-		{
-			if (CSaleBasketHelper::isSetItem($arItem))
+        while ($arItem = $dbBasketItems->Fetch()) {
+            if (CSaleBasketHelper::isSetItem($arItem)) {
 				continue;
+            }
 
 			$arBasketList[] = $arItem;
 			$arBasketId[] = $arItem["ID"];
@@ -1515,9 +1635,11 @@ class EventSend
 
 	}
 
-	static function getBasketList ($orderId) {
-		if(!CModule::IncludeModule("sale"))
+    static function getBasketList($orderId)
+    {
+        if (!CModule::IncludeModule("sale")) {
 			return null;
+        }
 		/*$arBasketList = array();
 		$dbBasketItems = CSaleBasket::GetList(
 			array("ID" => "ASC"),
@@ -1556,12 +1678,10 @@ class EventSend
 			$arBasketProps[$arBasketPropsTmp["BASKET_ID"]][] = $arBasketPropsTmp;
 		}
 
-		if (!empty($arBasketList) && is_array($arBasketList))
-		{
+        if (!empty($arBasketList) && is_array($arBasketList)) {
 			$strOrderList = '<table cellspacing="0" style="font-size:14px;width:100%;border-collapse:collapse;"><tbody>';
 			$strOrderList .= '<tr style="color:#777;border-bottom:1px solid #ddd;height:40px;"><td>Артикул</td><td style="width:40%;">Наименование</td><td>Количество</td><td>Цена товара</td><td>Сумма</td></tr>';
-			foreach ($arBasketList as $arItem)
-			{
+            foreach ($arBasketList as $arItem) {
 				$measureText = (isset($arItem["MEASURE_TEXT"]) && strlen($arItem["MEASURE_TEXT"])) ? $arItem["MEASURE_TEXT"] : GetMessage("SOA_SHT");
 
 				/*$strOrderList .= $arItem["NAME"]." - ".$arItem["QUANTITY"]." ".$measureText.": ".SaleFormatCurrency($arItem["PRICE"], $arItem["CURRENCY"]);
@@ -1572,7 +1692,8 @@ class EventSend
 				$strOrderList .= '<td style="font-weight:bold;">'.$arItem["NAME"].'</td>';
 				$strOrderList .= '<td>'.$arItem["QUANTITY"].'</td>';
 				$strOrderList .= '<td>'.SaleFormatCurrency($arItem["PRICE"], $arItem["CURRENCY"]).'</td>';
-				$strOrderList .= '<td style="font-weight:bold;">'.SaleFormatCurrency($arItem["PRICE"] * intVal($arItem["QUANTITY"]), $arItem["CURRENCY"]).'</td></tr>';
+                $strOrderList .= '<td style="font-weight:bold;">' . SaleFormatCurrency($arItem["PRICE"] * intVal($arItem["QUANTITY"]),
+                        $arItem["CURRENCY"]) . '</td></tr>';
 			}
 			$strOrderList .= '</tbody></table>';
 		}
@@ -1582,7 +1703,8 @@ class EventSend
 }
 
 
-function success1c($arParams, $arFields){
+function success1c($arParams, $arFields)
+{
     if (preg_match("/prices__/", $arFields)){
     	//include("changeprice.php");
         $f = fopen ($_SERVER['DOCUMENT_ROOT']."/bitrix/OnSuccessCatalogImport1C.log", "a+");
@@ -1607,7 +1729,8 @@ $time = date("d.m.Y H:i:s");
 }
 
 AddEventHandler("catalog", "OnBeforeCatalogImport1C",  "warning1c");
-function warning1c($arParams, $arFields){
+function warning1c($arParams, $arFields)
+{
 $f2 = fopen ($_SERVER['DOCUMENT_ROOT']."/log/OnBeforeCatalogImport1C.log", "a+");
         fwrite($f2, var_export($arFields, true));
         fwrite($f2, "\n");
@@ -1623,7 +1746,8 @@ function savingCurrentPrice($ID)
     	$arPrice = CPrice::GetByID($ID);
         fwrite($f, "\n-------arPrice----------------------------------------------------------------------------\n");
         fwrite($f, var_export($arPrice, true));
-        fwrite($f, "\n---------end arPrice--------------------------------------------------------------------------\n");
+        fwrite($f,
+            "\n---------end arPrice--------------------------------------------------------------------------\n");
 
         if (in_array($arPrice["CATALOG_GROUP_ID"], array(1, 2, 6, 7))){
         	return false;
@@ -1633,8 +1757,8 @@ function savingCurrentPrice($ID)
 }
 
 
-
-function savingCurrentPrice2(&$arFields){
+function savingCurrentPrice2(&$arFields)
+{
     $f = fopen ($_SERVER['DOCUMENT_ROOT']."/bitrix/OnBeforePriceAdd.log", "a+");
     $f2 = fopen ($_SERVER['DOCUMENT_ROOT']."/log/AcRRcPriceAdd.log", "a+");
     fwrite($f, var_export($_REQUEST, true));
@@ -1655,7 +1779,8 @@ function savingCurrentPrice2(&$arFields){
 
 }
 
-function savingCurrentPrice3($ID, &$arFields){
+function savingCurrentPrice3($ID, &$arFields)
+{
 if ($_REQUEST["mode"] == "import" && preg_match("/prices__/", $_REQUEST["filename"])) {
     if ($arFields["CATALOG_GROUP_ID"] == 4) {
         $timestamp = ConvertTimeStamp(time(), 'FULL');
@@ -1669,20 +1794,23 @@ if ($_REQUEST["mode"] == "import" && preg_match("/prices__/", $_REQUEST["filenam
 }
 
 
-function deleteStore($id){
+function deleteStore($id)
+{
     $dbResult = CCatalogStore::GetList(
     	array(),
 		array("ID" => $id),
 		array("XML_ID")
 		);
 	$item = $dbResult->getNext();
-	$dbResult = CIBlockElement::GetList(array(), array("IBLOCK_ID" => 50, "XML_ID" => $item["XML_ID"]), false, false, array("ID", "IBLOCK_ID"));
+    $dbResult = CIBlockElement::GetList(array(), array("IBLOCK_ID" => 50, "XML_ID" => $item["XML_ID"]), false, false,
+        array("ID", "IBLOCK_ID"));
 	$item = $dbResult->getNext();
 	CIBlockElement::Delete($item["ID"]);
 }
 
 AddEventHandler("main", "OnAdminTabControlBegin", "MyOnAdminTabControlBegin");
-function MyOnAdminTabControlBegin(&$form){
+function MyOnAdminTabControlBegin(&$form)
+{
     if($GLOBALS["APPLICATION"]->GetCurPage() == "/bitrix/admin/1c_admin.php")    {
 
         $pricestart = COption::GetOptionString('defo.log1c', 'defo_log_pricestart');
@@ -1694,7 +1822,12 @@ function MyOnAdminTabControlBegin(&$form){
         $historyinterval = COption::GetOptionString('defo.log1c', 'defo_log_historyinterval');
         $emails = COption::GetOptionString('defo.log1c', 'defo_log_emails');
 
-        $form->tabs[] = array("DIV" => "my_edit", "TAB" => "Настройка уведомлений об ошибках", "ICON"=>"main_user_edit", "TITLE"=>"Настройка уведомлений об ошибках", "CONTENT"=>
+        $form->tabs[] = array(
+            "DIV" => "my_edit",
+            "TAB" => "Настройка уведомлений об ошибках",
+            "ICON" => "main_user_edit",
+            "TITLE" => "Настройка уведомлений об ошибках",
+            "CONTENT" =>
             '<tr class="heading">
 				<td id="td_extended_options" colspan="2">Цены</td>
 			</tr>
@@ -1740,8 +1873,10 @@ function MyOnAdminTabControlBegin(&$form){
         );
     }
 }
+
 AddEventHandler('main', 'OnBeforeProlog', 'MyOnBeforePrologHandler');
-function MyOnBeforePrologHandler(){
+function MyOnBeforePrologHandler()
+{
     if ($_SERVER['REQUEST_METHOD']=='POST' && $GLOBALS['APPLICATION']->GetCurPage()=='/bitrix/admin/1c_admin.php')    {
         COption::SetOptionString('defo.log1c', 'defo_log_pricestart', $_REQUEST['pricestart']);
         COption::SetOptionString('defo.log1c', 'defo_log_priceend', $_REQUEST['priceend']);
@@ -1755,7 +1890,8 @@ function MyOnBeforePrologHandler(){
 }
 
 AddEventHandler("catalog", "OnSuccessCatalogImport1C",  "successImport");
-function successImport($arParams, $arFields){
+function successImport($arParams, $arFields)
+{
 	\Bitrix\Main\Loader::IncludeModule("defo.log1c");
 	
 	$file = file_get_contents($arFields);
@@ -1789,7 +1925,8 @@ function successImport($arParams, $arFields){
 
 
 AddEventHandler('main', 'OnBeforeEventSend', "OnBeforeEventSendHandle");
-function OnBeforeEventSendHandle(&$arFields, &$arTemplate){
+function OnBeforeEventSendHandle(&$arFields, &$arTemplate)
+{
 
 $log = fopen($_SERVER['DOCUMENT_ROOT']."/log/OnBeforeEventSend.log", "a+");
 	fwrite($log, "\n-----------------------------arFields: ------------------------------------\n");
@@ -1801,13 +1938,22 @@ $log = fopen($_SERVER['DOCUMENT_ROOT']."/log/OnBeforeEventSend.log", "a+");
 	
 	if ($arFields["RS_FORM_VARNAME"] or $arTemplate["EVENT_NAME"]){
 		$formName = $arTemplate["EVENT_NAME"];
-		if ($arFields["RS_FORM_VARNAME"])
+        if ($arFields["RS_FORM_VARNAME"]) {
 			$formName = $arFields["RS_FORM_VARNAME"];
+        }
 		$regionId = $arFields["REGION_ID"];
 		
-		$fields = CIBlockElement::GetList(array(), array("IBLOCK_ID"=>62, "ACTIVE"=>"Y", "CODE" => $formName), false, false, array("IBLOCK_ID", "ID", "CODE", "NAME"))->GetNext();
+	CModule::IncludeModule('iblock');
+        $fields = CIBlockElement::GetList(array(), array("IBLOCK_ID" => 62, "ACTIVE" => "Y", "CODE" => $formName),
+            false, false, array("IBLOCK_ID", "ID", "CODE", "NAME"))->GetNext();
 		if ($fields){
-			$res = CIBlockElement::GetList(array(), array("IBLOCK_ID"=>63, "ACTIVE"=>"Y", "PROPERTY_TYPE_ORDER" => $fields["ID"], "PROPERTY_REGION" => $regionId, "!PROPERTY_EMAIL" => false), false, false, array("IBLOCK_ID", "ID", "NAME", "PROPERTY_*"));
+            $res = CIBlockElement::GetList(array(), array(
+                "IBLOCK_ID" => 63,
+                "ACTIVE" => "Y",
+                "PROPERTY_TYPE_ORDER" => $fields["ID"],
+                "PROPERTY_REGION" => $regionId,
+                "!PROPERTY_EMAIL" => false
+            ), false, false, array("IBLOCK_ID", "ID", "NAME", "PROPERTY_*"));
 			while($ob = $res->getNextElement()){
 				$arProps = $ob->GetProperties();
 				$emails[] = $arProps["EMAIL"]["VALUE"];
@@ -1815,11 +1961,13 @@ $log = fopen($_SERVER['DOCUMENT_ROOT']."/log/OnBeforeEventSend.log", "a+");
 			$emails = implode(",", $emails);
 			$arFields["FORM_EMAIL_TO"] = $emails;
 		}
-		if ($_SERVER['HTTP_REFERER'])
+        if ($_SERVER['HTTP_REFERER']) {
 		$arFields['HTTP_REFERER'] = $_SERVER['HTTP_REFERER'];
 	}
-if ($arFields["EMAIL_RAW"])
+    }
+    if ($arFields["EMAIL_RAW"]) {
 	$arFields["EMAIL"] = $arFields["EMAIL_RAW"];
+    }
 
 	fwrite($log, "\n-----------------------------emails: ------------------------------------\n");
 	fwrite($log, var_export($emails, true));
@@ -1827,8 +1975,8 @@ if ($arFields["EMAIL_RAW"])
 }
 
 AddEventHandler('form', 'onBeforeResultAdd', 'onBeforeResultAddHandle');
-function onBeforeResultAddHandle($WEB_FORM_ID, &$arFields, &$arrVALUES){
-    global $APPLICATION;
+function onBeforeResultAddHandle($WEB_FORM_ID, &$arFields, &$arrVALUES)
+{
     global $arRegion;
 
     foreach ($arrVALUES as $key=>$item){
@@ -1848,8 +1996,8 @@ function GetMarks($select = ['*'], $filter = [])
 		'filter' => $filter,
     ]);
     $tizers=[];
-    while($el=$res->fetch())
-    {        $tizers[$el['ID']]=
+    while ($el = $res->fetch()) {
+        $tizers[$el['UF_XML_ID']] =
             [
                 'ID'=>$el['ID'],
                 'NAME'=>$el['UF_DESC'],
@@ -1860,6 +2008,485 @@ function GetMarks($select = ['*'], $filter = [])
             ];
     }
     return $tizers;
+
+}
+
+function GetGroups($select = ['*'], $filter = [])
+{
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(17)->fetch();
+    $entity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass = $entity->getDataClass();
+    $res = $entityClass::getList([
+        'select' => $select,
+        'filter' => $filter,
+    ]);
+    $tizers = [];
+    while ($el = $res->fetch()) {
+        $tizers[$el['ID']] =
+            [
+                'ID' => $el['ID'],
+                'NAME' => $el['UF_DESC'],
+                'PODBORKI' => $el['UF_PODBORKA'],
+                'TAB_NAME' => $el['UF_NAME'],
+
+            ];
+    }
+    return $tizers;
+
+}
+
+function GetMetkipok($select = ['*'], $filter = [])
+{
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(18)->fetch();
+    $entity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass = $entity->getDataClass();
+    $res = $entityClass::getList([
+        'select' => $select,
+        'filter' => $filter,
+    ]);
+    $tizers = [];
+    while ($el = $res->fetch()) {
+        $tizers[$el['UF_XML_ID']] = $el['UF_NAME'];
+    }
+    return $tizers;
+}
+
+function GetMetkipokSect($select = ['*'], $filter = [])
+{
+    $hl = Bitrix\Highloadblock\HighloadBlockTable::getById(18)->fetch();
+    $entity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hl);
+    $entityClass = $entity->getDataClass();
+    $res = $entityClass::getList([
+        'select' => $select,
+        'filter' => $filter,
+    ]);
+    $tizers = [];
+    while ($el = $res->fetch()) {
+        $tizers[$el['ID']] = $el['UF_NAME'];
+    }
+    return $tizers;
+}
+
+AddEventHandler("sale", "OnOrderAdd", "OnOrderAdd2Quick");
+function OnOrderAdd2Quick($intOrderID, $arFields){
+    require_once($_SERVER["DOCUMENT_ROOT"] . '/ddsdev/tcpdf/tcpdf.php');
+    /**
+     * @param $num
+     * @return string
+     */
+    function num2str($num)
+    {
+        $nul = 'ноль';
+        $ten = array(
+            array('', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'),
+            array('', 'одна', 'две', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'),
+        );
+        $a20 = array(
+            'десять',
+            'одиннадцать',
+            'двенадцать',
+            'тринадцать',
+            'четырнадцать',
+            'пятнадцать',
+            'шестнадцать',
+            'семнадцать',
+            'восемнадцать',
+            'девятнадцать'
+        );
+        $tens = array(
+            2 => 'двадцать',
+            'тридцать',
+            'сорок',
+            'пятьдесят',
+            'шестьдесят',
+            'семьдесят',
+            'восемьдесят',
+            'девяносто'
+        );
+        $hundred = array(
+            '',
+            'сто',
+            'двести',
+            'триста',
+            'четыреста',
+            'пятьсот',
+            'шестьсот',
+            'семьсот',
+            'восемьсот',
+            'девятьсот'
+        );
+        $unit = array( // Units
+            array('копейка', 'копейки', 'копеек', 1),
+            array('рубль', 'рубля', 'рублей', 0),
+            array('тысяча', 'тысячи', 'тысяч', 1),
+            array('миллион', 'миллиона', 'миллионов', 0),
+            array('миллиард', 'милиарда', 'миллиардов', 0),
+        );
+        //
+        list($rub, $kop) = explode('.', sprintf("%015.2f", floatval($num)));
+        $out = array();
+        if (intval($rub) > 0) {
+            foreach (str_split($rub, 3) as $uk => $v) { // by 3 symbols
+                if (!intval($v)) {
+                    continue;
+                }
+                $uk = sizeof($unit) - $uk - 1; // unit key
+                $gender = $unit[$uk][3];
+                list($i1, $i2, $i3) = array_map('intval', str_split($v, 1));
+                // mega-logic
+                $out[] = $hundred[$i1]; # 1xx-9xx
+                if ($i2 > 1) {
+                    $out[] = $tens[$i2] . ' ' . $ten[$gender][$i3];
+                } # 20-99
+                else {
+                    $out[] = $i2 > 0 ? $a20[$i3] : $ten[$gender][$i3];
+                } # 10-19 | 1-9
+                // units without rub & kop
+                if ($uk > 1) {
+                    $out[] = morph($v, $unit[$uk][0], $unit[$uk][1], $unit[$uk][2]);
+                }
+            } //foreach
+        } else {
+            $out[] = $nul;
+        }
+        $out[] = morph(intval($rub), $unit[1][0], $unit[1][1], $unit[1][2]); // rub
+        $out[] = $kop . ' ' . morph($kop, $unit[0][0], $unit[0][1], $unit[0][2]); // kop
+        return trim(preg_replace('/ {2,}/', ' ', join(' ', $out)));
+    }
+
+    /**
+     * @param $n
+     * @param $f1
+     * @param $f2
+     * @param $f5
+     * @return mixed
+     */
+    function morph($n, $f1, $f2, $f5)
+    {
+        $n = abs(intval($n)) % 100;
+        if ($n > 10 && $n < 20) {
+            return $f5;
+        }
+        $n = $n % 10;
+        if ($n > 1 && $n < 5) {
+            return $f2;
+        }
+        if ($n == 1) {
+            return $f1;
+        }
+        return $f5;
+    }
+
+    /**
+     * @return string
+     */
+    function getUrl() {
+        $url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
+        $url .= ( $_SERVER["SERVER_PORT"] != 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
+        return $url;
+    }
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+    $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, '', '', array(0, 64, 255), array(0, 64, 128));
+    $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+    $pdf->setPrintFooter(false);
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+
+    $pdf->SetMargins(20, 25, 20);
+    $pdf->SetHeaderMargin(10);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+    if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+        require_once(dirname(__FILE__) . '/lang/eng.php');
+        $pdf->setLanguageArray($l);
+    }
+
+    $pdf->setFontSubsetting(true);
+    $pdf->SetFont('dejavusans', '', 14, '', true);
+    $pdf->AddPage();
+
+
+    $order = Sale\Order::load($intOrderID);
+    $order->doFinalAction(true);
+    $basket = $order->getBasket();
+    $fuser = new Sale\Discount\Context\Fuser($basket->getFUserId(true));
+    $discounts = Sale\Discount::buildFromBasket($basket, $fuser);
+    $discounts->calculate();
+    $result = $discounts->getApplyResult(true);
+    $prices = $result['PRICES']['BASKET']; // цены товаров с учетом скидки
+    $basketItems = $basket->getOrderableItems();
+    $allVatSum = $basketItems->getVatSum();
+    $allSum = 0;//$basketItems->getBasePrice();
+    $allDiscountSum = 0;//$basketItems->getPrice();
+    $vatRate = 0;
+    $vatRate = $basketItems->getVatRate();
+
+
+    $arProductsIDs = [];
+    foreach ($basketItems as $basketItem) {
+        $mxResult = CCatalogSku::GetProductInfo(
+            $basketItem->getProductId()
+        );
+        if (is_array($mxResult)) {
+            $arProductsIDs[$mxResult['ID']] = $mxResult['ID'];
+        } else {
+            $arProductsIDs[$basketItem->getProductId()] = $basketItem->getProductId();
+        }
+    }
+
+    if (!empty($arProductsIDs)) {
+        $select = Array('ID', 'IBLOCK_ID', 'NAME', 'PREVIEW_PICTURE', 'PROPERTY_*');
+        $filter = Array('IBLOCK_ID' => 17, 'ID' => $arProductsIDs);
+        $res = CIBlockElement::GetList(Array(), $filter, false, false, $select);
+        while ($ob = $res->GetNextElement()) {
+            $fields = $ob->GetFields();
+            $fields ['PROPERTIES'] = $ob->GetProperties();
+            $arProducts[$fields['ID']] = $fields;
+        }
+    }
+    foreach ($basketItems as $basketItem) {
+        $mxResult = CCatalogSku::GetProductInfo(
+            $basketItem->getProductId()
+        );
+        if (is_array($mxResult)) {
+            $intProdID = $mxResult['ID'];
+        } else {
+            $intProdID = $basketItem->getProductId();
+        }
+        $arBasketItemInfo = $arProducts[$intProdID];
+
+        $basePrice = $prices[$basketItem->getId()]['BASE_PRICE'];
+        $discountPrice = $prices[$basketItem->getId()]['PRICE'];
+
+        $allSum += floatval($basePrice);
+        $allDiscountSum += floatval($discountPrice);
+
+        $arItems[] = [
+            'PREVIEW_PICTURE' => ['SRC' => CFile::GetPath($arBasketItemInfo['PREVIEW_PICTURE'])],
+            'NAME' => $basketItem->getField('NAME'),
+            'PROPERTIES' => [
+                'ARTNUMBER' => ['VALUE' => $arBasketItemInfo['PROPERTIES']['CML2_ARTICLE']['VALUE']],
+                'CODE' => ['VALUE' => $arBasketItemInfo['PROPERTIES']['CML2_BAR_CODE']['VALUE']],
+                'COLOR' => ['VALUE' => $arBasketItemInfo['PROPERTIES']['TEXTURE']['VALUE']],
+                'DATE' => ['VALUE' => date("d.m.Y", strtotime(date('d.m.Y') . " +2 day"))],
+            ],
+            'QUANTITY' => $basketItem->getQuantity(),
+            'PRICE' => $basePrice,
+            'DISCOUNT_PRICE' => $discountPrice,
+            'DISCOUNT_PERCENT' => 100 - floor((floatval($discountPrice)/ floatval($basePrice))*100)
+        ];
+    }
+    $strLocationRequisites = '';
+    $intCurrentLocation = (int)CNextRegionalityB2c::getCurrentRegion()['LOCATION'];
+    if (!empty($intCurrentLocation) && $intCurrentLocation > 0) {
+        $select = Array('ID', 'IBLOCK_ID','PROPERTY_REGION_TAG_REKVIZITY','PROPERTY_REGION_TAG_MANAGER');
+        $filter = Array('IBLOCK_ID' => 2, 'PROPERTY_LOCATION_LINK' => $intCurrentLocation);
+        $res = CIBlockElement::GetList(Array(), $filter, false, Array("nPageSize" => 1), $select);
+        $arLocation = $res->GetNext();
+        $strLocationRequisites = $arLocation['~PROPERTY_REGION_TAG_REKVIZITY_VALUE']['TEXT'];
+        $strManagerInfo = $arLocation['~PROPERTY_REGION_TAG_MANAGER_VALUE']['TEXT'];
+    }
+    /*if(!empty($arLocation)){
+        $select = Array('ID', 'IBLOCK_ID','PROPERTY_EMAIL','NAME');
+        $filter = Array('IBLOCK_ID' => 63, 'PROPERTY_REGION' => $arLocation['ID']);
+        $res = CIBlockElement::GetList(Array(), $filter, false, Array("nPageSize" => 1), $select);
+        $arManager = $res->GetNext();
+        $arManagerName = $arManager['NAME'];
+        $arManagerEmail = $arManager['PROPERTY_EMAIL_VALUE'];
+    }*/
+    $date = date('d.m.Y');
+    $intNumber = rand(1,99999999);
+
+    $productsHTML = '<table>';
+
+    foreach ($arItems as $arItem) {
+        $productsHTML .= '<tr>
+<td style="width: 15%"><img height="70" src="' . $arItem['PREVIEW_PICTURE']['SRC'] . '" alt=""></td>
+<td style="width: 45%"><p class="namerd">' . $arItem['NAME'] . '</p>
+<p class="namepRopd">';
+        if (!empty($arItem['PROPERTIES']['ARTNUMBER']['VALUE'])) {
+            $productsHTML .= 'Артикул ' . $arItem['PROPERTIES']['ARTNUMBER']['VALUE'];
+        }
+        if (!empty($arItem['PROPERTIES']['CODE']['VALUE'])) {
+            $productsHTML .= ', код  ' . $arItem['PROPERTIES']['CODE']['VALUE'];
+        }
+        $productsHTML .= '
+<br>';
+        if (!empty($arItem['PROPERTIES']['COLOR']['VALUE'])) {
+            $productsHTML .= 'Цвет: ' . $arItem['PROPERTIES']['COLOR']['VALUE'];
+        }
+        $productsHTML .= '
+
+<span class="namepDelvier">
+<br>
+Дата поставки: ' . $arItem['PROPERTIES']['DATE']['VALUE'] . '
+</span>
+</p>
+
+</td>
+<td style="width: 15%; text-align: center;"><p class="namerd">' . $arItem['QUANTITY'] . ' шт</p></td>
+<td style="width: 15%">
+
+<p class="namerd">' . number_format($arItem['PRICE'], 0, ' ', ' ') . ' руб.
+<br>';
+        if ($arItem['DISCOUNT_PRICE'] != $arItem['PRICE']) {
+            $productsHTML .= '<span class="namepRopd">Скидка ' . $arItem['DISCOUNT_PERCENT'] . ' %</span>';
+        }
+        $productsHTML .= '</p>
+
+</td>';
+        if ($arItem['DISCOUNT_PRICE'] != $arItem['PRICE']) {
+            $productsHTML .= '<td style="width: 15%"><p style="    text-decoration: line-through;color: #9E9FA2;" class="namerd">' . number_format($arItem['DISCOUNT_PRICE'],
+                    0, ' ', ' ') . ' руб.</p></td>';
+        }
+
+        $productsHTML .= '</tr>';
+
+    }
+
+    $productsHTML .= '
+<tr class="smlPPw" >
+<td colspan="3" style="text-align: right">
+Итого
+</td>
+<td>
+  ' . number_format($allSum, 0, ' ', ' ') . ' руб
+</td>';
+    if ($allDiscountSum != $allSum) {
+        $productsHTML .= '<td>
+   <span style="  text-decoration: line-through;color: #9E9FA2;">' . number_format($allDiscountSum, 0, ' ', ' ') . ' руб</span> 
+</td>';
+    }
+    $productsHTML .= '</tr>
+
+<tr class="smlPPw">
+<td colspan="3" style="text-align: right">
+в том числе НДС (' . $vatRate . '%)      
+</td>
+<td  style="text-align: left">
+     ' . $allVatSum . ' руб.
+</td>
+<td>
+
+</td>
+</tr>
+<tr></tr>
+<br>
+<tr>
+<td class="smlPP" colspan="5" style="text-align: right">
+<br>
+' . lcfirst(num2str($allDiscountSum)) . ' <br>
+в том числе НДС (' . $vatRate . '%) ' . num2str($allVatSum) . '
+
+</td>
+
+</tr>';
+
+    $productsHTML .= '</table>';
+
+    $html = <<<EOD
+<style>
+
+.smlPP{
+font-size: 8px;
+}
+
+
+.smlPPw{
+font-size: 10px;
+}
+
+p.namerd{
+font-size: 10px;
+}
+
+
+
+p.namepDelvier, span.namepDelvier{
+font-size: 9px;
+color: #000000;
+}
+
+p.namepRopd, span.namepRopd {
+color: #9E9FA2;
+font-size: 8px;
+}
+
+.tqRequisites p{
+color: #9E9FA2;
+font-size: 8px;
+}
+.tqRequisites h1{
+color: #9E9FA2;
+font-size: 12px;
+}
+.tqRequisites h2{
+color: #9E9FA2;
+font-size: 10px;
+}
+.tqRequisites a{
+color: #9E9FA2;
+font-size: 8px;
+text-decoration: none;
+}
+.tqFooter p{
+color: #9E9FA2;
+font-size: 7px;
+}
+.tqTitle{
+margin: 0 auto;
+text-align: center;
+}
+.tqTitle h1{
+color: #9E9FA2;
+font-size: 18px;
+}
+.tqTitle p{
+color: #9E9FA2;
+font-size: 10px;
+}
+
+</style>
+<div class="tqTitle">
+<h1>Коммерческое предложение</h1>
+<p>№$intNumber  от $date</p>
+</div>
+
+
+$productsHTML
+
+
+
+<div class="tqRequisites">
+<p>Ваш персональный специалист</p>
+<p>$strManagerInfo</p>
+<br/>
+<br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/>
+
+$strLocationRequisites
+
+</div>
+<div class="tqFooter">
+<p>Цены указанные в коммерческом предложении действительны в течении 3 (трех) рабочих дней.</p>
+<p>Для получение индивидуальной скидки, необходимо обращаться к личному менеджеру либо сотрудникам интернет магазина</p>
+</div>
+EOD;
+
+    $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+
+    $_SESSION['CP_FILE'] = 'offer-' . $intNumber . '.pdf';
+    $pdf->Output($_SERVER['DOCUMENT_ROOT'] . 'cpoffers/offer-' . $intNumber . '.pdf', 'F');
+
+
+    CEvent::Send("SEND_PDF", 's1', $arFields,'Y',123,[$_SERVER['DOCUMENT_ROOT'] . 'cpoffers/offer-' . $intNumber . '.pdf']);
 
 }
 

@@ -374,21 +374,19 @@ if (!empty($arResult['ITEMS'])){
 				$arItem['MIN_BASIS_PRICE'] = false;
 				foreach ($arItem['OFFERS'] as $keyOffer => $arOffer)
 				{
-					//if (empty($arItem['MIN_PRICE']))
-					//{
-						if ($arItem['OFFER_ID_SELECTED'] > 0)
-							$foundOffer = ($arItem['OFFER_ID_SELECTED'] == $arOffer['ID']);
-						else
-							$foundOffer = $arOffer['CAN_BUY'];
-						if ($foundOffer && $intSelected == -1)
-						{
-							$intSelected = $keyOffer;
-							$arItem['MIN_PRICE'] = (isset($arOffer['RATIO_PRICE']) ? $arOffer['RATIO_PRICE'] : $arOffer['MIN_PRICE']);
-							$arItem['MIN_BASIS_PRICE'] = $arOffer['MIN_PRICE'];
-						}
-						unset($foundOffer);
-					//}
-					$arSKUProps =$arSKUArticle = false;
+					if ($arItem['OFFER_ID_SELECTED'] > 0){
+						$foundOffer = ($arItem['OFFER_ID_SELECTED'] == $arOffer['ID']);
+					}
+					else{
+						$foundOffer = $arOffer['CAN_BUY'];
+					}
+
+					if ($foundOffer && $intSelected == -1){
+						$intSelected = $keyOffer;
+					}
+					unset($foundOffer);
+
+					$arSKUProps = $arSKUArticle = false;
 					if (!empty($arOffer['DISPLAY_PROPERTIES']))
 					{
 						$boolSKUDisplayProperties = true;
@@ -487,30 +485,26 @@ if (!empty($arResult['ITEMS'])){
 						'ITEM_MEASURE_RATIOS' => $arOffer['ITEM_MEASURE_RATIOS'],
 						'ITEM_MEASURE_RATIO_SELECTED' => $arOffer['ITEM_MEASURE_RATIO_SELECTED'],
 					);
+
 					if($arOneRow["PRICE"]["DISCOUNT_DIFF"]){
 						$percent=round(($arOneRow["PRICE"]["DISCOUNT_DIFF"]/$arOneRow["PRICE"]["VALUE"])*100, 2);
 						$arOneRow["PRICE"]["DISCOUNT_DIFF_PERCENT_RAW"]="-".$percent."%";
 					}
 					$arMatrix[$keyOffer] = $arOneRow;
 				}
-				if (-1 == $intSelected)
+
+				if (-1 == $intSelected){
 					$intSelected = 0;
-				if (!$arMatrix[$intSelected]['OWNER_PICT'])
-				{
+				}
+
+				if (!$arMatrix[$intSelected]['OWNER_PICT']){
 					$arItem['PREVIEW_PICTURE'] = $arMatrix[$intSelected]['PREVIEW_PICTURE'];
 					$arItem['PREVIEW_PICTURE_SECOND'] = $arMatrix[$intSelected]['PREVIEW_PICTURE_SECOND'];
 				}
+
 				$arItem['JS_OFFERS'] = $arMatrix;
 				$arItem['OFFERS_SELECTED'] = $intSelected;
 				$arItem['OFFERS_PROPS_DISPLAY'] = $boolSKUDisplayProperties;
-
-				if(empty($arItem['OFFERS_PROP']))
-				{
-					$arItem['MIN_PRICE'] = CNext::getMinPriceFromOffersExt(
-						$arItem['OFFERS'],
-						$boolConvert ? $arResult['CONVERT_CURRENCY']['CURRENCY_ID'] : $strBaseCurrency
-					);
-				}
 			}
 			else
 			{
@@ -543,47 +537,47 @@ if (!empty($arResult['ITEMS'])){
 						$arItem['OFFERS'][$keyOffer] = $arOffer;
 					}
 				}
+			}
 
-				$arItem['MIN_PRICE'] = CNext::getMinPriceFromOffersExt(
-					$arItem['OFFERS'],
-					$boolConvert ? $arResult['CONVERT_CURRENCY']['CURRENCY_ID'] : $strBaseCurrency
-				);
+			// get MIN_PRICE
+			$arItem['MIN_PRICE'] = CNext::getMinPriceFromOffersExt(
+				$arItem['OFFERS'],
+				$boolConvert ? $arResult['CONVERT_CURRENCY']['CURRENCY_ID'] : $strBaseCurrency
+			);
 
-				/*set min_price_id*/
-				$minItemPriceID = 0;
-				$minItemPrice = 0;
-				$minItemPriceFormat = "";
-				foreach ($arItem['OFFERS'] as $keyOffer => $arOffer){
+			// get MIN_PRICE_ID
+			$minItemPriceID = 0;
+			$minItemPrice = 0;
+			$minItemPriceFormat = "";
+			foreach ($arItem['OFFERS'] as $keyOffer => $arOffer){
+				if($arOffer["MIN_PRICE"]["CAN_ACCESS"]){
+					if($arOffer["MIN_PRICE"]["DISCOUNT_VALUE"] < $arOffer["MIN_PRICE"]["VALUE"]){
+						$minOfferPrice = $arOffer["MIN_PRICE"]["DISCOUNT_VALUE"];
+						$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_DISCOUNT_VALUE"];
+						$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
+					}
+					else{
+						$minOfferPrice = $arOffer["MIN_PRICE"]["VALUE"];
+						$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_VALUE"];
+						$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
+					}
 
-					if($arOffer["MIN_PRICE"]["CAN_ACCESS"]){
-						if($arOffer["MIN_PRICE"]["DISCOUNT_VALUE"] < $arOffer["MIN_PRICE"]["VALUE"]){
-							$minOfferPrice = $arOffer["MIN_PRICE"]["DISCOUNT_VALUE"];
-							$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_DISCOUNT_VALUE"];
-							$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
-						}
-						else{
-							$minOfferPrice = $arOffer["MIN_PRICE"]["VALUE"];
-							$minOfferPriceFormat = $arOffer["MIN_PRICE"]["PRINT_VALUE"];
-							$minOfferPriceID = $arOffer["MIN_PRICE"]["PRICE_ID"];
-						}
-
-						if($minItemPrice > 0 && $minOfferPrice < $minItemPrice){
-							$minItemPrice = $minOfferPrice;
-							$minItemPriceFormat = $minOfferPriceFormat;
-							$minItemPriceID = $minOfferPriceID;
-							$minItemID = $arOffer["ID"];
-						}
-						elseif($minItemPrice == 0){
-							$minItemPrice = $minOfferPrice;
-							$minItemPriceFormat = $minOfferPriceFormat;
-							$minItemPriceID = $minOfferPriceID;
-							$minItemID = $arOffer["ID"];
-						}
+					if($minItemPrice > 0 && $minOfferPrice < $minItemPrice){
+						$minItemPrice = $minOfferPrice;
+						$minItemPriceFormat = $minOfferPriceFormat;
+						$minItemPriceID = $minOfferPriceID;
+						$minItemID = $arOffer["ID"];
+					}
+					elseif($minItemPrice == 0){
+						$minItemPrice = $minOfferPrice;
+						$minItemPriceFormat = $minOfferPriceFormat;
+						$minItemPriceID = $minOfferPriceID;
+						$minItemID = $arOffer["ID"];
 					}
 				}
-				$arItem['MIN_PRICE']["MIN_PRICE_ID"]=$minItemPriceID;
-				$arItem['MIN_PRICE']["MIN_ITEM_ID"]=$minItemID;
 			}
+			$arItem['MIN_PRICE']["MIN_PRICE_ID"]=$minItemPriceID;
+			$arItem['MIN_PRICE']["MIN_ITEM_ID"]=$minItemID;
 
 			if($arParams["SET_SKU_TITLE"] === "Y"){
 				if(isset($arItem["OFFERS_SELECTED"])){

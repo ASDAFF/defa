@@ -29,6 +29,7 @@
 			"CHILD_MENU_TYPE" => "left",
 			"USE_EXT" => "Y",
 			"DELAY" => "N",
+			"CACHE_SELECTED_ITEMS" => "N",
 			"ALLOW_MULTI_SELECT" => "N" ),
 			false, array( "ACTIVE_COMPONENT" => "Y" )
 		);?>
@@ -47,5 +48,5 @@
 		"DELAY" => "N",
 		"ALLOW_MULTI_SELECT" => "N" ),
 		false, array( "ACTIVE_COMPONENT" => "Y" )
-	);?>								
+	);?>
 <?endif;?>

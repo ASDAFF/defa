@@ -14,19 +14,33 @@
 
 
 .quick-metki{
+    display: flex;
+    justify-content: space-between;
     position: absolute;
-    z-index: 9999999;
+    left: 56px;
+    z-index: 10;
     padding: 10px;
-    width: 100%!important;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 100px;
 }
 .quick-metki li{
-    width: 100%!important;
-    margin-bottom: 10px!important;
+    width: auto;
+    margin-bottom: 10px;
+    padding: 0!important;
+    margin-right: 20px!important;
+}
+.quick-metki li:last-child{
+    margin-right: 0!important;
 }
 .quick-metki .series-item-pros-element span{
     display: none!important;
-    width: auto!important;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 340px!important;
     padding: 10px!important;
+    padding-left: 0!important;
 }
 .quick-metki li:hover span{
     background-color: white!important;
@@ -41,13 +55,18 @@
 }
 .quick-metki-list {
     position: absolute;
-    z-index: 9999999;
+    z-index: 10;
     padding: 10px;
     width: 100%!important;
 }
 .maxwidth-theme {
     padding-left: 15px!important;
     padding-right: 15px!important;
+}
+.quick-metki .pros-icon{
+    position: relative;
+    width: 40px;
+    height: 40px;
 }
 
 
@@ -616,6 +635,7 @@ ul li:before {
 .bottom-menu-block .menu-row .mega-menu {
     position: relative;
     height: 60px;
+    z-index: 9;
 }
 
 
@@ -1295,7 +1315,7 @@ body .mega_fixed_menu .mega-menu .table-menu-wrapper .wrap > .dropdown-menu li:f
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 2999!important;
+    z-index: 2998!important;
 }
 
 .inline-search-block.fixed.big {
@@ -2184,8 +2204,15 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 /*СТИЛИЗАЦИЯ СЛАЙДЕРОВ ПОПУЛЯРНЫЕ КАТЕГОРИИ*/
 .catalog-sections-block .popular-cat-item .name {
-    margin: 0;
+    margin: 0 -15px;
 }
+
+.catalog-sections-block .sections_wrapper .top_wrapper {
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+
 
 .catalog-sections-block .slick-track {
     /*padding: 15px 0!important;*/
@@ -2544,11 +2571,11 @@ body .tabs_slider .catalog_item .inner_wrap {
 .brands-mobile-block {
     height: 0;
     overflow: hidden;
-    margin: 0 -40px;
+    margin: 0 -15px;
 }
 
 .brands-mobile-block .slick-list {
-    margin: 0 -15px;
+    margin: 0;
 }
 
 .brands-mobile-block .brand-item img{
@@ -2664,7 +2691,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 .popular-cat-item .name {
     font-size: 20px;
-    margin: 0 0 20px;
+    margin: 0 -15px 20px;
 }
 
 .popular-list #bx_incl_area_22_1_1 {
@@ -5019,6 +5046,9 @@ body .tabs_slider .catalog_item .inner_wrap {
 /*КАРТОЧКА ТОВАРА*/
 
 /*фон страницы*/
+.catalog_page #content .top_inner_block_wrapper {
+    /*padding-bottom: 0;*/
+}
 .catalog_page #content .top_inner_block_wrapper, .catalog_page #content {
     background: rgb(246,246,247);
 }
@@ -5796,6 +5826,12 @@ body .tabs_slider .catalog_item .inner_wrap {
     .catalog_detail .catalog-item-left {
         width: 258px;
         float: left;
+        position: sticky;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        top: 100px;
     }
 
     .catalog_detail .catalog-item-right {
@@ -5803,6 +5839,10 @@ body .tabs_slider .catalog_item .inner_wrap {
         float: right;
     }
 }
+
+
+
+
 
 
 @media (max-width: 1300px) {
@@ -6539,6 +6579,11 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 }
 
+#price-modal .fancybox-button.fancybox-close-small {
+    display: none;
+
+}
+
 
 /*показ скроллбара при открытой модалке*/
 body.compensate-for-scrollbar {
@@ -6749,6 +6794,17 @@ body.compensate-for-scrollbar {
 }
 
 /*кнопки*/
+.counter_block .minus,
+.counter_block .plus {
+    font-size: 0;
+    line-height: 40px;
+    height: 34px;
+    width: 24px;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+}
+
 .catalog_detail .offer_buy_block {
     margin-top: 40px;
     margin-bottom: 5px;
@@ -6800,24 +6856,40 @@ body.compensate-for-scrollbar {
 }
 
 .counter_block > span:before {
-    background: url("../images/arrows.png");
+    content: "";
+    opacity: .7;
+    display: inline-block;
+    width: 24px;
+    height: 34px;
+    background-image: url(/bitrix/templates/aspro_next/images/svg/ai.svg);
+    background-position: -80px -191px;
+    background-repeat: no-repeat;
+    vertical-align: middle;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket input[type=text] {
+.counter_block>span.plus:before {
+    background-position: -54px -191px;
+}
+
+.counter_block.big_basket {
+    position: relative;
+}
+
+.counter_block.big_basket input[type=text] {
     font-size: 13px;
     height: 48px;
     width: 56px;
     border-right: 1px solid #e6e6e6;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket>span {
+.counter_block.big_basket>span {
+    position: absolute;
     height: 24px;
     width: 44px;
     line-height: 48px;
-    position: absolute;
 }
 
-.catalog_detail .middle_info .left-info .counter_block.big_basket span.minus {
+.counter_block.big_basket span.minus {
     bottom: 0;
     right: 0;
 }
@@ -6839,7 +6911,7 @@ body.compensate-for-scrollbar {
     top: 1px;
     left: 0;
     content: '';
-    background: #e6e6e6;
+    background-color: #e6e6e6;
 }
 
 
@@ -9293,6 +9365,82 @@ table.contacts-stores tr.item td:last-of-type {
     font-weight: 500;
 }
 
+.why-buy .banner {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+}
+
+.why-buy .banner-wrap {
+    padding: 30px 0;
+    background-color: #ffffff;
+    background-image: url("/images/gears.png");
+    background-repeat: no-repeat;
+    background-position: left 0 top -123px;
+}
+
+.why-buy .banner-wrap::before {
+    content: url("/images/man.png");
+    position: absolute;
+    right: 200px;
+    bottom: -7px;
+}
+
+.why-buy .banner-wrap .text {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.why-buy .banner-wrap h4 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.why-buy .banner-wrap p {
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    color: #969799;
+}
+
+@media (max-width: 1280px) {
+    .why-buy .banner-wrap {
+        background-position: left -73px top -123px;
+    }
+
+    .why-buy .banner-wrap::before {
+        right: 115px;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-buy .banner-wrap .text {
+        width: 360px;
+        margin-left: 70px;
+    }
+
+    .why-buy .banner-wrap::before {
+        right: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .why-buy .banner {
+        margin-bottom: 30px;
+    }
+
+    .why-buy .banner-wrap .text {
+        width: auto;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .why-buy .banner-wrap::before {
+        display: none;
+    }
+}
 
 
 /*ХОТИТЕ ТАКОЙ ОФИС*/
@@ -9749,8 +9897,23 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     /*НОВОСТИ*/
+    .news-block .slick-list {
+        padding-top: 15px!important;
+        padding-bottom: 15px!important;
+        padding-left: 5px!important;
+        padding-right: 5px!important;
+    }
+
+    .news-block .slick-slide {
+        padding: 0 10px;
+    }
+
+
     .news-block .news-item {
         width: 50%;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
     }
 
     .news-block .news-item.first-news-item {
@@ -9813,6 +9976,15 @@ table.contacts-stores tr.item td:last-of-type {
         width: 255px;
     }
 
+
+    /*характеристики*/
+    .char_block .props_list {
+        column-count: 3;
+        margin: 0 -20px;
+    }
+    .char_block .props_list li {
+        margin: 0 20px 15px;
+    }
 
     /*форма*/
     .catalog_detail .wraps.form-container .form_block {
@@ -10224,12 +10396,17 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .front_page .tizers_block {
-        margin: 0 -40px;
+        margin: 0 -15px;
         padding: 0!important;
     }
 
+    .front_page .tizers_block .slick-list{
+        padding-top: 10px!important;
+        padding-bottom: 10px!important;
+    }
+
     .front_page .tizers_block .slick-slide {
-        padding: 10px 0;
+        padding: 0 10px;
     }
 
 
@@ -10241,7 +10418,7 @@ table.contacts-stores tr.item td:last-of-type {
         box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
         -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
         -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
-        margin: 0 10px;
+        margin: 0;
         padding: 0 20px;
         display: flex;
         justify-content: center;
@@ -10388,6 +10565,17 @@ table.contacts-stores tr.item td:last-of-type {
     .catalog_detail .mobile-features .features-slide img{
         width: 100%;
     }
+
+
+    /*характеристики*/
+    .char_block .props_list {
+        column-count: 2;
+        margin: 0 -20px;
+    }
+    .char_block .props_list li {
+        margin: 0 20px 15px;
+    }
+
 
     /*Услуги*/
     .catalog_detail .services-block .row{
@@ -10760,7 +10948,7 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .best-block .tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .best-block .slick-track {
@@ -10788,7 +10976,7 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .hit-block .tab_slider_wrapp div.tabs_content, .podborki-block .tab_slider_wrapp div.tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .hit-block .tab_slider_wrapp div.tabs_content .catalog_block .slick-track,
@@ -10831,7 +11019,7 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*стилизация СЛАЙДЕРА САМОЕ ИНТЕРЕСНОЕ*/
     .recommend-block .tabs_content {
-        margin: 0 -40px;
+        margin: 0 -15px;
     }
 
     .recommend-block .slick-track {
@@ -10855,12 +11043,22 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     /*СТИЛИЗАЦИЯ СЛАЙДЕРОВ ПОПУЛЯРНЫЕ КАТЕГОРИИ*/
+    .catalog-sections-block {
+        margin: 0 -15px;
+    }
+
+    .catalog-sections-block .top_wrapper.items_wrapper {
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+
     .catalog-sections-block .popular-cat-item .name {
         font-size: 16px;
+        padding: 0!important;
     }
 
     .catalog-sections-block .sections_wrapper .list {
-        margin: 40px -40px 0;
+        margin: 40px 0 0;
     }
 
     .catalog-sections-block .sections_wrapper .list .popular-cat-item {
@@ -10873,8 +11071,8 @@ table.contacts-stores tr.item td:last-of-type {
     }
 
     .catalog-sections-block .sections_wrapper .catalog_block {
-        margin-left: -15px!important;
-        margin-right: -15px!important;
+        margin-left: 0!important;
+        margin-right: 0!important;
     }
 
     .catalog-sections-block .sections_wrapper .catalog_block .catalog_item_wrapp {
@@ -10942,9 +11140,15 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*НОВОСТИ*/
 
+    .news-block .slick-list {
+        padding-left: 40px!important;
+        padding-right: 40px!important;
+    }
+
+
     .news-block .table-type-block.item-views.items-list3 .row, .table-type-block.item-views.table-elements .row {
-        margin-left: -40px;
-        margin-right: -40px;
+        margin-left: -15px;
+        margin-right: -15px;
     }
 
     /*заголовок*/
@@ -11226,16 +11430,10 @@ table.contacts-stores tr.item td:last-of-type {
 
     /*тизеры*/
     .wrapper_inner .tizers_block .item {
-        margin: 0 10px;
+        margin: 0;
     }
 
-    .front_page .tizers_block .item .img {
-        display: table-cell;
-    }
 
-    .front_page .tizers_block .item .title {
-        display: table-cell;
-    }
 }
 
 @media (max-width: 450px) {
@@ -11711,6 +11909,8 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .about-company.advantages {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 20px;
 }
 
@@ -11872,10 +12072,6 @@ table.contacts-stores tr.item td:last-of-type {
     content: url("/images/icons/feedback.svg");
 }
 
-.principles-list .principle:last-child {
-    margin-right: 0;
-}
-
 .principles-list .principle-text {
     max-width: 250px;
 }
@@ -11899,6 +12095,10 @@ table.contacts-stores tr.item td:last-of-type {
     margin-right: 160px;
     margin-bottom: 55px;
     padding: 0;
+}
+
+.about-company .steps-list .step.no-margin {
+    margin-bottom: 0;
 }
 
 .steps-list .step::before {
@@ -11947,6 +12147,15 @@ table.contacts-stores tr.item td:last-of-type {
     color: #d33234;
 }
 
+.steps-list .manager-btn {
+    align-self: center;
+    padding-left: 0;
+}
+
+.steps-list .manager-btn::before {
+    display: none;
+}
+
 .about-company.design-projects .row,
 .about-company.advantages-cards .row {
     margin: 0 15px;
@@ -11955,8 +12164,6 @@ table.contacts-stores tr.item td:last-of-type {
 .design-project-text {
     padding: 0;
 }
-
-
 
 
 
@@ -12040,6 +12247,11 @@ table.contacts-stores tr.item td:last-of-type {
     border-color: #d33234;
 }
 
+.advantage-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .advantage-card {
     position: relative;
     padding: 0;
@@ -12065,12 +12277,12 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .advantage-card::after {
-    top: 42px;
+    top: 50%;
     transform: rotate(45deg);
 }
 
 .advantage-card::before {
-    top: 45px;
+    top: 53%;
     transform: rotate(-45deg);
 }
 
@@ -12093,6 +12305,17 @@ table.contacts-stores tr.item td:last-of-type {
 .advantage-card-text:focus {
     color: #ffffff;
     background-color: #1f2229;
+}
+
+.advantage-card.efficient {
+    display: flex;
+    width: 300px;
+}
+
+.advantage-card.efficient .advantage-card-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 
@@ -12189,6 +12412,305 @@ table.contacts-stores tr.item td:last-of-type {
     color: #b8b8ba;
 }
 
+/*о компании адаптив*/
+
+@media (max-width: 1440px) {
+    .alphabet-menu-wrapper {
+        display: none;
+    }
+
+    .awards .columns.principles {
+        display: flex;
+    }
+
+    .awards .columns.principles .progress-card {
+        align-self: flex-start;
+    }
+
+    .awards .columns.principles .principles-list .principle {
+        margin-right: 0;
+    }
+
+    .advantage-card.simple:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .advantage-card.efficient:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .advantage-card-wrapper {
+        justify-content: center
+    }
+
+    .left_block .fixed-left-block {
+        max-width: 258px;
+    }
+
+    .steps-list {
+        justify-content: space-between;
+    }
+
+    .steps-list .step {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1280px) {
+    .left_block .fixed-left-block {
+        max-width: 234px;
+    }
+
+    .about-company.advantages .advantage-item {
+        margin-right: 140px;
+    }
+
+    .about-company.advantages .advantage-item:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.principles .principles-list {
+        flex-wrap: wrap;
+    }
+
+    .about-company .reward-card {
+        align-self: flex-start;
+    }
+
+    .about-company.principles .principles-list {
+        justify-content: flex-start;
+    }
+
+    .about-company.principles .principles-list .principle {
+        margin-right: 200px;
+    }
+
+    .about-company.principles .principles-list .principle:nth-child(2n) {
+        margin-right: 200px;
+    }
+
+    .steps-list {
+        justify-content: flex-start;
+    }
+
+    .steps-list .step {
+        margin-right: 200px;
+    }
+
+    .steps-list .step:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .steps-list .step-title {
+        max-width: 300px;
+    }
+
+    .steps-list .step-text {
+        max-width: 300px;
+    }
+
+    .about-company.design-projects.completed_projects {
+        max-width: 800px;
+    }
+
+    .brands_block .brand-item img {
+        max-width: 100%;
+    }
+
+    .awards .columns.principles {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .awards .columns.principles .col-lg-8 {
+        width: 100%;
+    }
+
+    .awards .columns.principles .principles-list.develop {
+        justify-content: space-between;
+    }
+
+    .about-company.awards {
+        max-width: 800px;
+    }
+
+    .about-company.awards +  .partners-company {
+        max-width: 800px;
+        margin: 0;
+    }
+
+    .advantage-card-wrapper {
+        justify-content: flex-start;
+    }
+
+    .advantage-card.efficient {
+        width: 318px;
+        margin-right: 27px;
+    }
+
+    .advantage-card.efficient:nth-child(3n) {
+        margin-right: 27px!important;
+    }
+
+    .advantage-card.efficient:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.catalog .catalog-item {
+        max-width: 250px;
+    }
+
+    .progress-card {
+        padding-right: 50px;
+        width: 100%;
+    }
+
+    .progress-card ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .progress-card .progress-card-item {
+        width: 330px;
+        margin-right: 10px;
+    }
+
+    .progress-card .progress-card-item:first-child {
+        width: 100%;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .left_block .fixed-left-block {
+        max-width: 210px;
+    }
+
+    .about-company.advantages .advantage-item {
+        margin-right: 30px;
+    }
+
+    .about-company .reward-card {
+        margin-left: 20px;
+    }
+
+    .products-tabs {
+         display: none;
+     }
+
+    .tabs-title {
+        display: none;
+    }
+
+    .inner-map {
+        display: none;
+    }
+
+    .about-company.principles .principles-list .principle {
+        margin-right: 93px;
+    }
+
+    .about-company.principles .principles-list .principle:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .about-company.design-projects.completed_projects {
+        max-width: 660px;
+    }
+
+    .steps-list .step {
+        margin-right: 70px;
+    }
+
+    .steps-list .step:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .advantage-card {
+        width: 300px;
+    }
+
+    .advantage-card.efficient {
+        width: 300px;
+    }
+
+    .about-company.catalog .catalog-item {
+        max-width: 220px;
+    }
+
+    .about-company.awards {
+        max-width: 635px;
+    }
+
+    .about-company.awards + .partners-company {
+        max-width: 635px;
+        overflow: hidden;
+    }
+
+    .progress-card .progress-card-item {
+        width: 250px;
+    }
+
+    .services .services-steps {
+        padding-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .services .services-step {
+        padding-top: 90px;
+
+    }
+
+    .services .services-step::before {
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .services .services-step::after {
+        content: none;
+    }
+
+    .about-company.principles {
+        margin: 0;
+    }
+
+    .steps-list .step-title {
+        text-align: left;
+    }
+
+    .about-company.catalog {
+        justify-content: flex-start;
+    }
+
+    .principles-list .principle::before {
+        left: 0;
+        transform: none;
+    }
+
+    .principles-list .principle-text {
+        width: 300px;
+    }
+
+    .about-company.advantages-wrap {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .principles-list .principle,
+    .principles-list .principle:last-child {
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+
+}
+
 /*Персональный менеджер адаптив*/
 
 @media screen and (min-width: 640px) and (max-width: 823px) {
@@ -12280,7 +12802,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .text-show-block {
-    height: 120px;
+    height: 57px;
     overflow: hidden;
 }
 
@@ -12454,6 +12976,18 @@ table.contacts-stores tr.item td:last-of-type {
     background-color: grey;
 }
 
+@media (max-width: 1440px) {
+    .row.download {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .download .document-download:not(:last-child) {
+        margin-bottom: 30px;
+    }
+}
+
 /*всегда в наличии*/
 
 .top-banner {
@@ -12468,10 +13002,6 @@ table.contacts-stores tr.item td:last-of-type {
 .row.text h2 {
     margin: 0;
     margin-bottom: 30px;
-}
-
-.row.text {
-    margin-bottom: 65px;
 }
 
 .why-we {
@@ -12503,6 +13033,7 @@ table.contacts-stores tr.item td:last-of-type {
 
 .why-we .why-we-list li {
     position: relative;
+    min-width: 290px;
 }
 
 .why-we .why-we-list li::before {
@@ -12618,6 +13149,89 @@ table.contacts-stores tr.item td:last-of-type {
     transform: translateX(-50%);
 }
 
+.always-available-wrap .advantages {
+    margin-top: 0;
+    justify-content: space-between;
+}
+
+.always-available-wrap .advantage-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.always-available-wrap .advantages-text.big {
+    width: 395px;
+    max-width: 395px;
+}
+
+.why-we small {
+    display: block;
+    text-align: center;
+}
+
+@media (max-width: 1440px) {
+    .why-we {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .why-we .why-we-list li:not(:last-child)::after {
+        right: -37px;
+        width: 70px;
+    }
+
+    .why-we .why-we-list li {
+        min-width: 270px;
+    }
+
+    .defo_advantages {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .why-we .why-we-list li {
+        min-width: 330px;
+    }
+
+    .why-we-wrapper h3 {
+        margin: 0 auto;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .always-available-wrap .advantages-text.big {
+        width: 320px;
+    }
+
+    .always-available-wrap .advantages-text {
+        margin-bottom: 54px;
+    }
+
+    .always-available-wrap .advantages-text.big {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 414px) {
+    .why-we-title {
+        font-size: 20px;
+    }
+
+    .why-we-subtitle {
+        font-size: 13px;
+    }
+
+    .why-we small {
+        font-size: 10px;
+    }
+
+    .defo_advantages {
+        margin-right: 0!important;
+        font-size: 16px;
+    }
+}
 
 
 
@@ -12764,7 +13378,7 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .price-quality .simple-list li {
-    margin-bottom: 40px;
+    margin-bottom: 31px;
 }
 
 .price-quality h2 {
@@ -13983,6 +14597,7 @@ div#ajax-sectionContainer {
 .mlist .active {
     color: #d33234;
     background: rgb(235, 235, 235);
+    z-index: 10;
 }
 .ajax-element p {
     white-space: initial;
@@ -14054,6 +14669,10 @@ div#ajax-sectionContainer {
 }
 
 
+/*текстуры*/
+.sectionContainer .block .catalog_block .catalog_item_wrapp .catalog_item .footer_button .list_values_wrapper li{
+    padding: 4px 5px;
+}
 
 
 /*АКЦИИ В МЕНЮ*/
@@ -14229,6 +14848,57 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
 
 /*Серии*/
+.sectionContainer .mlist li .fix-icon {
+    position: absolute;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.sectionContainer .mlist li:hover .fix-icon {
+    opacity: 1;
+}
+
+.sectionContainer .mlist li.active .fix-icon {
+    opacity: 1;
+}
+
+.sectionContainer .mlist li .fix-icon svg {
+    transition: 0.3s;
+}
+
+.sectionContainer .mlist li .fix-icon.active svg{
+    transform: rotate(-45deg);
+    transition: 0.3s;
+}
+
+.sectionContainer .mlist li .fix-icon:hover svg path{
+    fill: #d33234;
+}
+
+.sectionContainer .mlist li .fix-icon.active svg path{
+    fill: #d33234;
+}
+
+
+/*отключение остальных элементов при Закрепленном элементе*/
+.sectionContainer .mlist.opacity {
+    position: relative;
+}
+
+.sectionContainer .mlist.opacity:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+}
+
+
 /*Картинки*/
 .sectionContainer .ajax-element .main-image .slick-next, .sectionContainer .ajax-element .main-image .slick-prev {
     z-index: 99;
@@ -14335,6 +15005,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
         top: 20px;
         width: 100%;
         background: #fff;
+        padding: 0 20px;
     }
     .front_page .map-info-wrap {
         position: relative;
@@ -15194,9 +15865,45 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     content: url('/images/icons/more_hundred.svg');
 }
 
-.advantage-card-shadow p
+.advantage-card-shadow p,
 .government.advantages.how-buy {
     margin-bottom: 60px;
+}
+
+@media (max-width: 1440px) {
+    .advantage-card-shadow {
+        max-width: 330px;
+    }
+
+    .advantage-card-shadow h3 {
+        min-height: 178px;
+    }
+
+    .main-advantages .why-buy-item {
+        margin-bottom: 40px;
+    }
+
+    .main-advantages .why-buy-item span {
+        font-size: 14px!important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .main-advantages .why-buy-item span {
+        font-size: 13px!important;
+    }
+
+    .advantage-card-shadow-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .advantage-card-shadow-wrapper h2 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
 }
 
 
@@ -15611,7 +16318,7 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     .specialist-form.card {
         margin: 0 auto;
         max-width: 400px;
-        background-image: url("/images/moving-form.jpg");
+        background-image: url("/images/specialist-form.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -15698,18 +16405,9 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
         justify-content: center;
     }
 
-    .row.download {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
     .row.price-quality {
         margin: 0;
         margin-bottom: 40px;
-    }
-
-    .advantage-card-shadow {
-        margin: 0 auto;
     }
 
     .services .services-step::after {
@@ -15728,93 +16426,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 
     .about-company.catalog {
         justify-content: flex-start;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .products-tabs {
-        display: none;
-    }
-
-    .tabs-title {
-        display: none;
-    }
-
-    .inner-map {
-        display: none;
-    }
-
-    .advantage-card {
-        margin: 10px auto!important;
-    }
-
-    .services .services-steps {
-        padding-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .services .services-step {
-        padding-top: 90px;
-
-    }
-
-    .services .services-step::before {
-        top: 5px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .services .services-step::after {
-        content: none;
-    }
-
-    .about-company .reward-card {
-        margin-left: 20px;
-    }
-
-    .about-company.principles {
-        margin: 0;
-    }
-
-    .steps-list .step {
-        margin-right: 0;
-    }
-
-    .steps-list .step-title {
-        text-align: left;
-    }
-
-    .principles-list {
-        flex-wrap: wrap;
-    }
-
-    .about-company.catalog {
-        justify-content: flex-start;
-    }
-
-    .principles-list .principle::before {
-        left: 0;
-        transform: none;
-    }
-
-    .principles-list .principle-text {
-        width: 300px;
-    }
-
-    .about-company.advantages-wrap {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .principles-list .principle,
-    .principles-list .principle:last-child {
-        margin-right: 50px;
-    }
-
-    .about-company .card {
-        margin: 0 auto;
     }
 }
 
@@ -16067,7 +16678,6 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     display: flex;
     justify-content: space-between;
     width: 1200px;
-    margin: 0;
     padding: 0;
     margin: 0 auto;
 
@@ -16099,4 +16709,146 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     border-bottom: 4px solid #d33234;
 }
 
-/*ереключатели якорей верхние*/
+/*сообщение о скидке на странице серии и на списке серий*/
+
+.sale-mark {
+    position: absolute;
+    /*left: 12px;*/
+    /*bottom: 16px;*/
+    left: 35px;
+    bottom: 180px;
+    width: 256px;
+    color: #d33234;
+    font-size: 15px;
+    line-height: 25px;
+    font-weight: 500;
+    z-index: +1;
+    text-transform: uppercase;
+    border: 1px solid #c7cbce;
+    border-radius: 50px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #ffffff;
+}
+
+.series .sale-mark {
+    left: 10px;
+    bottom: 105px;
+    width: 200px;
+    font-size: 13px;
+}
+
+.sale-mark::before {
+    content: 'Скидка на серию ';
+}
+
+/*метки для товара*/
+
+.rating-recommend-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recommend {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 15px;
+    font-size: 12px;
+    /*color: #29a22d;*/
+    color: #666666;
+}
+
+.recommend svg {
+    margin-right: 10px;
+}
+
+.buyers-like {
+    width: 240px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #000000;
+}
+
+.item_main_info .buyers-like,
+.series-top + .buyers-like {
+    width: 100%;
+    margin: 0;
+    margin-left: 43px;
+    margin-bottom: 30px;
+}
+
+.series-top + .buyers-like {
+    margin-left: 25px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.buyers-like .green {
+    font-size: 12px;
+    color: #29a22d;
+}
+
+.item_main_info .buyers-like .green,
+.series-top + .buyers-like .green {
+    font-weight: 500;
+}
+
+.best_block.tab_slider_wrapp .item .catalog_item:hover .item_info,
+.block .catalog_block .catalog_item_wrapp .catalog_item:hover .item_info {
+    height: auto!important;
+}
+
+/*метки для серий*/
+
+.series-item .quick-metki,
+.ajax-element .quick-metki {
+    left: 15px;
+    margin: 15px;
+    padding: 5px;
+    width: 40px;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.series .quick-metki {
+    left: 0;
+}
+
+.series-item .quick-metki .series-item-pros-element,
+.ajax-element .quick-metki .series-item-pros-element {
+    margin-bottom: 8px;
+    margin-right: 0!important;
+    width: 30px;
+    height: auto;
+}
+
+.series-item .quick-metki .series-item-pros-element:last-child,
+.ajax-element .quick-metki .series-item-pros-element:last-child {
+    margin-bottom: 0;
+}
+
+.series-item .quick-metki .pros-icon,
+.ajax-element .quick-metki .pros-icon {
+    display: block;
+    width: auto;
+    margin: 0;
+    height: auto;
+    z-index: 2;
+}
+
+.series-item .quick-metki .pros-text,
+.ajax-element .quick-metki .pros-text {
+    position: absolute!important;
+    top: 0;
+    left: 0;
+    padding: 10px!important;
+    padding-left: 40px!important;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.8)!important;
+    z-index: 1;
+}

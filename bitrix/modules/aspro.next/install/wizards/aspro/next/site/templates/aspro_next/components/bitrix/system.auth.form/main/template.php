@@ -249,9 +249,7 @@ if($arResult['PHONE_AUTH_PARAMS']['USE']){
 						}
 					},
 					submitHandler: function(form){
-						console.log(1);
 						if($(form).valid()){
-							console.log(2);
 							/*var eventdata = {type: 'form_submit', form: form, form_name: 'AUTH'};
 							BX.onCustomEvent('onSubmitForm', [eventdata]);*/
 
@@ -261,15 +259,16 @@ if($arResult['PHONE_AUTH_PARAMS']['USE']){
 							var bCaptchaInvisible = false;
 							if(window.renderRecaptchaById && window.asproRecaptcha && window.asproRecaptcha.key)
 							{
-								if(window.asproRecaptcha.params.recaptchaSize == 'invisible')
+								if(window.asproRecaptcha.params.recaptchaSize == 'invisible' && typeof grecaptcha != 'undefined')
 								{
 									if(!$(form).find('.g-recaptcha-response').val())
 									{
-										grecaptcha.execute($(form).find('.g-recaptcha').data('widgetid'));
 										bCaptchaInvisible = true;
+										grecaptcha.execute($(form).find('.g-recaptcha').data('widgetid'));
 									}
 								}
 							}
+
 							if(!bCaptchaInvisible)
 							{
 								var $button = $(form).find('input[type=submit]');

@@ -57,7 +57,6 @@
     </div>
 </div>
 
-
 <?/*if($arResult["TIZERS_ITEMS"]){*/?><!--
         <div class="tizers-catalog-elem">
 		<div class="tizers_block_detail tizers_block">
@@ -118,7 +117,13 @@
 </div>-->
 
 
-
+<?$arResult['METKIPOK'] = GetMetkipok();
+if ($arResult["PROPERTIES"]["LABELSALE"]["VALUE"]) {$metkipok = array();
+    foreach($arResult["PROPERTIES"]["LABELSALE"]["VALUE"] as $metkipokItem){
+        $metkipok[] = $arResult["METKIPOK"][$metkipokItem];
+    }
+    $metkipok = implode(", ",$metkipok);
+}?>
 
 <div class="basket_props_block" id="bx_basket_div_<?=$arResult["ID"];?>" style="display: none;">
 	<?if (!empty($arResult['PRODUCT_PROPERTIES_FILL'])){
@@ -293,7 +298,11 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                 }
             </style>
 
-
+            <?if($metkipok):?>
+                <p class="buyers-like">
+                    Покупателям нравится <span class="green"><?=($metkipok);?></span>
+                </p>
+            <?endif;?>
 
             <?if($arResult['MARKS']){?>
                 <ul class="series-item-pros quick-metki" style="text-align: left">
@@ -628,6 +637,15 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                         <span class="animate-load" data-event="jqm" data-param-form_id="CHEAPER" data-name="cheaper" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=($arParams["CHEAPER_FORM_NAME"] ? $arParams["CHEAPER_FORM_NAME"] : GetMessage("CHEAPER"));?></span>
                                     </div>
                                 <?endif;?>
+	                            <?
+	                            global $USER;
+	                            if($USER->IsAdmin()){
+	                            	$cpAction = (in_array($arResult['ID'],$_SESSION['QUICK_OFFER_LIST']))?'removeFromCp':'add2cp';
+                                    $cpText = (in_array($arResult['ID'],$_SESSION['QUICK_OFFER_LIST']))?'Удалить из КП':'Добавить в КП';
+		                            ?>
+		                            <div class="cheaper_form"><span class="tqGeneratePDF" data-action="product" data-id="<?=$arResult['ID']?>">Скачать КП</span></div>
+		                            <?/*<div class="cheaper_form"><span class="tqGeneratePDF" data-action="<?=$cpAction?>" data-id="<?=$arResult['ID']?>"><?=$cpText?></span></div>*/?>
+	                            <?}?>
                             </div>
 
                             <!--АКЦИЯ-->
@@ -651,7 +669,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                     <div class="p_block">
                                 <?}?>
 
-                                        <span class="animate-load" data-event="jqm" data-param-form_id="FAST_PRODUCT" data-name="FAST_PRODUCT" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=$arQuantityData["HTML"];?>Нужно быстрее?</span>
+                                        <span class="animate-load" data-event="jqm" data-param-form_id="FAST_PRODUCT" data-name="FAST_PRODUCT" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>"><?=$arQuantityData["HTML"];?><span class="text">  </span></span>
                                 <?if($useStores){?>
                                     </div>
                                 <?}?>
@@ -3041,11 +3059,27 @@ $showProps = false;
     );*/?>
     <!-- new! -->
     <!--<div class="maxwidth-theme">-->
+    <?if(!empty($arResult['PROPERTIES']['PODBORKI']['PROPERTY_VALUE_ID'])){
+    	$arPodborki = $arResult['PROPERTIES']['PODBORKI']['VALUE'];
+    	$select = Array('ID', 'IBLOCK_ID', 'NAME', 'PROPERTY_PODBORKI');
+    	$filter = Array('IBLOCK_ID'=>$arParams['IBLOCK_ID'],'SECTION_ID'=>$arResult['IBLOCK_SECTION_ID'],'ACTIVE_DATE'=>'Y', 'ACTIVE'=>'Y'/*, 'INCLUDE_SUBSECTIONS' => 'Y'*/);
+    	$res = CIBlockElement::GetList(Array(), $filter, false, false, $select);
+    	while($ob = $res->GetNextElement()){
+    	 $fields = $ob->GetFields();
+    	 $fields ['PROPERTIES'] = $ob->GetProperties();
+    	    if(!empty($fields['PROPERTIES']['PODBORKI']['VALUE']))
+            $arPodborki = array_merge($arPodborki,$fields['PROPERTIES']['PODBORKI']['VALUE']);
+    	}
+        $arPodborki = array_unique($arPodborki);
+
+    $GLOBALS['arrFilterPodborki']['VALUE'] = $arPodborki;
+    $GLOBALS['arrFilterPodborki']['SECTION_ID'] = $arResult['IBLOCK_SECTION_ID'];
+    ?>
         <div class="podborki-block">
             <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
                 array(
                     "COMPONENT_TEMPLATE" => ".default",
-                    "PATH" => SITE_DIR."include/mainpage/comp_catalog_podborki.php",
+                    "PATH" => SITE_DIR."include/mainpage/comp_catalog_podborki_card.php",
                     "AREA_FILE_SHOW" => "file",
                     "AREA_FILE_SUFFIX" => "",
                     "AREA_FILE_RECURSIVE" => "Y",
@@ -3054,6 +3088,8 @@ $showProps = false;
                 false
             );?>
         </div>
+
+    <?}?>
     <!--</div>-->
     <!-- end new! -->
 
@@ -3836,6 +3872,16 @@ $showProps = false;
                         <span>Бесплатный звонок по России</span>
                         <p>Консультация по любым вопросам по тел.: 8(800)505-45-79</p>
                     </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 banner">
+                <div class="banner-wrap">
+                    <div class="text">
+                        <h4>Собственное производство</h4>
+                        <p>3 производственных площадки с итальянским и немецким оборудованием</p>
+                    </div>
+                </div>
             </div>
         </div>
 

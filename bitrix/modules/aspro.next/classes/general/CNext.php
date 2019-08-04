@@ -588,8 +588,11 @@ class CNext{
 									<?
 									$phone = $arRegion['PHONES'][$i];
 									$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+									$description = '';
+									$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+									$description = (!empty($description)) ? 'title="' . $description . '"' : '';
 									?>
-									<div itemprop="telephone"><a href="<?=$href?>"><?=$phone?></a></div>
+									<div itemprop="telephone"><a <?=$description;?> href="<?=$href?>"><?=$phone?></a></div>
 								<?endfor;?>
 							</div>
 						<?else:?>
@@ -913,6 +916,8 @@ class CNext{
 			<?
 			$phone = ($arRegion ? $arRegion['PHONES'][0] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_0']);
 			$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+			$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][0] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_0']);
+			$description = (!empty($description)) ? '<span class="descr">' . $description . '</span>' : '';
 			static $mphones_call;
 
 			$iCalledID = ++$mphones_call;
@@ -924,12 +929,12 @@ class CNext{
 			<?endif;?>
 
 			<!-- noindex -->
-			<div class="menu middle">
+			<div class="menu middle mobile-menu-contacts">
 				<ul>
 					<li>
-						<a rel="nofollow" href="<?=$href?>" class="dark-color<?=($iCountPhones > 1 ? ' parent' : '')?>">
+						<a rel="nofollow" href="<?=$href?>" class="dark-color<?=($iCountPhones > 1 ? ' parent' : '')?> <?=(empty($description)?'no-decript':'decript')?> ">
 							<i class="svg svg-phone"></i>
-							<span><?=$phone?></span>
+							<span><?=$phone?><?=$description?></span>
 							<?if($iCountPhones > 1):?>
 								<span class="arrow"><i class="svg svg_triangle_right"></i></span>
 							<?endif;?>
@@ -942,8 +947,10 @@ class CNext{
 									<?
 									$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
 									$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+									$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+									$description = (!empty($description)) ? '<span class="descr">' . $description . '</span>' : '';
 									?>
-									<li><a rel="nofollow" href="<?=$href?>" class="dark-color"><?=$phone?></a></li>
+									<li><a rel="nofollow" href="<?=$href?>" class="bold dark-color <?=(empty($description)?'no-decript':'decript')?>"><?=$phone?><?=$description?></a></li>
 								<?endfor;?>
 								<?if($arTheme['SHOW_CALLBACK']['VALUE'] == 'Y'):?>
 									<li><a rel="nofollow" class="dark-color" href="" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback"><?=Loc::getMessage('CALLBACK')?></a></li>
@@ -1868,6 +1875,8 @@ class CNext{
 			$APPLICATION->SetPageProperty('apple-mobile-web-app-status-bar-style', 'black');
 			$APPLICATION->SetPageProperty('SKYPE_TOOLBAR', 'SKYPE_TOOLBAR_PARSER_COMPATIBLE');
 
+			\Aspro\Next\PWA::showMeta(SITE_ID);
+
 			$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH.'/vendor/css/bootstrap.css');
 
 			if(!$bIndexBot)
@@ -2126,7 +2135,7 @@ class CNext{
     }
 
     public static function GetComponentTemplatePageBlocks($templateAbsPath, $pageBlocksDirName = 'page_blocks'){
-    	$arResult = array('SECTIONS' => array(), 'SUBSECTIONS' => array(), 'ELEMENTS' => array(), 'ELEMENT' => array());
+    	$arResult = array('SECTIONS' => array(), 'SUBSECTIONS' => array(), 'ELEMENTS' => array(), 'ELEMENT' => array(), 'LANDING' => array());
 
     	if($templateAbsPath){
     		$templateAbsPath = str_replace('//', '//', $templateAbsPath).'/';
@@ -2151,6 +2160,9 @@ class CNext{
 						}
 						elseif(strpos($file, 'bigdata_') !== false){
 							$arResult['BIGDATA'][$file] = $file;
+						}
+						elseif(strpos($file, 'landing_') !== false){
+							$arResult['LANDING'][$file] = $file;
 						}
 					}
     			}
@@ -2202,6 +2214,16 @@ class CNext{
 					'TYPE' => 'LIST',
 					'VALUES' => $arPageBlocks['ELEMENT'],
 					'DEFAULT' => key($arPageBlocks['ELEMENT']),
+				);
+    		}
+		if(isset($arPageBlocks['LANDING']) && $arPageBlocks['LANDING'] && is_array($arPageBlocks['LANDING'])){
+    			$arResult['LANDING_TYPE_VIEW'] = array(
+					'PARENT' => 'BASE',
+					'SORT' => 1,
+					'NAME' => GetMessage('M_LANDING_TYPE_VIEW'),
+					'TYPE' => 'LIST',
+					'VALUES' => $arPageBlocks['LANDING'],
+					'DEFAULT' => key($arPageBlocks['LANDING']),
 				);
     		}
     	}
@@ -2438,7 +2460,7 @@ class CNext{
 		global $arTheme;
 		$basket_class = ($arTheme['ORDER_BASKET_VIEW']['VALUE'] == 'FLY2' ? 'fly fly2' : strToLower($arTheme['ORDER_BASKET_VIEW']['VALUE']));
 		// print_r($arTheme);
-		return 'basket_'.$basket_class.' basket_fill_'.$arTheme['ORDER_BASKET_COLOR']['VALUE'].' side_'.$arTheme['SIDE_MENU']['VALUE'].' catalog_icons_'.$arTheme['LEFT_BLOCK_CATALOG_ICONS']['VALUE'].' banner_auto '.($arTheme['USE_FAST_VIEW_PAGE_DETAIL']['VALUE'] != 'NO' ? 'with_fast_view' : '').' mheader-v'.$arTheme['HEADER_MOBILE']['VALUE'].' header-v'.$arTheme['HEADER_TYPE']['VALUE'].' regions_'.$arTheme['USE_REGIONALITY']['VALUE'].' fill_'.$arTheme['SHOW_BG_BLOCK']['VALUE'].' footer-v'.$arTheme['FOOTER_TYPE']['VALUE'].' front-v'.$arTheme['INDEX_TYPE']['VALUE'].' mfixed_'.$arTheme['HEADER_MOBILE_FIXED']['VALUE'].' mfixed_view_'.strtolower($arTheme['HEADER_MOBILE_FIXED']['DEPENDENT_PARAMS']['HEADER_MOBILE_SHOW']['VALUE']).' title-v'.$arTheme['PAGE_TITLE']['VALUE'].((int)($arTheme['HEADER_PHONES']) > 0 ? ' with_phones' : '');
+		return 'basket_'.$basket_class.' basket_fill_'.$arTheme['ORDER_BASKET_COLOR']['VALUE'].' side_'.$arTheme['SIDE_MENU']['VALUE'].' catalog_icons_'.$arTheme['LEFT_BLOCK_CATALOG_ICONS']['VALUE'].' banner_auto '.($arTheme['USE_FAST_VIEW_PAGE_DETAIL']['VALUE'] != 'NO' ? 'with_fast_view' : '').' mheader-v'.$arTheme['HEADER_MOBILE']['VALUE'].' header-v'.$arTheme['HEADER_TYPE']['VALUE'].' regions_'.$arTheme['USE_REGIONALITY']['VALUE'].' fill_'.$arTheme['SHOW_BG_BLOCK']['VALUE'].' footer-v'.$arTheme['FOOTER_TYPE']['VALUE'].' front-v'.$arTheme['INDEX_TYPE']['VALUE'].' mfixed_'.$arTheme['HEADER_MOBILE_FIXED']['VALUE'].' mfixed_view_'.strtolower($arTheme['HEADER_MOBILE_FIXED']['DEPENDENT_PARAMS']['HEADER_MOBILE_SHOW']['VALUE']).' title-v'.$arTheme['PAGE_TITLE']['VALUE'].((int)($arTheme['HEADER_PHONES']) > 0 ? ' with_phones' : '').($arTheme['MOBILE_CATALOG_LIST_ELEMENTS_COMPACT']['VALUE'] === 'Y' ? ' ce_cmp' : '');
 	}
 
 	public static function getCurrentPageClass(){
@@ -2637,10 +2659,7 @@ class CNext{
 				{
 					if(($bCustom = ($colorCode == 'CUSTOM')) && $bGenerateCustom)
 					{
-						if(strlen($baseColorCustom))
-						{
-							$less->setVariables(array('bcolor' => (strlen($baseColorCustom) ? '#'.$baseColorCustom : $arBaseColors[self::$arParametrsList['MAIN']['OPTIONS']['BASE_COLOR']['DEFAULT']]['COLOR'])));
-						}
+						$less->setVariables(array('bcolor' => (strlen($baseColorCustom) ? '#'.$baseColorCustom : $arBaseColors[self::$arParametrsList['MAIN']['OPTIONS']['BASE_COLOR']['DEFAULT']]['COLOR'])));
 					}
 					elseif($bGenerateAll)
 					{
@@ -3523,7 +3542,6 @@ class CNext{
 				}
 			}
 		}
-
 		return $arFilter;
 	}
 
@@ -3637,8 +3655,32 @@ class CNext{
 					$totalCount += $quantity;
 				}
 			}
-			else
-			{
+			elseif(isset($arItem['SET_ITEMS']) && is_array($arItem['SET_ITEMS'])){
+			    $arProductSet = array();
+			    foreach ($arItem['SET_ITEMS'] as $k => $v){
+				$arProductSet[] = $v["ID"];
+			    }
+
+			    if(count($arProductSet)>0) {
+				$arSelect[] = "ELEMENT_ID";
+				$rsStore = CCatalogStore::GetList(array(), array_merge($arFilter, array('PRODUCT_ID' => $arProductSet)), false, false, $arSelect);
+				unset($arProductSet);
+				$quantity = array();
+				while($arStore = $rsStore->Fetch())
+				{
+				    $quantity[$arStore["ELEMENT_ID"]] += $arStore['PRODUCT_AMOUNT'];
+				}
+
+				if(!empty($quantity) && is_array($quantity)){
+				    foreach ($arItem['SET_ITEMS'] as $k => $v){
+					$quantity[$v["ID"]] /= $v["QUANTITY"];
+					$quantity[$v["ID"]] = floor($quantity[$v["ID"]]);
+				    }
+				}
+				$totalCount = min($quantity);
+			    }
+			}
+			else{
 				$rsStore = CCatalogStore::GetList(array(), array_merge($arFilter, array('PRODUCT_ID' => $arItem['ID'])), false, false, $arSelect);
 				while($arStore = $rsStore->Fetch())
 				{
@@ -3664,7 +3706,10 @@ class CNext{
 		return self::CheckTypeCount($totalCount);
 	}
 
-	public static function GetQuantityArray($totalCount, $arItemIDs = array(), $useStoreClick="N"){
+	public static function GetQuantityArray($totalCount, $arItemIDs = array(), $useStoreClick="N", $productType=1){
+		if($productType==2){
+		    return;
+		}
 		static $arQuantityOptions, $arQuantityRights;
 		if($arQuantityOptions === NULL){
 			$arQuantityOptions = array(
@@ -4680,6 +4725,11 @@ class CNext{
 				$buttonHTML = '<a class="btn btn-default basket read_more" rel="nofollow" href="'.$arItem["DETAIL_PAGE_URL"].'" data-item="'.$arItem["ID"].'">'.$buttonText[0].'</a>';
 			}
 		}
+		elseif(isset($arItem["PRODUCT"]["TYPE"]) && $arItem["PRODUCT"]["TYPE"] == 2) {
+			$buttonACTION = 'MORE';
+			$buttonText = array($arAddToBasketOptions['EXPRESSION_READ_MORE_OFFERS_DEFAULT']);
+			$buttonHTML = '<a class="btn btn-default basket read_more" rel="nofollow" href="'.$arItem["DETAIL_PAGE_URL"].'" data-item="'.$arItem["ID"].'">'.$buttonText[0].'</a>';
+		}
 		else{
 			if($bPriceExists = isset($arItem["MIN_PRICE"]) && $arItem["MIN_PRICE"]["VALUE"] > 0){
 				// price exists
@@ -5270,6 +5320,8 @@ class CNext{
 				"SHOW_ONECLICKBUY_ON_BASKET_PAGE" : '<?=$arFrontParametrs['SHOW_ONECLICKBUY_ON_BASKET_PAGE'];?>',
 				'SHOW_LICENCE' : '<?=$arFrontParametrs['SHOW_LICENCE'];?>',
 				'LICENCE_CHECKED' : '<?=$arFrontParametrs['LICENCE_CHECKED'];?>',
+				'LOGIN_EQUAL_EMAIL' : '<?=$arFrontParametrs['LOGIN_EQUAL_EMAIL'];?>',
+				'PERSONAL_ONEFIO' : '<?=$arFrontParametrs['PERSONAL_ONEFIO'];?>',
 				'SHOW_TOTAL_SUMM' : '<?=$arFrontParametrs['SHOW_TOTAL_SUMM'];?>',
 				'SHOW_TOTAL_SUMM_TYPE' : '<?=$arFrontParametrs['SHOW_TOTAL_SUMM_TYPE'];?>',
 				'CHANGE_TITLE_ITEM' : '<?=$arFrontParametrs['CHANGE_TITLE_ITEM'];?>',
@@ -5305,6 +5357,7 @@ class CNext{
 				'SHOW_HEADER_GOODS' : '<?=$arFrontParametrs['SHOW_HEADER_GOODS']?>',
 				'INSTAGRAMM_INDEX' : '<?=(isset($arFrontParametrs[$arFrontParametrs['INDEX_TYPE'].'_INSTAGRAMM']) ? $arFrontParametrs[$arFrontParametrs['INDEX_TYPE'].'_INSTAGRAMM'] : 'Y')?>',
 				'USE_PHONE_AUTH': '<?=($bPhoneAuthUse ? 'Y' : 'N')?>',
+				'MOBILE_CATALOG_LIST_ELEMENTS_COMPACT': '<?=$arFrontParametrs['MOBILE_CATALOG_LIST_ELEMENTS_COMPACT']?>',
 			}),
 			"PRESETS": <?=CUtil::PhpToJSObject(self::$arPresetsList)?>,
 			"REGIONALITY":({
@@ -5409,6 +5462,56 @@ class CNext{
 
 	<?}
 
+	public static function ShowHeaderMobilePhones($class = ''){
+		global $arRegion;
+		static $hphones_call_m;
+
+		$iCalledID = ++$hphones_call_m;
+		$arBackParametrs = self::GetBackParametrsValues(SITE_ID);
+
+		$iCountPhones = ($arRegion ? count($arRegion['PHONES']) : $arBackParametrs['HEADER_PHONES']);
+		$regionId = ($arRegion ? $arRegion['ID'] : '');?>
+
+		<?if($arRegion):?>
+		<?$frame = new \Bitrix\Main\Page\FrameHelper('header-allphones-block'.$iCalledID);?>
+		<?$frame->begin();?>
+		<?endif;?>
+		<?//$iCountPhones=1;?>
+		<?if($iCountPhones): // count of phones?>
+			<!-- noindex -->
+
+			<?=self::showIconSvg('phone', SITE_TEMPLATE_PATH.'/images/svg/phone.svg', "", $class);?>
+
+			<?if($iCountPhones >= 1): // if more than one?>
+				<div id="mobilePhone" class="dropdown-mobile-phone">
+					<div class="wrap">
+						<div class="more_phone title"><span class="no-decript dark-color "><?=Loc::getMessage('NEXT_T_MENU_CALLBACK')?> <?=CNext::showIconSvg("close dark dark-i", SITE_TEMPLATE_PATH."/images/svg/Close.svg");?></span></div>
+
+						<?for($i = 0; $i < $iCountPhones; ++$i):?>
+							<?
+							$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
+							$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+							$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+							$description = (!empty($description)) ? "<span>" . $description . "</span>" : "";
+							?>
+							<div class="more_phone">
+							    <a class="dark-color <?=(empty($description)?'no-decript':'')?>" rel="nofollow" href="<?=$href?>"><?=$phone?><?=$description?></a>
+							</div>
+						<?endfor;?>
+
+						<div class="more_phone"><a rel="nofollow" class="dark-color no-decript callback" href="" data-event="jqm" data-param-form_id="CALLBACK" data-name="callback"><?=Loc::getMessage('CALLBACK')?></a></div>
+					</div>
+				</div>
+			<?endif;?>
+			<!-- /noindex -->
+		<?endif;?>
+
+		<?if($arRegion):?>
+		<?$frame->end();?>
+		<?endif;?>
+
+	<?}
+
 	public static function ShowHeaderPhones($class = '', $bFooter = false){
 		global $arRegion;
 		static $hphones_call;
@@ -5442,8 +5545,12 @@ class CNext{
 								<?
 								$phone = ($arRegion ? $arRegion['PHONES'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_VALUE_'.$i]);
 								$href = 'tel:'.str_replace(array(' ', '-', '(', ')'), '', $phone);
+								$description = ($arRegion ? $arRegion['PROPERTY_PHONES_DESCRIPTION'][$i] : $arBackParametrs['HEADER_PHONES_array_PHONE_DESCRIPTION_'.$i]);
+								$description = (!empty($description)) ? "<span>" . $description . "</span>" : "";
 								?>
-								<div class="more_phone"><a rel="nofollow" href="<?=$href?>"><?=$phone?></a></div>
+								<div class="more_phone">
+								    <a <?=(empty($description)?'class="no-decript"':'')?> rel="nofollow" href="<?=$href?>"><?=$phone?><?=$description?></a>
+								</div>
 							<?endfor;?>
 						</div>
 					</div>

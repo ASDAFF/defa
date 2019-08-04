@@ -50,10 +50,12 @@ $bIncludedModule = (\Bitrix\Main\Loader::includeModule("aspro.next"));?>
 
 		<div id="mobileheader" class="visible-xs visible-sm">
 			<?CNext::ShowPageType('header_mobile');?>
-			<div id="mobilemenu" class="<?=($arTheme["HEADER_MOBILE_MENU_OPEN"]["VALUE"] == '1' ? 'leftside':'dropdown')?>">
+			<div id="mobilemenu" class="<?=($arTheme["HEADER_MOBILE_MENU_OPEN"]["VALUE"] == '1' ? 'leftside':'dropdown')?> <?=($arTheme['HEADER_MOBILE_MENU_COMPACT']['VALUE'] == 'Y' ? ' menu-compact ':'')?>">
 				<?CNext::ShowPageType('header_mobile_menu');?>
 			</div>
-		</div>
+		</div> <?if($arTheme['MOBILE_FILTER_COMPACT']['VALUE'] === 'Y'):?>
+				<div id="mobilefilter" class="visible-xs visible-sm scrollbar-filter"></div>
+			<?endif;?>
 
 		<?/*filter for contacts*/
 		if($arRegion)

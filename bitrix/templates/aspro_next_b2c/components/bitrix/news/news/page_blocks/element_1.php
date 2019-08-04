@@ -96,8 +96,8 @@
 		}
 		?>
 		<?$APPLICATION->IncludeComponent(
-	"bitrix:main.include", 
-	"main", 
+	"bitrix:main.include",
+	"main",
 	array(
 		"COMPONENT_TEMPLATE" => "main",
 		"PATH" => SITE_DIR."include/news.detail.products_".$list_view.".php",

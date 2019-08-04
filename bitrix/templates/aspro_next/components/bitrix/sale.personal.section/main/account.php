@@ -1,6 +1,6 @@
 <?
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-if ($arParam['SHOW_ACCOUNT_PAGE'] === 'N')
+if ($arParams['SHOW_ACCOUNT_PAGE'] === 'N')
 {
 	LocalRedirect($arParams['SEF_FOLDER']);
 }
@@ -13,7 +13,7 @@ $APPLICATION->AddChainItem(Loc::getMessage("SPS_CHAIN_ACCOUNT"));
 ?>
 <div class="personal_wrapper">
 	<div class="inner_border">
-		<?if ($arParam['SHOW_ACCOUNT_COMPONENT'] !== 'N')
+		<?if ($arParams['SHOW_ACCOUNT_COMPONENT'] !== 'N')
 		{
 			$APPLICATION->IncludeComponent(
 				"bitrix:sale.personal.account",
@@ -25,13 +25,14 @@ $APPLICATION->AddChainItem(Loc::getMessage("SPS_CHAIN_ACCOUNT"));
 			);
 		}
 		?>
-		<h3 class="sale-personal-section-account-sub-header">
-			<?=Loc::getMessage("SPS_BUY_MONEY")?>
-		</h3>
-
 		<?
-		if ($arParam['SHOW_ACCOUNT_PAY_COMPONENT'] !== 'N')
+		if ($arParams['SHOW_ACCOUNT_PAY_COMPONENT'] !== 'N')
 		{
+			?>
+			<h3 class="sale-personal-section-account-sub-header">
+				<?=Loc::getMessage("SPS_BUY_MONEY")?>
+			</h3>
+			<?
 			$APPLICATION->IncludeComponent(
 				"bitrix:sale.account.pay",
 				"",

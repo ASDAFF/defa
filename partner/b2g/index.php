@@ -74,7 +74,7 @@ $APPLICATION->SetTitle("Госзаказчикам");
 		<p class="manager-card-text">
 			 Наши менеджеры ответят на любой Ваш вопрос.
 		</p>
-        <span class="animate-load red-btn" data-event="jqm" data-param-form_id="ASK" data-name="ASK" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Задать вопрос</span>
+        <span class="animate-load red-btn" data-event="jqm" data-param-form_id="ASK_STATEORDER" data-name="ASK_STATEORDER" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Задать вопрос</span>
 	</div>
 </div>
 

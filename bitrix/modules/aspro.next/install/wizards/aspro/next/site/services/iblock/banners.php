@@ -39,7 +39,7 @@ if(WIZARD_INSTALL_DEMO_DATA){
 		if($arGroup = $dbGroup->Fetch()){
 			$permissions[$arGroup["ID"]] = "W";
 		};
-		
+
 		// replace macros IN_XML_SITE_ID & IN_XML_SITE_DIR in xml file - for correct url links to site
 		if(file_exists($_SERVER["DOCUMENT_ROOT"].$iblockXMLFile.".back")){
 			@copy($_SERVER["DOCUMENT_ROOT"].$iblockXMLFile.".back", $_SERVER["DOCUMENT_ROOT"].$iblockXMLFile);
@@ -52,7 +52,7 @@ if(WIZARD_INSTALL_DEMO_DATA){
 			@copy($_SERVER["DOCUMENT_ROOT"].$iblockXMLFile.".back", $_SERVER["DOCUMENT_ROOT"].$iblockXMLFile);
 		}
 		if ($iblockID < 1)	return;
-			
+
 		// iblock fields
 		$iblock = new CIBlock;
 		$arFields = array(
@@ -79,11 +79,11 @@ if(WIZARD_INSTALL_DEMO_DATA){
 				"SORT" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "0",
-				), 
+				),
 				"NAME" => array(
 					"IS_REQUIRED" => "Y",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"PREVIEW_PICTURE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -97,15 +97,15 @@ if(WIZARD_INSTALL_DEMO_DATA){
 						"DELETE_WITH_DETAIL" => "N",
 						"UPDATE_WITH_DETAIL" => "N",
 					),
-				), 
+				),
 				"PREVIEW_TEXT_TYPE" => array(
 					"IS_REQUIRED" => "Y",
 					"DEFAULT_VALUE" => "text",
-				), 
+				),
 				"PREVIEW_TEXT" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"DETAIL_PICTURE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -116,19 +116,19 @@ if(WIZARD_INSTALL_DEMO_DATA){
 						"METHOD" => "resample",
 						"COMPRESSION" => 95,
 					),
-				), 
+				),
 				"DETAIL_TEXT_TYPE" => array(
 					"IS_REQUIRED" => "Y",
 					"DEFAULT_VALUE" => "text",
-				), 
+				),
 				"DETAIL_TEXT" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"XML_ID" =>  array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"CODE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -145,11 +145,11 @@ if(WIZARD_INSTALL_DEMO_DATA){
 				"TAGS" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"SECTION_NAME" => array(
 					"IS_REQUIRED" => "Y",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"SECTION_PICTURE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -163,15 +163,15 @@ if(WIZARD_INSTALL_DEMO_DATA){
 						"DELETE_WITH_DETAIL" => "N",
 						"UPDATE_WITH_DETAIL" => "N",
 					),
-				), 
+				),
 				"SECTION_DESCRIPTION_TYPE" => array(
 					"IS_REQUIRED" => "Y",
 					"DEFAULT_VALUE" => "text",
-				), 
+				),
 				"SECTION_DESCRIPTION" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"SECTION_DETAIL_PICTURE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -182,11 +182,11 @@ if(WIZARD_INSTALL_DEMO_DATA){
 						"METHOD" => "resample",
 						"COMPRESSION" => 95,
 					),
-				), 
+				),
 				"SECTION_XML_ID" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => "",
-				), 
+				),
 				"SECTION_CODE" => array(
 					"IS_REQUIRED" => "N",
 					"DEFAULT_VALUE" => array(
@@ -199,18 +199,18 @@ if(WIZARD_INSTALL_DEMO_DATA){
 						"TRANS_EAT" => "Y",
 						"USE_GOOGLE" => "N",
 					),
-				), 
+				),
 			),
 		);
-		
+
 		$iblock->Update($iblockID, $arFields);
 	}
 	else{
 		// attach iblock to site
-		$arSites = array(); 
+		$arSites = array();
 		$db_res = CIBlock::GetSite($iblockID);
 		while ($res = $db_res->Fetch())
-			$arSites[] = $res["LID"]; 
+			$arSites[] = $res["LID"];
 		if (!in_array(WIZARD_SITE_ID, $arSites)){
 			$arSites[] = WIZARD_SITE_ID;
 			$iblock = new CIBlock;
@@ -224,263 +224,21 @@ if(WIZARD_INSTALL_DEMO_DATA){
 	if(!strlen($lang)) $lang = "ru";
 	WizardServices::IncludeServiceLang("editform_useroptions.php", $lang);
 
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "SHOW_VIDEO"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_335"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "SHOW_VIDEO",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "C",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => "Y",
-					"XML_ID" => "YES",
-				)
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_SOURCE"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_336"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_SOURCE",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "L",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_337"),
-					"XML_ID" => "LINK",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_338"),
-					"XML_ID" => "PROPERTY",
-				)
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_339"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO",
-			"PROPERTY_TYPE" => "F",
-			"LIST_TYPE" => "L",
-			"MULTIPLE" => "N",
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_AUTOSTART"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_340"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_AUTOSTART",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "C",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => "Y",
-					"XML_ID" => "YES",
-				),
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_COVER"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_341"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_COVER",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "C",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => "Y",
-					"XML_ID" => "YES",
-				),
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_DISABLE_SOUND"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_342"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_DISABLE_SOUND",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "C",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => "Y",
-					"XML_ID" => "YES",
-				),
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_LOOP"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_343"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_LOOP",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "C",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => "Y",
-					"XML_ID" => "YES",
-				),
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "VIDEO_SRC"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_344"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "VIDEO_SRC",
-			"PROPERTY_TYPE" => "S",
-			"LIST_TYPE" => "L",
-			"MULTIPLE" => "N",
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "BUTTON_VIDEO_TEXT"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_345"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "BUTTON_VIDEO_TEXT",
-			"PROPERTY_TYPE" => "S",
-			"LIST_TYPE" => "L",
-			"MULTIPLE" => "N",
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
-	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID, "CODE" => "BUTTON_VIDEO_CLASS"));
-	if(!$dbProperty->SelectedRowsCount())
-	{
-		$ibp = new CIBlockProperty;
-		$arFields = Array(
-			"NAME" => GetMessage("WZD_OPTION_346"),
-			"ACTIVE" => "Y",
-			"SORT" => "100",
-			"CODE" => "BUTTON_VIDEO_CLASS",
-			"PROPERTY_TYPE" => "L",
-			"LIST_TYPE" => "L",
-			"MULTIPLE" => "N",
-			"VALUES" => array(
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_347"),
-					"XML_ID" => "btn-default",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_348"),
-					"XML_ID" => "btn-primary",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_349"),
-					"XML_ID" => "btn-success",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_350"),
-					"XML_ID" => "btn-info",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_351"),
-					"XML_ID" => "btn-warning",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_352"),
-					"XML_ID" => "btn-danger",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_353"),
-					"XML_ID" => "btn-transparent",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_354"),
-					"XML_ID" => "btn-link",
-				),
-				array(
-					"VALUE" => GetMessage("WZD_OPTION_355"),
-					"XML_ID" => "btn-default white",
-				),
-			),
-			"IBLOCK_ID" => $iblockID
-		);
-		$PropID = $ibp->Add($arFields);
-	}
-
 	$arProperty = array();
 	$dbProperty = CIBlockProperty::GetList(array(), array("IBLOCK_ID" => $iblockID));
 	while($arProp = $dbProperty->Fetch())
 		$arProperty[$arProp["CODE"]] = $arProp["ID"];
 
+	// properties hints
+	$ibp = new CIBlockProperty;
+	$ibp->Update($arProperty["TABLET_IMAGE"], array("HINT" => GetMessage("WZD_OPTION_371_HINT")));
+	unset($ibp);
+
 	// edit form user oprions
 	CUserOptions::SetOption("form", "form_element_".$iblockID, array(
-		"tabs" => 'edit1--#--'.GetMessage("WZD_OPTION_48").'--,--ACTIVE--#--'.GetMessage("WZD_OPTION_2").'--,--ACTIVE_FROM--#--'.GetMessage("WZD_OPTION_50").'--,--ACTIVE_TO--#--'.GetMessage("WZD_OPTION_52").'--,--SORT--#--'.GetMessage("WZD_OPTION_44").'--,--NAME--#--'.GetMessage("WZD_OPTION_54").'--,--PROPERTY_'.$arProperty["TYPE_BANNERS"].'--#--'.GetMessage("WZD_OPTION_56").'--,--PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_58").'--,--DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_60").'--,--PROPERTY_'.$arProperty["TEXT_POSITION"].'--#--'.GetMessage("WZD_OPTION_62").'--,--PROPERTY_'.$arProperty["TARGETS"].'--#--'.GetMessage("WZD_OPTION_64").'--,--PROPERTY_'.$arProperty["TEXTCOLOR"].'--#--'.GetMessage("WZD_OPTION_66").'--,--PROPERTY_'.$arProperty["NAV_COLOR"].'--#--'.GetMessage("WZD_OPTION_235").'--,--PROPERTY_'.$arProperty["URL_STRING"].'--#--'.GetMessage("WZD_OPTION_68").'--,--PROPERTY_'.$arProperty["BANNER_SIZE"].'--#--'.GetMessage("WZD_OPTION_70").'--,--PROPERTY_'.$arProperty["BUTTON1TEXT"].'--#--'.GetMessage("WZD_OPTION_72").'--,--PROPERTY_'.$arProperty["BUTTON1LINK"].'--#--'.GetMessage("WZD_OPTION_74").'--,--PROPERTY_'.$arProperty["BUTTON2TEXT"].'--#--'.GetMessage("WZD_OPTION_76").'--,--PROPERTY_'.$arProperty["BUTTON2LINK"].'--#--'.GetMessage("WZD_OPTION_78").'--,--PROPERTY_'.$arProperty["LINK_REGION"].'--#--'.GetMessage("WZD_OPTION_310").'--,--PREVIEW_TEXT--#--'.GetMessage("WZD_OPTION_80").'--;--cedit1--#--'.GetMessage("WZD_OPTION_356").'--,--PROPERTY_'.$arProperty["SHOW_VIDEO"].'--#--'.GetMessage("WZD_OPTION_335").'--,--PROPERTY_'.$arProperty["VIDEO_SOURCE"].'--#--'.GetMessage("WZD_OPTION_336").'--,--PROPERTY_'.$arProperty["VIDEO"].'--#--'.GetMessage("WZD_OPTION_339").'--,--PROPERTY_'.$arProperty["VIDEO_AUTOSTART"].'--#--'.GetMessage("WZD_OPTION_340").'--,--PROPERTY_'.$arProperty["VIDEO_COVER"].'--#--'.GetMessage("WZD_OPTION_341").'--,--PROPERTY_'.$arProperty["VIDEO_DISABLE_SOUND"].'--#--'.GetMessage("WZD_OPTION_342").'--,--PROPERTY_'.$arProperty["VIDEO_LOOP"].'--#--'.GetMessage("WZD_OPTION_343").'--,--PROPERTY_'.$arProperty["VIDEO_SRC"].'--#--'.GetMessage("WZD_OPTION_344").'--,--PROPERTY_'.$arProperty["BUTTON_VIDEO_TEXT"].'--#--'.GetMessage("WZD_OPTION_345").'--,--PROPERTY_'.$arProperty["BUTTON_VIDEO_CLASS"].'--#--'.GetMessage("WZD_OPTION_346").'--;--edit2--#--'.GetMessage("WZD_OPTION_82").'--,--SECTIONS--#--'.GetMessage("WZD_OPTION_82").'--;--edit14--#--'.GetMessage("WZD_OPTION_18").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_TITLE--#--'.GetMessage("WZD_OPTION_20").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_KEYWORDS--#--'.GetMessage("WZD_OPTION_22").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_DESCRIPTION--#--'.GetMessage("WZD_OPTION_24").'--,--IPROPERTY_TEMPLATES_ELEMENT_PAGE_TITLE--#--'.GetMessage("WZD_OPTION_26").'--,--IPROPERTY_TEMPLATES_ELEMENTS_PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_28").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--IPROPERTY_TEMPLATES_ELEMENTS_DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_36").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--SEO_ADDITIONAL--#--'.GetMessage("WZD_OPTION_84").'--,--TAGS--#--'.GetMessage("WZD_OPTION_46").'--;--;--',
+		"tabs" => 'edit1--#--'.GetMessage("WZD_OPTION_48").'--,--ACTIVE--#--'.GetMessage("WZD_OPTION_2").'--,--ACTIVE_FROM--#--'.GetMessage("WZD_OPTION_50").'--,--ACTIVE_TO--#--'.GetMessage("WZD_OPTION_52").'--,--SORT--#--'.GetMessage("WZD_OPTION_44").'--,--XML_ID--#--'.GetMessage("WZD_OPTION_219").'--,--NAME--#--'.GetMessage("WZD_OPTION_54").'--,--PROPERTY_'.$arProperty["TYPE_BANNERS"].'--#--'.GetMessage("WZD_OPTION_56").'--,--PROPERTY_'.$arProperty["BANNER_SIZE"].'--#--'.GetMessage("WZD_OPTION_70").'--,--PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_58").'--,--DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_60").'--,--PROPERTY_'.$arProperty["TABLET_IMAGE"].'--#--'.GetMessage("WZD_OPTION_371").'--,--PROPERTY_'.$arProperty["NAV_COLOR"].'--#--'.GetMessage("WZD_OPTION_235").'--,--PROPERTY_'.$arProperty["URL_STRING"].'--#--'.GetMessage("WZD_OPTION_68").'--,--PROPERTY_'.$arProperty["TARGETS"].'--#--'.GetMessage("WZD_OPTION_64").'--,--PROPERTY_'.$arProperty["TEXT_POSITION"].'--#--'.GetMessage("WZD_OPTION_62").'--,--PROPERTY_'.$arProperty["TEXTCOLOR"].'--#--'.GetMessage("WZD_OPTION_66").'--,--PREVIEW_TEXT--#--'.GetMessage("WZD_OPTION_80").'--,--PROPERTY_'.$arProperty["BUTTON1TEXT"].'--#--'.GetMessage("WZD_OPTION_72").'--,--PROPERTY_'.$arProperty["BUTTON1LINK"].'--#--'.GetMessage("WZD_OPTION_74").'--,--PROPERTY_'.$arProperty["BUTTON1CLASS"].'--#--'.GetMessage("WZD_OPTION_372").'--,--PROPERTY_'.$arProperty["BUTTON2TEXT"].'--#--'.GetMessage("WZD_OPTION_76").'--,--PROPERTY_'.$arProperty["BUTTON2LINK"].'--#--'.GetMessage("WZD_OPTION_78").'--,--PROPERTY_'.$arProperty["BUTTON2CLASS"].'--#--'.GetMessage("WZD_OPTION_373").'--,--PROPERTY_'.$arProperty["LINK_REGION"].'--#--'.GetMessage("WZD_OPTION_310").'--;--cedit1--#--'.GetMessage("WZD_OPTION_356").'--,--PROPERTY_'.$arProperty["SHOW_VIDEO"].'--#--'.GetMessage("WZD_OPTION_335").'--,--PROPERTY_'.$arProperty["VIDEO_SOURCE"].'--#--'.GetMessage("WZD_OPTION_336").'--,--PROPERTY_'.$arProperty["VIDEO"].'--#--'.GetMessage("WZD_OPTION_339").'--,--PROPERTY_'.$arProperty["VIDEO_AUTOSTART"].'--#--'.GetMessage("WZD_OPTION_340").'--,--PROPERTY_'.$arProperty["VIDEO_COVER"].'--#--'.GetMessage("WZD_OPTION_341").'--,--PROPERTY_'.$arProperty["VIDEO_DISABLE_SOUND"].'--#--'.GetMessage("WZD_OPTION_342").'--,--PROPERTY_'.$arProperty["VIDEO_LOOP"].'--#--'.GetMessage("WZD_OPTION_343").'--,--PROPERTY_'.$arProperty["VIDEO_SRC"].'--#--'.GetMessage("WZD_OPTION_344").'--,--PROPERTY_'.$arProperty["BUTTON_VIDEO_TEXT"].'--#--'.GetMessage("WZD_OPTION_345").'--,--PROPERTY_'.$arProperty["BUTTON_VIDEO_CLASS"].'--#--'.GetMessage("WZD_OPTION_346").'--;--edit2--#--'.GetMessage("WZD_OPTION_82").'--,--SECTIONS--#--'.GetMessage("WZD_OPTION_82").'--;--edit14--#--'.GetMessage("WZD_OPTION_18").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_TITLE--#--'.GetMessage("WZD_OPTION_20").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_KEYWORDS--#--'.GetMessage("WZD_OPTION_22").'--,--IPROPERTY_TEMPLATES_ELEMENT_META_DESCRIPTION--#--'.GetMessage("WZD_OPTION_24").'--,--IPROPERTY_TEMPLATES_ELEMENT_PAGE_TITLE--#--'.GetMessage("WZD_OPTION_26").'--,--IPROPERTY_TEMPLATES_ELEMENTS_PREVIEW_PICTURE--#--'.GetMessage("WZD_OPTION_28").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_PREVIEW_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--IPROPERTY_TEMPLATES_ELEMENTS_DETAIL_PICTURE--#--'.GetMessage("WZD_OPTION_36").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_ALT--#--'.GetMessage("WZD_OPTION_30").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_TITLE--#--'.GetMessage("WZD_OPTION_32").'--,--IPROPERTY_TEMPLATES_ELEMENT_DETAIL_PICTURE_FILE_NAME--#--'.GetMessage("WZD_OPTION_34").'--,--SEO_ADDITIONAL--#--'.GetMessage("WZD_OPTION_84").'--,--TAGS--#--'.GetMessage("WZD_OPTION_46").'--;--;--',
 	));
+
 	// list user options
 	CUserOptions::SetOption("list", "tbl_iblock_list_".md5($iblockTYPE.".".$iblockID), array(
 		'columns' => 'NAME,PREVIEW_PICTURE,DETAIL_PICTURE,PROPERTY_'.$arProperty["TYPE_BANNERS"].',ACTIVE,SORT,PROPERTY_'.$arProperty["LINK_REGION"], 'by' => 'sort', 'order' => 'asc', 'page_size' => '20',

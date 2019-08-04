@@ -51,7 +51,7 @@
 						<div class="image_wrapper_block shine">
                             <?if($arItem['MARKS']){?>
                             <ul class="series-item-pros quick-metki-list">
-                                <? foreach($arItem['MARKS'] as $arMetka) { ?>
+                                <? foreach($arItem['MARKS'] as $arMetka) {if(!$arMetka['SRC'])continue ?>
                                     <li class="series-item-pros-element" title="<?=$arMetka['NAME']?>">
                                         <div class="pros-icon">
                                             <img src="<?=$arMetka['SRC']?>" alt="">

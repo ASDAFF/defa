@@ -674,6 +674,17 @@
 
 	if($arCurrentValues["SHOW_LANDINGS"] !== 'N'){
 		$arTemplateParametersParts[] = Array(
+			"LANDING_POSITION" => Array(
+				"NAME" => GetMessage("LANDING_POSITION_TITLE"),
+				"TYPE" => "LIST",
+				"DEFAULT" => "AFTER_PRODUCTS",
+				"PARENT" => "LIST_SETTINGS",
+				"VALUES" => array(
+					'BEFORE_PRODUCTS' => GetMessage('LANDING_POSITION_BEFORE_PRODUCTS'),
+					'AFTER_PRODUCTS' => GetMessage('LANDING_POSITION_AFTER_PRODUCTS'),
+					//'AFTER_DETAIL_TEXT' => GetMessage('LANDING_POSITION_AFTER_DETAIL_TEXT'),
+				),
+			),
 			"LANDING_TITLE" => Array(
 				"NAME" => GetMessage("LANDING_TITLE"),
 				"TYPE" => "STRING",

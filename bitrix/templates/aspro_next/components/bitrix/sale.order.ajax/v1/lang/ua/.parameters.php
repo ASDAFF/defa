@@ -14,6 +14,7 @@ $MESS["BASKET_POSITION_BEFORE"] = "на початку";
 $MESS["BASKET_POSITION_AFTER"] = "в кінці";
 $MESS["SHOW_BASKET_HEADERS"] = "Показувати заголовки колонок списку товарів";
 $MESS["DELIVERY_FADE_EXTRA_SERVICES"] = "Додаткові послуги, які будуть показані в пройденому (згорнутому) блоці";
+$MESS["SHOW_COUPONS"] = "Відображати поля введення купонів";
 $MESS["SHOW_COUPONS_BASKET"] = "Показувати поле введення купонів в блоці списку товарів";
 $MESS["SHOW_COUPONS_DELIVERY"] = "Показувати поле введення купонів в блоці доставки";
 $MESS["SHOW_COUPONS_PAY_SYSTEM"] = "Показувати поле введення купонів в блоці оплати";

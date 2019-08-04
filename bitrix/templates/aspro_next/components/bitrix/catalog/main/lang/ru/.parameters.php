@@ -195,6 +195,10 @@
 	$MESS["CHEAPER_FORM_NAME"] = "Текст ссылки \"Нашли дешевле\"";
 	$MESS["SEND_GIFT_FORM_NAME"] = "Текст ссылки \"Хочу в подарок\"";
 	$MESS["SHOW_LANDINGS_TITLE"] = "Отображать блок \"Популярные категории\"";
+	$MESS["LANDING_POSITION_TITLE"] = "Расположение блока \"Популярные категории\"";
+	$MESS["LANDING_POSITION_BEFORE_PRODUCTS"] = "Перед списком товаров";
+	$MESS["LANDING_POSITION_AFTER_PRODUCTS"] = "После списка товаров";
+	$MESS["LANDING_POSITION_AFTER_DETAIL_TEXT"] = "После детального описания";
 	$MESS["LANDING_TITLE"] = "Заголовок блока \"Популярные категории\"";
 	$MESS["LANDING_SECTION_COUNT"] = "Количество видимых элементов в блоке \"Популярные категории\"";
 	$MESS["SHOW_LANDINGS_SEARCH_TITLE"] = "Отображать блок \"Похожие запросы\"";

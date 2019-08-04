@@ -34,7 +34,7 @@ header.header-v8 .svg-search.white{top:-2px;}
 .title_block.sm{font-size:19px;}
 
 /*filter*/
-.bx_filter_select_popup ul li label{font-family: "Open Sans", Arial, sans-serif;}
+.bx_filter_select_popup ul li label,.bx_filter_select_popup ul li a{font-family: "Open Sans", Arial, sans-serif;}
 
 /*basket*/
 .bx_ordercart .bx_ordercart_order_table_container .bx_ordercart_itemtitle,

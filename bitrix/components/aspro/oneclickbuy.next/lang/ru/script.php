@@ -1,6 +1,9 @@
 <?
 $MESS['NO_USER_NAME'] = 'Не указано имя.';
 $MESS['NO_PHONE'] = 'Не указан или неправильно указан телефон.';
+$MESS['TOO_MANY_USERS_WITH_PHONE'] = 'Ошибка регистрации нового пользователя: пользователь с номером телефона #PHONE# уже существует.';
+$MESS['PHONE_REGISTER_CODE_VERIFY_ERROR'] = 'Неверный код из СМС.';
+$MESS['ONE_CLICK_SMS_SENDED'] = 'На ваш номер было выслано СМС с кодом подтверждения.';
 $MESS['CURRENCY_NOT_FOUND'] = 'Валюта не найдена';
 $MESS['AUTH_FAIL'] = 'Ошибка авторизации';
 $MESS['TOO_MANY_USERS'] = 'Найдено более 1 пользователя с указанным email.';
@@ -20,4 +23,5 @@ $MESS['FAST_ORDER_COMMENT'] = 'Быстрый заказ';
 $MESS['BAD_EMAIL_FORMAT'] = 'Неверный формат email адреса';
 $MESS['CAPTCHA_ERROR_CODE'] = 'Неверный код проверки';
 $MESS['CANT_INCLUDE_MODULE'] = 'Не подключены необходимые модули';
+$MESS['CAPTCHA_LABEL'] = 'Введите текст с картинки';
 ?>

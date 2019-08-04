@@ -184,12 +184,15 @@ if($_REQUEST['id']) {
                     <? foreach($section['UF_METKA'] as $arMetka) { ?>
                         <li class="series-item-pros-element" style="padding: 0">
                             <div class="pros-icon" style="float:left">
-                                <img width="50px" height="50px" src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
+                                <img width="30" height="30" src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
                             </div>
                             <span class="pros-text" style="float:left"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
                         </li>
                     <? } ?>
                 </ul>
+<!--                --><?//if($arSection['UF_DISCOUNT']){?>
+<!--                    <span class="sale-mark">--><?//=($arSection['UF_DISCOUNT'])?><!--</span>-->
+<!--                --><?//}?>
                 <div class="main-image">
                     <? foreach ($arResult["SERIES_GALLERIES"] as $photo) { ?>
                         <div class="">

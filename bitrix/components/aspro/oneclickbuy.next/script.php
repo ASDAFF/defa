@@ -12,7 +12,7 @@ if (isset($_REQUEST['SITE_ID']) && !empty($_REQUEST['SITE_ID']))
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
-if(isset($_GET['uploadfiles'])&& isset($_GET['orderID']))
+if(isset($_GET['uploadfiles']) && isset($_GET['orderID']))
 {
 	\Bitrix\Main\Loader::includeModule('sale');
 	$orderID = $_GET['orderID'];
@@ -94,13 +94,32 @@ else
 	}
 
 	if(!function_exists('getJson')) {
-		function getJson($message, $res='N', $error=''){
-			global $APPLICATION;
+		function getJson($message, $res = 'N', $error = '', $ext = false){
 			$result = array(
-				'result' => $res=='Y'?'Y':'N',
-				'message' => $APPLICATION->ConvertCharset($message, SITE_CHARSET, 'utf-8')
+				'result' => $res === 'Y' ? 'Y' : 'N',
+				'message' => $GLOBALS['APPLICATION']->ConvertCharset($message, SITE_CHARSET, 'utf-8'),
 			);
-			if (strlen($error) > 0) { $result['err'] = $APPLICATION->ConvertCharset($error, SITE_CHARSET, 'utf-8'); }
+
+			if(\Bitrix\Main\Config\Option::get('aspro.next', 'ONE_CLICK_BUY_CAPTCHA', 'N') == 'Y'){
+				if(!is_array($ext)){
+					$ext = array();
+				}
+
+				include_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/classes/general/captcha.php');
+				$cpt = new CCaptcha();
+				$code = htmlspecialcharsbx($GLOBALS['APPLICATION']->CaptchaGetCode());
+
+				$ext['captcha_html'] = '<div class="form-control captcha-row clearfix"><label><span>'.$GLOBALS['APPLICATION']->ConvertCharset(GetMessage('CAPTCHA_LABEL'), SITE_CHARSET, 'utf-8').'<span class="star">*</span></span></label><div class="captcha_image"><img src="/bitrix/tools/captcha.php?captcha_sid='.$code.'" border="0"><input type="hidden" name="captcha_sid" value="'.$code.'"><div class="captcha_reload"></div></div><div class="captcha_input"><input type="text" class="inputtext captcha" name="captcha_word" size="30" maxlength="50" value="" required="" aria-required="true"></div></div>';
+			}
+
+			if($ext){
+				$result['ext'] = $ext;
+			}
+
+			if($error){
+				$result['err'] = $GLOBALS['APPLICATION']->ConvertCharset(is_array($error) ? implode('<br />', $error) : $error, SITE_CHARSET, 'utf-8');
+			}
+
 			return json_encode($result);
 		}
 	}
@@ -117,7 +136,7 @@ else
 	}
 
 	global $APPLICATION, $USER;
-	$user_registered =$user_exists = false;
+	$user_registered = $user_exists = false;
 	$bAllBasketBuy = $_POST['BUY_TYPE'] == 'ALL';
 	$SITE_ID = $_REQUEST['SITE_ID'];
 
@@ -126,7 +145,7 @@ else
 	{
 		foreach($_POST['ONE_CLICK_BUY'] as $key => $value)
 		{
-			$_POST['ONE_CLICK_BUY'][$key] = $APPLICATION->ConvertCharset($_POST['ONE_CLICK_BUY'][$key], 'utf-8', SITE_CHARSET);
+			$_POST['ONE_CLICK_BUY'][$key] = trim($APPLICATION->ConvertCharset($_POST['ONE_CLICK_BUY'][$key], 'utf-8', SITE_CHARSET));
 		}
 	}
 
@@ -152,6 +171,9 @@ else
 	}
 
 	if(!$USER->IsAuthorized()){
+		// get phone auth params
+		list($bPhoneAuthSupported, $bPhoneAuthShow, $bPhoneAuthRequired, $bPhoneAuthUse) = Aspro\Next\PhoneAuth::getOptions();
+
 		if(!isset($_POST['ONE_CLICK_BUY']['EMAIL']) || trim($_POST['ONE_CLICK_BUY']['EMAIL']) == ''){
 			$login = 'user_' . substr((microtime(true) * 10000), 0, 12);
 			if (strlen(SITE_SERVER_NAME)) { $server_name = SITE_SERVER_NAME; } else { $server_name = $_SERVER["SERVER_NAME"];}
@@ -188,13 +210,33 @@ else
 		}
 
 		if($user_registered && !$user_exists){
-			$captcha = COption::GetOptionString('main', 'captcha_registration', 'N');
-			if($captcha == 'Y'){COption::SetOptionString('main', 'captcha_registration', 'N');}
 			$userPassword = randString(10);
 			$username = explode(' ', trim($_POST['ONE_CLICK_BUY']['FIO']));
-			$newUser = $USER->Register($login, $username[0], $username[1], $userPassword,  $userPassword, $_POST['ONE_CLICK_BUY']['EMAIL']);
-			// $newUser = $USER->Add(array("LOGIN"=>$login, "NAME"=>$username[0], "LAST_NAME"=>$username[1], "PASSWORD"=>$userPassword,  "CONFIRM_PASSWORD"=>$userPassword, "EMAIL"=>$_POST['ONE_CLICK_BUY']['EMAIL']));
 
+			// register user
+			$captcha = COption::GetOptionString('main', 'captcha_registration', 'N');
+			if($captcha == 'Y'){COption::SetOptionString('main', 'captcha_registration', 'N');}
+			if($bPhoneAuthSupported && $bPhoneAuthShow){
+				if(empty($_POST['ONE_CLICK_BUY']['PHONE']) && $bPhoneAuthRequired){
+					die(getJson(GetMessage('NO_PHONE')));
+				}
+
+				$phoneNumber = \Bitrix\Main\UserPhoneAuthTable::normalizePhoneNumber($_POST['ONE_CLICK_BUY']['PHONE']);
+				$arUserByPhone = \Bitrix\Main\UserPhoneAuthTable::getList([
+					'select' => array('USER_ID'),
+					'filter' => array('=PHONE_NUMBER' => $phoneNumber),
+				])->fetch();
+				if($arUserByPhone){
+					die(getJson(GetMessage('TOO_MANY_USERS_WITH_PHONE', array('#PHONE#' => $phoneNumber))));
+				}
+
+				$newUser = $USER->Register($login, $username[0], $username[1], $userPassword, $userPassword, $_POST['ONE_CLICK_BUY']['EMAIL'], $SITE_ID, '', 0, false, $_POST['ONE_CLICK_BUY']['PHONE']);
+			}
+			else{
+				$newUser = $USER->Register($login, $username[0], $username[1], $userPassword,  $userPassword, $_POST['ONE_CLICK_BUY']['EMAIL']);
+			}
+
+			// $newUser = $USER->Add(array("LOGIN"=>$login, "NAME"=>$username[0], "LAST_NAME"=>$username[1], "PASSWORD"=>$userPassword,  "CONFIRM_PASSWORD"=>$userPassword, "EMAIL"=>$_POST['ONE_CLICK_BUY']['EMAIL']));
 			if($captcha == 'Y'){
 				COption::SetOptionString('main', 'captcha_registration', 'Y');
 			}
@@ -204,13 +246,106 @@ else
 			else{
 				$registeredUserID = $newUser['ID'];
 				// $registeredUserID = $newUser;
+
 				if (!empty($_POST['ONE_CLICK_BUY']['PHONE']) && ($arParams["AUTO_LOGOUT"]=="Y")) {
 					$USER->Update($registeredUserID,  array('PERSONAL_PHONE' => $_POST['ONE_CLICK_BUY']['PHONE']));
 				}
 				if (!empty($username[2])) {
 					$USER->Update($registeredUserID,  array('SECOND_NAME' => $username[2]));
 				}
-				 //$USER->Logout();
+
+				//$USER->Logout();
+
+				if($bPhoneAuthSupported && $bPhoneAuthShow){
+					die(getJson(GetMessage('ONE_CLICK_SMS_SENDED'), 'Y', '', array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $newUser['SIGNED_DATA'], 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+				}
+			}
+		}
+		elseif($registeredUserID /*&& $ar_user['ACTIVE'] === 'N'*/){
+			if($bPhoneAuthSupported && $bPhoneAuthShow){
+				if(empty($_POST['ONE_CLICK_BUY']['PHONE'])){
+					if($bPhoneAuthRequired){
+						die(getJson(GetMessage('NO_PHONE')));
+					}
+				}
+				else{
+					$phoneNumber = \Bitrix\Main\UserPhoneAuthTable::normalizePhoneNumber($_POST['ONE_CLICK_BUY']['PHONE']);
+
+					$arUserByPhone = \Bitrix\Main\UserPhoneAuthTable::getList([
+						'select' => array(
+							'USER_ID',
+							'DATE_SENT',
+							'CONFIRMED',
+						),
+						'filter' => array('=PHONE_NUMBER' => $phoneNumber),
+					])->fetch();
+					if($arUserByPhone && $arUserByPhone['CONFIRMED'] !== 'Y'){
+						// confirm code sent to this number
+						if($registeredUserID == $arUserByPhone['USER_ID']){
+							// sms sent to user with same email
+							$smsCode = trim($_POST['ONE_CLICK_BUY']['SMS_CODE']);
+							$signedData = \Bitrix\Main\Controller\PhoneAuth::signData(array('phoneNumber' => $phoneNumber));
+
+							if(
+								!isset($_POST['ONE_CLICK_BUY']['SIGNED_DATA']) ||
+								!isset($_POST['ONE_CLICK_BUY']['SMS_CODE'])
+							){
+								$now = new \Bitrix\Main\Type\DateTime();
+								if(!$arUserByPhone['DATE_SENT'] || ($now->getTimestamp() - $arUserByPhone['DATE_SENT']->getTimestamp() > \CUser::PHONE_CODE_RESEND_INTERVAL)){
+									// sending new confirmation SMS
+									list($code, $phoneNumber) = CUser::GeneratePhoneCode($registeredUserID);
+
+									$sms = new \Bitrix\Main\Sms\Event(
+										'SMS_USER_CONFIRM_NUMBER',
+										array(
+											'USER_PHONE' => $phoneNumber,
+											'CODE' => $code,
+										)
+									);
+									$smsResult = $sms->send(true);
+
+									if(!$smsResult->isSuccess()){
+										die(getJson('', 'Y', implode('<br />', array_merge($arResult['ERRORS'], $smsResult->getErrorMessages())), array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+									}
+
+									$signedData = \Bitrix\Main\Controller\PhoneAuth::signData(array('phoneNumber' => $phoneNumber));
+
+									die(getJson(GetMessage('ONE_CLICK_SMS_SENDED'), 'Y', '', array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+								}
+								else{
+									die(getJson('', 'Y', GetMessage('PHONE_REGISTER_CODE_VERIFY_ERROR'), array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+								}
+							}
+
+							if(
+								empty($_POST['ONE_CLICK_BUY']['SIGNED_DATA']) ||
+								empty($_POST['ONE_CLICK_BUY']['SMS_CODE'])
+							){
+								die(getJson('', 'Y', GetMessage('PHONE_REGISTER_CODE_VERIFY_ERROR'), array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+							}
+
+							if(($params = \Bitrix\Main\Controller\PhoneAuth::extractData($_POST['ONE_CLICK_BUY']['SIGNED_DATA'])) === false){
+								die(getJson('', 'Y', GetMessage('PHONE_REGISTER_CODE_VERIFY_ERROR'), array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+							}
+
+							if($userId = \CUser::VerifyPhoneCode($phoneNumber, $smsCode)){
+								// allready verified by if($registeredUserID == $arUserByPhone['USER_ID']){}
+								// if($registeredUserID != $userId){
+								// 	die(getJson(GetMessage('PHONE_REGISTER_CODE_VERIFY_ERROR')));
+								// }
+
+								if($ar_user['ACTIVE'] === 'N'){
+									//the user was added as inactive, now phone number is confirmed, activate them
+									$user = new CUser();
+									$user->Update($registeredUserID, array('ACTIVE' => 'Y'));
+								}
+							}
+							else{
+								die(getJson('', 'Y', GetMessage('PHONE_REGISTER_CODE_VERIFY_ERROR'), array('CODE' => 'SHOW_SMS_FIELD', 'SIGNED_DATA' => $signedData, 'RESEND_INTERVAL' => CUser::PHONE_CODE_RESEND_INTERVAL)));
+							}
+						}
+					}
+				}
 			}
 		}
 	}

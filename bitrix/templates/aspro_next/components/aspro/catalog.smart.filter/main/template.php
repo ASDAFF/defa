@@ -23,7 +23,7 @@ if($arResult["ITEMS"]){?>
 							continue;
 						?>
 						<div class="bx_filter_parameters_box active">
-							<span class="bx_filter_container_modef"></span>
+							<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
 							<div class="bx_filter_parameters_box_title icons_fa" ><?=(count($arParams['PRICE_CODE']) > 1 ? $arItem["NAME"] : Loc::getMessage("PRICE"));?></div>
 							<div class="bx_filter_block">
 								<div class="bx_filter_parameters_box_container numbers">
@@ -166,7 +166,7 @@ if($arResult["ITEMS"]){?>
 					$isFilter=true;
 					?>
 					<div class="bx_filter_parameters_box <?=$class;?>" data-expanded="<?=($arItem["DISPLAY_EXPANDED"] ? $arItem["DISPLAY_EXPANDED"] : "N");?>" data-prop_code=<?=strtolower($arItem["CODE"]);?> data-property_id="<?=$arItem["ID"]?>">
-						<span class="bx_filter_container_modef"></span>
+						<span data-f="<?=Loc::getMessage('CT_BCSF_SET_FILTER')?>" data-fi="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TI')?>" data-fr="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TR')?>" data-frm="<?=Loc::getMessage('CT_BCSF_SET_FILTER_TRM')?>" class="bx_filter_container_modef"></span>
 						<?if($arItem["CODE"]!="IN_STOCK"){?>
 							<div class="bx_filter_parameters_box_title icons_fa" >
 								<div>
@@ -711,7 +711,7 @@ if($arResult["ITEMS"]){?>
 						<div class="bx_filter_block">
 							<div class="bx_filter_parameters_box_container">
 								<div class="bx_filter_popup_result right" id="modef_mobile" <?if(!isset($arResult["ELEMENT_COUNT"])) echo 'style="display:none"';?>>
-									<?echo Loc::getMessage("CT_BCSF_FILTER_COUNT", array("#ELEMENT_COUNT#" => '<span id="modef_num_mobile">'.intval($arResult["ELEMENT_COUNT"]).'</span>'));?>
+									<?echo Loc::getMessage("CT_BCSF_FILTER_COUNT", array("#ELEMENT_COUNT#" => '<span data-f="'.Loc::getMessage('CT_BCSF_SET_FILTER').'" data-fi="'.Loc::getMessage('CT_BCSF_SET_FILTER_TI').'" data-fr="'.Loc::getMessage('CT_BCSF_SET_FILTER_TR').'" data-frm="'.Loc::getMessage('CT_BCSF_SET_FILTER_TRM').'" id="modef_num_mobile">'.intval($arResult["ELEMENT_COUNT"]).'</span>'));?>
 									<a rel="nofollow" href="<?echo str_replace('/filter/clear/apply/', '/', $arResult["FILTER_URL"]);?>" class="btn btn-default white white-bg"><?echo Loc::getMessage("CT_BCSF_FILTER_SHOW")?></a>
 								</div>
 								<div class="bx_filter_popup_result right" id="modef" <?if(!isset($arResult["ELEMENT_COUNT"])) echo 'style="display:none"';?>>

@@ -24,6 +24,9 @@
 		$arParams["BASKET_ITEMS"]=($arParams["BASKET_ITEMS"] ? $arParams["BASKET_ITEMS"] : array());
 		$arOfferProps = implode(';', $arParams['OFFERS_CART_PROPERTIES']);
 
+		// params for catalog elements compact view
+		$arParamsCE_CMP = $arParams;
+		$arParamsCE_CMP['TYPE_SKU'] = 'N';
 
 		switch ($arParams["LINE_ELEMENT_COUNT"]){
 			case '1':
@@ -91,7 +94,7 @@
 					$arItemIDs=CNext::GetItemsIDs($arItem);
 
 					$totalCount = CNext::GetTotalCount($arItem, $arParams);
-					$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"]);
+					$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"], "N", $arItem["PRODUCT"]["TYPE"]);
 
 					$bLinkedItems = (isset($arParams["LINKED_ITEMS"]) && $arParams["LINKED_ITEMS"]);
 					if($bLinkedItems)
@@ -117,7 +120,7 @@
 						if($arParams['TYPE_SKU'] == 'TYPE_1' && $arItem['OFFERS_PROP'])
 						{
 							$totalCount = CNext::GetTotalCount($arItem["OFFERS"][$arItem["OFFERS_SELECTED"]], $arParams);
-							$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"]);
+							$arQuantityData = CNext::GetQuantityArray($totalCount, $arItemIDs["ALL_ITEM_IDS"], "N", $arItem["PRODUCT"]["TYPE"]);
 
 							$currentSKUIBlock = $arItem["OFFERS"][$arItem["OFFERS_SELECTED"]]["IBLOCK_ID"];
 							$currentSKUID = $arItem["OFFERS"][$arItem["OFFERS_SELECTED"]]["ID"];
@@ -168,7 +171,7 @@
 													<span title="<?=GetMessage('CATALOG_WISH_OUT')?>" class="wish_item in added" style="display: none;" data-item="<?=$arItem["ID"]?>" data-iblock="<?=$arItem["IBLOCK_ID"]?>"><i></i></span>
 												</div>
 											<?elseif($arItem["OFFERS"] && !empty($arItem['OFFERS_PROP'])):?>
-												<div class="wish_item_button">
+												<div class="wish_item_button ce_cmp_hidden">
 													<span title="<?=GetMessage('CATALOG_WISH')?>" class="wish_item to <?=$arParams["TYPE_SKU"];?>" data-item="<?=$currentSKUID;?>" data-iblock="<?=$currentSKUIBlock?>" data-offers="Y" data-props="<?=$arOfferProps?>"><i></i></span>
 													<span title="<?=GetMessage('CATALOG_WISH_OUT')?>" class="wish_item in added <?=$arParams["TYPE_SKU"];?>" style="display: none;" data-item="<?=$currentSKUID;?>" data-iblock="<?=$currentSKUIBlock?>"><i></i></span>
 												</div>
@@ -181,9 +184,13 @@
 													<span title="<?=GetMessage('CATALOG_COMPARE_OUT')?>" class="compare_item in added" style="display: none;" data-iblock="<?=$arParams["IBLOCK_ID"]?>" data-item="<?=$arItem["ID"]?>"><i></i></span>
 												</div>
 											<?elseif($arItem["OFFERS"]):?>
-												<div class="compare_item_button">
+												<div class="compare_item_button ce_cmp_hidden">
 													<span title="<?=GetMessage('CATALOG_COMPARE')?>" class="compare_item to <?=$arParams["TYPE_SKU"];?>" data-item="<?=$currentSKUID;?>" data-iblock="<?=$arItem["IBLOCK_ID"]?>" ><i></i></span>
 													<span title="<?=GetMessage('CATALOG_COMPARE_OUT')?>" class="compare_item in added <?=$arParams["TYPE_SKU"];?>" style="display: none;" data-item="<?=$currentSKUID;?>" data-iblock="<?=$arItem["IBLOCK_ID"]?>"><i></i></span>
+												</div>
+												<div class="compare_item_button ce_cmp_visible">
+													<span title="<?=GetMessage('CATALOG_COMPARE')?>" class="compare_item to" data-iblock="<?=$arParams["IBLOCK_ID"]?>" data-item="<?=$arItem["ID"]?>" ><i></i></span>
+													<span title="<?=GetMessage('CATALOG_COMPARE_OUT')?>" class="compare_item in added" style="display: none;" data-iblock="<?=$arParams["IBLOCK_ID"]?>" data-item="<?=$arItem["ID"]?>"><i></i></span>
 												</div>
 											<?endif;?>
 										<?endif;?>
@@ -273,6 +280,11 @@
 												</div>
 											<?}?>
 										</div>
+										<?if($arCurrentSKU):?>
+											<div class="ce_cmp_visible">
+												<?\Aspro\Functions\CAsproSku::showItemPrices($arParamsCE_CMP, $arItem, $item_id, $min_price_id, $arItemIDs, ($arParams["SHOW_DISCOUNT_PERCENT_NUMBER"] == "Y" ? "N" : "Y"));?>
+											</div>
+										<?endif;?>
 										<div class="js_price_wrapper price">
 											<?if($arCurrentSKU):?>
 												<?
@@ -374,6 +386,7 @@
 									<?endif;?>
 								<?}?>
 							</div>
+
 							<div class="footer_button <?=($arItem["OFFERS"] && $arItem['OFFERS_PROP'] ? 'has_offer_prop' : '');?> inner_content js_offers__<?=$arItem['ID'];?>">
 								<div class="sku_props">
 									<?if($arItem["OFFERS"]){?>
@@ -474,6 +487,11 @@
 											<?endif;?>
 										<?}?>
 									<?}?>
+									<div class="counter_wrapp ce_cmp_visible">
+										<div id="<?=$arItemIDs["ALL_ITEM_IDS"]['BASKET_ACTIONS']; ?>" class="button_block wide">
+											<a class="btn btn-default basket read_more" rel="nofollow" data-item="<?=$arItem['ID']?>" href="<?=$arItem['DETAIL_PAGE_URL']?>"><?=GetMessage('CATALOG_READ_MORE')?></a>
+										</div>
+									</div>
 								<?endif;?>
 							</div>
 						</div>

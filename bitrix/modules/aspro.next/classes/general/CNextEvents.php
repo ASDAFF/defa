@@ -360,6 +360,16 @@ class CNextEvents{
 			$sChangeLogin = $arFrontParametrs['LOGIN_EQUAL_EMAIL'];
 		}
 
+		if(isset($arFields["NAME"])){
+			$arFields["NAME"] = trim($arFields["NAME"]);
+		}
+		if(isset($arFields["LAST_NAME"])){
+			$arFields["LAST_NAME"] = trim($arFields["LAST_NAME"]);
+		}
+		if(isset($arFields["SECOND_NAME"])){
+			$arFields["SECOND_NAME"] = trim($arFields["SECOND_NAME"]);
+		}
+
 		if(strlen($arFields["NAME"]) && !strlen($arFields["LAST_NAME"]) && !strlen($arFields["SECOND_NAME"])){
 			if($sOneFIO !== 'N')
 			{
@@ -384,6 +394,7 @@ class CNextEvents{
 				}
 			}
 		}
+
 		if($_REQUEST["confirmorder"]=="Y"  && !strlen($arFields["SECOND_NAME"]) && $_REQUEST["ORDER_PROP_1"]){
 			$arNames = explode(' ', $_REQUEST["ORDER_PROP_1"]);
 			if($arNames[2]){
@@ -2094,42 +2105,100 @@ class CNextEvents{
 	static function OnSaleComponentOrderPropertiesHandler(&$arFields){
 		global $arRegion;
 
-		if($arRegion && $_SERVER['REQUEST_METHOD'] != 'POST')
-		{
-			if($arRegion['LOCATION'])
-			{
-	    		$arLocationProp = CSaleOrderProps::GetList(
-			        array('SORT' => 'ASC'),
-			        array(
+		if(!$arRegion){
+			$arRegion = CNextRegionality::getCurrentRegion();
+		}
+
+		if($arRegion){
+			if($_SERVER['REQUEST_METHOD'] != 'POST'){
+				if($arRegion['LOCATION']){
+		    		$arLocationProp = CSaleOrderProps::GetList(
+				        array('SORT' => 'ASC'),
+				        array(
 			                'PERSON_TYPE_ID' => $arFields['PERSON_TYPE_ID'],
 			                'TYPE' => 'LOCATION',
 			                'IS_LOCATION' => 'Y',
-			        ),
-			        false,
-			        false,
-			        array('ID')
-			    )->Fetch();
-			    if($arLocationProp)
-			    {
-					$arFields['ORDER_PROP'][$arLocationProp['ID']] = CSaleLocation::getLocationCODEbyID($arRegion['LOCATION']);
-					$arLocationZipProp = CSaleOrderProps::GetList(
-				        array('SORT' => 'ASC'),
-				        array(
-				                'PERSON_TYPE_ID' => $arFields['PERSON_TYPE_ID'],
-				                'CODE' => 'ZIP',
+			                'ACTIVE' => 'Y',
 				        ),
 				        false,
 				        false,
 				        array('ID')
 				    )->Fetch();
-				    if($arLocationZipProp)
-				    {
+				    if($arLocationProp){
+						$arFields['ORDER_PROP'][$arLocationProp['ID']] = CSaleLocation::getLocationCODEbyID($arRegion['LOCATION']);
+				    }
+
+					$arLocationZipProp = CSaleOrderProps::GetList(
+				        array('SORT' => 'ASC'),
+				        array(
+			                'PERSON_TYPE_ID' => $arFields['PERSON_TYPE_ID'],
+			                'CODE' => 'ZIP',
+			                'ACTIVE' => 'Y',
+				        ),
+				        false,
+				        false,
+				        array('ID')
+				    )->Fetch();
+				    if($arLocationZipProp){
 						$rsLocaction = CSaleLocation::GetLocationZIP($arRegion['LOCATION']);
 		    			$arLocation = $rsLocaction->Fetch();
-		    			if($arLocation['ZIP'])
+		    			if($arLocation['ZIP']){
 		    				$arFields['ORDER_PROP'][$arLocationZipProp['ID']] = $arLocation['ZIP'];
+		    			}
 		    		}
-			    }
+				}
+			}
+			else{
+				if(isset($arFields['PERSON_TYPE_ID']) && isset($arFields['PERSON_TYPE_OLD'])){
+					if($arFields['PROFILE_CHANGE'] === 'Y' || ($arFields['PERSON_TYPE_ID'] != $arFields['PERSON_TYPE_OLD'])){
+						$arLocationProps = $arZipProps = array();
+
+						$dbRes = CSaleOrderProps::GetList(
+					        array('SORT' => 'ASC'),
+					        array(
+				                'PERSON_TYPE_ID' => array($arFields['PERSON_TYPE_ID'], $arFields['PERSON_TYPE_OLD']),
+				                'TYPE' => 'LOCATION',
+				                'IS_LOCATION' => 'Y',
+				                'ACTIVE' => 'Y',
+					        ),
+					        false,
+					        false,
+					        array(
+					        	'ID',
+					        	'PERSON_TYPE_ID'
+					        )
+					    );
+					    while($arLocationProp = $dbRes->Fetch()){
+					    	$arLocationProps[$arLocationProp['PERSON_TYPE_ID']] = $arLocationProp['ID'];
+					    }
+
+					    if($arLocationProps){
+					    	$arFields['ORDER_PROP'][$arLocationProps[$arFields['PERSON_TYPE_ID']]] = $_POST['order']['ORDER_PROP_'.$arLocationProps[$arFields['PERSON_TYPE_OLD']]];
+					    }
+
+					    $dbRes = CSaleOrderProps::GetList(
+					        array('SORT' => 'ASC'),
+					        array(
+				                'PERSON_TYPE_ID' => array($arFields['PERSON_TYPE_ID'], $arFields['PERSON_TYPE_OLD']),
+				                'CODE' => 'ZIP',
+				                'ACTIVE' => 'Y',
+					        ),
+					        false,
+					        false,
+					        array(
+					        	'ID',
+					        	'PERSON_TYPE_ID'
+					        )
+					    );
+					    while($arZipProp = $dbRes->Fetch()){
+					    	$arZipProps[$arZipProp['PERSON_TYPE_ID']] = $arZipProp['ID'];
+					    }
+
+					    if($arZipProps){
+					    	$arFields['ORDER_PROP'][$arZipProps[$arFields['PERSON_TYPE_ID']]] = $_POST['order']['ORDER_PROP_'.$arZipProps[$arFields['PERSON_TYPE_OLD']]];
+						}
+					}
+				}
 			}
 		}
 	}

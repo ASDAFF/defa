@@ -2,29 +2,30 @@
 if($arResult['SECTIONS'])
 {
     ?>
-    <style>
-        .quick-metki{
-            position: absolute;
-            z-index: 9999999;
-            padding: 10px;
-            width: 100%!important;
-        }
-        .quick-metki li{
-            width: 100%!important;
-            margin-bottom: 10px!important;
-        }
-        .quick-metki .series-item-pros-element span{
-            display: none!important;
-            width: auto!important;
-            padding: 10px!important;
-        }
-        .quick-metki li:hover span{
-            background-color: white!important;
-            color: black!important;
-            display: block!important;
-
-        }
-    </style>
+<!--    <style>-->
+<!--        .quick-metki{-->
+<!--            position: absolute;-->
+<!--            z-index: 9999999;-->
+<!--            padding: 10px;-->
+<!--            width: 100%!important;-->
+<!--        }-->
+<!--        .quick-metki li{-->
+<!--            width: 100%!important;-->
+<!--            margin-bottom: 10px!important;-->
+<!--        }-->
+<!--        .quick-metki .series-item-pros-element span{-->
+<!--            display: none!important;-->
+<!--            width: auto!important;-->
+<!--            padding: 10px!important;-->
+<!--        }-->
+<!--        .quick-metki li:hover span{-->
+<!--            background-color: white!important;-->
+<!--            color: black!important;-->
+<!--            display: block!important;-->
+<!---->
+<!--        }-->
+<!--    </style>-->
+	
     <div class="sections_wrapper series">
         <?if($arParams["TITLE_BLOCK"] || $arParams["TITLE_BLOCK_ALL"]):?>
             <div class="top_block">
@@ -40,10 +41,33 @@ if($arResult['SECTIONS'])
                                 <div class="col-lg-12 select">
                                     <div class="sort-list-wrapper">
                                         <?
-                                        $rsEnum = CUserFieldEnum::GetList(array(), array("USER_FIELD_NAME"=>"UF_PODBORKA"));
-                                        while ($arEnum = $rsEnum->GetNext()){
-                                            $UF_PODBORKA[] = $arEnum;
-                                        }
+
+                                            $arTQurrentSectionID = $arParams['SECTION_ID'];
+
+                                            $arPodborki = $arParams['UF_PODBORKA'];
+                                            if(empty($arPodborki))  $arPodborki = [];
+                                            $filter = array(
+                                                'IBLOCK_ID' => $arParams['IBLOCK_ID'],
+                                                'SECTION_ID' => $arTQurrentSectionID,
+                                                'ACTIVE_DATE'=>'Y', 'ACTIVE'=>'Y'
+                                            );
+                                            $sect = CIBlockSection::GetList(array('sort' => 'asc'), $filter, false,
+                                                array('UF_PODBORKA'));
+                                            while ($section = $sect->GetNext()) {
+                                            	if(!empty($section['UF_PODBORKA']) && is_array($section['UF_PODBORKA'])){
+                                                    $arPodborki = array_merge($arPodborki,$section['UF_PODBORKA']);
+	                                            }
+                                            }
+                                            $arPodborki  = array_unique($arPodborki);
+                                            if(!empty($arPodborki)){
+                                                $rsEnum = CUserFieldEnum::GetList(array(),
+                                                    array("USER_FIELD_NAME" => "UF_PODBORKA", 'ID' => $arPodborki));
+                                                while ($arEnum = $rsEnum->GetNext()) {
+                                                    $UF_PODBORKA[] = $arEnum;
+                                                }
+                                            }
+
+
                                         ?>
                                         <ul class="sort-list">
                                             <li class="sort-item"><a href="<?=$APPLICATION->GetCurPage()?>" class="sort-link <?if(empty($_GET['filter'])) { ?>active all<? } ?>">Все серии</a></li>
@@ -154,11 +178,11 @@ if($arResult['SECTIONS'])
                                 <div class="series-tabs">
                                     <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>
                                     <a href="#" class="series-content-toggle" data-tab="2">Комплекты</a>
-                                    <a href="#" class="series-content-toggle" data-tab="3">Проекты</a>
+                                    <a href="#" class="series-content-toggle" data-tab="3">Пректы</a>
                                 </div>
                                 <div class="row series-main current series-desc-block"  data-tab="1">
                                         <div class="img col-lg-4 col-sm-12">
-                                      
+
                                             <ul class="series-item-pros quick-metki">
 
                                                 <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
@@ -173,6 +197,7 @@ if($arResult['SECTIONS'])
 
                                             <div class="series-slider-wrapper">
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
+                                                    <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                     {
 
@@ -218,7 +243,7 @@ if($arResult['SECTIONS'])
                                                 <?
                                                 if(!empty($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']]))
                                                 {
-                                                    
+
                                                     ?>
                                                     <div class="series-item__thumbs slick-nav preview-slide slider-nav">
                                                         <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
@@ -568,7 +593,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -586,7 +611,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -604,7 +629,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -622,7 +647,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -646,7 +671,7 @@ if($arResult['SECTIONS'])
                                                         </div>
                                                         <div class="row series-buy">
                                                             <div class="col-md-4 counter-wrap">
-                                                                <div class="counter_block big_basket">
+                                                                <div class="counter_block">
                                                                     <span class="minus">-</span>
                                                                     <input type="text" class="text" name="quantity" value="1">
                                                                     <span class="plus">+</span>
@@ -1022,27 +1047,31 @@ if($arResult['SECTIONS'])
                                                 <? } ?>
                                             </ul>
                                             <div class="series-slider-wrapper">
+                                                <?if($arSection['UF_DISCOUNT']){?>
+                                                    <span class="sale-mark"><?=($arSection['UF_DISCOUNT'])?></span>
+                                                <?}?>
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
                                                     {
                                                         if($arSection['UF_DISCOUNT']){
-                                                            $arWaterMark = array(
-                                                                array(
-                                                                    'name' => 'watermark',
-                                                                    'type' =>'text',
-                                                                    'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
-                                                                    'text' => "Скидка на серию  ".$arSection['UF_DISCOUNT'],
-                                                                    "position" => "topright",
-                                                                    "color" => "ffffff",
-                                                                )
 
-                                                            );
+//                                                            $arWaterMark = array(
+//                                                                array(
+//                                                                    'name' => 'watermark',
+//                                                                    'type' =>'text',
+//                                                                    'font' =>$_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/font/openSans.ttf',
+//                                                                    'text' => "Скидка на серию  ".$arSection['UF_DISCOUNT'],
+//                                                                    "position" => "topright",
+//                                                                    "color" => "ffffff",
+//                                                                )
+//
+//                                                            );
                                                             $arFileTmp = CFile::ResizeImageGet(
                                                                 $image,
                                                                 array("width" => 417, "height" => 300),
                                                                 BX_RESIZE_IMAGE_EXACT,
-                                                                true,
-                                                                $arWaterMark
+                                                                true
+//                                                                $arWaterMark
                                                             );
 
                                                         }else{
@@ -1417,7 +1446,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1435,7 +1464,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1453,7 +1482,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1471,7 +1500,7 @@ if($arResult['SECTIONS'])
                                                                             <p class="price">223 523 &#8381;</p>
                                                                         </td>
                                                                         <td>
-                                                                            <div class="counter_block big_basket">
+                                                                            <div class="counter_block">
                                                                                 <span class="minus">-</span>
                                                                                 <input type="text" class="text" name="quantity" value="1">
                                                                                 <span class="plus">+</span>
@@ -1495,7 +1524,7 @@ if($arResult['SECTIONS'])
                                                         </div>
                                                         <div class="row series-buy">
                                                             <div class="col-md-4 counter-wrap">
-                                                                <div class="counter_block big_basket">
+                                                                <div class="counter_block">
                                                                     <span class="minus">-</span>
                                                                     <input type="text" class="text" name="quantity" value="1">
                                                                     <span class="plus">+</span>
