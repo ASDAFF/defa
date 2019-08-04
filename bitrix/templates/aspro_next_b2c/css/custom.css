@@ -7799,6 +7799,15 @@ body.compensate-for-scrollbar {
     margin: 0;
 }
 
+.what_do-item .hidden-content ul li {
+    position: relative;
+    font-size: 13px;
+}
+
+.what_do-item .hidden-content ul li::before {
+    display: block!important;
+}
+
 .catalog_detail .what_do-block .what_do-item:hover {
     background: white;
     box-shadow: -4px 7px 6px 0 rgba(191,191,191,.5);
