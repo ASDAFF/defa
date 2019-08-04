@@ -89,7 +89,7 @@ $APPLICATION->SetTitle("Сотрудничество");
                 <h3>Мебельный фабрикам</h3>
                 <p>Принимаем заявки мебельных фабрик, которые готовы сделать компании “ДЭФО” эксклюзивные предложения в рамках представленного ассортимента.</p>
                 <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
-            </div>LETS_PARTNERS
+            </div>
             <img src="/images/partners-1.jpg" alt="" width="656" height="271">
         </div>
         <div class="col-md-12 a11y-price">
