@@ -5073,22 +5073,25 @@ body .tabs_slider .catalog_item .inner_wrap {
     margin-left: 150px;
 }
 
-.logo-row.wproduct > div.product_block {
+.logo-row.wproduct > div.product_block,
+.logo-row > div.product_block {
     display: flex;
 }
 
-#headerfixed .logo-row.wproduct > div.product_block {
+#headerfixed .logo-row > div.product_block {
     margin: 0;
     margin-left: 150px;
     height: 80px;
 }
 
 .logo-row.wproduct > div.product_block .module_products_list,
+.logo-row > div.product_block .module_products_list,
 .item.main_item_wrapper,
 .wrapper_td,
 .inner_table {
     display: flex;
     width: 100%;
+    margin: 0;
 }
 
 .panel-up-wrapper {
