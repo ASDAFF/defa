@@ -145,7 +145,6 @@ $(document).ready(function () {
             }
         });
     }
-    ;
 
 
 //подарок
@@ -337,7 +336,7 @@ window.addEventListener("load", function() {
             $(element).find(".popular-content-items").css({"height": "335px"});
         }
     });
-})
+});
 
 // страница серий. открыть панель со всеми цветами
 $(document).ready(function() {
@@ -524,7 +523,7 @@ $(document).ready(function() {
             $(this).addClass('active');
             $('.series_content').removeClass('active');
             $('.'+$(this).attr('data-id')).addClass('active');
-        })
+        });
 
     //    слайдер похожие серии
                 $(".similar-series-slider.slick-slider").slick({
@@ -569,7 +568,7 @@ $(document).ready(function() {
 
     if($('.series-item').hasClass('inner')){
         $('.panel-anchors').addClass('show');
-    };
+    }
 
 
 //арендодателям, переключение склад-салон
@@ -764,10 +763,11 @@ $(document).ready(function () {
 /** WBL **/
 class Wbl {
     static loadForm(strClassPrefix, strFormId, defaultData) {
-        $('body').find('.' + strClassPrefix + '_frame').remove();
-        $('body').find('.' + strClassPrefix + '_trigger').remove();
-        $('body').append('<div class="' + strClassPrefix + '_frame popup"></div>');
-        $('body').append('<div class="' + strClassPrefix + '_trigger"></div>');
+        $body = $('body');
+        $body.find('.' + strClassPrefix + '_frame').remove();
+        $body.find('.' + strClassPrefix + '_trigger').remove();
+        $body.append('<div class="' + strClassPrefix + '_frame popup"></div>');
+        $body.append('<div class="' + strClassPrefix + '_trigger"></div>');
         $('.'+strClassPrefix+'_frame').jqm({
             trigger: '.' + strClassPrefix + '_trigger', onHide: function (hash) {
                 onHidejqm(strClassPrefix, hash);
