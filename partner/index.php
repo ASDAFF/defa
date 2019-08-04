@@ -88,7 +88,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Мебельный фабрикам</h3>
                 <p>Принимаем заявки мебельных фабрик, которые готовы сделать компании “ДЭФО” эксклюзивные предложения в рамках представленного ассортимента.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-1.jpg" alt="" width="656" height="271">
         </div>
@@ -96,7 +96,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Франчайзи</h3>
                 <p>Приглашаем к сотрудничеству франчайзи-партнеров, готовых стать частью крупной мебельной компании “ДЭФО”, получать эксклюзивные условия сотрудничества, маркетинговую поддержку и рекламное сопровождение.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-2.jpg" alt="" width="656" height="271">
         </div>
@@ -104,7 +104,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Дилерам</h3>
                 <p>Компания “ДЭФО” рада сотрудничать с новыми мебельными дилерами, которые готовы реализовывать ассортимент офиснойи домашней мебели. Мы предлагаем интересные продукты и выгодные условия для всех категорий дилеров.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-dealers.jpg" alt="" width="656" height="271">
         </div>
@@ -115,7 +115,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Дизайнерам и архитекторам</h3>
                 <p>Предложение для тех, кто работает в сфере разработки интерьерных проектов от частных клиентов до крупных коммерческих организаций. Компания “ДЭФО” рада поучаствовать в этом процессе, помочь в выборе мебели, чтобы в минимальные сроки подготовить предложение - выгодное как для клиента, так и для дизайнера.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-3.jpg" alt="" width="656" height="271">
         </div>
@@ -123,7 +123,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Строительно-ремонтным организациям</h3>
                 <p>“ДЭФО” предлагает своим клиентам услугу «офис под ключ». Для этого нам требуются компетентные и ответственные подрядчики. Если Вы заинтересованы в сотрудничестве и совместной работе - мы открыты к предложениям! Также мы предлагаем строительно-ремонтным организациям выгодные условия по меблировке офисов, апартаментов, квартир, демо-квартир. Создавая интерьеры с мебелью ДЭФО, вы получаете качественную мебель со скидками и быструю сдачу объектов.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-1.jpg" alt="" width="656" height="271">
         </div>
@@ -131,7 +131,7 @@ $APPLICATION->SetTitle("Сотрудничество");
             <div>
                 <h3>Агенствам недвижимости и частным риелторам</h3>
                 <p>Наша компания заинтересована в долгосрочной аренде помещений под новыевыставочные залы, офисы продаж, складское хранение. Мы рассматриваем предложения об аренде торговых площадей и складских помещений.</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-3.jpg" alt="" width="656" height="271">
         </div>
@@ -140,7 +140,7 @@ $APPLICATION->SetTitle("Сотрудничество");
                 <h3>Бизнес-центрам и управляющим компаниям</h3>
                 <p>Предлагаете своим клиентам готовые решения по организации офисного пространства? Хотите сделать это максимально просто и эффективно?</p>
                 <p>У «ДЭФО» есть все необходимое для создания многофункциональных офисов – от колл-центров до концептуальных проджект-румов и коворкингов. Обращайтесь за дизайн-проектом!</p>
-                <a href="#" class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</a>
+                <span class="grey-btn" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">Стать партнером</span>
             </div>
             <img src="/images/partners-1.jpg" alt="" width="656" height="271">
         </div>
@@ -149,10 +149,10 @@ $APPLICATION->SetTitle("Сотрудничество");
     <div class="row write-us partners">
         <div class="col-md-12">
             <h2>Хотите зарабатывать вместе с нами?</h2>
-            <a href="#" data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">
+            <span data-event="jqm" data-param-form_id="LETS_PARTNERS" data-name="LETS_PARTNERS">
                 <img src="/images/write-us.png" alt="Нажмите здесь, чтобы вызвать форму обратной связи" width="231" height="131">
                 <p>Напишите нам</p>
-            </a>
+            </span>
         </div>
     </div>
 
