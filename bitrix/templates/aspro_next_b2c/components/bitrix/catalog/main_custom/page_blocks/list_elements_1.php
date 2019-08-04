@@ -1,4 +1,3 @@
-
 <?if($arSeoItem):?>
 	<div class="seo_block">
 		<?if($arSeoItem["DETAIL_PICTURE"]):?>
