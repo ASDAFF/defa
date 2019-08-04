@@ -791,3 +791,12 @@ class Wbl {
         $('.' + strClassPrefix + '_trigger').click();
     }
 }
+
+
+document.addEventListener('click', function (e) {
+    var elemClasses = e.target.parentNode.className.toString().split(' ');
+    if( elemClasses.indexOf('jqmClose') > -1 )
+    {
+        $(e.target.parentNode.parentNode.parentNode).jqmHide();
+    }
+});

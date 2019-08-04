@@ -225,8 +225,9 @@ if ($arItems) {
 
 
                     <?endforeach;?>
-
-                    myMap.setBounds(myMap.geoObjects.getBounds());
+                    myMap.setBounds(myMap.geoObjects.getBounds(), {
+                        checkZoomRange: true
+                    });
                 }
 
                 $(document).ready(function () {

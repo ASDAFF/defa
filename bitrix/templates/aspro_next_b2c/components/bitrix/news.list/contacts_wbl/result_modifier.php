@@ -14,6 +14,9 @@ if($arResult['ITEMS'])
     unset($arItem);
     $arResult['ITEMS'] = array_diff($arResult['ITEMS'], ['']);
 
+    $arResult['SECTIONS'][0]['ITEMS'] = $arResult['ITEMS'];
+
+    /*
 	$arAllSections = CNextB2c::GetSections($arResult['ITEMS'], $arParams);
 
 	$bHasImg = false;
@@ -73,6 +76,7 @@ if($arResult['ITEMS'])
 	{
 		$arResult['SECTIONS'][0]['ITEMS'] = $arResult['ITEMS'];
 	}
+	*/
 	$arResult['ITEMS_HAS_IMG'] = $bHasImg;
 }
 ?>
