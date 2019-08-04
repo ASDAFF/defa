@@ -599,25 +599,25 @@ if ($section["UF_LABELSALE"]){
                                 Array("MODE" => "html", "UF_NAME_RUS" => GetMessage('CT_BCE_CATALOG_SOC_BUTTON'))); ?>
                         </div>
                     </div>
-                    <ul class="name-right more-series-list">
-                        <li class="more-series-main">
-                            <a class="more-series-toggle">Другие серии раздела</a>
-                            <ul class="other-series">
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link active">Ларус</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Тревизо</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Привилегия</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Нью Вашингтон</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+<!--                    <ul class="name-right more-series-list">-->
+<!--                        <li class="more-series-main">-->
+<!--                            <a class="more-series-toggle">Другие серии раздела</a>-->
+<!--                            <ul class="other-series">-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link active">Ларус</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Тревизо</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Привилегия</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Нью Вашингтон</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
             </div>
         </div>
