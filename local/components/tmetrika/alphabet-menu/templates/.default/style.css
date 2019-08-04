@@ -21,7 +21,11 @@
     right: 20px;
 }
 
-.alphabet-loader img{
+.alphabet-demo .main-img {
+    margin-right: 15px;
+}
+
+.alphabet-loader img {
     width: 50px;
     height: auto;
 }

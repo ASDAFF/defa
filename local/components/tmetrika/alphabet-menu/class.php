@@ -7,7 +7,6 @@ class AlphabetMenu extends CBitrixComponent
     protected $catalogId = 17;
 
 
-
     protected $alphabet = [
         "а",
         "б",
@@ -120,8 +119,8 @@ class AlphabetMenu extends CBitrixComponent
     public function getDataForLetter($letter)
     {
         $ids = $this->getIdsForLetter($letter);
-        $sections = [];
-        $series = [];
+        $sections = collect();
+        $series = collect();
 
         if ($ids) {
             $query = CIBlockSection::GetList([
@@ -168,7 +167,7 @@ class AlphabetMenu extends CBitrixComponent
             "nPageSize" => 150,
         ]);
 
-        $elements = [];
+        $elements = collect();
 
         while ($element = $query->GetNext()) {
             $elements[] = $element;
@@ -178,6 +177,11 @@ class AlphabetMenu extends CBitrixComponent
         $count = count($sections) + count($series) + count($elements);
 
         if ($count > 0) {
+            // оставляем уникальные имена
+            $series = $series->unique("NAME");
+            $sections = $sections->unique("NAME");
+            $elements = $elements->unique("NAME");
+                    
             return [
                 "SECTIONS" => $sections,
                 "SERIES" => $series,
