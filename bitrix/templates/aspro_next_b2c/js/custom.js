@@ -113,106 +113,106 @@ $(document).ready(function () {
 
 //карта из плавающих тизеров
 
-$(document).ready(function () {
-    if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
-        var btn = document.querySelector("#callMap");
-        var map = document.querySelector(".map-fly");
-        var close = document.querySelector(".button-close");
-        // var gift = document.querySelector(".gift-activate");
-        // var giftBanner = document.querySelector(".gift-banner");
-        // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
-        // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
-
-        btn.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            map.classList.add("show");
-        });
-
-        close.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            map.classList.remove("show");
-        });
-
-        window.addEventListener("keydown", function (evt) {
-            if (evt.keyCode === 27) {
-                if (map.classList.contains("show")) {
-                    evt.preventDefault();
-                    map.classList.remove("show");
-                }
-            }
-        });
-
-        $(document).mouseup(function (e){
-            var div = $(".map-fly");
-            if (!div.is(e.target)
-                && div.has(e.target).length === 0) {
-                map.classList.remove("show");
-            }
-        });
-    };
-
-
-//подарок
-
-    // gift.addEventListener("click", function (evt) {
-    //     evt.preventDefault();
-    //     giftBanner.classList.add("show");
-    // });
-
-    // giftCloseAlternate.addEventListener("click", function (evt) {
-    //     evt.preventDefault();
-    //     giftBanner.classList.remove("show");
-    // });
-    //
-    // giftCloseYes.addEventListener("click", function (evt) {
-    //     evt.preventDefault();
-    //     giftBanner.classList.remove("show");
-    // });
-    //
-    // window.addEventListener("keydown", function (evt) {
-    //     if (evt.keyCode === 27) {
-    //         if (giftBanner.classList.contains("show")) {
-    //             evt.preventDefault();
-    //             giftBanner.classList.remove("show");
-    //         }
-    //     }
-    // });
-    //
-    // $(document).mouseup(function (e){
-    //     var div = $(".gift-banner");
-    //     if (!div.is(e.target)
-    //         && div.has(e.target).length === 0) {
-    //         giftBanner.classList.remove("show");
-    //     }
-    // });
-
-
-
-//открытие бокового меню по клику
-
-    // $(window).resize(function() {
-    //     if ( $(window).width() <= 1366 ) {
-    //
-    //         var callMenu = document.querySelector("#callMenu");
-    //         var hideMenu = document.querySelector("#hideMenu");
-    //
-    //             callMenu.addEventListener("click", function (evt) {
-    //                 evt.preventDefault();
-    //                 if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
-    //                     callMenu.classList.add("special-move-translate");
-    //                     hideMenu.classList.add("special-move-right");
-    //                 } else {
-    //                     callMenu.classList.remove("special-move-translate");
-    //                     hideMenu.classList.remove("special-move-right");
-    //                 }
-    //
-    //             });
-    //
-    //     }
-    // });
-
-
-});
+// $(document).ready(function () {
+//     if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
+//         var btn = document.querySelector("#callMap");
+//         var map = document.querySelector(".map-fly");
+//         var close = document.querySelector(".button-close");
+//         // var gift = document.querySelector(".gift-activate");
+//         // var giftBanner = document.querySelector(".gift-banner");
+//         // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
+//         // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
+//
+//         btn.addEventListener("click", function (evt) {
+//             evt.preventDefault();
+//             map.classList.add("show");
+//         });
+//
+//         close.addEventListener("click", function (evt) {
+//             evt.preventDefault();
+//             map.classList.remove("show");
+//         });
+//
+//         window.addEventListener("keydown", function (evt) {
+//             if (evt.keyCode === 27) {
+//                 if (map.classList.contains("show")) {
+//                     evt.preventDefault();
+//                     map.classList.remove("show");
+//                 }
+//             }
+//         });
+//
+//         $(document).mouseup(function (e){
+//             var div = $(".map-fly");
+//             if (!div.is(e.target)
+//                 && div.has(e.target).length === 0) {
+//                 map.classList.remove("show");
+//             }
+//         });
+//     };
+//
+//
+// //подарок
+//
+//     // gift.addEventListener("click", function (evt) {
+//     //     evt.preventDefault();
+//     //     giftBanner.classList.add("show");
+//     // });
+//
+//     // giftCloseAlternate.addEventListener("click", function (evt) {
+//     //     evt.preventDefault();
+//     //     giftBanner.classList.remove("show");
+//     // });
+//     //
+//     // giftCloseYes.addEventListener("click", function (evt) {
+//     //     evt.preventDefault();
+//     //     giftBanner.classList.remove("show");
+//     // });
+//     //
+//     // window.addEventListener("keydown", function (evt) {
+//     //     if (evt.keyCode === 27) {
+//     //         if (giftBanner.classList.contains("show")) {
+//     //             evt.preventDefault();
+//     //             giftBanner.classList.remove("show");
+//     //         }
+//     //     }
+//     // });
+//     //
+//     // $(document).mouseup(function (e){
+//     //     var div = $(".gift-banner");
+//     //     if (!div.is(e.target)
+//     //         && div.has(e.target).length === 0) {
+//     //         giftBanner.classList.remove("show");
+//     //     }
+//     // });
+//
+//
+//
+// //открытие бокового меню по клику
+//
+//     // $(window).resize(function() {
+//     //     if ( $(window).width() <= 1366 ) {
+//     //
+//     //         var callMenu = document.querySelector("#callMenu");
+//     //         var hideMenu = document.querySelector("#hideMenu");
+//     //
+//     //             callMenu.addEventListener("click", function (evt) {
+//     //                 evt.preventDefault();
+//     //                 if (!callMenu.classList.contains("special-move-translate") || !hideMenu.classList.contains("special-move-right")) {
+//     //                     callMenu.classList.add("special-move-translate");
+//     //                     hideMenu.classList.add("special-move-right");
+//     //                 } else {
+//     //                     callMenu.classList.remove("special-move-translate");
+//     //                     hideMenu.classList.remove("special-move-right");
+//     //                 }
+//     //
+//     //             });
+//     //
+//     //     }
+//     // });
+//
+//
+// });
 
 window.addEventListener("load", function () {
     //открытие бокового меню по клику
