@@ -88,7 +88,6 @@ if($arAccessories){
 	$arAllValues["ASSOCIATED"]=$arAccessories;
 }
 ?>
-
 <?if($arAccessories || $arExpValues || (ModuleManager::isModuleInstalled("sale") && (!isset($arParams['USE_BIG_DATA']) || $arParams['USE_BIG_DATA'] != 'N'))){?>
 	<?$bViewBlock = ($arParams["VIEW_BLOCK_TYPE"] == "Y");?>
 	<?

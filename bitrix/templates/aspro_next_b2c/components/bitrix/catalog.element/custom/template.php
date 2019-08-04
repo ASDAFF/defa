@@ -56,7 +56,6 @@
         </div>
     </div>
 </div>
-
 <?/*if($arResult["TIZERS_ITEMS"]){*/?><!--
         <div class="tizers-catalog-elem">
 		<div class="tizers_block_detail tizers_block">
@@ -2507,14 +2506,12 @@ $showProps = false;
 
 
 
-
-
     <!--НАЛИЧИЕ-->
     <div class="stores-block">
         <div class="contacts-v5">
             <?$APPLICATION->IncludeComponent(
                 "bitrix:news",
-                "contacts_custom_elem",
+                "contacts_custom_elem_wbl",
                 array(
                     "IBLOCK_TYPE" => "aspro_next_content",
                     "IBLOCK_ID" => "10",
@@ -2664,7 +2661,8 @@ $showProps = false;
                         "detail" => "stores/#ELEMENT_ID#/",
                         "rss" => "rss/",
                         "rss_section" => "#SECTION_ID#/rss/",
-                    )
+                    ),
+                    'WBL_PRODUCT_ID' => $arResult['ID']
                 ),
                 false
             );?>
