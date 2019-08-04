@@ -359,37 +359,37 @@
     </div>
 <!-- end new! -->
 
-<div class="maxwidth-theme">
-    <div class="best-block">
-        <?$APPLICATION->IncludeComponent(
-	"bitrix:main.include",
-	".default",
-	array(
-		"COMPONENT_TEMPLATE" => ".default",
-		"PATH" => SITE_DIR."include/mainpage/comp_catalog_hit_best_custom.php",
-		"AREA_FILE_SHOW" => "file",
-		"AREA_FILE_SUFFIX" => "",
-		"AREA_FILE_RECURSIVE" => "Y",
-		"EDIT_TEMPLATE" => "standard.php",
-		"PRICE_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"STORES" => array(
-			0 => "",
-			1 => "",
-		),
-		"STIKERS_PROP" => "HIT",
-		"SALE_STIKER" => "SALE_TEXT",
-		"SHOW_DISCOUNT_PERCENT_NUMBER" => "N",
-		"COMPOSITE_FRAME_MODE" => "A",
-		"COMPOSITE_FRAME_TYPE" => "AUTO"
-	),
-	false
-);?>
-    </div>
-
-</div>
+<!--<div class="maxwidth-theme">-->
+<!--    <div class="best-block">-->
+<!--        --><?//$APPLICATION->IncludeComponent(
+//	"bitrix:main.include",
+//	".default",
+//	array(
+//		"COMPONENT_TEMPLATE" => ".default",
+//		"PATH" => SITE_DIR."include/mainpage/comp_catalog_hit_best_custom.php",
+//		"AREA_FILE_SHOW" => "file",
+//		"AREA_FILE_SUFFIX" => "",
+//		"AREA_FILE_RECURSIVE" => "Y",
+//		"EDIT_TEMPLATE" => "standard.php",
+//		"PRICE_CODE" => array(
+//			0 => "",
+//			1 => "",
+//		),
+//		"STORES" => array(
+//			0 => "",
+//			1 => "",
+//		),
+//		"STIKERS_PROP" => "HIT",
+//		"SALE_STIKER" => "SALE_TEXT",
+//		"SHOW_DISCOUNT_PERCENT_NUMBER" => "N",
+//		"COMPOSITE_FRAME_MODE" => "A",
+//		"COMPOSITE_FRAME_TYPE" => "AUTO"
+//	),
+//	false
+//);?>
+<!--    </div>-->
+<!---->
+<!--</div>-->
 
 
 
@@ -555,22 +555,22 @@
     );?>
 </div>
 
-<div class="maxwidth-theme">
-    <div class="recommend-block">
-        <?$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
-            array(
-                "COMPONENT_TEMPLATE" => ".default",
-                "PATH" => SITE_DIR."include/mainpage/comp_catalog_hit_recommend_custom.php",
-                "AREA_FILE_SHOW" => "file",
-                "AREA_FILE_SUFFIX" => "",
-                "AREA_FILE_RECURSIVE" => "Y",
-                "EDIT_TEMPLATE" => "standard.php"
-            ),
-            false
-        );?>
-    </div>
-
-</div>
+<!--<div class="maxwidth-theme">-->
+<!--    <div class="recommend-block">-->
+<!--        --><?//$APPLICATION->IncludeComponent("bitrix:main.include", ".default",
+//            array(
+//                "COMPONENT_TEMPLATE" => ".default",
+//                "PATH" => SITE_DIR."include/mainpage/comp_catalog_hit_recommend_custom.php",
+//                "AREA_FILE_SHOW" => "file",
+//                "AREA_FILE_SUFFIX" => "",
+//                "AREA_FILE_RECURSIVE" => "Y",
+//                "EDIT_TEMPLATE" => "standard.php"
+//            ),
+//            false
+//        );?>
+<!--    </div>-->
+<!---->
+<!--</div>-->
 
 
 
