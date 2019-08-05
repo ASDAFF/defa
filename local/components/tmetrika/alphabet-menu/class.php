@@ -1,5 +1,4 @@
-<?php
-
+<?
 
 class AlphabetMenu extends CBitrixComponent
 {
