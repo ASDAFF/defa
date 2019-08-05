@@ -14913,21 +14913,26 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     top: 0;
     bottom: 0;
     margin: auto;
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
     text-align: center;
-    line-height: 20px;
+    line-height: 34px;
     opacity: 0;
     transition: 0.3s;
 }
 
 .sectionContainer .mlist li:hover .fix-icon {
-    opacity: 1;
+    opacity: 0;
 }
 
 .sectionContainer .mlist li.active .fix-icon {
     opacity: 1;
 }
+
+.sectionContainer .mlist li.active:hover .fix-icon {
+    opacity: 1;
+}
+
 
 .sectionContainer .mlist li .fix-icon svg {
     transition: 0.3s;
