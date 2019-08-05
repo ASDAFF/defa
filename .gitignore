@@ -11,6 +11,9 @@ Thumbs.db
 ._.DS_Store
 .ht*
 
+local/vendor/illuminate
+
+
 
 bitrix/activities/
 bitrix/admin/
@@ -90,3 +93,10 @@ bitrix/modules/aspro.next/lib/phoneauth.php
 bitrix/modules/aspro.next/lib/property/
 bitrix/modules/aspro.priority/install/wizards/aspro/priority/site/public/ru/images/company/manufacturer/
 /*.php.back*.*
+
+*.back*
+
+
+upload
+
+/composer.phar

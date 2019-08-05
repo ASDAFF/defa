@@ -4,47 +4,151 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit59bc989a1289eb9f82b7c1aa208ad208
+class ComposerStaticInit13404e4ceb12a9b26cfc9d887a412af0
 {
     public static $files = array (
-        '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'X' => 
+        'T' => 
         array (
-            'XFive\\' => 6,
+            'Tmetrika\\' => 9,
         ),
-        'K' => 
+        'S' => 
         array (
-            'Kint\\' => 5,
+            'Symfony\\Polyfill\\Php72\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Contracts\\Translation\\' => 30,
+            'Symfony\\Component\\VarDumper\\' => 28,
+            'Symfony\\Component\\Translation\\' => 30,
+        ),
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Container\\' => 14,
+        ),
+        'O' => 
+        array (
+            'ORM\\' => 4,
+        ),
+        'I' => 
+        array (
+            'Illuminate\\Support\\' => 19,
+            'Illuminate\\Pagination\\' => 22,
+            'Illuminate\\Database\\' => 20,
+            'Illuminate\\Contracts\\' => 21,
+            'Illuminate\\Container\\' => 21,
         ),
         'D' => 
         array (
+            'Doctrine\\Common\\Inflector\\' => 26,
             'Defo\\' => 5,
+        ),
+        'C' => 
+        array (
+            'Carbon\\' => 7,
+        ),
+        'A' => 
+        array (
+            'Arrilot\\BitrixModels\\' => 21,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'XFive\\' => 
+        'Tmetrika\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/lib/XFive',
+            0 => __DIR__ . '/../..' . '/classes/Tmetrika',
         ),
-        'Kint\\' => 
+        'Symfony\\Polyfill\\Php72\\' => 
         array (
-            0 => __DIR__ . '/..' . '/kint-php/kint/src',
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Contracts\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
+        ),
+        'Symfony\\Component\\VarDumper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/var-dumper',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'ORM\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes/ORM',
+        ),
+        'Illuminate\\Support\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/support',
+        ),
+        'Illuminate\\Pagination\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/pagination',
+        ),
+        'Illuminate\\Database\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/database',
+        ),
+        'Illuminate\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/contracts',
+        ),
+        'Illuminate\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/container',
+        ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
         'Defo\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib/Defo',
+        ),
+        'Carbon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'Arrilot\\BitrixModels\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/arrilot/bitrix-models/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'UpdateHelper\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kylekatarnls/update-helper/src',
+            ),
         ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit59bc989a1289eb9f82b7c1aa208ad208::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit59bc989a1289eb9f82b7c1aa208ad208::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit13404e4ceb12a9b26cfc9d887a412af0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit13404e4ceb12a9b26cfc9d887a412af0::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit13404e4ceb12a9b26cfc9d887a412af0::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

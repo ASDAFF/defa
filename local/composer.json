@@ -1,14 +1,17 @@
 {
     "name": "defo/site",
     "type": "project",
-    "require": {},
+    "require": {
+        "symfony/var-dumper": "^4.3",
+        "illuminate/support": "^5.6",
+        "illuminate/database": "5.6.*",
+        "arrilot/bitrix-models": "0.7.*"
+    },
     "autoload": {
         "psr-4": {
             "Defo\\": "lib/Defo/",
-            "XFive\\": "lib/XFive/"
+            "Tmetrika\\": "classes/Tmetrika",
+            "ORM\\": "classes/ORM"
         }
-    },
-    "require-dev": {
-        "kint-php/kint": "^3.2"
     }
 }
