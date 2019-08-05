@@ -1,17 +1,17 @@
 $(function () {
 
-    var loading = false;
+    // var loading = false;
 
     $(".alphabet-loader").hide();
 
     $(".element_hover, .seria_hover").on("mouseenter", function () {
 
         // не делаем повторную загрузку
-        if (loading) {
-            return;
-        }
+        // if (loading) {
+            // return;
+        // }
 
-        loading = true;
+        // loading = true;
 
         var loader = $(this).closest(".alphabet-item").find(".alphabet-loader");
 
