@@ -2,7 +2,7 @@
 <div class="alphabet-menu-wrapper">
     <ul class="alphabet-list">
 
-        <? foreach ($arResult["LETTERS"] as $letter => $data) { ?>
+        <?php foreach ($arResult["LETTERS"] as $letter => $data) { ?>
             <li class="alphabet-item">
                 <span class="alphabet-toggle">
                     <?= $letter ?>

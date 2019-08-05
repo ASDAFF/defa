@@ -1,7 +1,5 @@
 $(function () {
 
-    // var loading = false;
-
     $(".alphabet-loader").hide();
 
     $(".element_hover, .seria_hover").on("mouseenter", function () {
