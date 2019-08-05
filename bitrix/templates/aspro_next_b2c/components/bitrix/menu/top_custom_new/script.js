@@ -144,7 +144,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
 
 
@@ -207,7 +207,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
                 //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
                 ElementInfoJsOnLoad();
@@ -251,7 +251,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
             },
             onfailure : function()
@@ -294,7 +294,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
             },
             onfailure : function()

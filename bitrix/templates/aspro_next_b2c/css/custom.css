@@ -14872,8 +14872,13 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
 .sectionContainer .mlist li .fix-icon {
     position: absolute;
     right: 15px;
-    width: 10px;
-    height: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
     opacity: 0;
     transition: 0.3s;
 }
