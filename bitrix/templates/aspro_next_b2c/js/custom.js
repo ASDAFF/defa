@@ -109,42 +109,42 @@ $(document).ready(function () {
 //карта из плавающих тизеров
 
 $(document).ready(function () {
-    if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
-        var btn = document.querySelector("#callMap");
-        var map = document.querySelector(".map-fly");
-        var close = document.querySelector(".button-close");
-        // var gift = document.querySelector(".gift-activate");
-        // var giftBanner = document.querySelector(".gift-banner");
-        // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
-        // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
-
-        btn.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            map.classList.add("show");
-        });
-
-        close.addEventListener("click", function (evt) {
-            evt.preventDefault();
-            map.classList.remove("show");
-        });
-
-        window.addEventListener("keydown", function (evt) {
-            if (evt.keyCode === 27) {
-                if (map.classList.contains("show")) {
-                    evt.preventDefault();
-                    map.classList.remove("show");
-                }
-            }
-        });
-
-        $(document).mouseup(function (e) {
-            var div = $(".map-fly");
-            if (!div.is(e.target)
-                && div.has(e.target).length === 0) {
-                map.classList.remove("show");
-            }
-        });
-    }
+    // if ($('#callMap').length || $(".map-fly").length || $(".button-close").length) {
+    //     var btn = document.querySelector("#callMap");
+    //     var map = document.querySelector(".map-fly");
+    //     var close = document.querySelector(".button-close");
+    //     // var gift = document.querySelector(".gift-activate");
+    //     // var giftBanner = document.querySelector(".gift-banner");
+    //     // var giftCloseAlternate = document.querySelector(".gift-banner__link--no");
+    //     // var giftCloseYes = document.querySelector(".gift-banner__link--yes");
+    //
+    //     btn.addEventListener("click", function (evt) {
+    //         evt.preventDefault();
+    //         map.classList.add("show");
+    //     });
+    //
+    //     close.addEventListener("click", function (evt) {
+    //         evt.preventDefault();
+    //         map.classList.remove("show");
+    //     });
+    //
+    //     window.addEventListener("keydown", function (evt) {
+    //         if (evt.keyCode === 27) {
+    //             if (map.classList.contains("show")) {
+    //                 evt.preventDefault();
+    //                 map.classList.remove("show");
+    //             }
+    //         }
+    //     });
+    //
+    //     $(document).mouseup(function (e) {
+    //         var div = $(".map-fly");
+    //         if (!div.is(e.target)
+    //             && div.has(e.target).length === 0) {
+    //             map.classList.remove("show");
+    //         }
+    //     });
+    // }
 
 
 //подарок
