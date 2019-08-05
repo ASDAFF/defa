@@ -2062,7 +2062,7 @@ function GetMetkipokSect($select = ['*'], $filter = [])
     return $tizers;
 }
 
-AddEventHandler("sale", "OnOrderAdd", "OnOrderAdd2Quick");
+//AddEventHandler("sale", "OnOrderAdd", "OnOrderAdd2Quick");
 function OnOrderAdd2Quick($intOrderID, $arFields){
     require_once($_SERVER["DOCUMENT_ROOT"] . '/ddsdev/tcpdf/tcpdf.php');
     /**

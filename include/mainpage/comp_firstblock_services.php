@@ -1,5 +1,8 @@
 <?if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
 
+
+
+
 <?
 $rs = CIBlockElement::GetList (
     Array("SORT"=>"ASC"),
@@ -31,13 +34,13 @@ $dbService = CIBlockElement::GetList (
     <a href="/services/sborka/" class="services-btn">
         Сборка
     </a>
-    <a href="/services/vyvoz-musora" class="services-btn">
+    <a href="/services/vyvoz-musora/" class="services-btn">
         Вывоз упаковки
     </a>
     <a href="/services/pereezd/" class="services-btn">
         Переезд
     </a>
-    <a href="/services/pereezd/" class="services-btn">
+    <a href="/help/warranty/" class="services-btn">
         Гарантия
     </a>
     	<!--<a href="/help/warranty/" class="services-btn">
@@ -47,4 +50,7 @@ $dbService = CIBlockElement::GetList (
     		3D-планировщик
     	</a>-->
 </div>
+
+
+
 <?endif;?>
