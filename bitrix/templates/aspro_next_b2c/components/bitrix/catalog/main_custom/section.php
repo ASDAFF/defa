@@ -448,33 +448,33 @@ if(!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])){
                             <?$APPLICATION->IncludeFile(SITE_DIR."include/share_buttons.php", Array(), Array("MODE" => "html", "UF_NAME_RUS" => GetMessage('CT_BCE_CATALOG_SOC_BUTTON')));?>
                         </div>
                     </div>
-                    <ul class="name-right more-series-list">
-                        <li class="more-series-main">
-                            <a class="more-series-toggle">Другие серии раздела</a>
-                            <ul class="other-series">
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link active">Ларус</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Тревизо</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Привилегия</a>
-                                </li>
-                                <li class="other-series-choice">
-                                    <a href="" class="other-series-link">Нью Вашингтон</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+<!--                    <ul class="name-right more-series-list">-->
+<!--                        <li class="more-series-main">-->
+<!--                            <a class="more-series-toggle">Другие серии раздела</a>-->
+<!--                            <ul class="other-series">-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link active">Ларус</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Тревизо</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Привилегия</a>-->
+<!--                                </li>-->
+<!--                                <li class="other-series-choice">-->
+<!--                                    <a href="" class="other-series-link">Нью Вашингтон</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
             </div>
         </div>
         <div class="row series-content">
-            <div class="series-tabs">
-                <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>
-                <a href="#" class="series-content-toggle" data-tab="2">Комплекты</a>
-            </div>
+<!--            <div class="series-tabs">-->
+<!--                <a href="#" class="series-content-toggle current" data-tab="1">Описание серии</a>-->
+<!--                <a href="#" class="series-content-toggle" data-tab="2">Комплекты</a>-->
+<!--            </div>-->
             <div class="row series-main current" data-tab="1">
                 <div class="col-md-8">
                     <ul class="series-item-pros quick-metki">
@@ -550,161 +550,161 @@ if(!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])){
                     </div>
                 </div>
             </div>
-            <div class="row series-main"  data-tab="2">
-                <div class="col-md-8 sets-demonstration">
-                    <div class="series-item-slider">
-                        <div class="series-item-main-slide slick-slider">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
-                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="<?=$image['SRC']?>">
-                                    <img src="<?=$image['MIN_SRC']?>" alt="">
-                                </a>
-                            <?endforeach;?>
-                        </div>
-
-                        <div class="series-item-preview-slide slick-nav preview-slide slider-nav">
-                            <?foreach($section['SERIES_GALLERIES'] as $image):?>
-                                <div class="series-item-preview-slide-item">
-                                    <img src="<?=$image['SRC']?>" alt="">
-                                </div>
-                            <?endforeach;?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-12 sets-inform">
-                    <div class="series-item-info">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12">
-                                <div class="series-item-color-top">
-                                    <h4>Цена за комплект от 628 989 ₽</h4>
-                                    <div class="series-item-color">
-                                        <div class="color-wrapper colors-by-components">
-                                            <div class="kind-property">
-                                                <? $nn=0; ?>
-                                                <?foreach($section["COLORS"]["COLOR"] as $color){?>
-                                                    <?$nn++; if ($nn>4) break;?>
-                                                    <a class="color-item" href="javascript:;" style="background: url(<?=$color['FILE_SRC']?>)"></a>
-                                                <?}?>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row series-items">
-                                    <div class="col-md-12">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <p class="series-products">Стол руководителя правый</p>
-                                                </td>
-                                                <td class="table-prices">
-                                                    <p class="old-price">263 523 &#8381;</p>
-                                                    <p class="price">223 523 &#8381;</p>
-                                                </td>
-                                                <td>
-                                                    <div class="counter_block">
-                                                        <span class="minus">-</span>
-                                                        <input type="text" class="text" name="quantity" value="1">
-                                                        <span class="plus">+</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p class="series-products">Брифинг</p>
-                                                </td>
-                                                <td class="table-prices">
-                                                    <p class="old-price">263 523 &#8381;</p>
-                                                    <p class="price">223 523 &#8381;</p>
-                                                </td>
-                                                <td>
-                                                    <div class="counter_block">
-                                                        <span class="minus">-</span>
-                                                        <input type="text" class="text" name="quantity" value="1">
-                                                        <span class="plus">+</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p class="series-products">Шкаф для документов</p>
-                                                </td>
-                                                <td class="table-prices">
-                                                    <p class="old-price">263 523 &#8381;</p>
-                                                    <p class="price">223 523 &#8381;</p>
-                                                </td>
-                                                <td>
-                                                    <div class="counter_block">
-                                                        <span class="minus">-</span>
-                                                        <input type="text" class="text" name="quantity" value="1">
-                                                        <span class="plus">+</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <p class="series-products">Журнальный стол</p>
-                                                </td>
-                                                <td class="table-prices">
-                                                    <p class="old-price">263 523 &#8381;</p>
-                                                    <p class="price">223 523 &#8381;</p>
-                                                </td>
-                                                <td>
-                                                    <div class="counter_block">
-                                                        <span class="minus">-</span>
-                                                        <input type="text" class="text" name="quantity" value="1">
-                                                        <span class="plus">+</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row series-price">
-                                    <div class="col-md-4 new-price-wrap">
-                                        <p class="price">19 980 &#8381;</p>
-                                    </div>
-                                    <div class="col-md-4 old-price-wrap">
-                                        <p class="old-price">19 980 &#8381;</p>
-                                    </div>
-                                    <div class="col-md-4 sale-size-wrap">
-                                        <a href="#" class="expensive">Это дорого?</a>
-                                    </div>
-                                </div>
-                                <div class="row series-price procent">
-                                    <div class="col-md-12">
-                                        <p class="economy"><span class="procent">-28%</span> Экономия 3 530 &#8381;</p>
-                                    </div>
-                                </div>
-                                <div class="row series-buy">
-                                    <div class="col-md-12 counter-wrap">
-                                        <div class="counter_block">
-                                            <span class="minus">-</span>
-                                            <input type="text" class="text" name="quantity" value="1">
-                                            <span class="plus">+</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row series-buy">
-                                    <div class="col-md-6 in-basket-wrap">
-                                        <div class="button_block">
-                                            <a href="#">В корзину</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <a href="" class="fast-buy">Быстрый заказ</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 another-color">
-                                        <p>Нужна серия в другом цвете?</p>
-                                        <a class="btn"><span class="animate-load" data-event="jqm" data-param-form_id="SIMPLE_FORM_11" data-name="SIMPLE_FORM_11" data-autoload-product_name="<?=CNextB2c::formatJsName($arResult["NAME"]);?>" data-autoload-product_id="<?=$arResult["ID"];?>">Оставить заявку</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="row series-main"  data-tab="2">-->
+<!--                <div class="col-md-8 sets-demonstration">-->
+<!--                    <div class="series-item-slider">-->
+<!--                        <div class="series-item-main-slide slick-slider">-->
+<!--                            --><?//foreach($section['SERIES_GALLERIES'] as $image):?>
+<!--                                <a class="series-item-main-fancy thumb" rel="group_2" data-fancybox="gallery" href="--><?//=$image['SRC']?><!--">-->
+<!--                                    <img src="--><?//=$image['MIN_SRC']?><!--" alt="">-->
+<!--                                </a>-->
+<!--                            --><?//endforeach;?>
+<!--                        </div>-->
+<!---->
+<!--                        <div class="series-item-preview-slide slick-nav preview-slide slider-nav">-->
+<!--                            --><?//foreach($section['SERIES_GALLERIES'] as $image):?>
+<!--                                <div class="series-item-preview-slide-item">-->
+<!--                                    <img src="--><?//=$image['SRC']?><!--" alt="">-->
+<!--                                </div>-->
+<!--                            --><?//endforeach;?>
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-4 col-sm-12 sets-inform">-->
+<!--                    <div class="series-item-info">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-12 col-lg-12">-->
+<!--                                <div class="series-item-color-top">-->
+<!--                                    <h4>Цена за комплект от 628 989 ₽</h4>-->
+<!--                                    <div class="series-item-color">-->
+<!--                                        <div class="color-wrapper colors-by-components">-->
+<!--                                            <div class="kind-property">-->
+<!--                                                --><?// $nn=0; ?>
+<!--                                                --><?//foreach($section["COLORS"]["COLOR"] as $color){?>
+<!--                                                    --><?//$nn++; if ($nn>4) break;?>
+<!--                                                    <a class="color-item" href="javascript:;" style="background: url(--><?//=$color['FILE_SRC']?>/*)"></a>*/
+/*                                                */<?//}?>
+<!---->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row series-items">-->
+<!--                                    <div class="col-md-12">-->
+<!--                                        <table>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <p class="series-products">Стол руководителя правый</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="table-prices">-->
+<!--                                                    <p class="old-price">263 523 &#8381;</p>-->
+<!--                                                    <p class="price">223 523 &#8381;</p>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <div class="counter_block">-->
+<!--                                                        <span class="minus">-</span>-->
+<!--                                                        <input type="text" class="text" name="quantity" value="1">-->
+<!--                                                        <span class="plus">+</span>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <p class="series-products">Брифинг</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="table-prices">-->
+<!--                                                    <p class="old-price">263 523 &#8381;</p>-->
+<!--                                                    <p class="price">223 523 &#8381;</p>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <div class="counter_block">-->
+<!--                                                        <span class="minus">-</span>-->
+<!--                                                        <input type="text" class="text" name="quantity" value="1">-->
+<!--                                                        <span class="plus">+</span>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <p class="series-products">Шкаф для документов</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="table-prices">-->
+<!--                                                    <p class="old-price">263 523 &#8381;</p>-->
+<!--                                                    <p class="price">223 523 &#8381;</p>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <div class="counter_block">-->
+<!--                                                        <span class="minus">-</span>-->
+<!--                                                        <input type="text" class="text" name="quantity" value="1">-->
+<!--                                                        <span class="plus">+</span>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <p class="series-products">Журнальный стол</p>-->
+<!--                                                </td>-->
+<!--                                                <td class="table-prices">-->
+<!--                                                    <p class="old-price">263 523 &#8381;</p>-->
+<!--                                                    <p class="price">223 523 &#8381;</p>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <div class="counter_block">-->
+<!--                                                        <span class="minus">-</span>-->
+<!--                                                        <input type="text" class="text" name="quantity" value="1">-->
+<!--                                                        <span class="plus">+</span>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row series-price">-->
+<!--                                    <div class="col-md-4 new-price-wrap">-->
+<!--                                        <p class="price">19 980 &#8381;</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4 old-price-wrap">-->
+<!--                                        <p class="old-price">19 980 &#8381;</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4 sale-size-wrap">-->
+<!--                                        <a href="#" class="expensive">Это дорого?</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row series-price procent">-->
+<!--                                    <div class="col-md-12">-->
+<!--                                        <p class="economy"><span class="procent">-28%</span> Экономия 3 530 &#8381;</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row series-buy">-->
+<!--                                    <div class="col-md-12 counter-wrap">-->
+<!--                                        <div class="counter_block">-->
+<!--                                            <span class="minus">-</span>-->
+<!--                                            <input type="text" class="text" name="quantity" value="1">-->
+<!--                                            <span class="plus">+</span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row series-buy">-->
+<!--                                    <div class="col-md-6 in-basket-wrap">-->
+<!--                                        <div class="button_block">-->
+<!--                                            <a href="#">В корзину</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <a href="" class="fast-buy">Быстрый заказ</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-lg-12 another-color">-->
+<!--                                        <p>Нужна серия в другом цвете?</p>-->
+<!--                                        <a class="btn"><span class="animate-load" data-event="jqm" data-param-form_id="SIMPLE_FORM_11" data-name="SIMPLE_FORM_11" data-autoload-product_name="--><?//=CNextB2c::formatJsName($arResult["NAME"]);?><!--" data-autoload-product_id="--><?//=$arResult["ID"];?><!--">Оставить заявку</span></a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
         <div class="row series-advantages" id="moreInformSeries">
