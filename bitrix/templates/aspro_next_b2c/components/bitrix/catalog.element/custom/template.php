@@ -2015,7 +2015,7 @@ $showProps = false;
                             </a>
                         </div>
                         <div class="col-sm-2">
-                            <a href="" class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
+                            <a class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
                                 <div class="what_do-item-icon">
                                     <svg height="35" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                          viewBox="0 0 25.716 26.266" style="enable-background:new 0 0 25.716 26.266;" xml:space="preserve">
@@ -2069,7 +2069,7 @@ $showProps = false;
 
 
                         <div class="col-sm-2">
-                            <a href="<?=SITE_DIR ?>services/test-drayv/" class="what_do-item">
+                            <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                                 <div class="what_do-item-icon">
 
                                     <svg height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40.34 47.5">
