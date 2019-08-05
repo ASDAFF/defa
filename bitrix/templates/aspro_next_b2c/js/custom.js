@@ -763,7 +763,7 @@ $(document).ready(function () {
 /** WBL **/
 class Wbl {
     static loadForm(strClassPrefix, strFormId, defaultData) {
-        $body = $('body');
+        var $body = $('body');
         $body.find('.' + strClassPrefix + '_frame').remove();
         $body.find('.' + strClassPrefix + '_trigger').remove();
         $body.append('<div class="' + strClassPrefix + '_frame popup"></div>');
