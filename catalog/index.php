@@ -411,9 +411,9 @@ $APPLICATION->IncludeComponent(
 		"PARTIAL_PRODUCT_PROPERTIES" => "Y",
 		"DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
 		"STORES" => array(
-			0 => "1",
-			1 => "2",
-			2 => "3",
+			0 => "2",
+			1 => "3",
+			2 => "1",
 			3 => "",
 		),
 		"USER_FIELDS" => array(
