@@ -46,7 +46,6 @@ $APPLICATION->SetTitle("Дизайнерам и архитекторам");
 </div>
 
 <!--здесь не забыть добавить форму загрузить проект-->
-
 <div class="top_block">
 	<h3 class="title_block big">Преимущества работы с нами:</h3>
 </div>
