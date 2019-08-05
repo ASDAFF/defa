@@ -1016,7 +1016,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             <li>Возврат денежных средств</li>
                                         </ul>
                                         <a class="help_me animated-load" data-event="jqm" data-param-form_id="ASK" data-name="question">Получить консультацию</a>
-                                        <a href="/services/dostavka/">Детальная информация</a>
+                                        <a href="/help/warranty/">Детальная информация</a>
 
                                     </div>
                                 </div>
