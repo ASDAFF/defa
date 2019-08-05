@@ -98,5 +98,5 @@ bitrix/modules/aspro.priority/install/wizards/aspro/priority/site/public/ru/imag
 
 
 upload
-local/vendor
 
+/composer.phar
