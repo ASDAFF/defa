@@ -9002,8 +9002,6 @@ body.compensate-for-scrollbar {
 }
 
 .char_block .props_list li .char_name {
-    /*display: inline-block;
-    vertical-align: middle;*/
     background: rgb(246,246,247);
 }
 
@@ -9014,9 +9012,7 @@ body.compensate-for-scrollbar {
 }
 
 .char_block .props_list li .char_value {
-    /*display: inline-block;
-    vertical-align: middle;
-    float: right;*/
+
     text-align: right;
     background: rgb(246,246,247);
     padding-left: 10px;
