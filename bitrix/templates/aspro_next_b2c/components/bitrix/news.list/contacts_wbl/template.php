@@ -33,7 +33,7 @@
 								$address = ($arItem['PROPERTIES']['ADDRESS']['VALUE'] ? ", ".$arItem['PROPERTIES']['ADDRESS']['VALUE'] : "");
 								?>
 
-								<tr class="item" id="<?=$this->GetEditAreaId($arItem['ID'])?>">
+								<tr class="item" data-wbl-shop-id="<?=$arItem['ID']?>" id="<?=$this->GetEditAreaId($arItem['ID'])?>" data-wbl-detail-shop-id="<?=$arItem['ID']?>">
 									<?if($imageSrc):?>
 <!--										<td class="hidden-xs img">-->
 <!--											<a href="--><?//=$arItem["DETAIL_PAGE_URL"];?><!--">-->
@@ -43,7 +43,7 @@
 									<?endif;?>
 									<td colspan="<?=($imageSrc ? 1 : 2);?>" class="hidden-xs" <?=(($arResult['ITEMS_HAS_IMG'] && !$imageSrc) ? 'colspan=2' : '');?>>
 										<div class="title">
-											<a href="javascript:void(0)<?//=$arItem["DETAIL_PAGE_URL"];?>" data-wbl-detail-shop-id="<?=$arItem['ID']?>" class="dark_link"><?=$arItem['NAME'];?><?=$address;?></a>
+											<a href="javascript:void(0)<?//=$arItem["DETAIL_PAGE_URL"];?>" class="dark_link"><?=$arItem['NAME'];?><?=$address;?></a>
 										</div>
 
                                     <div class="phone">

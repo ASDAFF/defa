@@ -1,0 +1,22 @@
+.contacts_wbl [data-wbl-shop-id] .schedule {background: transparent !important;}
+.contacts_wbl [data-wbl-shop-id].active {background: #f8f9fb;}
+.stores-block .icon-blocks:before{
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    position: relative;
+    top: 1px;
+    left: 0px;
+    background: url(/bitrix/templates/aspro_next_b2c/images/next.png) -185px -58px no-repeat;
+    margin-right: 10px;
+}
+.stores-block .phone:before {
+    background-position: -221px -59px;
+}
+.stores-block .email:before {
+    background-position: -161px -118px;
+}
+
+.contacts_wbl [data-wbl-detail-shop-id] {
+    cursor: pointer;}
