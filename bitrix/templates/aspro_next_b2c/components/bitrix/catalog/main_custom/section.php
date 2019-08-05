@@ -582,8 +582,8 @@ if(!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])){
 <!--                                                --><?// $nn=0; ?>
 <!--                                                --><?//foreach($section["COLORS"]["COLOR"] as $color){?>
 <!--                                                    --><?//$nn++; if ($nn>4) break;?>
-<!--                                                    <a class="color-item" href="javascript:;" style="background: url(--><?//=$color['FILE_SRC']?>/*)"></a>*/
-/*                                                */<?//}?>
+<!--                                                    <a class="color-item" style="background:url(--><?//=$color['FILE_SRC']?><!--);"></a>-->
+<!--                                                    --><?//}?>
 <!---->
 <!--                                            </div>-->
 <!--                                        </div>-->
