@@ -1,13 +1,6 @@
 <?
 $aMenuLinks = Array(
 	Array(
-		"Главная", 
-		"/index.php", 
-		Array(), 
-		Array("ONLY_MOBILE"=>"Y"), 
-		"" 
-	),
-	Array(
 		"Компания", 
 		"/company/", 
 		Array(), 

@@ -85,84 +85,84 @@ $APPLICATION->SetTitle("Госзаказчикам");
     </div>
 
 
-<div class="top_block">
-	<h3 class="title_block big">Все необходимое для оборудования офисных и административных помещений</h3>
-</div>
+<!--<div class="top_block">-->
+<!--	<h3 class="title_block big">Все необходимое для оборудования офисных и административных помещений</h3>-->
+<!--</div>-->
 
-<div class="row products-tabs">
-    <div class="col-lg-12 products-tabs-card card">
-        <div class="row products-tabs-content">
-            <div class="col-lg-2 tabs-list-wrap">
-                <ul class="tabs-list">
-                    <li class="tabs-item"><a href="">Мебель для офиса</a></li>
-                    <li class="tabs-item active"><a href="">Кресла и стулья</a></li>
-                    <li class="tabs-item"><a href="">Мебель для приемных</a></li>
-                    <li class="tabs-item"><a href="">Переговорки</a></li>
-                    <li class="tabs-item"><a href="">Мягкая мебель</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-5 products-tabs-wrap">
-                <ul class="products-list">
-                    <li class="products-item"><a href="">Тревизо</a></li>
-                    <li class="products-item"><a href="">Ларус</a></li>
-                    <li class="products-item active"><a href="">Пингеко</a></li>
-                    <li class="products-item"><a href="">Гемсоун</a></li>
-                    <li class="products-item"><a href="">Спич</a></li>
-                    <li class="products-item"><a href="">Венеция</a></li>
-                    <li class="products-item"><a href="">Прего</a></li>
-                    <li class="products-item"><a href="">Плаза</a></li>
-                    <li class="products-item"><a href="">Таурус</a></li>
-                    <li class="products-item"><a href="">Смартекст</a></li>
-                    <li class="products-item"><a href="">Вегас</a></li>
-                    <li class="products-item"><a href="">Мастер</a></li>
-                    <li class="products-item"><a href="">Нортон</a></li>
-                    <li class="products-item"><a href="">Ричмонд</a></li>
-                    <li class="products-item"><a href="">Лофт</a></li>
-                </ul>
-                <ul class="products-list">
-                    <li class="products-item"><a href="">Тревизо</a></li>
-                    <li class="products-item"><a href="">Ларус</a></li>
-                    <li class="products-item"><a href="">Пингеко</a></li>
-                    <li class="products-item"><a href="">Гемсоун</a></li>
-                    <li class="products-item"><a href="">Спич</a></li>
-                    <li class="products-item"><a href="">Венеция</a></li>
-                    <li class="products-item"><a href="">Прего</a></li>
-                    <li class="products-item"><a href="">Плаза</a></li>
-                    <li class="products-item"><a href="">Таурус</a></li>
-                    <li class="products-item"><a href="">Смартекст</a></li>
-                    <li class="products-item"><a href="">Вегас</a></li>
-                    <li class="products-item"><a href="">Мастер</a></li>
-                    <li class="products-item"><a href="">Нортон</a></li>
-                    <li class="products-item"><a href="">Ричмонд</a></li>
-                    <li class="products-item"><a href="">Лофт</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-5 product-demo">
-                <img class="product-demo-img" src="/images/iq.jpg" alt="" width="441" height="630">
-                <ul class="product-demo-documents">
-                    <li>
-                        <a class="document pdf" href="">Описание товара согласно ФЗ-223 <span class="doc-size">12,41 МБ</span></a>
-                    </li>
-                    <li>
-                        <a class="document pdf" href="">Описание товара согласно ФЗ-44 <span class="doc-size">37,29 МБ</span></a>
-                    </li>
-                    <li>
-                        <a class="document pdf" href="">Презентация <span class="doc-size">43,95 МБ</span></a>
-                    </li>
-                    <li>
-                        <a class="document pdf" href="">Прайс-лист <span class="doc-size">37,29 МБ</span></a>
-                    </li>
-                    <li class="link-wrap">
-                        <a href="" class="arrow-link">Скачать одним архивом<span></span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-7 link-block"><a href="/catalog" class="arrow-link">Перейти в каталог<span></span></a></div>
-        </div>
-    </div>
-</div>
+<!--<div class="row products-tabs">-->
+<!--    <div class="col-lg-12 products-tabs-card card">-->
+<!--        <div class="row products-tabs-content">-->
+<!--            <div class="col-lg-2 tabs-list-wrap">-->
+<!--                <ul class="tabs-list">-->
+<!--                    <li class="tabs-item"><a href="">Мебель для офиса</a></li>-->
+<!--                    <li class="tabs-item active"><a href="">Кресла и стулья</a></li>-->
+<!--                    <li class="tabs-item"><a href="">Мебель для приемных</a></li>-->
+<!--                    <li class="tabs-item"><a href="">Переговорки</a></li>-->
+<!--                    <li class="tabs-item"><a href="">Мягкая мебель</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="col-lg-5 products-tabs-wrap">-->
+<!--                <ul class="products-list">-->
+<!--                    <li class="products-item"><a href="">Тревизо</a></li>-->
+<!--                    <li class="products-item"><a href="">Ларус</a></li>-->
+<!--                    <li class="products-item active"><a href="">Пингеко</a></li>-->
+<!--                    <li class="products-item"><a href="">Гемсоун</a></li>-->
+<!--                    <li class="products-item"><a href="">Спич</a></li>-->
+<!--                    <li class="products-item"><a href="">Венеция</a></li>-->
+<!--                    <li class="products-item"><a href="">Прего</a></li>-->
+<!--                    <li class="products-item"><a href="">Плаза</a></li>-->
+<!--                    <li class="products-item"><a href="">Таурус</a></li>-->
+<!--                    <li class="products-item"><a href="">Смартекст</a></li>-->
+<!--                    <li class="products-item"><a href="">Вегас</a></li>-->
+<!--                    <li class="products-item"><a href="">Мастер</a></li>-->
+<!--                    <li class="products-item"><a href="">Нортон</a></li>-->
+<!--                    <li class="products-item"><a href="">Ричмонд</a></li>-->
+<!--                    <li class="products-item"><a href="">Лофт</a></li>-->
+<!--                </ul>-->
+<!--                <ul class="products-list">-->
+<!--                    <li class="products-item"><a href="">Тревизо</a></li>-->
+<!--                    <li class="products-item"><a href="">Ларус</a></li>-->
+<!--                    <li class="products-item"><a href="">Пингеко</a></li>-->
+<!--                    <li class="products-item"><a href="">Гемсоун</a></li>-->
+<!--                    <li class="products-item"><a href="">Спич</a></li>-->
+<!--                    <li class="products-item"><a href="">Венеция</a></li>-->
+<!--                    <li class="products-item"><a href="">Прего</a></li>-->
+<!--                    <li class="products-item"><a href="">Плаза</a></li>-->
+<!--                    <li class="products-item"><a href="">Таурус</a></li>-->
+<!--                    <li class="products-item"><a href="">Смартекст</a></li>-->
+<!--                    <li class="products-item"><a href="">Вегас</a></li>-->
+<!--                    <li class="products-item"><a href="">Мастер</a></li>-->
+<!--                    <li class="products-item"><a href="">Нортон</a></li>-->
+<!--                    <li class="products-item"><a href="">Ричмонд</a></li>-->
+<!--                    <li class="products-item"><a href="">Лофт</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="col-lg-5 product-demo">-->
+<!--                <img class="product-demo-img" src="/images/iq.jpg" alt="" width="441" height="630">-->
+<!--                <ul class="product-demo-documents">-->
+<!--                    <li>-->
+<!--                        <a class="document pdf" href="">Описание товара согласно ФЗ-223 <span class="doc-size">12,41 МБ</span></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="document pdf" href="">Описание товара согласно ФЗ-44 <span class="doc-size">37,29 МБ</span></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="document pdf" href="">Презентация <span class="doc-size">43,95 МБ</span></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="document pdf" href="">Прайс-лист <span class="doc-size">37,29 МБ</span></a>-->
+<!--                    </li>-->
+<!--                    <li class="link-wrap">-->
+<!--                        <a href="" class="arrow-link">Скачать одним архивом<span></span></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-7 link-block"><a href="/catalog" class="arrow-link">Перейти в каталог<span></span></a></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
 <div class="top_block">

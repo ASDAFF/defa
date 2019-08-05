@@ -1016,7 +1016,7 @@ setViewedProduct(<?=$arResult['ID']?>, <?=CUtil::PhpToJSObject($arViewedData, fa
                                             <li>Возврат денежных средств</li>
                                         </ul>
                                         <a class="help_me animated-load" data-event="jqm" data-param-form_id="ASK" data-name="question">Получить консультацию</a>
-                                        <a href="/services/dostavka/">Детальная информация</a>
+                                        <a href="/help/warranty/">Детальная информация</a>
 
                                     </div>
                                 </div>
@@ -1913,9 +1913,11 @@ $showProps = false;
 
                                 <div class="hidden-content">
                                     <ul>
-                                        <li>Текст</li>
-                                        <li>Текст</li>
-                                        <li>Текст</li>
+                                        <li>Экономия времени</li>
+                                        <li>Демонстрация готового результата</li>
+                                        <li>Расстановка мебели с учетом зонирования</li>
+                                        <li>Тестирование мебели и эргономики офиса</li>
+                                        <li>Уверенность в правильном выборе</li>
                                     </ul>
                                 </div>
                             </a>
@@ -1957,9 +1959,11 @@ $showProps = false;
                                 <span>Получить 3D-проект бесплатно</span>
                                 <div class="hidden-content">
                                     <ul>
-                                        <li>Текст</li>
-                                        <li>Текст</li>
-                                        <li>Текст</li>
+                                        <li>Визуализация результата</li>
+                                        <li>Комплексный подход к дизайну</li>
+                                        <li>Индивидуальный подбор мебели</li>
+                                        <li>Создание эксклюзивного интерьера</li>
+                                        <li>Решение ваших бизнес-задач</li>
                                     </ul>
                                 </div>
                             </a>
@@ -2005,7 +2009,6 @@ $showProps = false;
                                 <div class="hidden-content">
                                     <ul>
                                         <li>Экономия времени</li>
-                                        <li>Выезд менеджера на объект</li>
                                         <li>Проведение замеров</li>
                                         <li>Демонстрация образцов материалов</li>
                                         <li>Индивидуальный подбор мебели</li>
@@ -2015,7 +2018,7 @@ $showProps = false;
                             </a>
                         </div>
                         <div class="col-sm-2">
-                            <a href="" class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
+                            <a class="what_do-item animate-load" data-event="jqm" data-param-form_id="ASK" data-name="question">
                                 <div class="what_do-item-icon">
                                     <svg height="35" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                          viewBox="0 0 25.716 26.266" style="enable-background:new 0 0 25.716 26.266;" xml:space="preserve">
@@ -2069,7 +2072,7 @@ $showProps = false;
 
 
                         <div class="col-sm-2">
-                            <a href="<?=SITE_DIR ?>services/test-drayv/" class="what_do-item">
+                            <a href="<?=SITE_DIR ?>partner/b2g/" class="what_do-item">
                                 <div class="what_do-item-icon">
 
                                     <svg height="35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40.34 47.5">

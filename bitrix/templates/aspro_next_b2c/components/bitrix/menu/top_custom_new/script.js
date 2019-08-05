@@ -109,20 +109,22 @@ $(document).ready(function(){
         return false;
 	});
 
-    $(document).on('mouseenter','.collections li',function(){
-    	var id = $(this).data('id');
-        $('.collections li').removeClass('active');
-        $(this).addClass('active');
+
+
+    $(document).on('mouseenter','.collections li span',function(){
+    	var id = $(this).parent().data('id');
+        $(this).parent().siblings().removeClass('active');
+        $(this).parent().addClass('active');
         $('.model-elements-list').removeClass('active');
     	$('.model'+id).addClass('active');
     });
 
-    $(document).on('mouseenter','.model-elements',function(){
-        var id = $(this).data('id');
-        var sectionid = $(this).data('sectionid');
-        var propid = $(this).data('propid');
+    $(document).on('mouseenter','.model-elements span',function(){
+        var id = $(this).parent().data('id');
+        var sectionid = $(this).parent().data('sectionid');
+        var propid = $(this).parent().data('propid');
         $('.model-elements-list li').removeClass('active');
-        $(this).addClass('active');
+        $(this).parent().addClass('active');
         BX.showWait();
         var postData = {
             id: id,
@@ -144,7 +146,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
 
 
@@ -165,16 +167,16 @@ $(document).ready(function(){
 
 
 
-    $(document).on('mouseenter','.collections.js-series.mlist li',function(){
-         var id = $(this).data('id');
+    $(document).on('mouseenter','.collections.js-series.mlist li span',function(){
+         var id = $(this).parent().data('id');
 
          //$('.model-elements-list.model'+id + ' ul .js-desc-series').addClass('active');
          $('.model-elements-list.model'+id + ' li:first').addClass('active');
 
     });
 
-    $(document).on('mouseenter','.collections:not(.js-series) li',function() { // наведение мыши на офисные кресла -> модели
-        var id = $(this).data('id');
+    $(document).on('mouseenter','.collections:not(.js-series) li span',function() { // наведение мыши на офисные кресла -> модели
+        var id = $(this).parent().data('id');
 
         var modelId = $('.model'+id+' .mlist li:first').data('id');
         var sectionid = $('.model'+id+' .mlist li:first').data('sectionid');
@@ -207,7 +209,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
                 //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
                 ElementInfoJsOnLoad();
@@ -223,14 +225,14 @@ $(document).ready(function(){
         /* ---------------------------------------------- */
 
     });
-    $(document).on('mouseenter','.js-series li,.js-desc-series',function(){
-        var id = $(this).data('id');
-        var sectionid = $(this).data('sectionid');
+    $(document).on('mouseenter','.js-series li span,.js-desc-series span',function(){
+        var id = $(this).parent().data('id');
+        var sectionid = $(this).parent().data('sectionid');
         /*$('.js-series li').removeClass('active');*/
         $('.model-elements-list li.js-kit-series').removeClass('active');
         $('.model-elements-list li.model-elements').removeClass('active');
 
-        $(this).addClass('active');
+        $(this).parent().addClass('active');
         BX.showWait();
         var postData = {
             id: id,
@@ -251,7 +253,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
             },
             onfailure : function()
@@ -267,13 +269,13 @@ $(document).ready(function(){
 
 
 
-    $(document).on('mouseenter','.js-kit-series',function(){
-        var id = $(this).data('id');
-        var sectionid = $(this).data('sectionid');
+    $(document).on('mouseenter','.js-kit-series span',function(){
+        var id = $(this).parent().data('id');
+        var sectionid = $(this).parent().data('sectionid');
         /*$('.js-series li').removeClass('active');*/
         $('.model-elements-list li').removeClass('active');
 
-        $(this).addClass('active');
+        $(this).parent().addClass('active');
         BX.showWait();
         var postData = {
             id: id,
@@ -294,7 +296,7 @@ $(document).ready(function(){
                 $('.ajax-element').html(result);
                 $('.model-elements-list .mlist .fix-icon').click(function () {
                     $(this).toggleClass('active');
-                    $('.mlist').toggleClass('opacity');
+                    $('.model-elements-list .mlist').toggleClass('opacity');
                 });
             },
             onfailure : function()
