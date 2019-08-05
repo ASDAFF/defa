@@ -1,0 +1,37 @@
+.seria_hover,
+.element_hover,
+.alphabet-toggle {
+    cursor: pointer;
+}
+
+.another-sale_img {
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+}
+
+.alphabet-hide {
+    overflow-y: auto;
+}
+
+.alphabet-loader {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.alphabet-demo .main-img {
+    margin-right: 15px;
+}
+
+.alphabet-loader img {
+    width: 50px;
+    height: auto;
+}
+
+.alphabet-demo {
+    position: relative;
+}
+
+
