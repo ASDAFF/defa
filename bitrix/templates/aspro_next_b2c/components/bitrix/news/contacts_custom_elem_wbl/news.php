@@ -335,6 +335,22 @@ if ($arItems) {
                     {
                         myMap.setZoom(zoom, { smooth: true });
                         myMap.setCenter([placemarks[intId]['lat'],placemarks[intId]['lon']]);
+                        if( document.querySelectorAll('.contacts_wbl [data-wbl-shop-id].active').length > 0 )
+                        {
+                            for(var i in document.querySelectorAll('.contacts_wbl [data-wbl-shop-id].active'))
+                            {
+                                if( !isNaN(i) && document.querySelectorAll('.contacts_wbl [data-wbl-shop-id].active')[i] instanceof Node)
+                                {
+                                    document.querySelectorAll('.contacts_wbl [data-wbl-shop-id].active')[i].classList.remove('active');
+                                }
+                            }
+                        }
+
+
+                        if( document.querySelectorAll('.contacts_wbl [data-wbl-shop-id="'+intId+'"]').length > 0 )
+                        {
+                            document.querySelector('.contacts_wbl [data-wbl-shop-id="'+intId+'"]').classList.add('active');
+                        }
                     }
                 }
 
