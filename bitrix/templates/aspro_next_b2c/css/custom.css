@@ -4508,7 +4508,6 @@ body .tabs_slider .catalog_item .inner_wrap {
 .sort-list-wrapper .sort-item input:checked + label::after {
     opacity: 1;
 }
-
 /*плавающий фильтр*/
 .sort-list-wrapper.floating.fixed {
     display: flex;
@@ -13728,11 +13727,12 @@ table.contacts-stores tr.item td:last-of-type {
     top: 0;
     left: 32px;
     z-index: 1;
-    height: 672px;
+    height: 624px;
     padding: 45px 60px;
     background-color: #ffffff;
     border-radius: 0 5px 5px 0;
-    box-shadow: 10px 0 10px 0px rgba(191, 191, 191, 0.7);
+    box-shadow: 10px 0 10px 0 rgba(191, 191, 191, 0.7);
+    overflow-y: unset;
 }
 
 .alphabet-item:hover .alphabet-hide {
@@ -13746,14 +13746,17 @@ table.contacts-stores tr.item td:last-of-type {
 }
 
 .alphabet-choice {
-    width: 450px;
     margin-right: 90px;
 }
 
 .alphabet-hide-list {
     margin: 0;
-    margin-right: 60px;
+    margin-right: 40px;
     padding: 0;
+    max-height: 530px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-width: 155px;
 }
 
 .alphabet-hide-list:last-child {
