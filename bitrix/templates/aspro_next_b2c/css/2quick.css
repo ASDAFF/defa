@@ -1,0 +1,16 @@
+.tqGeneratePDF{
+    cursor:pointer;
+    border-bottom: 1px dotted rgb(44,105,189);
+    color: rgb(44,105,189);
+    font-size: 13px;
+}
+.basket-items-list-header-filter-item .tqGeneratePDF{
+    border: none;
+    color: black;
+}
+.img_wrapper.swipeignore ul.quick-metki{
+max-width: 50%!important;
+}
+.filters-for-series.series-sort .select .sort-list-wrapper .sort-list{
+    justify-content: left!important;
+}
