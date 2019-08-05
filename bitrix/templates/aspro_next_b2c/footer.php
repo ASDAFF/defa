@@ -143,7 +143,7 @@
                                                 </span>
                                             </li>
                                             <li class="floating-tizer-block" id="callMap">
-                                                <a href="/contacts/stores/" class="floating-tizer-link">
+                                                <a href="/company/stores/" class="floating-tizer-link">
 <!--                                                    <a href="href="/contacts/stores/" "></a>-->
                                                     <div class="tizer-icon">
                                                         <img src="<?SITE_DIR?>/images/see-in-shop__light.svg" alt="" width="30" height="30">
