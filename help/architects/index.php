@@ -1,96 +1,125 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Дизайнерам и архитекторам");
-?><div class="row architects">
-	<div class="col-lg-12 big-banner">
-		<div class="background-opacity">
-			<h2>Для дизайнеров и архитекторов</h2>
-			<p>
-				 Зарегистрируйтесь и скачайте 3D-модели и другие материалы
-			</p>
- <a href="/help/architects/3d-models/" class="simple-link">Список материалов</a>
-            <?if(!$USER->IsAuthorized()):?>
-			<p class="links-wrapper">
- <a href="/help/architects/3d-models/" data-event="jqm" data-param-type="auth" data-param-backurl="/help/architects/" data-name="auth">Войти</a> <a href="/auth/registration/?register=yes&backurl=/help/architects/?login=yes&wait_architect">Регистрация</a>
-			</p>
-            <?else:?>
-                <p class="links-wrapper">
-                    <a href="/help/architects/3d-models/" style="width:100%">Перейти к материалам</a>
+?>
+    <div class="row architects">
+        <div class="col-lg-12 big-banner">
+            <div class="background-opacity">
+                <h2>Для дизайнеров и архитекторов</h2>
+                <p>
+                     Зарегистрируйтесь и скачайте 3D-модели и другие материалы
                 </p>
-            <?endif;?>
-		</div>
-	</div>
+     <a href="/help/architects/3d-models/" class="simple-link">Список материалов</a>
+                <?if(!$USER->IsAuthorized()):?>
+                <p class="links-wrapper">
+     <a href="/help/architects/3d-models/" data-event="jqm" data-param-type="auth" data-param-backurl="/help/architects/" data-name="auth">Войти</a> <a href="/auth/registration/?register=yes&backurl=/help/architects/?login=yes&wait_architect">Регистрация</a>
+                </p>
+                <?else:?>
+                    <p class="links-wrapper">
+                        <a href="/help/architects/3d-models/" style="width:100%">Перейти к материалам</a>
+                    </p>
+                <?endif;?>
+            </div>
+        </div>
+    </div>
+
+<div class="row text">
+    <p>«ДЭФО» приглашает к сотрудничеству креативных дизайнеров, архитекторов и декораторов, дизайн-бюро и интерьерные студии. Если вы проектируете или оформляете офисные пространства, домашние кабинеты, рестораны, отели или квартиры, то мы готовы предложить более 40000 моделей современной мебели для реализации ваших идей.</p>
 </div>
+
 <div class="top_block">
-	<h3 class="title_block big">Преимущества для покупателя</h3>
+	<h3 class="title_block big">Партнерство с «ДЭФО» это:</h3>
 </div>
 <div class="row services-specialist test-drive architects">
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Приятные условия</h3>
-		<div class="specialist-advantages-hide">
-			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
-			</p>
-		</div>
+		<h3 class="specialist-advantages-title">Индивидуальные условия начисления бонусов</h3>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Разнообразие стилей</h3>
-		<div class="specialist-advantages-hide">
-			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
-			</p>
-		</div>
+		<h3 class="specialist-advantages-title">Гарантированная защита проекта</h3>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Можно посмотреть в салоне</h3>
-		<div class="specialist-advantages-hide">
-			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
-			</p>
-		</div>
+		<h3 class="specialist-advantages-title">Статус официального партнера после первой сделки</h3>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Доставка 2-3 дня</h3>
-		<div class="specialist-advantages-hide">
-			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
-			</p>
-		</div>
+		<h3 class="specialist-advantages-title">Размещение ваших проектов на официальном сайте и социальных сетях «ДЭФО»</h3>
 	</div>
 </div>
+
+<!--здесь не забыть добавить форму загрузить проект-->
+
 <div class="top_block">
-	<h3 class="title_block big">Преимущества для дизайнера</h3>
+	<h3 class="title_block big">Преимущества работы с нами:</h3>
 </div>
 <div class="row services-specialist test-drive architects">
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Приятные условия</h3>
+		<h3 class="specialist-advantages-title">Огромный ассортимент</h3>
 		<div class="specialist-advantages-hide">
 			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
+                Более 40000 наименований моделей для офиса и дома
 			</p>
 		</div>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Разнообразие стилей</h3>
+		<h3 class="specialist-advantages-title">Встречи в салонах</h3>
 		<div class="specialist-advantages-hide">
 			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
+                Салоны в разных районах города, где вы можете осмотреть материалы и товары на выставке, организовать встречу с клиентом или получить личную консультацию наших специалистов
 			</p>
 		</div>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Можно посмотреть в салоне</h3>
+		<h3 class="specialist-advantages-title">Персональный менеджер</h3>
 		<div class="specialist-advantages-hide">
 			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
+                При работе над проектом вы всегда можете обратиться к личному менеджеру, который  поможет разобраться в ассортименте, сделать заказ и сопроводит сделку
 			</p>
 		</div>
 	</div>
 	<div class="col-lg-3 specialist-advantages">
-		<h3 class="specialist-advantages-title">Доставка 2-3 дня</h3>
+		<h3 class="specialist-advantages-title">Есть в наличии</h3>
 		<div class="specialist-advantages-hide">
 			<p class="specialist-advantages-text">
-				 Краткое описание преимущества. Краткое описание преимущества. Краткое описание преимущества
+                Самые востребованные модели всегда в наличии на нашем складе – ваши клиенты могут получить мебель уже завтра
+			</p>
+		</div>
+	</div>
+	<div class="col-lg-3 specialist-advantages">
+		<h3 class="specialist-advantages-title">Федеральная сеть</h3>
+		<div class="specialist-advantages-hide">
+			<p class="specialist-advantages-text">
+                Вы можете расширять границы реализации ваших проектов, так как салоны «ДЭФО» представлены по всей России.
+			</p>
+		</div>
+	</div>
+	<div class="col-lg-3 specialist-advantages">
+		<h3 class="specialist-advantages-title">Изготовим под заказ</h3>
+		<div class="specialist-advantages-hide">
+			<p class="specialist-advantages-text">
+                Если Ваш проект требует нестандартных размеров или дизайна – мы изготовим мебель по вашему индивидуальному заказу.
+			</p>
+		</div>
+	</div>
+	<div class="col-lg-3 specialist-advantages">
+		<h3 class="specialist-advantages-title">Комплексный сервис</h3>
+		<div class="specialist-advantages-hide">
+			<p class="specialist-advantages-text">
+                Наши сотрудники позаботятся о всех этапах доставки, подъема, сборки и вывоза упаковки с объекта
+			</p>
+		</div>
+	</div>
+	<div class="col-lg-3 specialist-advantages">
+		<h3 class="specialist-advantages-title">Гарантия и постгарантийное обслуживание</h3>
+		<div class="specialist-advantages-hide">
+			<p class="specialist-advantages-text">
+                Мы предлагаем гарантию до 10 лет на ряд серий корпусной мебели и до 5 лет на офисные кресла. Оказываем услуги ремонта мебели по истечению гарантийного срока
+			</p>
+		</div>
+	</div>
+	<div class="col-lg-3 specialist-advantages">
+		<h3 class="specialist-advantages-title">Специальные предложения</h3>
+		<div class="specialist-advantages-hide">
+			<p class="specialist-advantages-text">
+                У нас проходят акции и распродажи, которые могут быть интересны вашим клиентам. Подпишитесь на нашу рассылку и будьте в курсе самых выгодных предложений и анонсов последних новинок
 			</p>
 		</div>
 	</div>
@@ -101,27 +130,27 @@ $APPLICATION->SetTitle("Дизайнерам и архитекторам");
 <div class="row services about architects">
 	<ol class="row services-steps">
 		<li class="col-lg-3 services-step">
-		<h4>Зарегистрироваться</h4>
+		<h4>Оставьте заявку на сайте</h4>
 		<p class="about-text">
-			 Менеджер "ДЭФО" приедет к Вам в офис с каталогами и образцами текстур и фактур
+            С вами свяжется менеджер и расскажет об условиях сотрудничества
 		</p>
  </li>
 		<li class="col-lg-3 services-step">
-		<h4>Зарегистрироваться</h4>
+		<h4>Заключите соглашение</h4>
 		<p class="about-text">
-			 Бесплатно и быстро дизайнер создаст проект расстановки мебели с учетом специфики работы каждого сотрудника
+            Подписание договора подтверждает партнерские намерения
 		</p>
  </li>
 		<li class="col-lg-3 services-step">
-		<h4>Зарегистрироваться</h4>
+		<h4>Скачайте базу 3D моделей</h4>
 		<p class="about-text">
-			 Специалисты отдела послепродажного обслуживания помогут подобрать наиболее подходящие условия поставки
+            Вы получите свой персональный доступ к базе моделей и другим материалам
 		</p>
  </li>
 		<li class="col-lg-3 services-step">
-		<h4>Зарегистрироваться</h4>
+		<h4>Создавайте проекты с мебелью «ДЭФО»</h4>
 		<p class="about-text">
-			 Профессиональная служба доставки в кратчайшие сроки доставит заказанную мебель, соберет и установит, вывезет мусор
+
 		</p>
  </li>
 	</ol>
@@ -244,57 +273,57 @@ $APPLICATION->SetTitle("Дизайнерам и архитекторам");
 <!--		</div>-->
 <!--	</div>-->
 <!--</div>-->
-<div class="top_block">
-	<h3 class="title_block big">Дизайнеры</h3>
-</div>
-<div class="row architects">
-	<div class="col-lg-12">
-		<p>
-			 Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться.
-		</p>
-	</div>
-	<div class="col-lg-3 designer-portfolio">
- <img width="312" src="/images/design-project.jpg" height="200" alt="">
-		<div class="designer-portfolio-text">
- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">
-			<h3 class="designer-name">Марта Ерофеева</h3>
-			<h4>Офис в современном стиле</h4>
-			<p>
-				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.
-			</p>
- <a href="" class="designer-portfolio-link">Заказать такой проект</a>
-		</div>
-	</div>
-	<div class="col-lg-3 designer-portfolio">
- <img width="312" src="/images/design-project.jpg" height="200" alt="">
-		<div class="designer-portfolio-text">
- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">
-			<h3 class="designer-name">Марта Ерофеева</h3>
-			<h4>Офис в современном стиле</h4>
-			<p>
-				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.
-			</p>
- <a href="" class="designer-portfolio-link">Заказать такой проект</a>
-		</div>
-	</div>
-	<div class="col-lg-3 designer-portfolio">
- <img width="312" src="/images/design-project.jpg" height="200" alt="">
-		<div class="designer-portfolio-text">
- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">
-			<h3 class="designer-name">Марта Ерофеева</h3>
-			<h4>Офис в современном стиле</h4>
-			<p>
-				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.
-			</p>
- <a href="" class="designer-portfolio-link">Заказать такой проект</a>
-		</div>
-	</div>
-	<div class="col-lg-3 designer-portfolio card">
-		<h4>Консультация</h4>
-		<p>
-			 Специалисты проконсультируют Вас по вопросам проектирования и реализации разработанного дизайна интерьера.
-		</p>
- <a href="" class="red-btn">Консультация</a>
-	</div>
-</div>
+<!--<div class="top_block">-->
+<!--	<h3 class="title_block big">Дизайнеры</h3>-->
+<!--</div>-->
+<!--<div class="row architects">-->
+<!--	<div class="col-lg-12">-->
+<!--		<p>-->
+<!--			 Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться. Краткий текст о подразделе и как можно им пользоваться.-->
+<!--		</p>-->
+<!--	</div>-->
+<!--	<div class="col-lg-3 designer-portfolio">-->
+<!-- <img width="312" src="/images/design-project.jpg" height="200" alt="">-->
+<!--		<div class="designer-portfolio-text">-->
+<!-- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">-->
+<!--			<h3 class="designer-name">Марта Ерофеева</h3>-->
+<!--			<h4>Офис в современном стиле</h4>-->
+<!--			<p>-->
+<!--				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.-->
+<!--			</p>-->
+<!-- <a href="" class="designer-portfolio-link">Заказать такой проект</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<div class="col-lg-3 designer-portfolio">-->
+<!-- <img width="312" src="/images/design-project.jpg" height="200" alt="">-->
+<!--		<div class="designer-portfolio-text">-->
+<!-- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">-->
+<!--			<h3 class="designer-name">Марта Ерофеева</h3>-->
+<!--			<h4>Офис в современном стиле</h4>-->
+<!--			<p>-->
+<!--				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.-->
+<!--			</p>-->
+<!-- <a href="" class="designer-portfolio-link">Заказать такой проект</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<div class="col-lg-3 designer-portfolio">-->
+<!-- <img width="312" src="/images/design-project.jpg" height="200" alt="">-->
+<!--		<div class="designer-portfolio-text">-->
+<!-- <img width="151" src="/images/designer.jpg" height="151" alt="" class="designer-photo">-->
+<!--			<h3 class="designer-name">Марта Ерофеева</h3>-->
+<!--			<h4>Офис в современном стиле</h4>-->
+<!--			<p>-->
+<!--				 Концепция Open Space демонстрирует идею демократичного офиса, который организуется в достаточно большом помещенеии, не разделенном капитальными стенами.-->
+<!--			</p>-->
+<!-- <a href="" class="designer-portfolio-link">Заказать такой проект</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<div class="col-lg-3 designer-portfolio card">-->
+<!--		<h4>Консультация</h4>-->
+<!--		<p>-->
+<!--			 Специалисты проконсультируют Вас по вопросам проектирования и реализации разработанного дизайна интерьера.-->
+<!--		</p>-->
+<!-- <a href="" class="red-btn">Консультация</a>-->
+<!--	</div>-->
+<!--</div>-->
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
