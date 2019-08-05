@@ -85,9 +85,9 @@ $APPLICATION->SetTitle("Госзаказчикам");
     </div>
 
 
-<div class="top_block">
-	<h3 class="title_block big">Все необходимое для оборудования офисных и административных помещений</h3>
-</div>
+<!--<div class="top_block">-->
+<!--	<h3 class="title_block big">Все необходимое для оборудования офисных и административных помещений</h3>-->
+<!--</div>-->
 
 <!--<div class="row products-tabs">-->
 <!--    <div class="col-lg-12 products-tabs-card card">-->
