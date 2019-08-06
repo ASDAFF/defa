@@ -11,7 +11,7 @@ Thumbs.db
 ._.DS_Store
 .ht*
 
-local/vendor/illuminate
+local/vendor/
 
 
 
