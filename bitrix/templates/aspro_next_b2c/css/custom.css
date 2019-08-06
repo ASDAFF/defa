@@ -8259,9 +8259,9 @@ body.compensate-for-scrollbar {
     margin-right: auto;
 }
 
-.catalog_detail .banner.SCALE {
-    border: 2px solid #ebebeb;
-}
+/*.catalog_detail .banner.SCALE {*/
+    /*border: 2px solid #ebebeb;*/
+/*}*/
 
 /*подписка*/
 .catalog_detail .subscribe-form .wrap_bg {
