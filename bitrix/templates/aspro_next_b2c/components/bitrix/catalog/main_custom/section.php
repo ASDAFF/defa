@@ -397,7 +397,10 @@ if(!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])){
     }
     $section["SERIES_GALLERIES"] = $seriesGalleries;
     //METKI
-    $arResult['METKI'] = GetMarks();
+    $arMarks = GetMarks();
+    foreach ($arMarks as $arMark){
+        $arResult['METKI'][$arMark['ID']] = $arMark;
+    }
 
 
     ?>

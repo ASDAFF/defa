@@ -60,8 +60,11 @@ if ($articuls){
 	}
 }
 ?>
-<?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket", "2quick", Array(
-	"COLUMNS_LIST" => array(
+<?$APPLICATION->IncludeComponent(
+	"bitrix:sale.basket.basket", 
+	"2quick", 
+	array(
+		"COLUMNS_LIST" => array(
 			0 => "NAME",
 			1 => "DISCOUNT",
 			2 => "PROPS",
@@ -72,45 +75,58 @@ if ($articuls){
 			7 => "QUANTITY",
 			8 => "SUM",
 		),
-		"OFFERS_PROPS" => array(	// Свойства, влияющие на пересчет корзины
+		"OFFERS_PROPS" => array(
 			0 => "SIZES",
 			1 => "COLOR_REF",
 		),
-		"PATH_TO_ORDER" => SITE_DIR."order/",	// Страница оформления заказа
-		"HIDE_COUPON" => "N",	// Спрятать поле ввода купона
-		"PRICE_VAT_SHOW_VALUE" => "Y",	// Отображать значение НДС
+		"PATH_TO_ORDER" => SITE_DIR."order/",
+		"HIDE_COUPON" => "N",
+		"PRICE_VAT_SHOW_VALUE" => "Y",
 		"COUNT_DISCOUNT_4_ALL_QUANTITY" => "N",
-		"USE_PREPAYMENT" => "N",	// Использовать предавторизацию для оформления заказа (PayPal Express Checkout)
-		"SET_TITLE" => "N",	// Устанавливать заголовок страницы
+		"USE_PREPAYMENT" => "N",
+		"SET_TITLE" => "N",
 		"AJAX_MODE_CUSTOM" => "Y",
 		"SHOW_MEASURE" => "Y",
 		"PICTURE_WIDTH" => "100",
 		"PICTURE_HEIGHT" => "100",
 		"SHOW_FULL_ORDER_BUTTON" => "Y",
 		"SHOW_FAST_ORDER_BUTTON" => "Y",
-		"COMPONENT_TEMPLATE" => ".default",
-		"QUANTITY_FLOAT" => "N",	// Использовать дробное значение количества
-		"ACTION_VARIABLE" => "action",	// Название переменной действия
-		"TEMPLATE_THEME" => "blue",	// Цветовая тема
-		"AUTO_CALCULATION" => "Y",	// Автопересчет корзины
-		"COMPOSITE_FRAME_MODE" => "A",	// Голосование шаблона компонента по умолчанию
-		"COMPOSITE_FRAME_TYPE" => "AUTO",	// Содержимое компонента
-		"USE_GIFTS" => "Y",	// Показывать блок "Подарки"
-		"GIFTS_PLACE" => "BOTTOM",	// Вывод блока "Подарки"
-		"GIFTS_BLOCK_TITLE" => "Выберите один из подарков",	// Текст заголовка "Подарки"
-		"GIFTS_HIDE_BLOCK_TITLE" => "N",	// Скрыть заголовок "Подарки"
-		"GIFTS_TEXT_LABEL_GIFT" => "Подарок",	// Текст метки "Подарка"
-		"GIFTS_PRODUCT_QUANTITY_VARIABLE" => "undefined",	// Название переменной, в которой передается количество товара
-		"GIFTS_PRODUCT_PROPS_VARIABLE" => "prop",	// Название переменной, в которой передаются характеристики товара
-		"GIFTS_SHOW_OLD_PRICE" => "Y",	// Показывать старую цену
-		"GIFTS_SHOW_DISCOUNT_PERCENT" => "Y",	// Показывать процент скидки
+		"COMPONENT_TEMPLATE" => "2quick",
+		"QUANTITY_FLOAT" => "N",
+		"ACTION_VARIABLE" => "action",
+		"TEMPLATE_THEME" => "blue",
+		"AUTO_CALCULATION" => "Y",
+		"COMPOSITE_FRAME_MODE" => "A",
+		"COMPOSITE_FRAME_TYPE" => "AUTO",
+		"USE_GIFTS" => "Y",
+		"GIFTS_PLACE" => "BOTTOM",
+		"GIFTS_BLOCK_TITLE" => "Выберите один из подарков",
+		"GIFTS_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_TEXT_LABEL_GIFT" => "Подарок",
+		"GIFTS_PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"GIFTS_PRODUCT_PROPS_VARIABLE" => "prop",
+		"GIFTS_SHOW_OLD_PRICE" => "Y",
+		"GIFTS_SHOW_DISCOUNT_PERCENT" => "Y",
 		"GIFTS_SHOW_NAME" => "Y",
 		"GIFTS_SHOW_IMAGE" => "Y",
-		"GIFTS_MESS_BTN_BUY" => "Выбрать",	// Текст кнопки "Выбрать"
-		"GIFTS_MESS_BTN_DETAIL" => "Подробнее",	// Текст кнопки "Подробнее"
-		"GIFTS_PAGE_ELEMENT_COUNT" => "4",	// Количество элементов в строке
-		"GIFTS_CONVERT_CURRENCY" => "N",	// Показывать цены в одной валюте
-		"GIFTS_HIDE_NOT_AVAILABLE" => "N",	// Не отображать товары, которых нет на складах
+		"GIFTS_MESS_BTN_BUY" => "Выбрать",
+		"GIFTS_MESS_BTN_DETAIL" => "Подробнее",
+		"GIFTS_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_CONVERT_CURRENCY" => "N",
+		"GIFTS_HIDE_NOT_AVAILABLE" => "N",
+		"COLUMNS_LIST_EXT" => array(
+			0 => "PREVIEW_PICTURE",
+			1 => "DISCOUNT",
+			2 => "DELETE",
+			3 => "DELAY",
+			4 => "TYPE",
+			5 => "SUM",
+		),
+		"CORRECT_RATIO" => "Y",
+		"COMPATIBLE_MODE" => "Y",
+		"ADDITIONAL_PICT_PROP_17" => "-",
+		"ADDITIONAL_PICT_PROP_20" => "-",
+		"BASKET_IMAGES_SCALING" => "adaptive"
 	),
 	false
 );?>

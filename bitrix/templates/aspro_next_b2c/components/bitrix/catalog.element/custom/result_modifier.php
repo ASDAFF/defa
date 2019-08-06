@@ -153,9 +153,7 @@ if($arResult['PROPERTIES']['HIT']['VALUE']){
     foreach ($arResult['PROPERTIES']['HIT']['VALUE'] as $mark){
         $arResult['MARKS'][$mark] = $armarks[$mark];
     }
-
 }
-
 
 
 

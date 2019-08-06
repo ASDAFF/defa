@@ -175,7 +175,10 @@ if($_REQUEST['id']) {
                 $obCache->EndDataCache($arTizersData);
             }
         }
-        $arResult['METKI'] = GetMarks();
+        $arMarks = GetMarks();
+        foreach ( $arMarks as $item){
+            $arResult['METKI'][$item['ID']] = $item;
+        }
         ?>
         <div class="row">
             <div class="col-sm-6">

@@ -9,7 +9,10 @@ use Bitrix\Main\Loader,
 	)
 );?>
 <?$sViewElementTemplate = ($arParams["ELEMENT_TYPE_VIEW"] == "FROM_MODULE" ? $arTheme["CATALOG_PAGE_DETAIL"]["VALUE"] : $arParams["ELEMENT_TYPE_VIEW"]);?>
-<?$hide_left_block = ($arTheme["LEFT_BLOCK_CATALOG_DETAIL"]["VALUE"] == "Y" ? "N" : "Y");
+<?
+
+
+$hide_left_block = ($arTheme["LEFT_BLOCK_CATALOG_DETAIL"]["VALUE"] == "Y" ? "N" : "Y");
 $arWidePage = array("element_3", "element_4", "element_5");
 
 //set offer view type
@@ -64,6 +67,7 @@ if(in_array($sViewElementTemplate, $arWidePage))
 		setStatusButton();
 	</script>
 <?endif;?>
+
 <?$sViewBigDataTemplate = ($arParams["BIGDATA_NORMAL"] ? $arParams["BIGDATA_NORMAL"] : "bigdata_1" );?>
 <?$sViewBigDataExtTemplate = ($arParams["BIGDATA_EXT"] ? $arParams["BIGDATA_EXT"] : "bigdata_2" );?>
 <div class="catalog_detail detail<?=($isWideBlock == "Y" ? " fixed_wrapper" : "");?> <?=$sViewElementTemplate;?>" itemscope itemtype="http://schema.org/Product">

@@ -2487,6 +2487,7 @@ EOD;
 
 
     CEvent::Send("SEND_PDF", 's1', $arFields,'Y',123,[$_SERVER['DOCUMENT_ROOT'] . 'cpoffers/offer-' . $intNumber . '.pdf']);
+    return $arFields;
 
 }
 
