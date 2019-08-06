@@ -5833,12 +5833,13 @@ body .tabs_slider .catalog_item .inner_wrap {
     font-size: 13px;
 }
 
-/*ЗВЕЗДОЧКИ РЕЙТИНГА*/
-.catalog_detail .rating {
-    display: none;
+
+/*звездочки рейтинга*/
+.catalog_detail .item_main_info .rating {
+    position: absolute;
+    right: 25px;
+    top: -35px;
 }
-
-
 
 
 
@@ -6425,13 +6426,6 @@ body .tabs_slider .catalog_item .inner_wrap {
     padding: 0;
 }
 
-
-/*звездочки рейтинга*/
-.catalog_detail .item_main_info .rating {
-    position: absolute;
-    right: 25px;
-    top: 20px;
-}
 
 .catalog_detail .item_slider .like_icons {
     top: -40px;
