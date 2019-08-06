@@ -63,6 +63,8 @@ if($_REQUEST['id']) {
                                 <?endif;?>
                             <?endforeach;?>
                         </ul>
+
+                        <a class="see-more" href="<?=$section['SECTION_PAGE_URL']?>">Посмотреть весь раздел</a>
                     </div>
                     <?$key = false;?>
                     <div class="col-md-2">
@@ -171,6 +173,9 @@ require($_SERVER["DOCUMENT_ROOT"]."/local/tools/getElementInfo.php");?>
                                 <?endif;?>
                             <?endforeach;?>
                         </ul>
+
+                        <a class="see-more" href="<?=$section['SECTION_PAGE_URL']?>">Посмотреть весь раздел</a>
+
                     </div>
                     <?$key = false;?>
                     <div class="col-md-2">
@@ -363,9 +368,9 @@ require($_SERVER["DOCUMENT_ROOT"]."/local/tools/getElementInfo.php");?>
 
         </div>
 
-        <div class="bottom-section">
-        <a href="<?=$section['SECTION_PAGE_URL']?>">Посмотреть весь раздел</a>
-        </div>
+        <!--<div class="bottom-section">
+
+        </div>-->
         <?
     }
     else $errors[] = "Раздел не найден";

@@ -14678,6 +14678,19 @@ div#ajax-sectionContainer {
     width: 100px;
 }
 
+
+/*Посмотреть весь раздел*/
+.sectionContainer .see-more {
+    padding: 5px 15px;
+    display: block;
+    text-transform: uppercase;
+    color: #555;
+    font-size: 14px;
+    border-top: 1px solid #AAB;
+}
+
+
+/*
 .sectionContainer .bottom-section {
     position: absolute;
     bottom: 0;
@@ -14697,6 +14710,7 @@ div#ajax-sectionContainer {
     color: #555;
     border-top: 1px solid #AAB;
 }
+*/
 
 
 
