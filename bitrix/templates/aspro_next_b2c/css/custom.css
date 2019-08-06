@@ -14616,25 +14616,24 @@ div#ajax-sectionContainer {
 }
 
 
-.sectionContainer .ajax-element .slick-prev:before, .ajax-element .slick-next:before {
-    color: #000;
+.sectionContainer .ajax-element .slick-prev:before, .sectionContainer .ajax-element .slick-next:before {
+    display: none;
+}
+
+.sectionContainer .ajax-element .slick-next {
+    background: url(../images/arrows2.png) -70px -18px no-repeat!important;
+    width: 33px;
+    height: 35px;
+    z-index: 10;
+    right: -5px;
 }
 
 .sectionContainer .ajax-element .slick-prev {
+    background: url(../images/arrows2.png) 5px -18px no-repeat!important;
+    width: 33px;
+    height: 35px;
+    z-index: 10;
     left: -5px;
-}
-.sectionContainer .ajax-element .slick-next {
-    right: -5px;
-}
-.sectionContainer .ajax-element .slick-next,.ajax-element .slick-prev {
-    z-index: 99;
-    background: #fff;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    box-shadow: 0 0 1px #aaa;
-    border: 1px solid #eee;
-    top: 150px;
 }
 .main-image {
     text-align: center;
@@ -14678,6 +14677,20 @@ div#ajax-sectionContainer {
     width: 100px;
 }
 
+
+/*Посмотреть весь раздел*/
+.sectionContainer .see-more {
+    padding: 5px 15px;
+    display: block;
+    text-transform: uppercase;
+    color: #555;
+    font-size: 14px;
+    border-top: 1px solid #AAB;
+    margin-top: 10px;
+}
+
+
+/*
 .sectionContainer .bottom-section {
     position: absolute;
     bottom: 0;
@@ -14697,6 +14710,7 @@ div#ajax-sectionContainer {
     color: #555;
     border-top: 1px solid #AAB;
 }
+*/
 
 
 
