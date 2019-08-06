@@ -5833,12 +5833,13 @@ body .tabs_slider .catalog_item .inner_wrap {
     font-size: 13px;
 }
 
-/*ЗВЕЗДОЧКИ РЕЙТИНГА*/
-.catalog_detail .rating {
-    display: none;
+
+/*звездочки рейтинга*/
+.catalog_detail .item_main_info .rating {
+    position: absolute;
+    right: 25px;
+    top: -35px;
 }
-
-
 
 
 
@@ -6425,13 +6426,6 @@ body .tabs_slider .catalog_item .inner_wrap {
     padding: 0;
 }
 
-
-/*звездочки рейтинга*/
-.catalog_detail .item_main_info .rating {
-    position: absolute;
-    right: 25px;
-    top: 20px;
-}
 
 .catalog_detail .item_slider .like_icons {
     top: -40px;
@@ -16928,4 +16922,47 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     border-radius: 100px;
     background-color: rgba(255, 255, 255, 0.8)!important;
     z-index: 1;
+}
+
+@media (max-width: 600px){
+    .item_main_info .buyers-like,
+    .series-top + .buyers-like {
+        width: auto;
+        margin-right: 43px;
+    }
+
+    .quick-metki {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .quick-metki li {
+        margin-right: 0!important;
+    }
+
+    .quick-metki li {
+        margin-right: 0!important;
+    }
+
+    .quick-metki .pros-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .quick-metki .series-item-pros-element {
+        height: auto!important;
+    }
+}
+
+@media (max-width: 430px){
+    .item_main_info .buyers-like,
+    .series-top + .buyers-like {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }
+
+    .quick-metki {
+        left: 20px;
+    }
 }
