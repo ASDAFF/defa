@@ -16923,3 +16923,46 @@ body .catalog_item:hover .footer_button, body .catalog_item.hover .footer_button
     background-color: rgba(255, 255, 255, 0.8)!important;
     z-index: 1;
 }
+
+@media (max-width: 600px){
+    .item_main_info .buyers-like,
+    .series-top + .buyers-like {
+        width: auto;
+        margin-right: 43px;
+    }
+
+    .quick-metki {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+    .quick-metki li {
+        margin-right: 0!important;
+    }
+
+    .quick-metki li {
+        margin-right: 0!important;
+    }
+
+    .quick-metki .pros-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .quick-metki .series-item-pros-element {
+        height: auto!important;
+    }
+}
+
+@media (max-width: 430px){
+    .item_main_info .buyers-like,
+    .series-top + .buyers-like {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }
+
+    .quick-metki {
+        left: 20px;
+    }
+}
