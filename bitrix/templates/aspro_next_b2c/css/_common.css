@@ -96,13 +96,13 @@
     width: 101%;
 }
 .series-item .series-item-pros .series-item-pros-element .pros-text::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 33px;
-    height: 26px;
+    /*content: '';*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+    /*width: 33px;*/
+    /*height: 26px;*/
 }
 .series-item-pros-innovation .pros-text::before {
     content: '';
