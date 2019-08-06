@@ -21,7 +21,7 @@ else
 
 
 <?if( count( $arResult["ITEMS"] ) >= 1 ){?>
-<script>
+<!--<script>
 
 
     $(".slick-slider-ajax").slick({
@@ -29,7 +29,7 @@ else
         arrows: true
     });
 
-</script>
+</script>-->
 	<?if(($arParams["AJAX_REQUEST"]=="N") || !isset($arParams["AJAX_REQUEST"])){?>
 		<?if(isset($arParams["TITLE"]) && $arParams["TITLE"]):?>
 			<hr/>

@@ -149,7 +149,10 @@ $(document).ready(function(){
                     $('.model-elements-list .mlist').toggleClass('opacity');
                 });
 
-
+                $(".slick-slider-ajax").slick({
+                    slidesToShow: 3,
+                    arrows: true
+                });
                 //x5 20190626 выполняем js, который показывает ссылку Развернуть и фиксирует первоначальные размеры
                 ElementInfoJsOnLoad();
 
