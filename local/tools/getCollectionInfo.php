@@ -182,17 +182,20 @@ if($_REQUEST['id']) {
         ?>
         <div class="row">
             <div class="col-sm-6">
-                <ul class="series-item-pros quick-metki">
+                <?if($section['UF_METKA']){?>
+                    <ul class="series-item-pros quick-metki">
 
-                    <? foreach($section['UF_METKA'] as $arMetka) { ?>
-                        <li class="series-item-pros-element" style="padding: 0">
-                            <div class="pros-icon" style="float:left">
-                                <img width="30" height="30" src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
-                            </div>
-                            <span class="pros-text" style="float:left"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
-                        </li>
-                    <? } ?>
-                </ul>
+                        <? foreach($section['UF_METKA'] as $arMetka) { ?>
+                            <li class="series-item-pros-element" style="padding: 0">
+                                <div class="pros-icon" style="float:left">
+                                    <img width="30" height="30" src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
+                                </div>
+                                <span class="pros-text" style="float:left"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
+                            </li>
+                        <? } ?>
+                    </ul>
+                <? } ?>
+
 <!--                --><?//if($arSection['UF_DISCOUNT']){?>
 <!--                    <span class="sale-mark">--><?//=($arSection['UF_DISCOUNT'])?><!--</span>-->
 <!--                --><?//}?>

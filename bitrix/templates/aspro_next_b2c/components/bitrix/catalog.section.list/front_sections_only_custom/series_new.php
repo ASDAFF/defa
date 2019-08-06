@@ -159,10 +159,9 @@ if($arResult['SECTIONS'])
 <!--                                    <a href="#" class="series-content-toggle" data-tab="3">Пректы</a>-->
 <!--                                </div>-->
                                 <div class="row series-main current series-desc-block"  data-tab="1">
-                                        <div class="img col-lg-4 col-sm-12">
-
+                                    <div class="img col-lg-4 col-sm-12">
+                                        <?if($arSection['UF_METKA']){?>
                                             <ul class="series-item-pros quick-metki">
-
                                                 <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
                                                     <li class="series-item-pros-element">
                                                         <div class="pros-icon">
@@ -170,10 +169,10 @@ if($arResult['SECTIONS'])
                                                         </div>
                                                         <span class="pros-text"><?=$arResult['METKI'][$arMetka['ID']]['NAME']?></span>
                                                     </li>
-                                                    <? } ?>
+                                                <? } ?>
                                             </ul>
-
-                                            <div class="series-slider-wrapper">
+                                        <? } ?>
+                                        <div class="series-slider-wrapper">
                                                 <div class="slick-slider put-arrows main-slide slider-for slider-single">
                                                     <span class="sale-mark"><?=($section['UF_DISCOUNT']);?></span>
                                                     <?foreach($arResult['SERIES_GALLERIES'][$arSection['UF_SERIES_GALLERY']] as $image)
@@ -594,17 +593,18 @@ if($arResult['SECTIONS'])
                         $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_SECTION_DELETE_CONFIRM')));?>
                         <?if(in_array($_GET['filter'], $arSection['UF_PODBORKA'])) { ?>
                     <div class="series-item" id="<?=$this->GetEditAreaId($arSection['ID']);?>">
-                        <ul class="series-item-pros quick-metki">
-
-                            <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
-                                <li class="series-item-pros-element">
-                                    <div class="pros-icon">
-                                        <img src="<?=$arResult['METKI'][$arMetka['ID']]['SRC']?>" alt="">
-                                    </div>
-                                    <span class="pros-text"><?=$arResult['METKI'][$arMetka['ID']]['NAME']?></span>
-                                </li>
-                            <? } ?>
-                        </ul>
+                        <?if($arSection['UF_METKA']){?>
+                            <ul class="series-item-pros quick-metki">
+                                <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
+                                    <li class="series-item-pros-element">
+                                        <div class="pros-icon">
+                                            <img src="<?=$arResult['METKI'][$arMetka['ID']]['SRC']?>" alt="">
+                                        </div>
+                                        <span class="pros-text"><?=$arResult['METKI'][$arMetka['ID']]['NAME']?></span>
+                                    </li>
+                                <? } ?>
+                            </ul>
+                        <? } ?>
                         <div class="series-img-wrap">
                             <a href="<?=$arSection['SECTION_PAGE_URL'];?>">
                                 <? $lolo=0; ?>
@@ -752,17 +752,18 @@ if($arResult['SECTIONS'])
                                     <div class="row series-main current series-desc-block"  data-tab="1">
                                         <div class="img col-lg-4 col-sm-12">
 
-                                            <ul class="series-item-pros quick-metki">
-
-                                                <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
-                                                    <li class="series-item-pros-element">
-                                                        <div class="pros-icon">
-                                                            <img src="<?=$arResult['METKI'][$arMetka['ID']]['SRC']?>" alt="">
-                                                        </div>
-                                                        <span class="pros-text"><?=$arResult['METKI'][$arMetka['ID']]['NAME']?></span>
-                                                    </li>
-                                                <? } ?>
-                                            </ul>
+                                            <?if($arSection['UF_METKA']){?>
+                                                <ul class="series-item-pros quick-metki">
+                                                    <? foreach($arSection['UF_METKA'] as $arMetka) { ?>
+                                                        <li class="series-item-pros-element">
+                                                            <div class="pros-icon">
+                                                                <img src="<?=$arResult['METKI'][$arMetka['ID']]['SRC']?>" alt="">
+                                                            </div>
+                                                            <span class="pros-text"><?=$arResult['METKI'][$arMetka['ID']]['NAME']?></span>
+                                                        </li>
+                                                    <? } ?>
+                                                </ul>
+                                            <? } ?>
                                             <div class="series-slider-wrapper">
                                                 <?if($arSection['UF_DISCOUNT']){?>
                                                     <span class="sale-mark"><?=($arSection['UF_DISCOUNT'])?></span>

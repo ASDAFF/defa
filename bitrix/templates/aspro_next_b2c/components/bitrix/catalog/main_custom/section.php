@@ -480,17 +480,19 @@ if(!empty($section['UF_SERIES']) && !empty($section["UF_PROS_SERIES"])){
 <!--            </div>-->
             <div class="row series-main current" data-tab="1">
                 <div class="col-md-8">
-                    <ul class="series-item-pros quick-metki">
+                    <?if($section['UF_METKA']){?>
+                        <ul class="series-item-pros quick-metki">
 
-                        <? foreach($section['UF_METKA'] as $arMetka) { ?>
-                            <li class="series-item-pros-element">
-                                <div class="pros-icon">
-                                    <img src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
-                                </div>
-                                <span class="pros-text"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
-                            </li>
-                        <? } ?>
-                    </ul>
+                            <? foreach($section['UF_METKA'] as $arMetka) { ?>
+                                <li class="series-item-pros-element">
+                                    <div class="pros-icon">
+                                        <img src="<?=$arResult['METKI'][$arMetka]['SRC']?>" alt="">
+                                    </div>
+                                    <span class="pros-text"><?=$arResult['METKI'][$arMetka]['NAME']?></span>
+                                </li>
+                            <? } ?>
+                        </ul>
+                    <?}?>
                     <?if($section['UF_DISCOUNT']){?>
                         <span class="sale-mark"><?=($section['UF_DISCOUNT'])?></span>
                     <?}?>
