@@ -4453,12 +4453,22 @@ body .tabs_slider .catalog_item .inner_wrap {
     width: 1000px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .sort-list-wrapper .sort-item {
     margin: 0;
+    margin-right: 20px;
     padding: 0;
+}
+
+.sort-list-wrapper .sort-item:last-child {
+    margin-right: 0;
+}
+
+.sort-list-wrapper .sort-item a {
+    display: block;
+    padding: 10px;
 }
 
 .sort-list-wrapper .sort-item:before {
@@ -4511,7 +4521,7 @@ body .tabs_slider .catalog_item .inner_wrap {
 /*плавающий фильтр*/
 .sort-list-wrapper.floating.fixed {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: #ffffff;
     box-shadow: 0 -3px 10px 0px rgba(191, 191, 191, 0.7);
     bottom: 0!important;
@@ -4521,6 +4531,8 @@ body .tabs_slider .catalog_item .inner_wrap {
 
 .sort-list-wrapper.floating.fixed .sort-list {
     flex-wrap: wrap;
+    width: 1150px;
+    justify-content: flex-end;
 }
 
 .sort-list-wrapper.floating.fixed .sort-evt {
@@ -8250,7 +8262,6 @@ body.compensate-for-scrollbar {
     position: fixed;
     /*top: 100px;*/
 }
-
 
 
 /*БАННЕРЫ СЛЕВА*/
